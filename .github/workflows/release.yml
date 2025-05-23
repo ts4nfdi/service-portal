@@ -164,7 +164,7 @@ jobs:
             helmv3 upgrade ts4nfdi-service-portal \
               --install \
               --namespace='ts4nfdi' \
-              --set-json='ingress.dns="ts4nfdi-service-portal.qa.km.k8s.zbmed.de"'  \
+              --set-json='ingress.dns="terminology.services.base4nfdi.de"'  \
               --set-json='images.ui="ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}"' \
               --set-json='ingress.path="/"' \
               service-portal-deployment/service-portal-ui
