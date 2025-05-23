@@ -58,8 +58,8 @@ jobs:
           push: true
           # use a) human-readable and b) immutable tag
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
             ghcr.io/${{ github.repository }}:${{ steps.generate-image-tag.outputs.imageTag }}
+            ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
           build-args: |
             COMMIT_SHA=${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -69,7 +69,7 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
+          subject-name: ghcr.io/${{ github.repository }}:${{ steps.generate-image-tag.outputs.imageTag }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
   deploy_main:
