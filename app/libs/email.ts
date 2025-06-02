@@ -30,7 +30,7 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST_NAME,
     port: process.env.SMTP_PORT,
-    secure: false,
+    secure: true,
     //auth: {
     //user: process.env.SMTP_USERNAME,
     //pass: process.env.SMTP_PASSWORD,
@@ -40,7 +40,7 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
 
   try {
     const smtpServerVerfied = await transporter.verify();
-    console.log(smtpServerVerfied)
+    console.log("smtp server connection verfication output: ", smtpServerVerfied)
   } catch {
     return false;
   }
@@ -65,6 +65,7 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   }
 
   const info = await transporter.sendMail(message);
+  console.log("smtp email transport result: ", info)
   if (info.accepted.length > 0) {
     return true;
   }
