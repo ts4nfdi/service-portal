@@ -116,6 +116,7 @@ jobs:
             --install \
             --namespace='ts4nfdi' \
             --set-json='ingress.dns="terminology.services.base4nfdi.de"'  \
+            --set-json='ingress.redirectDns="ts.services.base4nfdi.de"'  \
             --set-json='images.ui="ghcr.io/${{ github.repository }}:${{ inputs.image_sha|| github.sha }}"' \
             --set-json='ingress.path="/"' \
             --set-json='ingress.enableSSL="true"'  \
