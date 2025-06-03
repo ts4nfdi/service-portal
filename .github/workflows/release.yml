@@ -133,6 +133,14 @@ jobs:
             --namespace='ts4nfdi' \
             --dry-run=client -o yaml | kubectl apply -f -
 
+      - name: Create K8s secret for SMTP_PORT
+        run: |
+          kubectl create secret generic ts4nfdi-service-portal-smtp-port \
+            --from-literal=SMTP_PORT=${{ vars.SMTP_PORT }} \
+            --namespace='ts4nfdi' \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+
       - name: Create K8s secret for SERVICE_EMAIL
         run: |
           kubectl create secret generic ts4nfdi-service-portal-smtp-service-email \
