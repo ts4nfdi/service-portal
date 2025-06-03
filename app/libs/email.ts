@@ -39,6 +39,9 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
     //},
     //name: process.env.NEXTAUTH_URL! as string,
     connectionTimeout: 10000,
+    tls: {
+      rejectUnauthorized: false,
+    },
   } as SMTPTransport.Options);
 
 
