@@ -17,6 +17,7 @@ export default function Contact() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    console.log("email sending started ....")
     let form = document.querySelector('form')!;
     let formData = new FormData(form);
     let contactFormData: ContactForm = {
@@ -31,7 +32,9 @@ export default function Contact() {
     }
     setFormIsSubmited(true);
     setLoading(true);
+    console.log("email sending submiting ....")
     let res = await sendContactForm(contactFormData) as ActionResponse;
+    console.log("email sent result: ", res)
     if (!res.status) {
       setError(true);
     }
