@@ -87,6 +87,10 @@ export default function Documentation() {
         The software <a href="https://github.com/gbv/cocoda" target="_blank">Cocoda</a> was selected for the NFDI-wide mapping service.
         Cocoda is published under a MIT license on GitHub and is based on Vue.js.
       </p>
+      <p className="text-justify">
+        The current development version of the mapping service is available at
+        <a href="https://coli-conc.gbv.de/cocoda/ts4nfdi/" target="_blank">https://coli-conc.gbv.de/cocoda/ts4nfdi/</a>
+      </p>
 
       <a href="#gateway"><p className="header-2" id="gateway">5. API Gateway</p></a>
       <p className="text-justify">
