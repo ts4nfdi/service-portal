@@ -25,7 +25,8 @@ export async function sendContactForm(formData: ContactForm): Promise<ActionResp
 			return { status: true, content: "sent" };
 		}
 		return { status: false, content: SERVER_ERROR_MESSAGE };
-	} catch {
+	} catch (e) {
+		console.log(e)
 		return { status: false, content: SERVER_ERROR_MESSAGE };
 	}
 }
