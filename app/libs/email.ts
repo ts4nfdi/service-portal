@@ -46,8 +46,8 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
 
   try {
     const smtpServerVerfied = await transporter.verify();
-    console.log("smtp server connection verfication output: ", smtpServerVerfied)
-  } catch {
+  } catch (e) {
+    console.log("smtp server connection verfication output: ", e)
     return false;
   }
 
