@@ -122,7 +122,7 @@ jobs:
       - name: Create K8s secret for CONTACT_RECV_EMAIL
         run: |
           kubectl create secret generic ts4nfdi-service-portal-contact-recv-email \
-            --from-literal=CONTACT_RECV_EMAIL=${{ secrets.CONTACT_RECV_EMAIL }} \
+            --from-literal=CONTACT_RECV_EMAIL=${{ vars.CONTACT_RECV_EMAIL }} \
             --namespace='ts4nfdi' \
             --dry-run=client -o yaml | kubectl apply -f -
 
