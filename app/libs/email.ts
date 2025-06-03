@@ -27,6 +27,7 @@ type EmailMessage = {
 
 
 export async function sendEmail(props: InputProps): Promise<boolean> {
+  console.log("host name: ", process.env.SMTP_HOST_NAME)
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST_NAME,
     port: process.env.SMTP_PORT,
