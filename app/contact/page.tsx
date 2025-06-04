@@ -47,16 +47,6 @@ export default function Contact() {
       <p className="header-1">Contact us</p>
       {!formIsSubmitted &&
         <form onSubmit={submit}>
-          <div className="font-bold p-4 mb-4 text-sm text-black rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            This feature is currently under active development. At the moment, please send your request to: <br />
-            <a href="mailto:ts4nfdi@lists.nfdi.de">ts4nfdi@lists.nfdi.de</a>
-            <br />
-            Please provide the following:
-            <ul>
-              <li>Title of your request</li>
-              <li>Description</li>
-            </ul>
-          </div>
           <div className="grid grid-rows-1 form">
             <TextInput
               id="title-input"
