@@ -67,7 +67,7 @@ jobs:
             npm_token=${{ secrets.NPM_TOKEN }}
 
   deploy_main:
-    environment: release-k8s
+    environment: release-k8s-qa
     needs: build-and-push-image
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
