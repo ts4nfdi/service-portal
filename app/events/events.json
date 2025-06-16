@@ -1,12 +1,40 @@
-[  
+[
   {
+    "name": "2nd Base4NFDI User Conference, Aachen",
+    "date": "28 + 29 August 2025",
+    "formal_date": "2025-08-28"
+  },{
+    "name": "Conference on Research Data Infrastructure 2025, Aachen",
+    "date": "26 - 28 August 2025",
+    "formal_date": "2025-08-26"
+  },{
     "name": "University of Manchester, Manchester",
     "date": "18 July 2025",
     "formal_date": "2025-07-18"
   },{
+    "name": "2nd NFDI Taskforce Metadata Workshop , Hannover",
+    "date": "25 June 2025",
+    "formal_date": "2025-06-25"
+  },{
+    "name": "7th Annual AGROVOC Editorial Community Meeting, Berlin",
+    "date": "4 + 5 June 2025",
+    "formal_date": "2025-06-04",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.15590235"
+      }
+    ]
+  },{
     "name": "2nd Services Roadshow by Base4NFDI, online",
     "date": "22 May + 27 May 2025",
-    "formal_date": "2025-05-27"
+    "formal_date": "2025-05-27",
+    "links": [
+      {
+        "type" :  "webpage",
+        "link" :  "https://base4nfdi.de/news-events/events/services-roadshow-by-base4nfdi-05-2025"
+      }
+    ]
   },{
     "name": "Working Group Terminology Services, online",
     "date": "27 February 2025",
@@ -45,7 +73,21 @@
   {
     "name": "Services Roadshow by Base4NFDI, online",
     "date": "4th December 2024",
-    "formal_date": "2024-12-04"
+    "formal_date": "2024-12-04",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.14281349"
+      },
+      {
+        "type" :  "video",
+        "link" :  "https://www.youtube.com/watch?v=crYgdEjliFY"
+      },
+      {
+        "type" :  "webpage",
+        "link" :  "https://base4nfdi.de/news-events/events/services-roadshow-by-base4nfdi-12-2024"
+      }
+    ]
   },
   {
     "name": "EUDAT Conference 2024, Karlsruhe",
@@ -100,7 +142,7 @@
   {
     "name": "BioHackathon Germany 2023, Bielefeld",
     "date": "11 - 15 December 2023",
-    "formal_date": "2023-02-11"
+    "formal_date": "2023-12-11"
   },
   {
     "name": "NFDI4BIOIMAGE All-Hands meeting, Düsseldorf",

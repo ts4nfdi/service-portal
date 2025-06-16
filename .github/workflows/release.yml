@@ -35,7 +35,7 @@ jobs:
           head_ref="${head_ref/\//-}"
           ref_name="${head_ref:-${ref_name/main/latest}}"
           ref_name="${ref_name#v}"
-          echo "imageTag=ref_name" >> "$GITHUB_OUTPUT"
+          echo "imageTag=$ref_name" >> "$GITHUB_OUTPUT"
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -48,7 +48,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
+          images: ghcr.io/${{ github.repository }}
 
       - name: Build and push Docker image
         id: push
@@ -58,22 +58,16 @@ jobs:
           push: true
           # use a) human-readable and b) immutable tag
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
             ghcr.io/${{ github.repository }}:${{ steps.generate-image-tag.outputs.imageTag }}
+            ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
           build-args: |
             COMMIT_SHA=${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           secrets: |
             npm_token=${{ secrets.NPM_TOKEN }}
-      
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: ghcr.io/${{ github.repository }}:${{ github.event.pull_request.head.sha || github.sha }}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+
   deploy_main:
-    environment: release-k8s
+    environment: release-k8s-qa
     needs: build-and-push-image
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
