@@ -40,6 +40,7 @@ export default function IncubatorRequestCard() {
         <li className="list-disc ml-6 text-justify mb-2" key={'goal3'}>Adding terminology services to the API Gateway</li>
         <li className="list-disc ml-6 text-justify mb-2" key={'goal4'}>Integration of TSS widgets</li>
         <li className="list-disc ml-6 text-justify mb-2" key={'goal5'}>Provision of collection(s) via API Gateway</li>
+        <li className="list-disc ml-6 text-justify mb-2" key={'goal6'}>Adding mappings to the mapping service</li>
       </ul>
       <Link className="btn mt-5 float-right" href="/incubators/new/" key={"new-incubator-anchor"}>Send us your request</Link>
     </div>
