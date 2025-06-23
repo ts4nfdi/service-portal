@@ -13,7 +13,7 @@ RUN npm install --force
 COPY . .
 
 ENV NEXT_PUBLIC_AUTOCOMPLETE_DOCUMENTATION_URL=https://ts4nfdi.github.io/terminology-service-suite/comp/latest/?path=/docs/react_search-autocompletewidget--docs
-ENV NEXT_PUBLIC_API_GATEWAY_ENDPOINT=https://ts4nfdi-api-gateway.prod.km.k8s.zbmed.de/api-gateway/
+ENV NEXT_PUBLIC_API_GATEWAY_ENDPOINT=https://terminology.services.base4nfdi.de/api-gateway
 ENV NEXT_PUBLIC_API_GATEWAY_DEFAULT_PARAMETERS="ontology=mesh,efo&type=class&collection=nfdi4health&fieldList=description,label,iri,ontology_name,type,short_form"
 ENV NEXT_PUBLIC_CAPTCHA_SITE_KEY=FCMNGJO6FSOIB5ER
 # ENV SMTP_HOST_NAME=134.95.56.25
