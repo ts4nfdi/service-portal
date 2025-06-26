@@ -13,6 +13,10 @@
     dark:bg-gray-800;
 }
 
+.clicked-status-card {
+    @apply status-card !bg-[#45546B] !text-white !font-bold;
+}
+
 .status-card p {
     padding-right: 0;
 }

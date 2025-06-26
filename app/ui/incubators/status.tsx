@@ -1,9 +1,22 @@
+'use client'
+
 import {IncubatorsStatusCmpProps, ProjectStatus} from "./types";
+import {useEffect} from "react";
 
 
 export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
     const stats = props.projectsJson?.stats ?? {};
     const statusToSkip = ['Requested', 'First contact', 'Postponed'];
+
+    useEffect(() => {
+        if (props.selectedStatus === "") {
+            const currentSelected = document.getElementsByClassName("clicked-status-card");
+            for (let element of currentSelected) {
+                element.classList.remove("clicked-status-card");
+                element.classList.add("status-card");
+            }
+        }
+    }, [props.selectedStatus]);
 
     return (
         <>
@@ -16,7 +29,22 @@ export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
                             return;
                         }
                         return (
-                            <div className="status-card" key={status} onClick={props.onClickStatus} data-value={status}>
+                            <div
+                                className="status-card"
+                                key={status}
+                                onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                                    if (props.onClickStatus) {
+                                        props.onClickStatus(event);
+                                        const currentSelected = document.getElementsByClassName("clicked-status-card");
+                                        for (let element of currentSelected) {
+                                            element.classList.remove("clicked-status-card");
+                                            element.classList.add("status-card");
+                                        }
+                                        event.currentTarget.classList.remove('status-card');
+                                        event.currentTarget.classList.add('clicked-status-card');
+                                    }
+                                }}
+                                data-value={status}>
                                 <p className="lg:text-xl ">{status}: <b>{stats[status]}</b></p>
                             </div>
                         )

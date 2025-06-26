@@ -33,4 +33,5 @@ export type IncubatorsStatusCmpProps = {
     projectsJson: IncubatorProjectList;
     onClickStatus?: (event: React.MouseEvent<HTMLDivElement>) => void;
     selectedStatus?: ProjectStatus | "";
+    setSelectedStatus?: React.Dispatch<React.SetStateAction<"" | ProjectStatus>>;
 }

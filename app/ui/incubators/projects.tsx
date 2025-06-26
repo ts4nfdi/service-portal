@@ -1,6 +1,6 @@
 'use client'
 
-import {Project, IncubatorsStatusCmpProps} from "./types";
+import {Project, IncubatorsStatusCmpProps, ProjectStatus} from "./types";
 import {SelectionInput} from "../commons/snippets";
 import React, {useState, useEffect} from "react";
 import ProjectCard from "./projectCard";
@@ -70,7 +70,10 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
                     defaultValue=""
                     options={projectsStatusOptions}
                     onSelection={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        setSelectedStatus(e.target.value)
+                        setSelectedStatus(e.target.value);
+                        if (props.setSelectedStatus) {
+                            props.setSelectedStatus(e.target.value as ProjectStatus);
+                        }
                     }}
                     key={"status-dropdown"}
                 />
