@@ -26,7 +26,7 @@ export default function Incubators() {
                 <p className="header-1" key={'IncubatorProjectsHeader'}>Projects</p>
                 <IncubatorProjects
                     key={'IncubatorProjects'}
-                    onClickStatus={(event) => {
+                    onClickStatus={() => {
                     }}
                     projectsJson={projectsJson as IncubatorProjectList}
                     selectedStatus={selectedStatus}
