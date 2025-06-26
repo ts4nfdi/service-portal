@@ -19,7 +19,9 @@ export default function Incubators() {
                 <IncubatorsStatus
                     key={'Incubatorsstatus'}
                     onClickStatus={(event) => setSelectedStatus((event.currentTarget.dataset.value ?? "") as ProjectStatus)}
-                    projectsJson={projectsJson as IncubatorProjectList}>
+                    selectedStatus={selectedStatus}
+                    projectsJson={projectsJson as IncubatorProjectList}
+                >
                 </IncubatorsStatus>
                 <br/>
                 <br/>
@@ -30,6 +32,7 @@ export default function Incubators() {
                     }}
                     projectsJson={projectsJson as IncubatorProjectList}
                     selectedStatus={selectedStatus}
+                    setSelectedStatus={setSelectedStatus}
                 >
                 </IncubatorProjects>
             </div>
