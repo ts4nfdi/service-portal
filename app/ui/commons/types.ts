@@ -20,17 +20,6 @@ export type TextInputProps = {
     defaultValue?: string,
 }
 
-export type TextAreaProps = {
-    id: string,
-    required: boolean,
-    name: string,
-    placeholder: string,
-    labelText: string,
-    defaultValue?: string,
-    rows: number,
-    cols?: number,
-}
-
 export type FileInputProps = Omit<TextInputProps, 'type'> & {
     accept: string
 }
@@ -41,6 +30,7 @@ export type SelectionInputProps = {
     required?: boolean,
     label: string,
     defaultOptionLabel: string,
+    defaultValue?: string,
     options: { label: string, value: string }[],
     onSelection: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }

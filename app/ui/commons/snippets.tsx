@@ -1,4 +1,4 @@
-import {TextInputProps, FileInputProps, SelectionInputProps, TextAreaProps} from "./types";
+import {TextInputProps, FileInputProps, SelectionInputProps} from "./types";
 
 
 export function TextInput(props: TextInputProps) {
@@ -18,22 +18,6 @@ export function TextInput(props: TextInputProps) {
         </div>
     );
 
-}
-
-
-export function TextArea(props: TextAreaProps) {
-    return (
-        <>
-            <label htmlFor={props.id} className={props.required ? "required-label" : ""}>{props.labelText}</label>
-            <textarea
-                id={props.id}
-                placeholder={props.placeholder}
-                rows={props.rows}
-                name={props.name}
-            >
-            </textarea>
-        </>
-    );
 }
 
 
@@ -64,7 +48,7 @@ export function SelectionInput(props: SelectionInputProps) {
             <label htmlFor={props.id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                    key={"label"}>{props.label}</label>
             <select id={props.id} defaultValue={""} onChange={props.onSelection} key={"input"}>
-                <option value={""} key={"defaultValue"}>{props.defaultOptionLabel}</option>
+                <option value={props.defaultValue} key={"defaultValue"}>{props.defaultOptionLabel}</option>
                 {props.options.map((stat) => {
                     return (
                         <option value={stat.value} key={stat.label}>{stat.label}</option>
