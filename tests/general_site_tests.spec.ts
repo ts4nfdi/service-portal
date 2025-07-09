@@ -16,7 +16,8 @@ test("site header is loaded", async ({page}) => {
      * Home tab has to be active when a user open the site url (default tab)
      */
     await page.goto(BASE_URL);
-    await expect(page.locator("img[alt='logo']").first()).toBeVisible();
+    const siteLogo = await isImageLoaded(page, "img[alt='logo']");
+    expect(siteLogo).toBe(true);
     await expect(page.locator(".navbar-link-active").first()).toBeVisible();
     await expect(page.locator(".navbar-link-active").first()).toHaveText("Home");
 });
