@@ -1,32 +1,58 @@
-# TS4NFDI Service Portal 
+# TS4NFDI Service Portal
 
-Will be extended soon ...
+The TS4NFDI Service Portal is available via https://terminology.services.base4nfdi.de.
+
+Terminology Services 4 NFDI (TS4NFDI) is a cross-domain initiative
+aimed at standardizing, harmonizing, and enhancing the management
+of terminologies across scientific disciplines within the
+German National Research Data Infrastructure (NFDI).
+Terminologies are critical for ensuring the semantic
+interoperability of research data, allowing researchers to clearly
+understand and reuse data across various disciplines.
+TS4NFDI addresses the complexities involved in managing diverse
+terminological resources by providing unified access to several
+terminology services through an integrated service architecture.
+
+To facilitate the integration and customisation of
+the features of TS4NFDI into the services of the NFDI consortia,
+TS4NFDI will provide a central **TS4NFDI Service Portal**.
+The TS4NFDI Service Portal is designed to facilitate the
+creation and management of entity sets and terminology collections.
+This enables domain experts to configure the response of the centralized
+API Gateway or the Terminology Service Suite (TSS)
+following their specific requirements. To enable customisation,
+an administrator user interface will be provided within a
+configuration panel, utilising the widgets provided by the
+Terminology Service Suite. This will ensure simple access and enhance
+usability for administrators. The configuration panel will display a
+comprehensive list of all available terminologies from the various
+terminology services accessed by the API Gateway.
+Furthermore, it is possible to list terminologies that are subject
+to licence restrictions. Should a user meet the licence conditions,
+these terminologies can also be utilised via the widgets.
+Next to this, a Mapping Service will be also accessible via the T
+S4NFDI Service Portal. To implement these access-restricted areas or
+licenced terminologies the features of the basic service IAM4NFDI will be used.
 
 ## Development
 
-### Development requirements
-
-- Node v18.18.0
-
-
-```
-nvm install 18.18.0
-```
-### Authenticate
-
-Add the following two lines to your local npm configuration `~/.npmrc`. Replace `TOKEN` with your personal access
-token (classic). 
-
-```
-@ts4nfdi:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=TOKEN
-```
 ### Run TS4NFDI Service Portal for development
 
-#### Manually
-To start the development server, install the dependencies with `npm install --legacy-peer-deps` and start the 
+To start the development server, install the dependencies with
+`npm install` and start the
 application with this command:
+
 ```
 npm run dev
 ```
-The TS4NFDI Service Portal is available via https://terminology.services.base4nfdi.de.
+
+### Run Test
+
+Playwrite have been used for testing this application. To run test for Firefox:
+
+```
+npx playwrite test --project=firefox
+```
+
+you can also use **chromium** and **webkit** for Chrome and Safari. 
+
