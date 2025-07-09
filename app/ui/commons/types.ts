@@ -53,3 +53,14 @@ export type ModalProps = {
     imageExpandModal?: boolean,
     actionBtnCallback?: () => void
 }
+
+export type TextAreaProps = {
+    id: string,
+    required: boolean,
+    name: string,
+    placeholder: string,
+    labelText: string,
+    defaultValue?: string,
+    rows: number,
+    cols?: number,
+}
