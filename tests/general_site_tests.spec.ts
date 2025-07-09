@@ -1,4 +1,6 @@
 import {test, expect} from '@playwright/test';
+import {isImageLoaded} from "@/tests/libs";
+
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -28,8 +30,34 @@ test("site header tab change acts correctly", async ({page}) => {
      * Event page.
      */
     await page.goto(BASE_URL);
+    await expect(page.locator(".navbar-link-active").first()).toHaveText("Home");
+    await page.locator(".navbar-links").filter({hasText: "Events"}).click();
+    await expect(page.locator(".navbar-link-active").first()).toHaveText("Events");
+    await expect(page.locator(".site-content").first()).toContainText("Past Events");
+});
 
-})
+test("site header selected tab should work on first load", async ({page}) => {
+    /**
+     * Depends on the selected path, the correct tab should get loaded when
+     * a user open it via URL.
+     * in this test, the user opens the event page via the url.
+     */
+    await page.goto(BASE_URL + "/events");
+    await expect(page.locator(".navbar-link-active").first()).toHaveText("Events");
+    await expect(page.locator(".site-content").first()).toContainText("Past Events");
+});
+
+test("site footer is loaded", async ({page}) => {
+    /**
+     * Site footers including the logos and footer links has to be loaded.
+     */
+    await page.goto(BASE_URL);
+    const isBaseLogoLoaded = await isImageLoaded(page, 'img[alt="Base4nfdi Logo"]');
+    expect(isBaseLogoLoaded).toBe(true);
+    const isDfgLogoLoaded = await isImageLoaded(page, 'img[alt="DFG Logo"]');
+    expect(isDfgLogoLoaded).toBe(true);
+    await expect(page.locator("a[href='/termsofuse']")).toHaveText("Terms of use");
+});
 
 
 
