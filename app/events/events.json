@@ -31,6 +31,10 @@
     "formal_date": "2025-05-27",
     "links": [
       {
+        "type" :  "video",
+        "link" :  "https://www.youtube.com/watch?v=QNjvJLP6-4k"
+      },
+      {
         "type" :  "webpage",
         "link" :  "https://base4nfdi.de/news-events/events/services-roadshow-by-base4nfdi-05-2025"
       }
