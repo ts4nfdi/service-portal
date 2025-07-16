@@ -48,10 +48,10 @@ npm run dev
 
 ### Run Test
 
-Playwrite have been used for testing this application. To run test for Firefox:
+Playwright have been used for testing this application. To run test for Firefox:
 
 ```
-npx playwrite test --project=firefox
+npx playwright test --project=firefox
 ```
 
 you can also use **chromium** and **webkit** for Chrome and Safari. 
