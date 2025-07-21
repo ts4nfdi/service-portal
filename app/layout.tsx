@@ -2,8 +2,8 @@ import type {Metadata} from "next";
 import "./globals.css";
 import Footer from "./ui/site/footer";
 import Header from "./ui/site/header";
-// import {createMatomoScript} from "@/app/matomo/matomo";
 import MatomoTracker from "@/app/matomo/useMatomo";
+import TrackingConsentForm from "@/app/matomo/trackingConsent";
 
 export const metadata: Metadata = {
     title: "TS4NFDI Service Portal",
@@ -19,13 +19,6 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-        {/*<head>*/}
-        {/*    <script*/}
-        {/*        dangerouslySetInnerHTML={{*/}
-        {/*            __html: createMatomoScript(),*/}
-        {/*        }}*/}
-        {/*    />*/}
-        {/*</head>*/}
         <body
             className={`antialiased`}
         >
@@ -33,6 +26,7 @@ export default function RootLayout({
         <div className="grid min-h-screen" id="app-layout">
             <Header/>
             <main className="site-content" key={"site-content"}>
+                <TrackingConsentForm/>
                 {children}
             </main>
             <Footer/>

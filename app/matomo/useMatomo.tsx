@@ -5,13 +5,12 @@ import {usePathname} from "next/navigation";
 import {generateRandomNumber, generateRandomString} from "@/app/libs/toolkit";
 
 const MATOMO_USER_ID_FIELD = "matomoUserId";
-const MATOMO_IS_ENABLED_FIELD = "matomoIsEnabled";
+export const MATOMO_IS_ENABLED_FIELD = "matomoIsEnabled";
 
 export default function MatomoTracker() {
     let pathName = usePathname();
     let matomoUserId = localStorage.getItem(MATOMO_USER_ID_FIELD);
-    // let matomoIsEnabled = localStorage.getItem(MATOMO_IS_ENABLED_FIELD);
-    let matomoIsEnabled = true;
+    let matomoIsEnabled = localStorage.getItem(MATOMO_IS_ENABLED_FIELD) === "true";
     let newVisitor = matomoUserId ? '0' : '1';
     if (matomoIsEnabled && !matomoUserId) {
         matomoUserId = generateRandomString(16);
