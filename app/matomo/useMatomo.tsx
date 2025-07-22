@@ -7,7 +7,7 @@ import {generateRandomNumber, generateRandomString} from "@/app/libs/toolkit";
 const MATOMO_USER_ID_FIELD = "matomoUserId";
 export const MATOMO_IS_ENABLED_FIELD = "matomoIsEnabled";
 
-export default function MatomoTracker() {
+export default function MatomoTrackerComponent() {
     let pathName = usePathname();
     let matomoUserId = localStorage.getItem(MATOMO_USER_ID_FIELD);
     let matomoIsEnabled = localStorage.getItem(MATOMO_IS_ENABLED_FIELD) === "true";

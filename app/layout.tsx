@@ -2,8 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 import Footer from "./ui/site/footer";
 import Header from "./ui/site/header";
-import MatomoTracker from "@/app/matomo/useMatomo";
-import TrackingConsentForm from "@/app/matomo/trackingConsent";
+import {MatomoTracker, TrackingConsentForm} from "@/app/matomo/clientExports";
 
 export const metadata: Metadata = {
     title: "TS4NFDI Service Portal",

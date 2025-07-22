@@ -3,7 +3,7 @@
 import {RadioButton} from "@/app/ui/commons/snippets";
 import {MATOMO_IS_ENABLED_FIELD} from "@/app/matomo/useMatomo";
 
-export default function UserPrivacySection() {
+export default function UserPrivacySectionComponent() {
     let matomoIsEnabledSetting = localStorage.getItem(MATOMO_IS_ENABLED_FIELD);
     let matomoIsEnabled = !!(matomoIsEnabledSetting && matomoIsEnabledSetting === "true");
     return (
@@ -19,3 +19,5 @@ export default function UserPrivacySection() {
         </>
     );
 }
+
+

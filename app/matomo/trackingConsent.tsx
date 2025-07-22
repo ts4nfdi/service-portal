@@ -3,7 +3,7 @@
 import {useState, useEffect} from "react";
 import {MATOMO_IS_ENABLED_FIELD} from "@/app/matomo/useMatomo";
 
-export default function TrackingConsentForm() {
+export default function TrackingConsentFormComponent() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function TrackingConsentForm() {
                       </ul>
                       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                         We do <b>not</b> use tracking for advertising, nor do we sell your data. <br/>
-                        By clicking <b>"Accept"</b>, you agree to our use of tracking for analytics and performance
+                        By clicking <b>{'"Accept"'}</b>, you agree to our use of tracking for analytics and performance
                         purposes.
                         You can change your preferences at any time in your account settings.
                       </p>
