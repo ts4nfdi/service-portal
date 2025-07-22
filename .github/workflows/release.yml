@@ -162,20 +162,6 @@ jobs:
             --namespace='ts4nfdi' \
             --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: Create K8s secret for NEXT_PUBLIC_MATOMO_TRACKER_URL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-nextauth-url \
-            --from-literal=NEXT_PUBLIC_MATOMO_TRACKER_URL=${{ vars.NEXT_PUBLIC_MATOMO_TRACKER_URL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
-
-      - name: Create K8s secret for NEXT_PUBLIC_MATOMO_TRACKER_ID
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-nextauth-url \
-            --from-literal=NEXT_PUBLIC_MATOMO_TRACKER_ID=${{ vars.NEXT_PUBLIC_MATOMO_TRACKER_ID }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
-
 
       - name: Deploy to Kubernetes
         uses: stefanprodan/kube-tools@v1
