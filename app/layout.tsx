@@ -1,31 +1,36 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import "./globals.css";
 import Footer from "./ui/site/footer";
 import Header from "./ui/site/header";
+import {MatomoTracker, TrackingConsentForm} from "@/app/matomo/clientExports";
 
 export const metadata: Metadata = {
-  title: "TS4NFDI Service Portal",
-  description: "",
+    title: "TS4NFDI Service Portal",
+    description: "",
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
+                                       children,
+                                   }: Readonly<{
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`antialiased`}
-      >
+
+
+    return (
+        <html lang="en">
+        <body
+            className={`antialiased`}
+        >
+        <MatomoTracker/>
         <div className="grid min-h-screen" id="app-layout">
-          <Header />
-          <main className="site-content" key={"site-content"}>
-            {children}
-          </main>
-          <Footer />
+            <Header/>
+            <main className="site-content" key={"site-content"}>
+                <TrackingConsentForm/>
+                {children}
+            </main>
+            <Footer/>
         </div>
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }

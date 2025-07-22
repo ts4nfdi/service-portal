@@ -64,3 +64,11 @@ export type TextAreaProps = {
     rows: number,
     cols?: number,
 }
+
+export type RadioButtonProps = {
+    id: string,
+    label: string,
+    disabled: boolean,
+    value: string,
+    checked: boolean,
+}
