@@ -12,7 +12,6 @@ export default function TrackingConsentForm() {
             setShowModal(true);
             return;
         }
-        setShowModal(matomoIsEnabled === "true")
     }, [])
 
     return (
