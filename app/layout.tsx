@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "./ui/site/footer";
 import Header from "./ui/site/header";
 import {MatomoTracker, TrackingConsentForm} from "@/app/matomo/clientExports";
+import 'flowbite';
 
 export const metadata: Metadata = {
     title: "TS4NFDI Service Portal",
