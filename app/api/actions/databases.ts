@@ -11,7 +11,7 @@ export async function getAllDatabases(): Promise<Database[]> {
         }
         let databases = await resp.json();
         return databases;
-    } catch (error) {
+    } catch {
         return [];
     }
 }

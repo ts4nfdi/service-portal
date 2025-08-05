@@ -1,8 +1,8 @@
-@import "flowbite";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*@import "flowbite";*/
 
 :root {
     --background: #dae3ed;
