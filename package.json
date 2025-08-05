@@ -1,6 +1,6 @@
 {
   "name": "service-portal",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/ts4nfdi/service-portal.git",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "@friendlycaptcha/sdk": "^0.1.19",
     "@socialgouv/matomo-next": "^1.2.0",
     "@tailwindcss/forms": "^0.5.10",
-    "@ts4nfdi/terminology-service-suite": "^5.0.3",
+    "@ts4nfdi/terminology-service-suite": "^5.5.0",
     "@types/draftjs-to-html": "^0.8.4",
     "@types/html-to-draftjs": "^1.5.0",
     "axios": "^1.7.9",
@@ -23,6 +23,7 @@
     "dotenv": "^17.1.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "flowbite": "^3.1.2",
     "html-to-draftjs": "^1.5.0",
     "next": "15.1.6",
     "next-auth": "^4.24.11",

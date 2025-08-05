@@ -8,6 +8,7 @@ import {usePathname} from "next/navigation";
 
 const navItems = [
     {href: "/widgets", text: "Lookup Service"},
+    {href: "/databases", text: "Databases"},
     {href: "/incubators", text: "Incubators"},
     {href: "/publications", text: "Publications"},
     {href: "/events", text: "Events"},

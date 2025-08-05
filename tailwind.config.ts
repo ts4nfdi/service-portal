@@ -1,10 +1,13 @@
 import type {Config} from "tailwindcss";
+import forms from '@tailwindcss/forms';
+import flowbite from 'flowbite/plugin';
 
 export default {
     content: [
         "./pages/**/*.{js,ts,jsx,tsx,mdx,css}",
         "./components/**/*.{js,ts,jsx,tsx,mdx,css}",
         "./app/**/*.{js,ts,jsx,tsx,mdx,css}",
+        "./node_modules/flowbite/**/*.js"
     ],
     theme: {
         extend: {
@@ -22,6 +25,7 @@ export default {
         }
     },
     plugins: [
-        require('@tailwindcss/forms'),
+        forms,
+        flowbite
     ],
 } satisfies Config;

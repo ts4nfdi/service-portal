@@ -17,8 +17,6 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
-        console.log(token)
-        console.log((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/");
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/", {
             headers: await getHttpHeaderForGateway(token)
         });
