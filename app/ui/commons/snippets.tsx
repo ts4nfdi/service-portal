@@ -1,7 +1,7 @@
 'use client'
 
 import {TextInputProps, FileInputProps, SelectionInputProps, TextAreaProps, RadioButtonProps} from "./types";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {TickIcon} from "@/app/ui/commons/icons";
 
 
@@ -119,22 +119,6 @@ export function WarningAlert(props: { message: string }) {
 }
 
 export function InfoAlertCmp(props: { title: string, body: string }) {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setLoading(false);
-    }, []);
-
-    if (loading) {
-        return (
-            <div className="animate-pulse space-y-4">
-                <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                <div className="h-4 bg-gray-300 rounded w-1/2"></div>
-                <div className="h-4 bg-gray-300 rounded w-full"></div>
-            </div>
-        );
-    }
-
     return (
         <div className="bg-[rgb(197,247,168)] border-t-4 rounded-b text-teal-900 px-4 py-3 shadow-md mb-4" role="alert">
             <div className="flex">
