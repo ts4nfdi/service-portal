@@ -1,10 +1,26 @@
-.status-card{
-  @apply border-black bg-white rounded-lg shadow-sm text-center items-center dark:bg-gray-800;
-}
-.status-card p{
-  padding-right: 0;
+.status-card {
+    @apply
+    border-black
+    bg-white
+    rounded-lg
+    shadow-sm
+    text-center
+    items-center
+    hover:bg-[#5e718e]
+    hover:text-white
+    hover:font-bold
+    cursor-pointer
+    dark:bg-gray-800;
 }
 
-.incubator-project-card{
-  @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+.clicked-status-card {
+    @apply status-card !bg-[#45546B] !text-white !font-bold;
+}
+
+.status-card p {
+    padding-right: 0;
+}
+
+.incubator-project-card {
+    @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
 }

@@ -2,150 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
+/*@import "flowbite";*/
+
 :root {
-  --background: #dae3ed;
-  --foreground: #171717;
-  --fontFamily: Arial, Helvetica, sans-serif;
-  --siteMainColor: rgb(69, 84, 107);
-  --elementDarkModeBgColor: #1f2937;
+    --background: #dae3ed;
+    --foreground: #171717;
+    --fontFamily: Arial, Helvetica, sans-serif;
+    --siteMainColor: rgb(69, 84, 107);
+    --elementDarkModeBgColor: #1f2937;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 @layer site-globals {
-  .dark-mode-bg-color {
-    @apply dark:bg-gray-800;
-  }
+    .dark-mode-bg-color {
+        @apply dark:bg-gray-800;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--fontFamily);
-  @apply overflow-x-hidden text-base dark:text-white;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--fontFamily);
+    @apply overflow-x-hidden text-base dark:text-white;
 }
 
 .site-content {
-  @apply container grid md:grid-cols-3 sm:grid-rows-1 gap-4 min-h-screen pt-20 mx-auto md:pl-10 md:pr-10 pb-20;
+    @apply container grid md:grid-cols-3 sm:grid-rows-1 gap-4 min-h-screen pt-20 mx-auto md:pl-10 md:pr-10 pb-20;
 }
 
 .content-panel {
-  @apply bg-white p-4 dark:bg-gray-800;
+    @apply bg-white p-4 dark:bg-gray-800;
 }
 
 .header-1 {
-  @apply text-5xl;
-  margin-bottom: 40px;
-  margin-top: 40px;
+    @apply text-5xl;
+    margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .header-2 {
-  @apply text-3xl;
-  margin-bottom: 40px;
-  margin-top: 80px;
+    @apply text-3xl;
+    margin-bottom: 40px;
+    margin-top: 80px;
 }
 
 .header-3 {
-  @apply text-xl;
-  margin-bottom: 40px;
-  margin-top: 80px;
+    @apply text-xl;
+    margin-bottom: 40px;
+    margin-top: 80px;
 }
 
 .header-4 {
-  @apply text-lg font-bold;
+    @apply text-lg font-bold;
 }
 
 .card {
-  @apply border-black bg-white rounded-lg shadow-sm p-2 mb-2 dark:bg-gray-800;
+    @apply border-black bg-white rounded-lg shadow-sm p-2 mb-2 dark:bg-gray-800;
 }
 
 .card-sm {
-  @apply card md:max-w-xs text-sm text-center;
+    @apply card md:max-w-xs text-sm text-center;
 }
 
 p {
-  @apply md:px-0 px-4 mb-2;
+    @apply md:px-0 px-4 mb-2 dark:text-white;
 }
 
 a {
-  @apply pl-1 pr-1 sm:text-sm text-[#054484] font-bold dark:text-blue-400;
+    @apply pl-1 pr-1 sm:text-sm text-[#054484] font-bold dark:text-blue-400;
 }
 
 .orcid-id-btn {
-  @apply bg-[#A5CD39] text-white rounded-xl text-base p-1;
+    @apply bg-[#A5CD39] text-white rounded-xl text-base p-1;
 }
 
 .badge {
-  @apply text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-full whitespace-nowrap;
+    @apply text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-full whitespace-nowrap;
 }
 
 .status-badge {
-  @apply badge bg-[rgb(251,188,67)];
+    @apply badge bg-[rgb(251,188,67)];
 }
 
 .cycle-badge {
-  @apply badge bg-[rgb(163,199,23)];
+    @apply badge bg-[rgb(163,199,23)];
 }
 
 .name-badge {
-  @apply badge bg-[rgb(69,84,107)] !text-white;
+    @apply badge bg-[rgb(69,84,107)] !text-white;
 }
 
 .form {
-  @apply bg-[#FFFFFF] p-10 dark:bg-gray-900;
+    @apply bg-[#FFFFFF] p-10 dark:bg-gray-900;
 }
 
 .form-input-group {
-  @apply mx-auto mb-5 w-4/5;
+    @apply mx-auto mb-5 w-4/5;
 }
 
-input {
-  @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color dark:!text-white;
+body input {
+    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color dark:!text-white;
 }
 
 .file-input {
-  @apply block w-full text-sm border border-gray-300 rounded-lg cursor-pointer p-0 file:bg-[var(--siteMainColor)] file:text-white file:rounded-lg file:mr-3 file:py-2 file:px-4 file:border-0;
+    @apply block w-full text-sm border border-gray-300 rounded-lg cursor-pointer p-0 file:bg-[var(--siteMainColor)] file:text-white file:rounded-lg file:mr-3 file:py-2 file:px-4 file:border-0;
 }
 
 textarea {
-  @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2;
+    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2;
+}
+
+.radio-btn {
+    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked:!text-blue-500 ;
 }
 
 .btn {
-  @apply inline-block bg-[var(--siteMainColor)] text-white md:font-medium rounded text-sm md:px-5 md:py-2.5 px-3 me-2 mb-2;
+    @apply inline-block bg-[var(--siteMainColor)] text-white md:font-medium rounded text-sm md:px-5 md:py-2.5 px-3 me-2 mb-2;
 }
 
 .required-label::after {
-  content: " *";
-  color: red;
+    content: " *";
+    color: red;
 }
 
 select {
-  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
 }
 
 .autocomplete-in-form input {
-  @apply placeholder:text-sm placeholder:text-[#9197A3] font-[var(--fontFamily)] pl-0;
+    @apply placeholder:text-sm placeholder:text-[#9197A3] font-[var(--fontFamily)] pl-0;
 }
 
 .modal-bg {
-  @apply fixed top-0 left-0 z-10 w-screen h-screen bg-black/40 backdrop-blur-md;
+    @apply fixed top-0 left-0 z-10 w-screen h-screen bg-black/40 backdrop-blur-md;
 }
 
 ul {
-  list-style: square !important;
-  @apply dark-mode-bg-color md:px-4 px-0;
+    list-style: square !important;
+    @apply dark-mode-bg-color md:px-4 px-0;
 }
 
 li {
-  @apply ml-6 mr-3;
+    @apply ml-6 mr-3;
 }
 
 ol {
-  list-style: decimal !important;
+    list-style: decimal !important;
 }

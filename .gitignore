@@ -44,3 +44,9 @@ next-env.d.ts
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 .idea/*
 
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
