@@ -15,7 +15,7 @@
     "@friendlycaptcha/sdk": "^0.1.19",
     "@socialgouv/matomo-next": "^1.2.0",
     "@tailwindcss/forms": "^0.5.10",
-    "@ts4nfdi/terminology-service-suite": "^5.5.0",
+    "@ts4nfdi/terminology-service-suite": "^5.5.1",
     "@types/draftjs-to-html": "^0.8.4",
     "@types/html-to-draftjs": "^1.5.0",
     "axios": "^1.7.9",
