@@ -54,9 +54,9 @@
         },
         {
           "imagePath": "blank.jpg",
-          "name": "Bouazzouni, Syphax",
+          "name": "Schäfermeier, Ralph",
           "affiliation": "Institute for Applied Informatics (InfAI), Leipzig",
-          "orcid": "https://orcid.org/0000-0002-2069-8739"
+          "orcid": "https://orcid.org/0000-0002-4349-6726"
         },
         {
           "imagePath": "blank.jpg",
@@ -88,6 +88,11 @@
       "title": "Former Project Team Members",
       "persons": [
         {
+          "imagePath": "blank.jpg",
+          "name": "Bouazzouni, Syphax",
+          "affiliation": "Institute for Applied Informatics (InfAI), Leipzig",
+          "orcid": "https://orcid.org/0000-0002-2069-8739"
+        },{
           "imagePath": "blank.jpg",
           "name": "Fillies, Jan",
           "affiliation": "Institute for Applied Informatics (InfAI), Leipzig",
