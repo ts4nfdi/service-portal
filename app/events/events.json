@@ -2,20 +2,63 @@
   {
     "name": "2nd Base4NFDI User Conference, Aachen",
     "date": "28 + 29 August 2025",
-    "formal_date": "2025-08-28"
-  },{
+    "formal_date": "2025-08-28",
+    "links": [
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://base4nfdi.de/news-events/events/user-conference-2025"
+      }
+    ]
+  },
+  {
     "name": "Conference on Research Data Infrastructure 2025, Aachen",
     "date": "26 - 28 August 2025",
-    "formal_date": "2025-08-26"
-  },{
+    "formal_date": "2025-08-26",
+    "links": [
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://www.nfdi.de/cordi-2025/"
+      }
+    ]
+  },
+  {
     "name": "University of Manchester, Manchester",
     "date": "18 July 2025",
-    "formal_date": "2025-07-18"
-  },{
-    "name": "2nd NFDI Taskforce Metadata Workshop , Hannover",
-    "date": "25 June 2025",
-    "formal_date": "2025-06-25"
-  },{
+    "formal_date": "2025-07-18",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.16143555"
+      }
+    ]
+  },
+  {
+    "name": "NFDI4Objects Community Clusters \"Authority Files and community-driven Vocabularies\", online",
+    "date": "16 July 2025",
+    "formal_date": "2025-07-16",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.15974350"
+      }
+    ]
+  },
+  {
+    "name": "2nd NFDI Taskforce Metadata Workshop, Hannover",
+    "date": "25 - 27 June 2025",
+    "formal_date": "2025-06-25",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.15736141"
+      },
+      {
+        "type" :  "slides (HTML version)",
+        "link" :  "https://ts4nfdi.github.io/nfdimetadata-ts4nfdi2025/"
+      }
+    ]
+  },
+  {
     "name": "7th Annual AGROVOC Editorial Community Meeting, Berlin",
     "date": "4 + 5 June 2025",
     "formal_date": "2025-06-04",
@@ -25,7 +68,8 @@
         "link" :  "https://doi.org/10.5281/zenodo.15590235"
       }
     ]
-  },{
+  },
+  {
     "name": "2nd Services Roadshow by Base4NFDI, online",
     "date": "22 May + 27 May 2025",
     "formal_date": "2025-05-27",
@@ -35,24 +79,56 @@
         "link" :  "https://www.youtube.com/watch?v=QNjvJLP6-4k"
       },
       {
-        "type" :  "webpage",
+        "type" :  "demo",
+        "link" :  "https://github.com/ts4nfdi/2nd-base4nfdi-roadshow-demo"
+      },
+      {
+        "type" :  "webpage (event)",
         "link" :  "https://base4nfdi.de/news-events/events/services-roadshow-by-base4nfdi-05-2025"
       }
     ]
-  },{
-    "name": "Working Group Terminology Services, online",
-    "date": "27 February 2025",
-    "formal_date": "2025-02-27"
-  },
-  {
-    "name": "E-Science-Days, Heidelberg",
-    "date": "12 + 14 March 2025",
-    "formal_date": "2025-03-12"
   },
   {
     "name": "NFDI4Immuno - All-Hands Meeting 2025, Berlin",
     "date": "22 - 24 April 2025",
     "formal_date": "2025-04-22"
+  },
+  {
+    "name": "Working Group Terminology Services, online",
+    "date": "27 March 2025",
+    "formal_date": "2025-03-27",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.15095693"
+      }
+    ]
+  },
+  {
+    "name": "E-Science-Days, Heidelberg",
+    "date": "12 + 14 March 2025",
+    "formal_date": "2025-03-12",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.15016365"
+      },
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://e-science-tage.de/en/startseite"
+      }
+    ]
+  },
+  {
+    "name": "Working Group Terminology Services, online",
+    "date": "27 February 2025",
+    "formal_date": "2025-02-27",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.14938279"
+      }
+    ]
   },
   {
     "name": "NFDI-BioMed Metadata&Interoperability Meeting , online",
@@ -72,7 +148,13 @@
   {
     "name": "NFDI4Microbiota Annual Conference 2024, Leipzig",
     "date": "4 + 5 December 2024",
-    "formal_date": "2024-12-04"
+    "formal_date": "2024-12-04",
+    "links": [
+      {
+        "type" :  "poster",
+        "link" :  "https://doi.org/10.5281/zenodo.14284423"
+      }
+    ]
   },
   {
     "name": "Services Roadshow by Base4NFDI, online",
@@ -88,7 +170,7 @@
         "link" :  "https://www.youtube.com/watch?v=crYgdEjliFY"
       },
       {
-        "type" :  "webpage",
+        "type" :  "webpage (event)",
         "link" :  "https://base4nfdi.de/news-events/events/services-roadshow-by-base4nfdi-12-2024"
       }
     ]
@@ -96,7 +178,17 @@
   {
     "name": "EUDAT Conference 2024, Karlsruhe",
     "date": "3 - 5 December 2024",
-    "formal_date": "2024-12-03"
+    "formal_date": "2024-12-03",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.14332547"
+      },
+      {
+        "type" :  "webpage (event)",
+        "link" :  "https://eudat.eu/events/conferences/eudat-conference-2024"
+      }
+    ]
   },
   {
     "name": "PUNCH4NFDI Annual Meeting 2024, Bonn",
@@ -106,12 +198,32 @@
   {
     "name": "Base4NFDI User Conference, Berlin",
     "date": "20 + 21 November 2024",
-    "formal_date": "2024-11-20"
+    "formal_date": "2024-11-20",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.14181064"
+      },
+      {
+        "type" :  "poster",
+        "link" :  "https://doi.org/10.5281/zenodo.14230727"
+      },
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://base4nfdi.de/news-events/events/user-conference-2024"
+      }
+    ]
   },
   {
     "name": "NFDI4Objects Community Meeting, Mainz",
     "date": "25 - 27 September 2024",
-    "formal_date": "2024-09-25"
+    "formal_date": "2024-09-25",
+    "links": [
+      {
+        "type" :  "poster",
+        "link" :  "https://doi.org/10.5281/zenodo.13846878"
+      }
+    ]
   },
   {
     "name": "3rd OntoPortal Workshop 2024, Stanford",
@@ -121,22 +233,69 @@
   {
     "name": "FDM @ Campus, Göttingen",
     "date": "23 - 25 September 2024",
-    "formal_date": "2024-09-23"
+    "formal_date": "2024-09-23",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.13830940"
+      },
+      {
+        "type" :  "demo",
+        "link" :  "https://github.com/ts4nfdi/Workshop-FDM-Campus"
+      },
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://www.eresearch.uni-goettingen.de/fdmcampus-2024-event-information/"
+      }
+    ]
   },
   {
     "name": "Workshop for Terminologies in Earth System Science, Dresden",
     "date": "22th May 2024",
-    "formal_date": "2024-05-22"
+    "formal_date": "2024-05-22",
+    "links": [
+      {
+        "type" :  "website (workshop)",
+        "link" :  "https://projects.tib.eu/bits/news/detail/the-agenda-for-the-workshops-on-terminologies-in-ess-during-the-nfdi4earth-plenary-in-dresden-has-been-finalised"
+      }
+    ]
   },
   {
     "name": "NFDI4Biodiversity All Hands Conference 2024, München",
     "date": "24 - 26 April 2024",
-    "formal_date": "2024-04-24"
+    "formal_date": "2024-04-24",
+    "links": [
+      {
+        "type" :  "poster",
+        "link" :  "https://doi.org/10.5281/zenodo.13846878"
+      }
+    ]
   },
   {
     "name": "TS4NFDI Community Hands-On Workshop, Hannover",
     "date": "8 + 9 April 2024",
-    "formal_date": "2024-04-08"
+    "formal_date": "2024-04-08",
+    "links": [
+      {
+        "type" :  "website (workshop)",
+        "link" :  "https://www.nfdi4chem.de/de/veranstaltung/ts4nfdi-community-hands-on-workshop/"
+      }
+    ]
+  },
+  {
+    "name": "NFDI4Culture Forum, online",
+    "date": "20 + 21 March 2024",
+    "formal_date": "2024-03-20",
+    "links": [
+      {
+        "type" :  "slides",
+        "link" :  "https://doi.org/10.5281/zenodo.10550341"
+      },
+      {
+        "type" :  "website (event)",
+        "link" :  "https://nfdi4culture.de/events/details/building-bridges-between-terminologies-challenges-and-perspectives.html"
+      }
+    ]
   },
   {
     "name": "TS4NFDI Online Community Workshop, online",
@@ -144,9 +303,30 @@
     "formal_date": "2024-02-15"
   },
   {
+    "name": "NFDITalk, online",
+    "date": "22nd January 2024",
+    "formal_date": "2024-01-22",
+    "links": [
+      {
+        "type": "slides",
+        "link": "https://doi.org/10.5281/zenodo.10550341"
+      },
+      {
+        "type": "video",
+        "link": "https://www.youtube.com/watch?v=_av3eU8tO6Y"
+      }
+    ]
+  },
+  {
     "name": "BioHackathon Germany 2023, Bielefeld",
     "date": "11 - 15 December 2023",
-    "formal_date": "2023-12-11"
+    "formal_date": "2023-12-11",
+    "links": [
+      {
+        "type" :  "website (event)",
+        "link" :  "https://www.denbi.de/de-nbi-events/1547-biohackathon-germany-2"
+      }
+    ]
   },
   {
     "name": "NFDI4BIOIMAGE All-Hands meeting, Düsseldorf",
@@ -156,6 +336,20 @@
   {
     "name": "Conference on Research Data Infrastructure, Karlsruhe",
     "date": "12 - 14 September 2023",
-    "formal_date": "2023-09-12"
+    "formal_date": "2023-09-12",
+    "links": [
+      {
+        "type": "slides",
+        "link": "https://doi.org/10.5281/zenodo.8342678"
+      },
+      {
+        "type": "paper",
+        "link": "https://doi.org/10.52825/cordi.v1i.356"
+      },
+      {
+        "type": "webpage (conference)",
+        "link": "https://www.nfdi.de/cordi-2023/"
+      }
+    ]
   }
 ]
