@@ -12,12 +12,12 @@ export type Project = {
     description: string,
     goals: string[],
     consortium: string[],
-    contactPersons: Person[],
+    contactPersons?: Person[],
     logo: string,
     logoW?: number,
     logoH?: number,
-    activityPage: string,
-    publications: string[]
+    activityPage?: string,
+    publications?: string[]
 }
 
 export type ProjectStatus = "In preparation" | "Running" | "Requested" | "Finished" | "First contact" | "Postponed";
