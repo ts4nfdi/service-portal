@@ -1,4 +1,4 @@
-export function DefaultSkeleton(props: { lineCount: number }) {
+export function DefaultSkeleton(props: { lineCount: number, className?: string }) {
     let lines: React.ReactNode[] = [];
     for (let i = 1; i < props.lineCount; i++) {
         if (i % 2 === 0) {
@@ -9,7 +9,7 @@ export function DefaultSkeleton(props: { lineCount: number }) {
     }
     lines.push(<div className="h-4 bg-gray-300 rounded w-full"></div>);
     return (
-        <div className="animate-pulse space-y-4">
+        <div className={"animate-pulse space-y-4 " + (props.className ? props.className : "")}>
             {lines}
         </div>
     );

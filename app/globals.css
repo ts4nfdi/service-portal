@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/*@import "flowbite";*/
-
 :root {
-    --background: #dae3ed;
+    --background: #dae0e8;
     --foreground: #171717;
     --fontFamily: Arial, Helvetica, sans-serif;
     --siteMainColor: rgb(69, 84, 107);

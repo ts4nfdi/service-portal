@@ -1,5 +1,3 @@
-'use client'
-
 import '../ui/widgets/styles.css';
 import Link from "next/link";
 import {BookOpenIcon, SearchIcon, ListIcon} from '../ui/commons/icons';
