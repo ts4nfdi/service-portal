@@ -53,8 +53,8 @@ export default function CollectionCard(props: CmpProps) {
                 <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
             </div>
             <p key={"collection-desc"} dangerouslySetInnerHTML={{__html: props.collection.description}}></p>
-            <p key={"collection-terminologies"}>
-                <b>Terminologies:</b> {renderTerminologies(props.collection.terminologies)}</p>
+            <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
+                <b>Terminologies:</b> {renderTerminologies(props.collection.terminologies)}</div>
         </div>
     );
 }
