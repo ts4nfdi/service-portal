@@ -1,3 +1,5 @@
+'use client'
+
 import {
     TextInputProps,
     FileInputProps,
@@ -182,7 +184,6 @@ export function TextArea(props: TextAreaProps) {
                 placeholder={props.placeholder}
                 rows={props.rows}
                 name={props.name}
-                defaultValue={props.defaultValue ?? ""}
             >
             </textarea>
         </>
