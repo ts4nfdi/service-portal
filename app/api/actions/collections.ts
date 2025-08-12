@@ -54,7 +54,7 @@ export async function createCollection(formData: Collection): Promise<ActionResp
         let res: Collection = await resp.json();
         return {status: true, content: res}
 
-    } catch (e) {
+    } catch {
         return {status: false, content: SERVER_ERROR_MESSAGE}
     }
 }
@@ -66,7 +66,6 @@ export async function editCollection(formData: Collection): Promise<ActionRespon
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
-        // console.log(formData)
         if (!formData.label || !formData.description || !formData.terminologies || formData.terminologies.length === 0) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }

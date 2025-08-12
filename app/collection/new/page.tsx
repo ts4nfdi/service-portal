@@ -51,7 +51,7 @@ export default function NewCollection() {
             let res = await createCollection(collectionData);
             window.location.href = `/collection/myCollections?created=${res.status}`;
 
-        } catch (e) {
+        } catch {
             return;
         }
     }
