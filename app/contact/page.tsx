@@ -46,32 +46,40 @@ export default function Contact() {
             {!formIsSubmitted &&
               <form onSubmit={submit}>
                 <div className="grid grid-rows-1 form">
-                  <TextInput
-                    id="title-input"
-                    type="text"
-                    name="title"
-                    placeHolder="Please enter your topic"
-                    labelText="Title"
-                    required={true}
-                  />
-                  <TextInput
-                    id="email-input"
-                    type="email"
-                    name="email"
-                    placeHolder="Please enter your email"
-                    labelText="E-mail"
-                    required={true}
-                  />
-                  <TextEditor
-                    placeholder="Please describe your query..."
-                    wrapperId=""
-                    textSizeOptions={['Normal', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
-                    labelText="Message"
-                    name="content"
-                    required={true}
-                  />
-                  <Captcha/>
-                  <div className="text-center">
+                  <div className="w-3/4 mb-2">
+                    <TextInput
+                      id="title-input"
+                      type="text"
+                      name="title"
+                      placeHolder="Please enter your topic"
+                      labelText="Title"
+                      required={true}
+                    />
+                  </div>
+                  <div className="w-3/4 mb-2">
+                    <TextInput
+                      id="email-input"
+                      type="email"
+                      name="email"
+                      placeHolder="Please enter your email"
+                      labelText="E-mail"
+                      required={true}
+                    />
+                  </div>
+                  <div className="w-3/4 mb-2">
+                    <TextEditor
+                      placeholder="Please describe your query..."
+                      wrapperId=""
+                      textSizeOptions={['Normal', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
+                      labelText="Message"
+                      name="content"
+                      required={true}
+                    />
+                  </div>
+                  <div className="w-3/4 mb-2">
+                    <Captcha/>
+                  </div>
+                  <div className="text-right">
                     <button type="submit" className="btn">Submit</button>
                   </div>
                 </div>
