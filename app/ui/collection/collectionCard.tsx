@@ -1,6 +1,6 @@
 'use client'
 
-import {Collection} from "@/app/api/actions/types";
+import {Collection, Terminology} from "@/app/api/actions/types";
 import {ModalButton, Modal} from "../commons/modal";
 import {WarningAlert} from "../commons/snippets";
 import {deleteCollection} from "@/app/api/actions/collections";
@@ -15,6 +15,15 @@ type CmpProps = {
 
 export default function CollectionCard(props: CmpProps) {
 
+    function renderTerminologies(terminologies: Terminology[]) {
+        let result = [];
+        for (let terminology of terminologies) {
+            result.push(
+                <span className="badge terminology-badge">{terminology.label} ({terminology.source})</span>
+            );
+        }
+        return result;
+    }
 
     return (
         <div className="collection-card" key={props.collection.id}>
@@ -44,7 +53,8 @@ export default function CollectionCard(props: CmpProps) {
                 <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
             </div>
             <p key={"collection-desc"} dangerouslySetInnerHTML={{__html: props.collection.description}}></p>
-            <p key={"collection-terminologies"}><b>Terminologies:</b> {props.collection.terminologies.join(", ")}</p>
+            <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
+                <b>Terminologies:</b> {renderTerminologies(props.collection.terminologies)}</div>
         </div>
     );
 }

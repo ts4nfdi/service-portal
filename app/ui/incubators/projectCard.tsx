@@ -17,41 +17,39 @@ export default function ProjectCard(props: { incubator: Project }) {
                     <span className="status-badge" key={project.status}>{project.status}</span>
                     <span className="cycle-badge" key={project.cycle}>Cycle {project.cycle}</span>
                 </div>
-                {project.consortium.length && (
-                    <div>
-                        <p className="header-4">Related Consortia</p>
-                        <div className="flex flex-wrap gap-2 mb-10" key={'tags'}>
-                            {
-                                project.consortium.map((consortia) => {
-                                    return (
-                                        <span className="name-badge" key={consortia}>{consortia}</span>
-                                    )
-                                })
-                            }
-                        </div>
+                {project.consortium.length !== 0 &&
+                  <div>
+                    <p className="header-4">Related Consortia</p>
+                    <div className="flex flex-wrap gap-2 mb-10" key={'tags'}>
+                        {
+                            project.consortium.map((consortia) => {
+                                return (
+                                    <span className="name-badge" key={consortia}>{consortia}</span>
+                                )
+                            })
+                        }
                     </div>
-                )
+                  </div>
                 }
                 <p className="header-4">Duration</p>
                 <p key={'period'}>{`From ${project.start} To ${project.end}`}</p>
                 <p className="header-4">Description</p>
                 <p className="text-justify" key={'description'}>{project.description}</p>
                 <div>
-                    {project.goals.length && (
-                        <div>
-                            <p className="header-4">Goals</p>
-                            <ul>
-                                {
-                                    project.goals.map((goals) => {
-                                        return (
-                                            <li className="list-disc ml-6 text-justify mb-2 hover:bg-blue"
-                                                key={goals}>{goals}</li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
-                    )
+                    {project.goals.length !== 0 &&
+                      <div>
+                        <p className="header-4">Goals</p>
+                        <ul>
+                            {
+                                project.goals.map((goals) => {
+                                    return (
+                                        <li className="list-disc ml-6 text-justify mb-2 hover:bg-blue"
+                                            key={goals}>{goals}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                      </div>
                     }
                 </div>
                 {project.publications && (

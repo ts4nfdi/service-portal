@@ -48,7 +48,6 @@ export async function createCollection(formData: Collection): Promise<ActionResp
             headers: await getHttpHeaderForGateway(token),
             body: JSON.stringify(formData)
         });
-
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}
         }
@@ -67,7 +66,6 @@ export async function editCollection(formData: Collection): Promise<ActionRespon
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
-
         if (!formData.label || !formData.description || !formData.terminologies || formData.terminologies.length === 0) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
