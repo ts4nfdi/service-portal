@@ -27,12 +27,14 @@ export default function NewCollection() {
             let collectionData: Collection = {
                 description: formData.get("collection-desc")! as string,
                 label: formData.get("collection-title")! as string,
+                collaborators: [],
+                isPublic: true,
                 terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
                     return {
                         label: terminilogy.label,
                         source: terminilogy.source,
                         uri: terminilogy.iri,
-                        type: terminilogy.type
+                        type: "DATABASE"
                     } as Terminology;
                 })
             };
@@ -54,7 +56,6 @@ export default function NewCollection() {
             window.location.href = `/collection/myCollections?created=${!error}`;
 
         } catch (e) {
-            console.log(e)
             return;
         }
     }
@@ -98,7 +99,7 @@ export default function NewCollection() {
                   />
                 </div>
                 <div className="text-center" key={"submit-btn"}>
-                  <button type="submit" className="btn" onClick={submit}>Create</button>
+                  <button type="submit" className="btn">Create</button>
                 </div>
               </form>
             }

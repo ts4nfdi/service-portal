@@ -48,14 +48,14 @@ export async function createCollection(formData: Collection): Promise<ActionResp
             headers: await getHttpHeaderForGateway(token),
             body: JSON.stringify(formData)
         });
-
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}
         }
         let res: Collection = await resp.json();
         return {status: true, content: res}
 
-    } catch {
+    } catch (e) {
+        console.log(e)
         return {status: false, content: SERVER_ERROR_MESSAGE}
     }
 }
