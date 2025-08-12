@@ -35,7 +35,7 @@ export function TextInput(props: TextInputProps) {
 
 export function FileInput(props: FileInputProps) {
     return (
-        <div className="form-input-group">
+        <div className="">
             <label htmlFor={props.id} className={"block " + (props.required ? "required-label" : "")} key={"label"}
                    dangerouslySetInnerHTML={{__html: props.labelText}}></label>
             <input

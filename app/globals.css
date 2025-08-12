@@ -108,8 +108,17 @@ a {
     @apply mx-auto mb-5 w-4/5;
 }
 
-body input {
-    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color dark:!text-white;
+body input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+    @apply
+    bg-gray-50
+    w-full
+    p-2
+    rounded-lg
+    border
+    border-gray-300
+    text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2
+    dark-mode-bg-color dark:!text-white
+    !important;
 }
 
 .file-input {

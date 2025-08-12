@@ -158,7 +158,7 @@ export default function NewCollection() {
                     rows={10}
                   />
                 </div>
-                <div className="text-center" key={"submit-btn"}>
+                <div className="text-end" key={"submit-btn"}>
                   <button type="submit" className="btn">Create</button>
                 </div>
               </form>
