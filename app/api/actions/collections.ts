@@ -66,7 +66,7 @@ export async function editCollection(formData: Collection): Promise<ActionRespon
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
-
+        // console.log(formData)
         if (!formData.label || !formData.description || !formData.terminologies || formData.terminologies.length === 0) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }

@@ -15,7 +15,6 @@ export default function NewCollection() {
 
     const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
     const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
 
@@ -48,12 +47,7 @@ export default function NewCollection() {
             setLoading(true);
 
             let res = await createCollection(collectionData);
-            if (!res.status) {
-                setError(true);
-            }
-
-            setLoading(false);
-            window.location.href = `/collection/myCollections?created=${!error}`;
+            window.location.href = `/collection/myCollections?created=${res.status}`;
 
         } catch (e) {
             return;

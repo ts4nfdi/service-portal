@@ -35,7 +35,7 @@ export default function CollectionEdit() {
             let form = document.querySelector('form')!;
             let formData = new FormData(form);
             let collectionData: Collection = {
-                description: formData.get("collection-desc")! as string,
+                description: (document.getElementById("description")! as HTMLTextAreaElement).value,
                 label: formData.get("collection-title")! as string,
                 collaborators: [],
                 isPublic: true,
@@ -57,14 +57,8 @@ export default function CollectionEdit() {
 
             setFormIsSubmited(true);
             setLoading(true);
-
             let res = await editCollection(collectionData);
-            if (!res.status) {
-                setError(res.content);
-            }
-
-            setLoading(false);
-            window.location.href = `/collection/myCollections?edited=${!error}`;
+            window.location.href = `/collection/myCollections?edited=${res.status}`;
 
         } catch {
             return;
@@ -137,6 +131,7 @@ export default function CollectionEdit() {
                           placeholder="please add a description for your collection ..."
                           labelText="Description"
                           rows={10}
+                          defaultValue={collection.description}
                         />
                       </div>
                       <div className="text-center" key={"submit-btn"}>

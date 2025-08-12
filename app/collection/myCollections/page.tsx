@@ -24,7 +24,7 @@ export default async function MyCollections() {
     return (
         <div className="md:col-span-3 p-4" key={"my_collection"}>
             <Suspense> <CollectionListMessages/> </Suspense>
-            <p className="header-2">My Collections</p>
+            <p className="header-2">TS4NFDI Collections</p>
             <a href="/collection/new/" className="btn">Create Collection</a>
             <CollectionList collections={collections}/>
         </div>
