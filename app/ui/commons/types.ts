@@ -78,3 +78,10 @@ export type ToggleButtonProps = {
     id: string,
     label: string,
 }
+
+export type CheckboxProps = {
+    id: string,
+    label: string,
+    checked?: boolean,
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
+}
