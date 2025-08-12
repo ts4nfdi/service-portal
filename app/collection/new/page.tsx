@@ -9,6 +9,7 @@ import {Collection} from "@/app/api/actions/types";
 import {createCollection} from "@/app/api/actions/collections";
 import {Loading, TextArea} from "@/app/ui/commons/snippets";
 import {Terminology} from "@/app/api/actions/types";
+import {ToggleButton} from "@/app/ui/commons/snippets";
 
 
 export default function NewCollection() {
@@ -21,13 +22,14 @@ export default function NewCollection() {
     async function submit(e: React.FormEvent) {
         try {
             e.preventDefault();
+            let visBox = (document.getElementById("visibility")! as HTMLInputElement);
             let form = document.querySelector('form')!;
             let formData = new FormData(form);
             let collectionData: Collection = {
                 description: formData.get("collection-desc")! as string,
                 label: formData.get("collection-title")! as string,
                 collaborators: [],
-                isPublic: true,
+                isPublic: visBox.checked,
                 terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
                     return {
                         label: terminilogy.label,
@@ -61,6 +63,9 @@ export default function NewCollection() {
             {loading && <Loading/>}
             {!formIsSubmitted &&
               <form key={"collection-form"} className="mt-10" onSubmit={submit}>
+                <div className="form-input-group">
+                  <ToggleButton id={"visibility"} label="Public"/>
+                </div>
                 <div className="form-input-group">
                   <TextInput
                     id="collection-title"

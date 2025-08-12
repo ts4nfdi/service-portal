@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {getUserCollectionList, editCollection} from "@/app/api/actions/collections";
 import {ActionResponse, Collection} from "@/app/api/actions/types";
 import {LeftArrowIcon} from "@/app/ui/commons/icons";
-import {Loading, TextArea, TextInput} from "@/app/ui/commons/snippets";
+import {Loading, TextArea, TextInput, ToggleButton} from "@/app/ui/commons/snippets";
 import {AutoCompleteSelectedTermType} from "@/app/ui/widgets/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import {Terminology} from "@/app/api/actions/types";
@@ -32,13 +32,14 @@ export default function CollectionEdit() {
     async function submit(e: React.FormEvent) {
         try {
             e.preventDefault();
+            let visBox = (document.getElementById("visibility")! as HTMLInputElement);
             let form = document.querySelector('form')!;
             let formData = new FormData(form);
             let collectionData: Collection = {
                 description: (document.getElementById("description")! as HTMLTextAreaElement).value,
                 label: formData.get("collection-title")! as string,
                 collaborators: [],
-                isPublic: true,
+                isPublic: visBox.checked,
                 terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
                     return {
                         label: terminilogy.label,
@@ -81,11 +82,21 @@ export default function CollectionEdit() {
             for (let terminology of targetCollection.terminologies as Terminology[]) {
                 preselected.push({label: terminology.label, iri: ""});
             }
+
             setPreselectedTerminologies(preselected);
             setCollection(targetCollection);
+
         }).finally(() => setLoading(false));
 
     }, [slug]);
+
+    useEffect(() => {
+        if (!collection.id || loading) {
+            return;
+        }
+        let visBox = (document.getElementById("visibility")! as HTMLInputElement);
+        visBox.checked = collection.isPublic;
+    }, [collection]);
 
     return (
         <>
@@ -98,6 +109,9 @@ export default function CollectionEdit() {
                 <p className="header-2" key={"heading"}>Edit your collection: {collection.label}</p>
                   {!formIsSubmitted &&
                     <form key={"collection-form"} className="mt-10" onSubmit={submit}>
+                      <div className="form-input-group">
+                        <ToggleButton id={"visibility"} label="Public"/>
+                      </div>
                       <div className="form-input-group">
                         <TextInput
                           id="collection-title"

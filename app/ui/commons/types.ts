@@ -73,3 +73,8 @@ export type RadioButtonProps = {
     value: string,
     checked: boolean,
 }
+
+export type ToggleButtonProps = {
+    id: string,
+    label: string,
+}
