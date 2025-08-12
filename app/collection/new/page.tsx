@@ -67,15 +67,17 @@ export default function NewCollection() {
             {loading && <Loading/>}
             {!formIsSubmitted &&
               <form key={"collection-form"} className="mt-10" onSubmit={submit}>
-                <TextInput
-                  id="collection-title"
-                  name="collection-title"
-                  type="text"
-                  labelText="Collection Title"
-                  placeHolder="please add the collection title ..."
-                  key={"collection-title"}
-                  required
-                />
+                <div className="form-input-group">
+                  <TextInput
+                    id="collection-title"
+                    name="collection-title"
+                    type="text"
+                    labelText="Collection Title"
+                    placeHolder="please add the collection title ..."
+                    key={"collection-title"}
+                    required
+                  />
+                </div>
                 <div className="form-input-group" key={"terminology-list"}>
                   <AutoCompleteTSS
                     setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {

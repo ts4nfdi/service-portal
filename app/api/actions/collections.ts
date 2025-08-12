@@ -55,7 +55,6 @@ export async function createCollection(formData: Collection): Promise<ActionResp
         return {status: true, content: res}
 
     } catch (e) {
-        console.log(e)
         return {status: false, content: SERVER_ERROR_MESSAGE}
     }
 }

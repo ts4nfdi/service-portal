@@ -1,10 +1,10 @@
 import {getUserCollectionList} from "@/app/api/actions/collections";
 import {Collection} from "@/app/api/actions/types";
 import {notFound} from "next/navigation";
-import CollectionCard from "@/app/ui/collection/collectionCard";
 import {CollectionListMessages} from "@/app/ui/collection/collectionListMessages";
 import {Suspense} from "react";
 import {getUserToken} from "@/app/libs/auth";
+import {CollectionList} from "@/app/ui/collection/clientExports";
 
 
 export default async function MyCollections() {
@@ -26,15 +26,7 @@ export default async function MyCollections() {
             <Suspense> <CollectionListMessages/> </Suspense>
             <p className="header-2">My Collections</p>
             <a href="/collection/new/" className="btn">Create Collection</a>
-            {collections.map((col: Collection) => {
-                return (
-                    <>
-                        <div className="pt-5" key={"collections-list-container"}>
-                            <CollectionCard collection={col}/>
-                        </div>
-                    </>
-                )
-            })}
+            <CollectionList collections={collections}/>
         </div>
     );
 }

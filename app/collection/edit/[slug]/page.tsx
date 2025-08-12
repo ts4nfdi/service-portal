@@ -104,16 +104,18 @@ export default function CollectionEdit() {
                 <p className="header-2" key={"heading"}>Edit your collection: {collection.label}</p>
                   {!formIsSubmitted &&
                     <form key={"collection-form"} className="mt-10" onSubmit={submit}>
-                      <TextInput
-                        id="collection-title"
-                        name="collection-title"
-                        type="text"
-                        labelText="Collection Title"
-                        placeHolder="please add the collection title ..."
-                        key={"collection-title"}
-                        defaultValue={collection.label}
-                        required
-                      />
+                      <div className="form-input-group">
+                        <TextInput
+                          id="collection-title"
+                          name="collection-title"
+                          type="text"
+                          labelText="Collection Title"
+                          placeHolder="please add the collection title ..."
+                          key={"collection-title"}
+                          defaultValue={collection.label}
+                          required
+                        />
+                      </div>
                       <div className="form-input-group" key={"terminology-list"}>
                         <AutoCompleteTSS
                           setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {

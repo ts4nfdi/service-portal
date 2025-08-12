@@ -18,6 +18,7 @@ export type TextInputProps = {
     placeHolder: string,
     labelText: string,
     defaultValue?: string,
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
 export type FileInputProps = Omit<TextInputProps, 'type'> & {

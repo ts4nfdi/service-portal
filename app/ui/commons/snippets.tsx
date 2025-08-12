@@ -5,7 +5,7 @@ import {TickIcon} from "@/app/ui/commons/icons";
 
 export function TextInput(props: TextInputProps) {
     return (
-        <div className="form-input-group">
+        <>
             <label htmlFor={props.id} className={"block " + (props.required ? "required-label" : "")}
                    key={"label"}>{props.labelText}</label>
             <input
@@ -16,8 +16,9 @@ export function TextInput(props: TextInputProps) {
                 required={props.required}
                 defaultValue={props.defaultValue}
                 key={"input"}
+                onChange={props.onChange}
             />
-        </div>
+        </>
     );
 
 }
