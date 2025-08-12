@@ -5,10 +5,10 @@ import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import {LeftArrowIcon} from "@/app/ui/commons/icons";
 import {useState} from "react";
 import {AutoCompleteSelectedTermType} from "@/app/ui/widgets/types";
-import {isTextEditorEmpty, highlightEditorIsEmpty} from "@/app/ui/commons/TextEditor/TextEditor";
 import {Collection} from "@/app/api/actions/types";
 import {createCollection} from "@/app/api/actions/collections";
 import {Loading, TextArea} from "@/app/ui/commons/snippets";
+import {Terminology} from "@/app/api/actions/types";
 
 
 export default function NewCollection() {
@@ -27,15 +27,18 @@ export default function NewCollection() {
             let collectionData: Collection = {
                 description: formData.get("collection-desc")! as string,
                 label: formData.get("collection-title")! as string,
-                terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => terminilogy.ontology_name!)
+                terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
+                    return {
+                        label: terminilogy.label,
+                        source: terminilogy.source,
+                        uri: terminilogy.iri,
+                        type: terminilogy.type
+                    } as Terminology;
+                })
             };
 
             if (selectedTermonologies.length === 0) {
                 (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "1px solid #445669";
-                return;
-            }
-            if (isTextEditorEmpty()) {
-                highlightEditorIsEmpty();
                 return;
             }
 
@@ -50,7 +53,8 @@ export default function NewCollection() {
             setLoading(false);
             window.location.href = `/collection/myCollections?created=${!error}`;
 
-        } catch {
+        } catch (e) {
+            console.log(e)
             return;
         }
     }
@@ -80,7 +84,6 @@ export default function NewCollection() {
                     label="Terminologies"
                     placeholder="Choose your terminologies ..."
                     parameter="type=ontology"
-                    api="https://api.terminology.tib.eu/api/"
                     required
                   />
                 </div>
@@ -95,7 +98,7 @@ export default function NewCollection() {
                   />
                 </div>
                 <div className="text-center" key={"submit-btn"}>
-                  <button type="submit" className="btn">Create</button>
+                  <button type="submit" className="btn" onClick={submit}>Create</button>
                 </div>
               </form>
             }
