@@ -1,11 +1,8 @@
 {
   "stats": {
-    "In preparation": 0,
+    "In preparation": 5,
     "Running": 7,
-    "Requested": 2,
-    "Finished": 4,
-    "First contact": 4,
-    "Postponed": 1
+    "Finished": 4
   },
   "projects": [
     {
@@ -21,12 +18,6 @@
         "Improve data discoverability: Enable \"Keyword\" as additional filter option in the data publication list."
       ],
       "consortium": ["NFDI4Chem", "NFDI4Culture", "NFDI4Memory"],
-      "contactPersons": [
-        {
-          "person": "Soltau, Kerstin",
-          "consortium": []
-        }
-      ],
       "logo": "radar.svg",
       "logoW": 300,
       "logoH": 300
@@ -38,18 +29,8 @@
       "start": "26.02.2025",
       "end": "~",
       "description": "The WDCC has the mission to archive, disseminate and publish Earth System model data and related data products to support the international climate research community. The WDCC is a discipline specific repository providing active preservation for research only. Therefore WDCC is using common metadata standards and is recommending the usage of community data standards like the Climate Forecast (CF) Conventions. The WDCC is certified by Core Trust Seal (CTS) and an accredited regular member of the World Data System. WDCC is following the FAIR principles - all metadata is openly accessible, the access to the data is free of charge. The WDCC is hosted by the German Climate Computing Center (Deutsches Klimarechenzentrum - DKRZ) in Hamburg.",
-      "goals": ["Integration of the NERC Vocabulary Serviceto the API Gateway"],
+      "goals": ["Integration of the NERC Vocabulary Service to the API Gateway"],
       "consortium": ["NFDI4Earth"],
-      "contactPersons": [
-        {
-          "person": "Martens, Claudia",
-          "consortium": []
-        },
-        {
-          "person": "Löhden, Anne",
-          "consortium": []
-        }
-      ],
       "logo": "wdcc.png",
       "logoW": 300,
       "logoH": 300
@@ -63,12 +44,6 @@
       "description": "While several attempts have been made recently to create NMR databases from literature, they fall short of meeting the needs of modern chemical and related scientific communities. nmrXiv is the first open archive to preserve NMR data in its original instrument format, while offering tools for their analysis and promoting open data and standards for long-term sustainability and accessibility.\n\nnmrXiv revolutionizes NMR data management and archival by providing an open-access, standardized, and user-friendly platform. Our platform is public and interoperable to ensure that NMR data is freely accessible, transparent, and reproducible. We support standardized data formats to enhance consistency and facilitate data comparison and integration. ",
       "goals": ["Integration of TSS widgets"],
       "consortium": ["NFDI4Chem"],
-      "contactPersons": [
-        {
-          "person": "Nainala, Chandu",
-          "consortium": []
-        }
-      ],
       "logo": "nmrxiv_repository.png",
       "logoW": 400,
       "logoH": 200
@@ -82,16 +57,6 @@
       "description": "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on ‘small’ chemical compounds. The term ‘molecular entity’ refers to any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer, etc., identifiable as a separately distinguishable entity. The molecular entities in question are either products of nature or synthetic products used to intervene in the processes of living organisms.\n\nChEBI incorporates an ontological classification, whereby the relationships between molecular entities or classes of entities and their parents and/or children are specified.",
       "goals": ["Integration of the hierarchy widget for visualization and as navigation", "Visualization of the path via the graph widget"],
       "consortium": [],
-      "contactPersons": [
-        {
-          "person": "Moreno, Carlos",
-          "consortium": []
-        },
-        {
-          "person": "Arsalan, Muhammad ",
-          "consortium": []
-        }
-      ],
       "logo": "chebi.png",
       "logoW": 400,
       "logoH": 400,
@@ -106,12 +71,6 @@
       "description": "A comprehensive platform facilitating natural product research by providing data, tools, and services for deposition, curation, and reuse. It aims to provide researchers, scientists, and enthusiasts with comprehensive and easily accessible data on a wide variety of natural compounds. The database includes detailed information on the chemical structures, literature references and sources of these compounds, facilitating research and discovery in natural products.",
       "goals": ["Integration of TSS widgets"],
       "consortium": ["NFDI4Chem"],
-      "contactPersons": [
-        {
-          "person": "Nainala, Chandu",
-          "consortium": []
-        }
-      ],
       "logo": "coconut.png",
       "logoW": 400,
       "logoH": 400
@@ -122,23 +81,9 @@
       "status": "Running",
       "start": "12.02.2025",
       "end": "13.08.2025",
-      "description": "NFDI4Cat is a community-driven and user-oriented initiative to secure the digital future of catalysis. NFDI4Cat has set up a data repository “Repo4Cat” based on the Dataverse platform (https://repository.nfdi4cat.org/). Due to the lack of catalysis-specific vocabularies and ontologies, NFDI4Cat has also created a community-managed SKOS vocabulary “Voc4Cat” (https://nfdi4cat.github.io/voc4cat/) to provide machine readable term definitions to be used for data annotation and in metadata schemas. Together with TS4NFDI NFDI4Cat wants to provide a better vocabulary  browsing and search experience by serving Voc4Cat via SKOSMOS, a terminology browsing tool specifically optimized for SKOS vocabularies. Moreover, we want to integrate Voc4Cat annotation-widgets in the Repo4Cat data sharing platform in order to improve the metadata entry and interoperability.\n",
+      "description": "NFDI4Cat is a community-driven and user-oriented initiative to secure the digital future of catalysis. NFDI4Cat has set up a data repository “Repo4Cat” based on the Dataverse platform (https://repository.nfdi4cat.org/). Due to the lack of catalysis-specific vocabularies and ontologies, NFDI4Cat has also created a community-managed SKOS vocabulary “Voc4Cat” (https://nfdi4cat.github.io/voc4cat/) to provide machine readable term definitions to be used for data annotation and in metadata schemas. Together with TS4NFDI NFDI4Cat wants to provide a better vocabulary  browsing and search experience by serving Voc4Cat via Skosmos, a terminology browsing tool specifically optimized for SKOS vocabularies. Moreover, we want to integrate Voc4Cat annotation-widgets in the Repo4Cat data sharing platform in order to improve the metadata entry and interoperability.\n",
       "goals": ["Setup a Skosmos terminology system", "Provide the skos-based Voc4Cat vocabulary via API", "Integration of Voc4Cat to Repo4Cat via Dataverse External Vocabulary Management"],
       "consortium": ["NFDI4Cat"],
-      "contactPersons": [
-        {
-          "person": "Linke, David",
-          "consortium": []
-        },
-        {
-          "person": "Kushnarenko, Volodymyr",
-          "consortium": []
-        },
-        {
-          "person": "Bönisch, Thomas",
-          "consortium": []
-        }
-      ],
       "logo": "nfdi4cat.png",
       "logoW": 300,
       "logoH": 200
@@ -150,14 +95,8 @@
       "start": "29.05.2024",
       "end": "19.11.2024",
       "description": "BERD@NFDI is dedicated to establishing a research data infrastructure transforming the management of Business, Economic, and Related Data. Our mission is to empower researchers of the social sciences with the tools and services needed to harness the full potential of unstructured data, such as images, videos, audio, and text files. BERD Terminology Service provides a single point of access to terminologies and ontologies from Business, Economics and Related fields.",
-      "goals": ["Setting up a terminology service for BERD@NFDI using the Terminology Service Suite (TSS)", "Provision of BERD related terminlogies"],
+      "goals": ["Setting up a terminology service for BERD@NFDI using the Terminology Service Suite (TSS)", "Provision of BERD related terminologies"],
       "consortium": ["BERD@NFDI"],
-      "contactPersons": [
-        {
-          "person": "Shigapov, Renat",
-          "consortium": []
-        }
-      ],
       "logo": "berd.png",
       "logoW": 300,
       "logoH": 200,
@@ -173,12 +112,6 @@
       "description": "The plasma ontology (Plasma-O) is a domain-specific ontology for low-temperature plasma science and technology. It aims to support the standardized documentation and annotation of data and information in this field. The ontology contains classes and properties for the entities which are relevant in typical plasma studies, such as plasma generating devices, media, materials and diagnostic methods.",
       "goals": ["Provision of Plasma-O in a self-hosted terminology service"],
       "consortium": ["NFDI4BIOIMAGE"],
-      "contactPersons": [
-        {
-          "person": "Becker, Markus",
-          "consortium": []
-        }
-      ],
       "logo": "plasma-mds_logo.svg",
       "logoW": 200,
       "logoH": 200,
@@ -194,7 +127,6 @@
       "description": "During the current COVID-19 pandemic, the rapid availability of profound information is crucial in order to derive information about diagnosis, disease trajectory, treatment or to adapt the rules of conduct in public. The increased importance of preprints for COVID-19 research initiated the design of the preprint search engine preVIEW. Conceptually, it is a lightweight semantic search engine focusing on easy inclusion of specialized COVID-19 textual collections and provides a user friendly web interface for semantic information retrieval. In order to support semantic search functionality, we integrated a text mining workflow for indexing with relevant terminologies. Currently, diseases, human genes and SARS-CoV-2 proteins are annotated, and more will be added in future. The system integrates collections from several different preprint servers that are used in the biomedical domain to publish non-peer-reviewed work, thereby enabling one central access point for the users. In addition, our service offers facet searching, export functionality and an API access.",
       "goals": ["Using terminologies of SemLookP to annotate and search preprints", "Provide information about terms via the TSS metadata widget", "Use the title widget as a facet"],
       "consortium": ["NFDI4Health"],
-      "contactPersons": [],
       "logo": "preVIEW.svg",
       "logoW": 300,
       "logoH": 300,
@@ -211,7 +143,7 @@
       "consortium": ["NFDI4Health"],
       "contactPersons": [
         {
-          "person": "Sasse, Julia",
+          "person": "",
           "consortium": []
         }
       ],
@@ -229,16 +161,6 @@
       "description": "Discuss Data (www.discuss-data.net) is an open repository for storing, sharing and discussing research data on Eastern Europe, South Caucasus and Central Asia and is currently building further Community Spaces, for example for the Digital Humanities .The platform, launched in September 2020, is funded by the German Research Foundation (DFG, Project number 493011772) and operated by the Research Centre for East European Studies at the University of Bremen (FSO) and the Göttingen State and University Library (SUB). Discuss Data goes beyond ordinary repositories and offers an interactive online platform for the discussion and quality assessment of research data and creates a space for academic communication and for the community-specific publication, curation, annotation and discussion of research data. ",
       "goals": ["Setting up a selfhosted terminology service based on OLS", "Adding this TS as backend source to the TS4NFDI API Gateway", "Provision of collection(s) via API Gateway", "Integration of TSS widgets"],
       "consortium": ["Text+"],
-      "contactPersons": [
-        {
-          "person": "Kurzawe, Daniel",
-          "consortium": []
-        },
-        {
-          "person": "Hynek, Stefan",
-          "consortium": []
-        }
-      ],
       "logo": "discuss-data.svg",
       "logoW": 400,
       "logoH": 400
@@ -246,77 +168,67 @@
     {
       "title": "Open Energy Platform",
       "cycle": 2,
-      "status": "Requested",
+      "status": "In preparation",
       "start": "~",
       "end": "~",
-      "description": "",
-      "goals": [],
+      "description": "NFDI4Energy is developing a platform that integrates key services to support researchers in the energy domain. Central components are accessible through the Open Energy Platform (OEP). A core element is the Open Energy Ontology (OEO), a dynamic domain ontology for energy system modeling. Additional complementary ontologies are currently in development to broaden the semantic framework.",
+      "goals": ["Setting up a Terminology Service for the Open Energy Platform (OEP)", "Provide additional information about ontology terms", "Integration of TSS widgets for visualization and as navigation"],
       "consortium": ["NFDI4Energy"],
-      "contactPersons": [
-        {
-          "person": "Hülk, Ludwig",
-          "consortium": []
-        }
-      ],
-      "logo": "NFDI4Energy.png",
+      "logo": "oep.svg",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "ICONCLASS",
+      "cycle": "2",
+      "status": "In preparation",
+      "start": "~",
+      "end": "~",
+      "description": "Adding support for the globally used cultural heritage subject classification system iconclass.org to the Terminology Services 4 NFDI. This will allow Iconclass to be selected as a base data source, and to allow other systems to make use of the TS4NFDI hierarchy and graph widgets for visualization and as navigation aids.",
+      "goals": [],
+      "consortium": ["NFDI4Culture", "NFDI4Memory", "Text+", "NFDI4Objects"],
+      "logo": "ICONCLASS.png",
       "logoW": 300,
       "logoH": 300
     },
     {
-      "title": "Metagenome Metadata submission Wizard",
-      "cycle": "-",
-      "status": "First contact",
+      "title": "OhdAB",
+      "cycle": "2",
+      "status": "In preparation",
       "start": "~",
       "end": "~",
-      "description": "",
+      "description": "The Ontology of the historical German-language nomenclature (OhdAB) for offices and professions (OhdAB) provides classifications according to job profiles and requirement levels based on the \"Classification of Occupations 2010/2020\" (KldB 2010) for historical professions. The OhdAB is maintained and curated within FactGrid. FactGrid is an instance of Wikibase.",
       "goals": [],
-      "consortium": ["NFDI4Microbiota"],
-      "contactPersons": [
-        {
-          "person": "Kasmanas, Jonas",
-          "consortium": []
-        },
-        {
-          "person": "Santos, Anderson",
-          "consortium": []
-        }
-      ],
-      "logo": "blank.jpg"
+      "consortium": ["NFDI4Memory", "BERD@NFDI"],
+      "logo": "ohdab.png",
+      "logoW": 200,
+      "logoH": 200
     },
     {
-      "title": "Coscine",
-      "cycle": "-",
-      "status": "First contact",
+      "title": "Health Study Hub",
+      "cycle": "2",
+      "status": "In preparation",
       "start": "~",
       "end": "~",
-      "description": "",
-      "goals": [],
-      "consortium": ["NFDI4Ing", "NFDI-MatWerk"],
-      "contactPersons": [
-        {
-          "person": "Lang, Ilona",
-          "consortium": []
-        }
-      ],
-      "logo": "blank.jpg"
-    },
-    {
-      "title": "NFDI4Health Studyhub",
-      "cycle": "-",
-      "status": "Requested",
-      "start": "~",
-      "end": "~",
-      "description": "",
+      "description": "The Health Study Hub is a central discovery platform developed within the NFDI4Health initiative. It provides structured metadata about health studies, enabling researchers, scientists, and other stakeholders to explore and understand available research data without requiring direct access to sensitive datasets. The Hub emphasizes metadata transparency, interoperability, and usability, supporting FAIR data principles and promoting responsible data reuse.",
       "goals": [],
       "consortium": ["NFDI4Health"],
-      "contactPersons": [
-        {
-          "person": "Darms, Johannes",
-          "consortium": []
-        }
-      ],
-      "logo": "blank.jpg"
+      "logo": "nfdi4health.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "DALIA Search Portal",
+      "cycle": "2",
+      "status": "In preparation",
+      "start": "~",
+      "end": "~",
+      "description": "DALIA stands for the “Data Literacy Alliance” which develops a user-centric search platform according to the FAIR principles in order to offer high quality search results for educational resources from and for the RDM and data literacy community. Knowledge graph and semantic technologies are used to offer “FAIR data usage and supply” including offers for best practices, open educational resources, and learning paths.",
+      "goals": [],
+      "consortium": [],
+      "logo": "dalia.png",
+      "logoW": 300,
+      "logoH": 300
     }
-
   ]
 }

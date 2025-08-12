@@ -24,7 +24,7 @@ export default function Events() {
     });
 
     upcomingEvents.sort((o1: Event, o2: Event) => {
-        if (o1.formal_date < o2.formal_date) {
+        if (o1.formal_date > o2.formal_date) {
             return 1;
         }
         return -1;
