@@ -96,6 +96,10 @@ a {
     @apply badge bg-[rgb(69,84,107)] !text-white;
 }
 
+.terminology-badge {
+    @apply badge bg-[rgb(69,84,107)] !text-white;
+}
+
 .form {
     @apply bg-[#FFFFFF] p-10 dark:bg-gray-900;
 }

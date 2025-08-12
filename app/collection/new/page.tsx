@@ -5,37 +5,43 @@ import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import {LeftArrowIcon} from "@/app/ui/commons/icons";
 import {useState} from "react";
 import {AutoCompleteSelectedTermType} from "@/app/ui/widgets/types";
-import {isTextEditorEmpty, highlightEditorIsEmpty} from "@/app/ui/commons/TextEditor/TextEditor";
 import {Collection} from "@/app/api/actions/types";
 import {createCollection} from "@/app/api/actions/collections";
 import {Loading, TextArea} from "@/app/ui/commons/snippets";
+import {Terminology} from "@/app/api/actions/types";
+import {ToggleButton} from "@/app/ui/commons/snippets";
 
 
 export default function NewCollection() {
 
     const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
     const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
 
     async function submit(e: React.FormEvent) {
         try {
             e.preventDefault();
+            let visBox = (document.getElementById("visibility")! as HTMLInputElement);
             let form = document.querySelector('form')!;
             let formData = new FormData(form);
             let collectionData: Collection = {
                 description: formData.get("collection-desc")! as string,
                 label: formData.get("collection-title")! as string,
-                terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => terminilogy.ontology_name!)
+                collaborators: [],
+                isPublic: visBox.checked,
+                terminologies: selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
+                    return {
+                        label: terminilogy.label,
+                        source: terminilogy.source,
+                        uri: terminilogy.iri,
+                        type: "DATABASE"
+                    } as Terminology;
+                })
             };
 
             if (selectedTermonologies.length === 0) {
                 (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "1px solid #445669";
-                return;
-            }
-            if (isTextEditorEmpty()) {
-                highlightEditorIsEmpty();
                 return;
             }
 
@@ -43,12 +49,7 @@ export default function NewCollection() {
             setLoading(true);
 
             let res = await createCollection(collectionData);
-            if (!res.status) {
-                setError(true);
-            }
-
-            setLoading(false);
-            window.location.href = `/collection/myCollections?created=${!error}`;
+            window.location.href = `/collection/myCollections?created=${res.status}`;
 
         } catch {
             return;
@@ -62,15 +63,20 @@ export default function NewCollection() {
             {loading && <Loading/>}
             {!formIsSubmitted &&
               <form key={"collection-form"} className="mt-10" onSubmit={submit}>
-                <TextInput
-                  id="collection-title"
-                  name="collection-title"
-                  type="text"
-                  labelText="Collection Title"
-                  placeHolder="please add the collection title ..."
-                  key={"collection-title"}
-                  required
-                />
+                <div className="form-input-group">
+                  <ToggleButton id={"visibility"} label="Public"/>
+                </div>
+                <div className="form-input-group">
+                  <TextInput
+                    id="collection-title"
+                    name="collection-title"
+                    type="text"
+                    labelText="Collection Title"
+                    placeHolder="please add the collection title ..."
+                    key={"collection-title"}
+                    required
+                  />
+                </div>
                 <div className="form-input-group" key={"terminology-list"}>
                   <AutoCompleteTSS
                     setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
@@ -80,7 +86,6 @@ export default function NewCollection() {
                     label="Terminologies"
                     placeholder="Choose your terminologies ..."
                     parameter="type=ontology"
-                    api="https://api.terminology.tib.eu/api/"
                     required
                   />
                 </div>

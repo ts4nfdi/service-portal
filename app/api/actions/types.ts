@@ -22,7 +22,16 @@ export type Collection = {
     id?: string,
     description: string,
     label: string,
-    terminologies: string[]
+    terminologies: Terminology[],
+    collaborators: { username: string, role: string }[],
+    isPublic: boolean,
+}
+
+export type Terminology = {
+    label: string,
+    source: string,
+    type: string,
+    uri: string,
 }
 
 export type Database = {
