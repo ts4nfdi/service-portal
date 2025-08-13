@@ -11,6 +11,7 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
 
     const [selectedStatus, setSelectedStatus] = useState<string>(props.selectedStatus ?? "");
     const [selectedConsortium, setSelectedConsortium] = useState<string>("");
+    const [selectedCycle, setSelectedCycle] = useState<string>("");
     const [projectsList, setProjectsList] = useState<Project[]>(props.projectsJson?.projects ?? []);
 
     const statusToSkip = ['Requested', 'First contact', 'Postponed'];
@@ -34,23 +35,27 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
         }
     }
 
+    let cycleOptions: { label: string, value: string }[] = [];
+    for (let project of props.projectsJson.projects) {
+        let option = {label: project.cycle.toString(), value: project.cycle.toString()};
+        if (!cycleOptions.find((el) => el.label === option.label)) {
+            cycleOptions.push(option);
+        }
+    }
+    cycleOptions.sort((a, b) => a.label.localeCompare(b.label));
+
 
     useEffect(() => {
         let filteredProjectsList: Project[];
         filteredProjectsList = props.projectsJson.projects.filter((p) => {
-            if (!selectedConsortium) {
-                return true
-            }
-            return p.consortium.includes(selectedConsortium);
+            let consortiumConditon = selectedConsortium ? p.consortium.includes(selectedConsortium) : true;
+            let cycleCondition = selectedCycle ? p.cycle.toString() === selectedCycle : true;
+            let statusCondition = selectedStatus ? p.status === selectedStatus : true;
+            return consortiumConditon && statusCondition && cycleCondition;
         });
-        setProjectsList(filteredProjectsList.filter((p) => {
-            if (!selectedStatus) {
-                return true
-            }
-            return p.status === selectedStatus;
-        }));
+        setProjectsList(filteredProjectsList);
 
-    }, [selectedStatus, selectedConsortium]);
+    }, [selectedStatus, selectedConsortium, selectedCycle]);
 
     useEffect(() => {
         setSelectedStatus(props.selectedStatus ?? "");
@@ -87,6 +92,17 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
                         setSelectedConsortium(e.target.value)
                     }}
                     key={"consortium-dropdown"}
+                />
+                <SelectionInput
+                    id="cycle"
+                    label="Cycle"
+                    defaultOptionLabel="any"
+                    defaultValue=""
+                    options={cycleOptions}
+                    onSelection={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        setSelectedCycle(e.target.value)
+                    }}
+                    key={"cycle-dropdown"}
                 />
             </div>
             <div className="grid md:grid-cols-3 grid-rows-1 gap-8" key={"incubators-grid"}>
