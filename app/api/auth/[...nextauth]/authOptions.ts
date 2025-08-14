@@ -50,7 +50,6 @@ export const authOptions = ({
         signIn: "/user/login",
         signOut: "/user/logout"
     },
-    NEXTAUTH_URL: "https://terminology.services.base4nfdi.de/",
     // url: process.env.NEXTAUTH_URL,
     secret: process.env.NEXTAUTH_SECRET
 });
