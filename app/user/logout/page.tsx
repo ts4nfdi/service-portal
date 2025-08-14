@@ -7,7 +7,10 @@ import {signOut} from "next-auth/react";
 export default function Logout() {
 
     function logout() {
-        signOut({callbackUrl: "https://terminology.services.base4nfdi.de/"});
+        // signOut({callbackUrl: "https://terminology.services.base4nfdi.de/"});
+        signOut({redirect: false}).then(() => {
+            window.location.href = "https://terminology.services.base4nfdi.de/";
+        });
     }
 
     return (
