@@ -4,7 +4,7 @@ import {notFound} from "next/navigation";
 import {CollectionListMessages} from "@/app/ui/collection/collectionListMessages";
 import {Suspense} from "react";
 import {getUserToken} from "@/app/libs/auth";
-import {CollectionList} from "@/app/ui/collection/clientExports";
+import {CollectionList} from "@/app/clientExports";
 
 
 export default async function MyCollections() {

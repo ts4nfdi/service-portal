@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 import Footer from "./ui/site/footer";
 import Header from "./ui/site/header";
-import {MatomoTracker, TrackingConsentForm} from "@/app/matomo/clientExports";
+import {MatomoTracker, TrackingConsentForm} from "@/app/clientExports";
 import 'flowbite';
 
 export const metadata: Metadata = {
