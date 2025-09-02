@@ -1,7 +1,7 @@
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
 import {notFound} from "next/navigation";
-import {UserPrivacySection} from "@/app/user/dashboard/clientExports";
+import {UserPrivacySection} from "@/app/clientExports";
 
 
 export default async function UserDashboard() {

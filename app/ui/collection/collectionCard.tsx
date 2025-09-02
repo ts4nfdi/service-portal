@@ -5,8 +5,9 @@ import {ModalButton, Modal} from "../commons/modal";
 import {WarningAlert} from "../commons/snippets";
 import {deleteCollection} from "@/app/api/actions/collections";
 import {TrashIcon, EditIcon} from "../commons/icons";
-import {CopyToClipboard} from "@/app/ui/commons/clientExports";
+import {CopyToClipboard} from "@/app/clientExports";
 import './styles.css';
+import Link from "next/link";
 
 
 type CmpProps = {
@@ -28,7 +29,9 @@ export default function CollectionCard(props: CmpProps) {
     return (
         <div className="collection-card" key={props.collection.id}>
             <div className="grid grid-cols-10" key={"collection-card-header"}>
-                <p className="header-4 col-span-9" key={"collection-title"}>{props.collection.label}</p>
+                <Link href={"/collection/" + props.collection.id} className="col-span-9">
+                    <p className="header-4" key={"collection-title"}>{props.collection.label}</p>
+                </Link>
                 <div className="col-span-1 grid grid-rows-1 p-0" key={"trash-icon"}>
                     <ModalButton label={<TrashIcon/>} targetModalId={"delete-collection-conf-" + props.collection.id}
                                  classNames="!bg-transparent !p-0 !text-white"/>
