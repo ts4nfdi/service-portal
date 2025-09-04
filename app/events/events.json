@@ -1,5 +1,39 @@
 [
   {
+    "name": "4th BioHackathon Germany, Walsrode",
+    "date": "01 + 05 December 2025",
+    "formal_date": "2025-12-05",
+    "links": [
+      {
+        "type" :  "webpage (workshop)",
+        "link" :  "https://www.denbi.de/de-nbi-events/1840-4th-biohackathon-germany"
+      }
+    ]
+  },{
+    "name": "4. Workshop: Ontologies4Chem, Limburg",
+    "date": "11 + 13 November 2025",
+    "formal_date": "2025-11-13",
+    "links": [
+      {
+        "type" :  "webpage (workshop)",
+        "link" :  "https://www.nfdi4chem.de/event/4-workshop-ontologies4chem/"
+      }
+    ]
+  },{
+    "name": "OntoPortal Workshop 2025, Berlin",
+    "date": "29 September - 3 October 2025",
+    "formal_date": "2025-10-03"
+  },{
+    "name": "Metadata & PID Workflows: Joint Workshop for ELN and DMP Tools, Berlin",
+    "date": "22 + 23 September 2025",
+    "formal_date": "2025-09-23",
+    "links": [
+      {
+        "type" :  "webpage (workshop)",
+        "link" :  "https://events.hifis.net/event/2908/overview"
+      }
+    ]
+  },{
     "name": "2nd Base4NFDI User Conference, Aachen",
     "date": "28 + 29 August 2025",
     "formal_date": "2025-08-28",
@@ -318,7 +352,7 @@
     ]
   },
   {
-    "name": "BioHackathon Germany 2023, Bielefeld",
+    "name": "2nd BioHackathon Germany 2023, Bielefeld",
     "date": "11 - 15 December 2023",
     "formal_date": "2023-12-11",
     "links": [
