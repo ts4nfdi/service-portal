@@ -1,7 +1,7 @@
 import '../ui/widgets/styles.css';
 import Link from "next/link";
 import {BookOpenIcon, SearchIcon, ListIcon} from '../ui/commons/icons';
-import {InfoAlert} from "@/app/ui/commons/clientExports";
+import {InfoAlert} from "@/app/clientExports";
 
 
 export default function Widgets() {

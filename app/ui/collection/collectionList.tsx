@@ -14,7 +14,7 @@ export default function CollectionListCmp(props: { collections: Collection[] }) 
         let filteredCollections: Collection[] = [];
         if (query) {
             query = query.toLowerCase();
-            filteredCollections = collectionsList.filter((collection: Collection) => {
+            filteredCollections = props.collections.filter((collection: Collection) => {
                 if (collection.label.toLowerCase().includes(query)) {
                     return true
                 }

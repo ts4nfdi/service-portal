@@ -1,8 +1,8 @@
 import {getAllDatabases} from "@/app/api/actions/databases";
 import {Database} from "@/app/api/actions/types";
 import {DatabaseIcon} from "@/app/ui/commons/icons";
-import {CopyToClipboard} from "@/app/ui/commons/clientExports";
-import {InfoAlert} from "@/app/ui/commons/clientExports";
+import {CopyToClipboard} from "@/app/clientExports";
+import {InfoAlert} from "@/app/clientExports";
 
 
 export default async function Databases() {
