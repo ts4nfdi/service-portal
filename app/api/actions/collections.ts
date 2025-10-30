@@ -9,7 +9,7 @@ import {
   SERVER_ERROR_MESSAGE,
   MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
-import { PortalCollection, PortalCollectionJsonData, PortalTerminologyJsonData } from "@/app/concepts";
+import { PortalCollection, PortalCollectionJsonData } from "@/app/concepts";
 
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
@@ -74,7 +74,6 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
       headers: await getHttpHeaderForGateway(token),
       body: JSON.stringify(formData)
     });
-    console.log("status:.................... ", resp.status)
     if (!resp.ok) {
       return { status: false, content: REQUEST_FAILED_MESSAGE }
     }
