@@ -41,3 +41,15 @@ export type Database = {
   searchUrl?: string,
   artefactsUrl?: string,
 }
+
+export type ZenodoPublication = {
+  doi?: string,
+  doi_url?: string,
+  title?: string,
+  metadata?: {
+    resource_type: {
+      title: string
+    }
+  },
+  created?: string
+}
