@@ -5,15 +5,24 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+type NavbarItem = {
+  href: string,
+  text: string,
+  children?: NavbarItem[]
+}
 
-const navItems = [
+const navItems: NavbarItem[] = [
   { href: "/widgets", text: "Lookup Service" },
   { href: "/databases", text: "Databases" },
   { href: "/incubators", text: "Incubators" },
-  { href: "/publications", text: "Publications" },
-  { href: "/events", text: "Events" },
-  { href: "/documentation", text: "Documentation" },
-  { href: "/about", text: "About" },
+  {
+    href: "", text: "Info", children: [
+      { href: "/publications", text: "Publications" },
+      { href: "/events", text: "Events" },
+      { href: "/documentation", text: "Documentation" },
+      { href: "/about", text: "About" }
+    ]
+  },
   { href: "/contact", text: "Contact" },
 ];
 
@@ -37,7 +46,7 @@ export default function NavBarOptions() {
           </Link>
         </div>
         <div className="hidden sm:ml-6 sm:block">
-          <div className="flex space-x-4">
+          <div className="flex-row item-start space-x-2">
             <Link
               href={'/'}
               className={"navbar-links " + (path === "/home" || path === '/' ? "navbar-link-active" : "")}
@@ -45,15 +54,18 @@ export default function NavBarOptions() {
             </Link>
             {
               navItems.map((item) => {
-                return (
-                  <Link
-                    href={item.href}
-                    className={"navbar-links " + (path.includes(item.href) ? "navbar-link-active" : "")}
-                    key={item.text}
-                  // prefetch={true}
-                  >{item.text}
-                  </Link>
-                )
+                if (!item.children) {
+                  return (
+                    <Link
+                      href={item.href}
+                      className={"navbar-links " + (path.includes(item.href) ? "navbar-link-active" : "")}
+                      key={item.text}
+                    >{item.text}
+                    </Link>
+                  )
+                }
+                return (<>{renderAsDropdown(item, !!item.children.find((rec: NavbarItem) => path.includes(rec.href)))}</>);
+
               })
             }
           </div>
@@ -96,5 +108,49 @@ export function NavBarOptionsMobile() {
         </div>
       </div>
     </>
+  );
+}
+
+
+function renderAsDropdown(navItem: NavbarItem, selected: boolean) {
+
+  function closeOrOpen() {
+    let menu = document.getElementById("dropdownNavbar")! as HTMLDivElement;
+    if (menu.classList.contains("hidden")) {
+      menu.classList.remove("hidden");
+      return;
+    }
+    menu.classList.add("hidden");
+    return;
+  }
+
+
+  return (
+    <div className="relative inline-block text-left">
+      <Link href={""} id="dropdownNavbarLink" className={"navbar-links " + (selected ? "navbar-link-active" : "")} onClick={closeOrOpen}>
+        {navItem.text}
+        <svg className="w-2.5 h-2.5 ms-2.5 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+        </svg>
+      </Link>
+      <div
+        id="dropdownNavbar"
+        className="absolute mt-2 z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600"
+      >
+        {navItem.children!.map((item: NavbarItem) => {
+          return (
+            <Link
+              href={item.href}
+              className="block px-4 py-2 hover:rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              onClick={closeOrOpen}
+              key={"dropdown-item-" + item.text}
+            >
+              {item.text}
+            </Link>
+          );
+        })}
+      </div>
+
+    </div >
   );
 }
