@@ -1,5 +1,6 @@
+'use server';
 
-import nodemailer from 'nodemailer';
+import { createTransport } from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import EmailTemplate from '../ui/email/template';
 
@@ -27,17 +28,10 @@ type EmailMessage = {
 
 
 export async function sendEmail(props: InputProps): Promise<boolean> {
-  console.log("host name: ", process.env.SMTP_HOST_NAME)
-  console.log("host port: ", process.env.SMTP_PORT)
-  const transporter = nodemailer.createTransport({
+  const transporter = createTransport({
     host: process.env.SMTP_HOST_NAME,
     port: process.env.SMTP_PORT,
     secure: false,
-    //auth: {
-    //user: process.env.SMTP_USERNAME,
-    //pass: process.env.SMTP_PASSWORD,
-    //},
-    //name: process.env.NEXTAUTH_URL! as string,
     connectionTimeout: 10000,
     tls: {
       rejectUnauthorized: false,
@@ -72,7 +66,6 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   }
 
   const info = await transporter.sendMail(message);
-  console.log("smtp email transport result: ", info)
   if (info.accepted.length > 0) {
     return true;
   }

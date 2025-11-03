@@ -1,3 +1,4 @@
+'use server';
 
 import { ActionResponse, ContactForm } from './types';
 import { sendEmail } from '@/app/libs/email';
