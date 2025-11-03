@@ -35,9 +35,9 @@ export type Terminology = {
 }
 
 export type Database = {
-  type: string,
-  name: string,
-  url: string,
-  searchUrl: string,
-  artefactsUrl: string,
+  type?: string,
+  name?: string,
+  url?: string,
+  searchUrl?: string,
+  artefactsUrl?: string,
 }
