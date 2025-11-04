@@ -21,7 +21,9 @@
       "logo": "radar.svg",
       "logoW": 300,
       "logoH": 300,
-      "publications": ["https://doi.org/10.5281/zenodo.17090276", "https://doi.org/10.5281/zenodo.16736267"]
+      "publications": ["https://doi.org/10.5281/zenodo.17090276", "https://doi.org/10.5281/zenodo.16736267",
+        "https://radar.products.fiz-karlsruhe.de/en/nachricht/radar-release-v123-ts4nfdi-integration-abgeschlossen"],
+      "activityPage": "https://www.radar-service.eu/radar/en/home"
     },
     {
       "title": "WDCC - World Data Center for Climate",
@@ -61,7 +63,7 @@
       "logo": "chebi.png",
       "logoW": 400,
       "logoH": 400,
-      "activityPage": "https://wwwdev.ebi.ac.uk/chebi/CHEBI:24431"
+      "activityPage": "https://www.ebi.ac.uk/chebi/CHEBI:27732"
     },
     {
       "title": "Coconut",
@@ -88,7 +90,8 @@
       "logo": "nfdi4cat.png",
       "logoW": 300,
       "logoH": 200,
-      "publications": ["https://doi.org/10.5281/zenodo.16736362"]
+      "publications": ["https://doi.org/10.5281/zenodo.16736362"],
+      "activityPage": "https://semanticlookup.zbmed.de/skosmos/voc4cat/en/"
     },
     {
       "title": "BERD Terminology Service",
@@ -178,7 +181,8 @@
       "consortium": ["NFDI4Energy"],
       "logo": "oep.svg",
       "logoW": 200,
-      "logoH": 200
+      "logoH": 200,
+      "activityPage": "https://openenergyplatform.org/viewer/oeo/"
     },
     {
       "title": "ICONCLASS",
@@ -217,7 +221,8 @@
       "consortium": ["NFDI4Health"],
       "logo": "nfdi4health.png",
       "logoW": 300,
-      "logoH": 300
+      "logoH": 300,
+      "activityPage" : "https://health-study-hub.de/resource/nfdi4health-108"
     },
     {
       "title": "DALIA Search Portal",
