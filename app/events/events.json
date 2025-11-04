@@ -1,7 +1,7 @@
 [
   {
     "name": "4th BioHackathon Germany, Walsrode",
-    "date": "01 + 05 December 2025",
+    "date": "01 - 05 December 2025",
     "formal_date": "2025-12-05",
     "links": [
       {
@@ -17,6 +17,19 @@
       {
         "type" :  "webpage (workshop)",
         "link" :  "https://www.nfdi4chem.de/event/4-workshop-ontologies4chem/"
+      }
+    ]
+  },{
+    "name": "International Data Week (IDW 2025), Brisbane",
+    "date": "13 - 16 October 2025",
+    "formal_date": "2025-10-16",
+    "links": [
+      {
+        "type" : "slides",
+        "link" : "https://doi.org/10.5281/zenodo.17518149"
+      },{
+        "type" :  "webpage (conference)",
+        "link" :  "https://scidatacon.org/event/9/contributions/54/"
       }
     ]
   },{
