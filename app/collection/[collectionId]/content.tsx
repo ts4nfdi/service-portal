@@ -35,12 +35,12 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
             <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
           </div>
         </div>
-        <div className="col-span-1 flex flex-col flex-wrap" key={"trash-icon"}>
+        {/*<div className="col-span-1 flex flex-col flex-wrap" key={"trash-icon"}>
           <ModalButton label={<TrashIcon />} targetModalId={"delete-collection-conf-" + props.collection.id}
             classNames="!bg-transparent !p-0 !text-white" />
           <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
             key={"edit-collection"}><EditIcon /></a>
-        </div>
+        </div>*/}
       </div>
       <Modal
         id={"delete-collection-conf-" + props.collection.id}

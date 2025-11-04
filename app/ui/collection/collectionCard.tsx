@@ -32,7 +32,7 @@ export default function CollectionCard(props: CmpProps) {
         <Link href={"/collection/" + props.collection.id} className="col-span-9">
           <p className="header-4" key={"collection-title"}>{props.collection.label}</p>
         </Link>
-        <div className="col-span-1 grid grid-rows-1 p-0" key={"trash-icon"}>
+        {/*<div className="col-span-1 grid grid-rows-1 p-0" key={"trash-icon"}>
           <ModalButton label={<TrashIcon />} targetModalId={"delete-collection-conf-" + props.collection.id}
             classNames="!bg-transparent !p-0 !text-white" />
           <Modal
@@ -49,7 +49,7 @@ export default function CollectionCard(props: CmpProps) {
           />
           <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
             key={"edit-collection"}><EditIcon /></a>
-        </div>
+        </div>*/}
       </div>
       <div key={"label-and-copy"}>
         <p key={"collection-id"} className="inline-block">{props.collection.id}</p>

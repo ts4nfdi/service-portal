@@ -38,6 +38,29 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
 }
 
 
+export async function getPublicCollectionList(): Promise<ActionResponse> {
+  try {
+
+    let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/collections/", {
+      headers: await getHttpHeaderForGateway()
+    });
+    if (!resp.ok) {
+      return { status: false, content: REQUEST_FAILED_MESSAGE }
+    }
+    let res: Collection[] = await resp.json();
+    let portalCols: PortalCollectionJsonData[] = [];
+    for (let col of res) {
+      let pCollection = new PortalCollection(col);
+      portalCols.push(pCollection.toJson());
+    }
+    return { status: true, content: portalCols }
+
+  } catch {
+    return { status: false, content: SERVER_ERROR_MESSAGE }
+  }
+}
+
+
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
   try {
     let token = await getUserToken();

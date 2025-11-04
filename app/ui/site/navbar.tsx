@@ -13,6 +13,7 @@ type NavbarItem = {
 
 const navItems: NavbarItem[] = [
   { href: "/widgets", text: "Lookup Service" },
+  { href: "/collection/collections", text: "Collections" },
   { href: "/databases", text: "Databases" },
   { href: "/incubators", text: "Incubators" },
   {
