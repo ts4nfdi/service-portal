@@ -20,7 +20,7 @@ export class PortalDatabase {
   constructor(dbData: Database = {}) {
     this._type = dbData.type ?? "";
     this._url = dbData.url ?? "";
-    this._name = dbData.url ?? "";
+    this._name = dbData.name ?? "";
     this._searchUrl = dbData.searchUrl ?? "";
     this._artefactsUrl = dbData.artefactsUrl ?? "";
   }

@@ -87,7 +87,7 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
     let formData: Collection = {
       label: newCollection.label,
       description: newCollection.description,
-      isPublic: !newCollection.isPublic,
+      isPublic: newCollection.isPublic,
       terminologies: terminologiesData,
       collaborators: newCollection.collaborators
     };

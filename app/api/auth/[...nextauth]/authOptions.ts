@@ -27,7 +27,10 @@ export const authOptions = ({
     //@ts-ignore
     async jwt({ token, user }) {
       if (token?.expiration && new Date(token.expiration).getTime() < Date.now()) {
-        return null;
+        token.token = "";
+        token.username = "";
+        token.expiration = "";
+        return token;
       }
       if (user) {
         token.token = user.token;
@@ -40,7 +43,7 @@ export const authOptions = ({
     //@ts-ignore
     async session({ session, token }) {
       if (!token) {
-        return null;
+        return { user: undefined };
       }
       session.user.token = token.token as string;
       session.user.username = token.username as string;

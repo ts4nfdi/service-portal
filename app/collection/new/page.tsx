@@ -10,9 +10,13 @@ import { Loading, TextArea } from "@/app/ui/commons/snippets";
 import { ToggleButton } from "@/app/ui/commons/snippets";
 import { getAllDatabases, getDatabasedListOfTerminologies } from "@/app/api/actions/databases";
 import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
+import { useSession } from "next-auth/react";
+import LoginFormWrapper from "@/app/user/login/page";
 
 
 export default function NewCollection() {
+
+  const session = useSession();
 
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
@@ -54,7 +58,7 @@ export default function NewCollection() {
       setLoading(true);
 
       let res = await createCollection(pCollection.toJson());
-      window.location.href = `/collection/myCollections?created=${res.status}`;
+      // window.location.href = `/collection/myCollections?created=${res.status}`;
 
     } catch {
       return;
@@ -95,6 +99,12 @@ export default function NewCollection() {
       setDbs(databases);
     })
   }, []);
+
+  if (!session?.data?.user.token && session.status !== "loading") {
+    return <><LoginFormWrapper /></>;
+  } else if (session.status === "loading") {
+    return <div className="md:col-span-2"><Loading /></div>;
+  }
 
   return (
     <div className="md:col-span-2 content-panel">

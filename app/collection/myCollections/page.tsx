@@ -1,15 +1,15 @@
 import { getUserCollectionList } from "@/app/api/actions/collections";
-import { notFound } from "next/navigation";
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { Suspense } from "react";
 import { getUserToken } from "@/app/libs/auth";
 import { CollectionList } from "@/app/clientExports";
+import LoginFormWrapper from "@/app/user/login/page";
 
 
 export default async function MyCollections() {
   let token = await getUserToken();
   if (!token) {
-    notFound();
+    return <LoginFormWrapper />;
   }
 
   let collectionsResp = await getUserCollectionList();
