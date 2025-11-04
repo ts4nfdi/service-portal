@@ -95,14 +95,26 @@ export function NavBarOptionsMobile() {
           </Link>
           {
             navItems.map((item) => {
+              if (!item.children) {
+                return (
+                  <Link
+                    href={item.href}
+                    className={"navbar-links-mobile " + (path.includes(item.href) ? "navbar-link-active" : "")}
+                    key={item.text}
+                  >{item.text}
+                  </Link>
+                )
+              }
               return (
-                <Link
-                  href={item.href}
-                  className={"navbar-links-mobile " + (path.includes(item.href) ? "navbar-link-active" : "")}
-                  key={item.text}
-                >{item.text}
-                </Link>
-              )
+                <>
+                  {renderAsDropdown(
+                    item,
+                    !!item.children.find((rec: NavbarItem) => path.includes(rec.href)),
+                    true
+                  )}
+                </>
+              );
+
             })
           }
         </div>
@@ -112,22 +124,15 @@ export function NavBarOptionsMobile() {
 }
 
 
-function renderAsDropdown(navItem: NavbarItem, selected: boolean) {
+function renderAsDropdown(navItem: NavbarItem, selected: boolean, isMobile: boolean = false) {
 
-  function closeOrOpen() {
-    let menu = document.getElementById("dropdownNavbar")! as HTMLDivElement;
-    if (menu.classList.contains("hidden")) {
-      menu.classList.remove("hidden");
-      return;
-    }
-    menu.classList.add("hidden");
-    return;
-  }
+  const [isOpen, setIsOpen] = useState(false);
 
+  const navbarClass = isMobile ? "navbar-links-mobile " : "navbar-links ";
 
   return (
     <div className="relative inline-block text-left">
-      <Link href={""} id="dropdownNavbarLink" className={"navbar-links " + (selected ? "navbar-link-active" : "")} onClick={closeOrOpen}>
+      <Link href={""} id="dropdownNavbarLink" className={navbarClass + (selected ? "navbar-link-active" : "")} onClick={() => setIsOpen(!isOpen)}>
         {navItem.text}
         <svg className="w-2.5 h-2.5 ms-2.5 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
@@ -135,14 +140,14 @@ function renderAsDropdown(navItem: NavbarItem, selected: boolean) {
       </Link>
       <div
         id="dropdownNavbar"
-        className="absolute mt-2 z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600"
+        className={"absolute mt-2 z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600" + (isOpen ? "" : " hidden")}
       >
         {navItem.children!.map((item: NavbarItem) => {
           return (
             <Link
               href={item.href}
-              className="block px-4 py-2 hover:rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={closeOrOpen}
+              className="block text-sm px-4 py-2 hover:rounded hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              onClick={() => setIsOpen(!isOpen)}
               key={"dropdown-item-" + item.text}
             >
               {item.text}
