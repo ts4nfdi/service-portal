@@ -25,6 +25,9 @@
     "formal_date": "2025-10-16",
     "links": [
       {
+        "type" : "slides",
+        "link" : "https://doi.org/10.5281/zenodo.17518149"
+      },{
         "type" :  "webpage (conference)",
         "link" :  "https://scidatacon.org/event/9/contributions/54/"
       }
