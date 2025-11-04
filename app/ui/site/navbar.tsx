@@ -7,8 +7,8 @@ import {usePathname} from "next/navigation";
 
 
 const navItems = [
-    {href: "/widgets", text: "Lookup Service"},
-    {href: "/databases", text: "Databases"},
+    {href: "/tss/comp/latest/", text: "Terminology Service Suite"},
+    {href: "/databases", text: "API Gateway"},
     {href: "/incubators", text: "Incubators"},
     {href: "/publications", text: "Publications"},
     {href: "/events", text: "Events"},
