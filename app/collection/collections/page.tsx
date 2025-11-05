@@ -1,18 +1,16 @@
-import { getUserCollectionList } from "@/app/api/actions/collections";
+
+import { getPublicCollectionList } from "@/app/api/actions/collections";
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { Suspense } from "react";
-import { getUserToken } from "@/app/libs/auth";
 import { CollectionList } from "@/app/clientExports";
-import LoginFormWrapper from "@/app/user/login/page";
+import { getUserToken } from "@/app/libs/auth";
 
 
-export default async function MyCollections() {
+export default async function Collections() {
+
   let token = await getUserToken();
-  if (!token) {
-    return <LoginFormWrapper />;
-  }
 
-  let collectionsResp = await getUserCollectionList();
+  let collectionsResp = await getPublicCollectionList();
   if (!collectionsResp.status) {
     return "";
   }
@@ -21,7 +19,7 @@ export default async function MyCollections() {
     <div className="md:col-span-3 p-4" key={"my_collection"}>
       <Suspense> <CollectionListMessages /> </Suspense>
       <p className="header-2">TS4NFDI Collections</p>
-      <a href="/collection/new/" className="btn">Create Collection</a>
+      {token && <a href="/collection/new/" className="btn">Create Collection</a>}
       <CollectionList collections={collectionsResp.content} />
     </div>
   );
