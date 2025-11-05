@@ -65,7 +65,14 @@ export default function NavBarOptions() {
                     </Link>
                   )
                 }
-                return (<>{renderAsDropdown(item, !!item.children.find((rec: NavbarItem) => path.includes(rec.href)))}</>);
+                return (<>
+                  <RenderAsDropdown
+                    navItem={item}
+                    selected={!!item.children.find((rec: NavbarItem) => path.includes(rec.href))}
+                    isMobile={false}
+                  />
+                </>
+                );
 
               })
             }
@@ -95,7 +102,7 @@ export function NavBarOptionsMobile() {
           >Home
           </Link>
           {
-            navItems.map((item) => {
+            navItems.map((item: NavbarItem) => {
               if (!item.children) {
                 return (
                   <Link
@@ -108,11 +115,11 @@ export function NavBarOptionsMobile() {
               }
               return (
                 <>
-                  {renderAsDropdown(
-                    item,
-                    !!item.children.find((rec: NavbarItem) => path.includes(rec.href)),
-                    true
-                  )}
+                  <RenderAsDropdown
+                    navItem={item}
+                    selected={!!item.children.find((rec: NavbarItem) => path.includes(rec.href))}
+                    isMobile={true}
+                  />
                 </>
               );
 
@@ -125,8 +132,8 @@ export function NavBarOptionsMobile() {
 }
 
 
-function renderAsDropdown(navItem: NavbarItem, selected: boolean, isMobile: boolean = false) {
-
+function RenderAsDropdown(props: { navItem: NavbarItem, selected: boolean, isMobile: boolean }) {
+  const { navItem, selected, isMobile } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const navbarClass = isMobile ? "navbar-links-mobile " : "navbar-links ";

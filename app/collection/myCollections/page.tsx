@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { getUserToken } from "@/app/libs/auth";
 import { CollectionList } from "@/app/clientExports";
 import LoginFormWrapper from "@/app/user/login/page";
+import Link from "next/link";
 
 
 export default async function MyCollections() {
@@ -21,7 +22,7 @@ export default async function MyCollections() {
     <div className="md:col-span-3 p-4" key={"my_collection"}>
       <Suspense> <CollectionListMessages /> </Suspense>
       <p className="header-2">TS4NFDI Collections</p>
-      <a href="/collection/new/" className="btn">Create Collection</a>
+      <Link href="/collection/new/" className="btn">Create Collection</Link>
       <CollectionList collections={collectionsResp.content} />
     </div>
   );
