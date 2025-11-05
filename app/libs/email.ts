@@ -31,6 +31,11 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   const transporter = createTransport({
     host: process.env.SMTP_HOST_NAME,
     port: process.env.SMTP_PORT,
+    // auth: {
+    //   user: process.env.SMTP_USERNAME,
+    //   pass: process.env.SMTP_PASSWORD,
+    // },
+    // name: process.env.NEXTAUTH_URL! as string,
     secure: false,
     connectionTimeout: 10000,
     tls: {
@@ -66,6 +71,7 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   }
 
   const info = await transporter.sendMail(message);
+  console.log("email resp ", info);
   if (info.accepted.length > 0) {
     return true;
   }

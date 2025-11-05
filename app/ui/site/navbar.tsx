@@ -12,9 +12,9 @@ type NavbarItem = {
 }
 
 const navItems: NavbarItem[] = [
-  { href: "/widgets", text: "Lookup Service" },
+  { href: "/tss/comp/latest/", text: "Terminology Service Suite" },
+  { href: "/databases", text: "API Gateway" },
   { href: "/collection/collections", text: "Collections" },
-  { href: "/databases", text: "Databases" },
   { href: "/incubators", text: "Incubators" },
   {
     href: "", text: "Info", children: [

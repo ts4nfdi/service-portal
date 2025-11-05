@@ -26,7 +26,7 @@ export default function NewCollection() {
     "label": string,
     "iri": string,
     source: string
-  }[]>();
+  }[]>([]);
   const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
 
 
@@ -58,7 +58,7 @@ export default function NewCollection() {
       setLoading(true);
 
       let res = await createCollection(pCollection.toJson());
-      // window.location.href = `/collection/myCollections?created=${res.status}`;
+      window.location.href = `/collection/myCollections?created=${res.status}`;
 
     } catch {
       return;
@@ -147,7 +147,8 @@ export default function NewCollection() {
             {autocompleteIsLoaded &&
               <AutoCompleteTSS
                 setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
-                  setSelectedTerminologies(terms);
+                  let selected = terms.filter((term) => !preselectedTerminologies.find((preSelectedTerm) => preSelectedTerm.iri === term.iri));
+                  setSelectedTerminologies([...preselectedTerminologies, ...selected]);
                   (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
                 }}
                 label="Terminologies"
