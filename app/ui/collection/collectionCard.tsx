@@ -1,9 +1,9 @@
 'use client'
 
-import { ModalButton, Modal } from "../commons/modal";
-import { WarningAlert } from "../commons/snippets";
-import { deleteCollection } from "@/app/api/actions/collections";
-import { TrashIcon, EditIcon } from "../commons/icons";
+// import { ModalButton, Modal } from "../commons/modal";
+// import { WarningAlert } from "../commons/snippets";
+// import { deleteCollection } from "@/app/api/actions/collections";
+// import { TrashIcon, EditIcon } from "../commons/icons";
 import { CopyToClipboard } from "@/app/clientExports";
 import './styles.css';
 import Link from "next/link";

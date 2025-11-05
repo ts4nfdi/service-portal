@@ -1,9 +1,9 @@
 'use client'
 
-import { Modal, ModalButton } from "@/app/ui/commons/modal";
-import { EditIcon, TrashIcon } from "@/app/ui/commons/icons";
-import { WarningAlert } from "@/app/ui/commons/snippets";
-import { deleteCollection } from "@/app/api/actions/collections";
+// import { Modal } from "@/app/ui/commons/modal";
+// import { EditIcon, TrashIcon } from "@/app/ui/commons/icons";
+// import { WarningAlert } from "@/app/ui/commons/snippets";
+// import { deleteCollection } from "@/app/api/actions/collections";
 import { CopyToClipboard } from "@/app/clientExports";
 import { PortalCollection, PortalTerminology, PortalCollectionJsonData } from "@/app/concepts";
 
@@ -42,7 +42,7 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
             key={"edit-collection"}><EditIcon /></a>
         </div>*/}
       </div>
-      <Modal
+      {/*<Modal
         id={"delete-collection-conf-" + props.collection.id}
         title={"Delete Collection: " + props.collection.label}
         content={<WarningAlert
@@ -53,7 +53,7 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
           let resp = await deleteCollection(props.collection.id!);
           window.location.href = `/collection/myCollections?deleted=${resp.status}`;
         }}
-      />
+      />*/}
     </>
   )
 }

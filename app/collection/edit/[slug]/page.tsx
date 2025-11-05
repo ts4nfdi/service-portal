@@ -124,6 +124,7 @@ export default function CollectionEdit() {
                   label="Terminologies"
                   placeholder="Choose your terminologies ..."
                   parameter="type=ontology"
+                  //@ts-ignore
                   preselected={preselectedTerminologies}
                   required
                 />
