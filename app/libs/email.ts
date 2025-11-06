@@ -31,12 +31,12 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   const transporter = createTransport({
     host: process.env.SMTP_HOST_NAME,
     port: process.env.SMTP_PORT,
-    // auth: {
-    //   user: process.env.SMTP_USERNAME,
-    //   pass: process.env.SMTP_PASSWORD,
-    // },
-    // name: process.env.NEXTAUTH_URL! as string,
-    secure: false,
+    auth: {
+      user: process.env.SMTP_USERNAME,
+      pass: process.env.SMTP_PASSWORD,
+    },
+    name: process.env.NEXTAUTH_URL! as string,
+    // secure: false,
     connectionTimeout: 10000,
     tls: {
       rejectUnauthorized: false,
@@ -52,7 +52,7 @@ export async function sendEmail(props: InputProps): Promise<boolean> {
   }
 
   const message: EmailMessage = {
-    from: process.env.SERVICE_EMAIL,
+    from: "Service Portal (TS4NFDI) " + process.env.SERVICE_EMAIL,
     to: process.env.CONTACT_RECV_EMAIL,
     subject: props.subject,
     html: EmailTemplate({ title: props.subject, content: props.html ?? "", senderEmail: props.senderEmail })
