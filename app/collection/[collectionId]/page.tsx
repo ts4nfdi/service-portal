@@ -1,14 +1,21 @@
-import { getUserCollectionList } from "@/app/api/actions/collections";
+import { getPublicCollectionList, getUserCollectionList } from "@/app/api/actions/collections";
 import { ErrorAlert } from "@/app/ui/commons/snippets";
 import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
 import { PortalCollectionJsonData } from "@/app/concepts";
+import { getUserToken } from "@/app/libs/auth";
 
 
 //@ts-ignore
 export default async function CollectionPage({ params }) {
 
-  const collectionsListResp = await getUserCollectionList();
+  let token = await getUserToken();
+  let collectionsListResp: any;
+  if (!token) {
+    collectionsListResp = await getPublicCollectionList();
+  } else {
+    collectionsListResp = await getUserCollectionList();
+  }
   if (!collectionsListResp.status) {
     return renderNotFoundPage();
   }
