@@ -22,7 +22,7 @@ type CmpType = {
   placeholder?: string,
   parameter?: string,
   api?: string,
-  preselected?: { "label": string, "iri": string }[]
+  preselected?: { "label": string, "iri": string, "source": string }[]
 }
 
 export default function AutoCompleteTSS(props: CmpType) {
