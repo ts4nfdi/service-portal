@@ -12,16 +12,21 @@ type NavbarItem = {
 }
 
 const navItems: NavbarItem[] = [
-  { href: "/tss/comp/latest/", text: "Terminology Service Suite" },
-  { href: "/databases", text: "API Gateway" },
+  {
+    href: "", text: "Tools", children: [
+      { href: "/databases", text: "API Gateway" },
+      { href: "https://coli-conc.gbv.de/cocoda/ts4nfdi/", text: "Mapping Service" },
+      { href: "/tss/comp/latest/", text: "Terminology Service Suite" }
+    ]
+  },
   { href: "/collection/collections", text: "Collections" },
   { href: "/incubators", text: "Incubators" },
   {
     href: "", text: "Info", children: [
-      { href: "/publications", text: "Publications" },
-      { href: "/events", text: "Events" },
+      { href: "/about", text: "About" },
       { href: "/documentation", text: "Documentation" },
-      { href: "/about", text: "About" }
+      { href: "/events", text: "Events" },
+      { href: "/publications", text: "Publications" }
     ]
   },
   { href: "/contact", text: "Contact" },
@@ -73,13 +78,11 @@ export default function NavBarOptions() {
                   />
                 </>
                 );
-
               })
             }
           </div>
         </div>
       </div>
-
     </>
   );
 }
@@ -122,7 +125,6 @@ export function NavBarOptionsMobile() {
                   />
                 </>
               );
-
             })
           }
         </div>
