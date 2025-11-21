@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth";
 import UserProfileMenuItems from "./profileMenuItems";
 import Link from "next/link";
-import './style.css';
+import './styles.css';
 
 
 export default async function UserProfileMenu() {

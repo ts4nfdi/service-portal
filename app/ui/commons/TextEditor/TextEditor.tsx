@@ -15,7 +15,7 @@ import draftToHtml from 'draftjs-to-html';
 import DOMPurify from 'dompurify';
 import {TextEditorProps} from '../types';
 import {useState, useEffect} from 'react';
-import './style.css';
+import './styles.css';
 
 
 const TextEditor = (props: TextEditorProps) => {
