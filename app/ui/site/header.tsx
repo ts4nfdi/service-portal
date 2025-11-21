@@ -1,7 +1,7 @@
 import NavBarOptions, { NavBarOptionsMobile } from "./navbar";
 import UserProfileMenu from "../user/profileMenu";
 import HamburgerBtn from "./hamburgerBtn";
-import './syles.css';
+import './styles.css';
 
 export default function Header() {
 
