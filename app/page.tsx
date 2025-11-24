@@ -28,9 +28,9 @@ export default function Home() {
                     </p>
                 </div>
                 <div className='md:col-span-4 card-background float-right'>
+                    {/*TODO: replace url with the explainer video*/}
                     <iframe
                         className="w-full aspect-video self-stretch md:min-h-96"
-                        {/*TODO: replace url with the explainer video*/}
                         src="https://www.youtube.com/embed/crYgdEjliFY"
                         frameBorder="0"
                         title="TS4NFDI quickly explained"
