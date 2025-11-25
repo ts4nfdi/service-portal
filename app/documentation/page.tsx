@@ -77,18 +77,17 @@ export default function Documentation() {
 
       <a href="#mapping-service"><p className="header-2" id="mapping-service">4. Mapping Service </p></a>
       <p className="text-justify">
-        A crucial component of the TS4NFDI system is the NFDI-wide Mapping Service, which facilitates cross-domain
-        interoperability by enabling the alignment of terminologies from different disciplines.
-        The mappings are based on the Simple Standard for Sharing Ontological Mappings (SSSOM), ensuring that
-        mappings are shared and accessible in a standard format across the NFDI community.
-        The Mapping Service allows users to create, manage, and retrieve mappings between terms from different vocabularies
-        or ontologies. These mappings enable the discovery of semantic equivalences and relationships across disciplines,
-        fostering a more integrated understanding of domain-specific knowledge.
-        The software <a href="https://github.com/gbv/cocoda" target="_blank">Cocoda</a> was selected for the NFDI-wide mapping service.
-        Cocoda is published under a MIT license on GitHub and is based on Vue.js.
+        The NFDI-wide Mapping Service facilitates cross-domain interoperability by enabling the alignment of terminologies
+        from different disciplines. The Mapping Service allows users to create, manage, retrieve, and review mappings between
+        concepts from different vocabularies and ontologies. These mappings enable the discovery of semantic equivalences and
+        relationships across disciplines, fostering a more integrated understanding of domain-specific knowledge.
+        The Mapping Service runs with <a href="https://github.com/gbv/cocoda" target="_blank">Cocoda</a> web application (Vue.js)
+        for frontend and <a href="https://github.com/gbv/jskos-server" target="_blank">jskos-server</a> (NodeJS) for backend database
+        and web service API, and <a href="https://www.npmjs.com/package/cocoda-sdk" target="_blank">cocoda-sdk</a> (NodeJS library) to
+        access terminology services such as the API Gateway.
       </p>
       <p className="text-justify">
-        The current development version of the mapping service is available at
+        The current development version of the Mapping Service is available at
         <a href="https://coli-conc.gbv.de/cocoda/ts4nfdi/" target="_blank">https://coli-conc.gbv.de/cocoda/ts4nfdi/</a>
       </p>
 
