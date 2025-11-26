@@ -18,7 +18,12 @@ export default function Home() {
                 </div>
                 <div className='md:col-span-5 card-background min-h-[50px]'>
                     <h3 className='header-main-3'>What is TS4NFDI?</h3>
-                    <p className='text-justify'>
+                    <p className='text-justify my-5'>
+                        An overarching research data management across all domains is built upon metadata describing
+                        research data and their generation. To make sure that disciplines can create and share a common
+                        understanding of the concepts and relations used to describe data, we need terminologies as a
+                        formal representation of domain knowledge.
+                    </p><p className='text-justify my-5'>
                         Terminology Services 4 NFDI (TS4NFDI) is a cross-domain service for the provision, curation,
                         development, harmonization, and mapping of terminologies. It aims to facilitate
                         consensus-building and interoperability of services across disciplines to achieve a shared
@@ -26,15 +31,21 @@ export default function Home() {
                         and converge individual solutions into a standardized, interoperable, and sustainable
                         architecture.
                     </p>
+                    <p className='text-justify my-5'>
+                        In order to accomplish these objectives, TS4NFDI provides the following tools: the TS4NFDI
+                        Service Portal, a Terminology Service Suite (TSS), an centralised API Gateway, and a mapping
+                        service.
+                    </p>
                 </div>
                 <div className='md:col-span-4 card-background float-right'>
-                    {/*TODO: replace url with the explainer video*/}
                     <iframe
                         className="w-full aspect-video self-stretch md:min-h-96"
-                        src="https://www.youtube.com/embed/crYgdEjliFY"
+                        src="https://www.youtube.com/embed/OT4YUTvqKRI"
                         frameBorder="0"
                         title="TS4NFDI quickly explained"
                         aria-hidden="true"
+                        allow="fullscreen"
+                        allowFullScreen
                     />
                 </div>
                 <div className='md:col-span-9'>
@@ -88,8 +99,10 @@ export default function Home() {
                         style={{margin: 'auto'}}
                     />
                     <p className='text-justify my-5'>
-                        The Terminology Service Suite (TSS) is a collection of interactive web components (widgets)
-                        designed to ease the integration of terminology service functions into third-party applications.
+                        Integrating terminology data into other web services, such as annotation services or data
+                        repositories, is crucial for generating and handling FAIR data. The Terminology Service Suite
+                        (TSS) is a collection of interactive web components (widgets) designed to ease the integration
+                        of terminology service functions into third-party applications.
                     </p>
                     <p className='text-justify my-5'>
                         The widgets are built using React and TypeScript and can be used in both React and plain HTML
@@ -110,9 +123,11 @@ export default function Home() {
                         style={{margin: 'auto'}}
                     />
                     <p className='text-justify my-5'>
-                        The TS4NFDI API Gateway is a sophisticated, flexible solution that can make federated calls
-                        across multiple terminology services within the NFDI and beyond. It can query all terminology
-                        services based on the technology of Ontology Lookup Service (OLS), OntoPortal and Skosmos.
+                        For the acceptance and use of terminology data, it is essential that the data is easily
+                        accessible. The TS4NFDI API Gateway is a sophisticated, flexible solution that can make
+                        federated calls across multiple terminology services within the NFDI and beyond. It can query
+                        all terminology services based on the technology of Ontology Lookup Service (OLS), OntoPortal
+                        and Skosmos.
                     </p>
                     <p className='text-justify my-5'>
                         The API output is provided in MOD (Metadata for Ontology Description and Publication) format.
