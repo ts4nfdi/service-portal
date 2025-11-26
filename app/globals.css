@@ -60,6 +60,24 @@ body {
     @apply text-lg font-bold;
 }
 
+.header-main-1 {
+    @apply text-5xl;
+    margin-bottom: 40px;
+    color: rgb(69, 84, 107);
+}
+.header-main-2 {
+    @apply text-4xl;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    color: rgb(69, 84, 107);
+}
+
+.header-main-3 {
+    @apply text-3xl;
+    color:#6c808099;
+    margin-bottom: 20px;
+}
+
 .card {
     @apply border-black bg-white rounded-lg shadow-sm p-2 mb-2 dark:bg-gray-800;
 }
@@ -165,4 +183,17 @@ li {
 
 ol {
     list-style: decimal !important;
+}
+
+.card-background {
+    @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+}
+
+.h1-service-portal img{
+    float: left;
+    margin-right: 10px;
+}
+
+.h1-service-portal h1 {
+    position: relative;
 }

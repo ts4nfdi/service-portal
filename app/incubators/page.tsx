@@ -1,6 +1,6 @@
 'use client'
 
-import '../ui/incubators/style.css';
+import '../ui/incubators/styles.css';
 import {useState} from "react";
 import IncubatorsStatus from '../ui/incubators/status';
 import IncubatorProjects from '../ui/incubators/projects';

@@ -26,7 +26,7 @@ export default function Footer() {
                     Resources
                     <ul className="dark:!bg-white">
                         <li>
-                            <a href="https://ts4nfdi.github.io/terminology-service-suite/comp/latest/?path=/docs/overview--docs"
+                            <a href="/tss/comp/latest/"
                                target="_blank">
                                 TSS Widgets
                             </a>
