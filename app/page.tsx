@@ -17,7 +17,7 @@ export default function Home() {
                     </h1>
                 </div>
                 <div className='md:col-span-5 card-background min-h-[50px]'>
-                    <h3 className='header-main-3'>What is TS4NFDI?</h3>
+                    <h3 className='header-main-3'>What is TS4NFDI?</h3>>>>>>>>>>
                     <p className='text-justify my-5'>
                         An overarching research data management across all domains is built upon metadata describing
                         research data and their generation. To make sure that disciplines can create and share a common
