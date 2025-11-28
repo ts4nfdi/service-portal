@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  pr-build-checker:
     runs-on: ubuntu-latest
 
     steps:
