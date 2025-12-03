@@ -18,25 +18,20 @@ export default function About() {
         </p>
         <ul>
           <li className="text-justify" key={1}>
-            The Service Portal offers personalized access via Integration of IAM4NFDI and enables users to
+            The <a href="documentation#service-portal">Service Portal</a> offers personalized access via Integration of IAM4NFDI and enables users to
             manage terminologies, entity sets, and access to licensed terminologies.
           </li>
           <li className="text-justify" key={2}>
-            A Mapping Service, based on the Simple Standard for Sharing Ontology Mappings (SSSOM)
-            and leveraging the Cocoda platform, will facilitate the creation, curation, and accessibility of terminology mappings.
+            A <a href="documentation#mapping-service">Mapping Service</a> facilitates the creation, curation, and accessibility of terminology mappings.
+          </li>
+          <li className="text-justify" key={4}>
+            The <a href="documentation#gateway">API Gateway</a> backend architecture integrates external terminology sources and allows to store curated collections of terminologies.
+          </li>
+          <li className="text-justify" key={5}>
+            The <a href="documentation#tss">Terminology Service Suite (TSS)</a> provides GUI widgets for integration of terminologies into existing applications.
           </li>
           <li className="text-justify" key={3}>
             TS4NFDI will enhance Terminology Curation Workflows to enable instant application of curated terminologies.
-          </li>
-          <li className="text-justify" key={4}>
-            The backend architecture will be extended to integrate external terminology sources such as ICONCLASS.
-          </li>
-          <li className="text-justify" key={5}>
-            The Terminology Service Suite (TSS) will gain new functionalities, including integration with the
-            ANTELOPE tool for enhanced terminology search, visualization, and entity linking.
-          </li>
-          <li className="text-justify" key={6}>
-            TSS widgets will be adapted for integration into Wikibase and the KGI4NFDI basic service.
           </li>
         </ul>
       </div>

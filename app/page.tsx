@@ -49,7 +49,7 @@ export default function Home() {
                     />
                 </div>
                 <div className='md:col-span-9'>
-                    <br/><br/>
+                    <br /><br />
                 </div>
                 <div className='card-background md:col-span-9 grid md:grid-cols-9'>
                     <div className='md:col-span-3'>
@@ -60,7 +60,7 @@ export default function Home() {
                             alt="Logo TS4NFDI Service Portal"
                             placeholder="blur"
                             blurDataURL="/blur.webp"
-                            style={{margin: 'auto'}}
+                            style={{ margin: 'auto' }}
                         />
                     </div>
                     <div className='md:col-span-6'>
@@ -80,7 +80,7 @@ export default function Home() {
                             The configuration panel displays a comprehensive list of all available terminologies from
                             the various terminology services accessed by the API Gateway. These terminologies could be
                             combined and published in<a className='text-base' href="/collection/collections">terminology
-                            collections</a>which are provided by and hosted at the TS4NFDI Service Portal.
+                                collections</a>which are provided by and hosted at the TS4NFDI Service Portal.
                         </p>
 
                     </div>
@@ -96,7 +96,7 @@ export default function Home() {
                         alt="TS4NFDI Terminology Service Suite"
                         placeholder="blur"
                         blurDataURL="/blur.webp"
-                        style={{margin: 'auto'}}
+                        style={{ margin: 'auto' }}
                     />
                     <p className='text-justify my-5'>
                         Integrating terminology data into other web services, such as annotation services or data
@@ -109,7 +109,7 @@ export default function Home() {
                         applications. The functionality and arguments are the same for the React and plain HTML versions.
                     </p>
                     <p className='text-right'>
-                        <a className='text-base' href="/documentation#tss">>>> Read more</a>
+                        <a className='text-base' href="/documentation#tss">{">>> Read more"}</a>
                     </p>
                 </div>
                 <div className='md:col-span-3 card-background'>
@@ -120,7 +120,7 @@ export default function Home() {
                         alt="TS4NFDI API Gateway"
                         placeholder="blur"
                         blurDataURL="/blur.webp"
-                        style={{margin: 'auto'}}
+                        style={{ margin: 'auto' }}
                     />
                     <p className='text-justify my-5'>
                         For the acceptance and use of terminology data, it is essential that the data is easily
@@ -135,7 +135,7 @@ export default function Home() {
                         OntoPortal and Skosmos APIs.
                     </p>
                     <p className='text-right'>
-                        <a className='text-base' href="/databases">>>> Read more</a>
+                        <a className='text-base' href="/databases">{">>> Read more"}</a>
                     </p>
                 </div>
                 <div className='md:col-span-3 card-background'>
@@ -146,7 +146,7 @@ export default function Home() {
                         alt="TS4NFDI Mapping Service"
                         placeholder="blur"
                         blurDataURL="/blur.webp"
-                        style={{margin: 'auto'}}
+                        style={{ margin: 'auto' }}
                     />
                     <p className='text-justify my-5'>
                         Mappings between terminologies are crucial for interoperability within NFDI consortia. The
@@ -161,7 +161,7 @@ export default function Home() {
                         systems, such as classifications, authority files, and thesauri.
                     </p>
                     <p className='text-right'>
-                        <a className='text-base' href="/documentation#mapping-service">>>> Read more</a>
+                        <a className='text-base' href="/documentation#mapping-service">{">>> Read more"}</a>
                     </p>
                 </div>
             </div>
