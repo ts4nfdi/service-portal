@@ -236,6 +236,24 @@
       "logo": "dalia.png",
       "logoW": 300,
       "logoH": 300
+    },
+    {
+      "title": "AIMS – Applying Interoperable Metadata Standards",
+      "cycle": 1,
+      "status": "",
+      "start": "",
+      "end": "",
+      "description": "AIMS (Applying Interoperable Metadata Standards) is developing a platform for creating, sharing, and reusing interoperable and machine-readable metadata profiles based on SHACL shapes. The project addresses key challenges in research data management by enabling researchers to model semantic metadata schemas in a modular and hierarchical fashion using elements from established controlled terminologies. AIMS provides a central web-UI for managing profiles, backed by repositories for storing validated metadata sets and integrating with electronic lab notebooks (ELNs) like eLabFTW and openBIS. The project consortium includes ULB Darmstadt, RWTH Aachen IT Center, University of Rostock, Fraunhofer IWM, and University of Freiburg.",
+      "goals": [
+        "Replace current terminology providers with TS4NFDI API Gateway as unified terminology service ",
+        "Integrate TS4NFDI Service Suite widgets for enhanced terminology browsing and navigation within the AIMS metadata profile editor ",
+        "Enable federated terminology search across multiple NFDI consortia domains (e.g. engineering, materials science, chemistry) via TS4NFDI "
+      ],
+      "consortium": ["NFDI4Ing"],
+      "logo": "aims_logo.png",
+      "logoW": 300,
+      "logoH": 300,
+      "activityPage": "https://www.aims-projekt.de/"
     }
   ]
 }
