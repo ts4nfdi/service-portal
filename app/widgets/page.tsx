@@ -11,11 +11,11 @@ export default function Widgets() {
         <div className="md:col-span-3">
             <p className="header-1">TS4NFDI Service Portal lookup service</p>
             <p className="text-justify">
-                Here you can look after terms and terminologies from variaty of Teminologies Service supported by our
+                Here you can look after terms and terminologies from variety of terminology services supported by our
                 API Gateway. The UI component to build this
                 lookup come from our <a
-                href="https://ts4nfdi.github.io/terminology-service-suite/comp/latest/?path=/docs/overview--docs">TSS
-                Widgets</a>
+                href="https://terminology.services.base4nfdi.de/tss/comp/latest/?path=/docs/overview--docs">Widgets of
+                the TSS</a>
             </p>
             <InfoAlert
                 title="A bit about TSS Widgets"

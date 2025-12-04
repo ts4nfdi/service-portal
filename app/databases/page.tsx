@@ -20,7 +20,7 @@ export default async function Databases() {
         body={
           `
                 The following backends are currently supported via the TS4NFDI API Gateway. For more information, please see:
-                    <a href="https://ts4nfdi.github.io/api-gateway/" rel="noopener" target="_blank">API Gateway documentation</a>         
+                    <a href="https://terminology.services.base4nfdi.de/api-gateway/" rel="noopener" target="_blank">API Gateway documentation</a>         
                 `
         }
       />
