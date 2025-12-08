@@ -42,6 +42,22 @@ export type Database = {
   artefactsUrl?: string,
 }
 
+export type DatabaseJson = {
+  [key: string]: {
+    type: string,
+    name: string,
+    url: string,
+    description: string,
+    contactUrl: string,
+    title: string,
+    logo: string,
+    logo_background_color: string,
+    homepage: string,
+    logoW?: number,
+    logoH?: number
+  }
+}
+
 export type ZenodoPublication = {
   doi?: string,
   doi_url?: string,
