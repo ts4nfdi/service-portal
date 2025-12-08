@@ -77,7 +77,9 @@
     "api": "https://semanticlookup.zbmed.de/ols/api",
     "type": "ols",
     "logo": "https://semanticlookup.zbmed.de/static/media/NFDI_SemLookP_Logo.d1aefcff2e623af9c83ad9e79a52511f.svg",
-    "logo_background_color": "white"
+    "logo_background_color": "white",
+    "logoW": 400,
+    "logoH": 400
   },
   "agrovoc": {
     "title": "AGROVOC",
@@ -87,7 +89,9 @@
     "api": "https://agrovoc.fao.org/browse/rest/v1",
     "type": "skosmos",
     "logo": "https://www.fao.org/images/corporatelibraries/fao-logo/fao-logo-archive/fao-logo-blue-2lines-en.svg",
-    "logo_background_color": "white"
+    "logo_background_color": "white",
+    "logoW": 400,
+    "logoH": 400
   },
   "gnd": {
     "title": "GND",
@@ -97,7 +101,9 @@
     "api": "https://lobid.org/gnd/api",
     "type": "gnd",
     "logo": "https://lobid.org/images/lobid.png",
-    "logo_background_color": "white"
+    "logo_background_color": "white",
+    "logoW": 400,
+    "logoH": 400
   },
   "dante": {
     "title": "DANTE",
@@ -127,6 +133,8 @@
     "api": "https://vocab.nerc.ac.uk",
     "type": "nerc",
     "logo": "https://vocab.nerc.ac.uk/static/eds.svg",
-    "logo_background_color": "white"
-  },
+    "logo_background_color": "white",
+    "logoW": 400,
+    "logoH": 400
+  }
 }

@@ -11,7 +11,15 @@ export type PortalDatabaseJsonData = {
   contactUrl: string;
   title: string;
   bartocUrl: string;
+  logo: string;
+  logo_background_color: string;
+  homePage: string;
+  logoW?: number;
+  logoH?: number;
 }
+
+const defatultLogoW = 150;
+const defatultLogoH = 150;
 
 
 export class PortalDatabase {
@@ -24,6 +32,11 @@ export class PortalDatabase {
   private _contactUrl: string;
   private _title: string;
   private _bartocUrl: string;
+  private _logo: string;
+  private _logo_background_color: string;
+  private _homePage: string;
+  private _logoW: number;
+  private _logoH: number;
 
   constructor(dbData: Database = {}) {
     this._type = dbData.type ?? "";
@@ -35,6 +48,11 @@ export class PortalDatabase {
     this._contactUrl = "";
     this._title = "";
     this._bartocUrl = "";
+    this._logo = "";
+    this._logo_background_color = "";
+    this._homePage = "";
+    this._logoW = defatultLogoW;
+    this._logoH = defatultLogoH;
   }
 
   get type() {
@@ -70,12 +88,43 @@ export class PortalDatabase {
     return this._bartocUrl;
   }
 
+  get logo(): string {
+    return this._logo;
+  }
+
+  get logo_background_color(): string {
+    return this._logo_background_color;
+  }
+
+  get homePage(): string {
+    return this._homePage;
+  }
+
+  get logoW(): number {
+    return this._logoW;
+  }
+
+  get logoH(): number {
+    return this._logoH;
+  }
+
   set type(val: string) {
     this._type = val;
   }
 
   set url(val: string) {
     this._url = val;
+  }
+
+  set homePage(val: string) {
+    this._homePage = val;
+  }
+  set logo(val: string) {
+    this._logo = val;
+  }
+
+  set logo_background_color(val: string) {
+    this._logo_background_color = val;
   }
 
   set name(val: string) {
@@ -118,6 +167,15 @@ export class PortalDatabase {
     this._bartocUrl = val;
   }
 
+  set logoW(val: number | undefined) {
+    this._logoW = val ?? defatultLogoW;
+  }
+  set logoH(val: number | undefined) {
+    this._logoH = val ?? defatultLogoH;
+  }
+
+
+
   toJson(): PortalDatabaseJsonData {
     return {
       type: this.type,
@@ -128,7 +186,12 @@ export class PortalDatabase {
       description: this.description,
       contactUrl: this.contactUrl,
       title: this.title,
-      bartocUrl: this.bartocUrl
+      bartocUrl: this.bartocUrl,
+      logo: this.logo,
+      logo_background_color: this.logo_background_color,
+      homePage: this.homePage,
+      logoW: this.logoW,
+      logoH: this.logoH
     };
   }
 
@@ -143,6 +206,11 @@ export class PortalDatabase {
     pdb.contactUrl = data.contactUrl;
     pdb.title = data.title;
     pdb.bartocUrl = data.bartocUrl;
+    pdb.logo = data.logo;
+    pdb.logo_background_color = data.logo_background_color;
+    pdb.homePage = data.homePage;
+    pdb.logoW = data.logoW ?? defatultLogoW;
+    pdb.logoH = data.logoH ?? defatultLogoH;
     return pdb;
   }
 }

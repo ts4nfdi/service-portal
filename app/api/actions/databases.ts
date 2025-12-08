@@ -1,8 +1,9 @@
 'use server';
 
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
-import { Database } from "@/app/api/actions/types";
+import { Database, DatabaseJson } from "@/app/api/actions/types";
 import { PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
+import DatabaseJsonMetadata from "../../databases/databases.json";
 
 export async function getAllDatabases(): Promise<PortalDatabaseJsonData[]> {
   try {
@@ -12,25 +13,21 @@ export async function getAllDatabases(): Promise<PortalDatabaseJsonData[]> {
     if (!resp.ok) {
       return [];
     }
-    let registries = await getListOfRegistriesFromBartoc();
     let databases: Database[] = await resp.json();
     let portalDatabases = [];
+    let extraMetadata = (DatabaseJsonMetadata as unknown) as DatabaseJson;
     for (let db of databases) {
       let pdb = new PortalDatabase(db);
-      registries.forEach((registry) => {
-        let regUrls = registry.url + "+++" + (registry["API"][0].url ?? "");
-        let dbUrl = pdb.url.replace("https://", "");
-        dbUrl = dbUrl.replace("http://", "");
-        dbUrl = dbUrl.replace("www.", "");
-        dbUrl = dbUrl.split("/")[0];
-        if (regUrls.includes(dbUrl)) {
-          pdb.description = registry.definition;
-          pdb.contactUrl = registry.contactUrl;
-          pdb.title = registry.prefLabel;
-          pdb.bartocUrl = registry.uri;
-        }
-      });
-      portalDatabases.push(pdb.toJson())
+      let registry = extraMetadata[pdb.name];
+      pdb.description = registry.description;
+      pdb.contactUrl = registry.contactUrl;
+      pdb.title = registry.title;
+      pdb.logo = registry.logo;
+      pdb.logo_background_color = registry.logo_background_color;
+      pdb.homePage = registry.homepage;
+      pdb.logoW = registry.logoW;
+      pdb.logoH = registry.logoH;
+      portalDatabases.push(pdb.toJson());
     }
     return portalDatabases;
   } catch {

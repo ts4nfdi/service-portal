@@ -151,7 +151,7 @@ export function CopyToClipboardCmp(props: { textToCopy: string }) {
 
     if (!isCopied) {
         return (
-            <button className="bg-transparent p-0 md:mr-1" onClick={() => {
+            <button className="bg-transparent p-0 ms-1 " onClick={() => {
                 navigator.clipboard.writeText(props.textToCopy);
                 setIsCopied(true);
                 setTimeout(() => {
