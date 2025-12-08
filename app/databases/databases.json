@@ -1,0 +1,132 @@
+{
+  "agroportal": {
+    "title": "AgroPortal",
+    "description": "Use AgroPortal to access and share ontologies. You can create ontology-based annotations for your own text , link your own project that uses ontologies to the description of those ontologies , find and create relations between terms in different ontologies, review and comment on ontologies and their components as you browse them. Sign in to AgroPortal to submit a new ontology or ontology-based project, provide comments on ontologies or add ontology mappings.",
+    "contactUrl": "https://agroportal.lirmm.fr/feedback",
+    "homepage": "https://agroportal.lirmm.fr/",
+    "api": "https://data.agroportal.lirmm.fr",
+    "type": "ontoportal",
+    "logo": "https://agroportal.lirmm.fr/assets/logos/ontoportal-a6c2bfe19d47c0fb1f5a47dd71e3c30aea2364edb5c224ce5b78fdee4dd6eb34.svg",
+    "logo_background_color": "#3CB371"
+  },
+  "earthportal": {
+    "title": "EarthPortal",
+    "description": "EarthPortal is a catalog of thematic semantic artefacts and a semantic repository intended for Earth sciences based on OntoPortal technology and supported by the Data Terra research infrastructure. Developed within the EOSC FAIR-IMPACT project, its implementation adheres to national and European recommendations, aiming to enhance the dissemination and reuse of semantic artefacts in an interdisciplinary research context. EarthPortal also ensures the traceability and recognition of the authorship of vocabularies, thus offering better recognition for their creators. At the European level, the recommendations of the “Semantic Interoperability” Task Force emphasize the importance of recognizing catalogs of semantic artefacts (as described in the interoperability framework of the European Open Science Cloud - EOSC) as a crucial element for the long-term sustainability of any research data infrastructure.",
+    "contactUrl": "https://earthportal.eu/feedback",
+    "homepage": "https://earthportal.eu/",
+    "api": "https://data.earthportal.eu",
+    "type": "ontoportal",
+    "logo": "https://earthportal.eu/assets/earthportal_logo_transparent-d42fcf07702ab73e3cc2b66d4d602f55614c8f3c474466bca8460f60afa2877a.svg",
+    "logo_background_color": "#20214E"
+  },
+  "biodivportal": {
+    "title": "BiodivPortal",
+    "description": "BiodivPortal offers access to a wide range of biodiversity-related ontologies, including vocabularies, taxonomies, and thesauri.",
+    "contactUrl": "https://biodivportal.gfbio.org/feedback",
+    "homepage": "https://biodivportal.gfbio.org/",
+    "api": "https://data.biodivportal.gfbio.org",
+    "type": "ontoportal",
+    "logo": "https://biodivportal.gfbio.org/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
+    "logo_background_color": "#33691B"
+  },
+  "ecoportal":{
+    "title": "EcoPortal",
+    "description": "EcoPortal is an initiative of LifeWatch ERIC , the e-Science and Technology European Infrastructure for Biodiversity and Ecosystem Research. In the last decade, ecological research groups and infrastructures have contributed to the definition and the production of core and domain ontologies as well as of vocabularies and domain-relevant reference lists. In order to support the scientific community in the management and integration of these different approaches, LifeWatch ERIC has created EcoPortal, an online spe designed to collect semantic resources and provide the necessary services for enabling discovery and interoperability.",
+    "contactUrl": "https://ecoportal.lifewatch.eu/feedback",
+    "homepage": "https://ecoportal.lifewatch.eu/",
+    "api": "https://data.ecoportal.lifewatch.eu",
+    "type": "ontoportal",
+    "logo": "https://ecoportal.lifewatch.eu/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
+    "logo_background_color": "#0F4E8B"
+  },
+  "lovportal": {
+    "title": "LovPortal",
+    "description": "The home of ontologies and semantic artefacts in agri-food and related domains. ",
+    "contactUrl": "https://lovportal.lirmm.fr/feedback",
+    "homepage": "https://lovportal.lirmm.fr/",
+    "api": "https://data.lovportal.lirmm.fr",
+    "type": "ontoportal",
+    "logo": "https://lovportal.lirmm.fr/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
+    "logo_background_color": "#F29E4C"
+  },
+  "ebi": {
+    "title": "EBI Ontology Lookup Service",
+    "description": "The Ontology Lookup Service (OLS) is a repository for biomedical ontologies that aims to provide a single point of access to the latest ontology versions. You can browse the ontologies through the website as well as programmatically via the OLS API. OLS is developed and maintained by the Samples, Phenotypes and Ontologies Team at EMBL-EBI.",
+    "contactUrl": "https://github.com/EBISPOT/ols4/issues",
+    "homepage": "https://www.ebi.ac.uk/ols4/",
+    "api": "https://www.ebi.ac.uk/ols4/api/v2",
+    "type": "ols",
+    "logo": "https://www.ebi.ac.uk/ols4/logo.svg",
+    "logo_background_color": "#000000"
+  },
+  "tib": {
+    "title": "TIB Terminology Service",
+    "description": "The TIB Terminology Service provides a single point of access to terminology from domains such as architecture, chemistry, computer science, mathematics and physics. The Terminology Service is a repository for terminological resources based on semantic W3C standards like the Web Ontology Language (OWL 2). You can browse ontologies through the website or use its API to retrieve terminological information and use it in your technical services. In addition, you can register ontologies at the service.",
+    "contactUrl": "https://terminology.tib.eu/ts/contact",
+    "homepage": "https://terminology.tib.eu/ts/",
+    "api": "https://api.terminology.tib.eu/api",
+    "type": "ols",
+    "logo": "https://terminology.tib.eu/TIB_Logo_W_W.SVG",
+    "logo_background_color": "#0E6668"
+  },
+  "zbmed": {
+    "title": "ZB MED Semantic Lookup Service",
+    "description": "The SemLookP Terminology Service aims to provide access to key terminologies in the health domain. It is developed and maintained by ZB MED - Information Centre for Life Sciences. It emerged from the BMBF-funded project IDSN.",
+    "contactUrl": "semlookp-support@zbmed.de",
+    "homepage": "https://semanticlookup.zbmed.de/",
+    "api": "https://semanticlookup.zbmed.de/ols/api",
+    "type": "ols",
+    "logo": "https://semanticlookup.zbmed.de/static/media/NFDI_SemLookP_Logo.d1aefcff2e623af9c83ad9e79a52511f.svg",
+    "logo_background_color": "white"
+  },
+  "agrovoc": {
+    "title": "AGROVOC",
+    "description": "AGROVOC is a relevant Linked Open Data set about agriculture available for public use and facilitates access and visibility of data across domains and languages. It offers a structured collection of agricultural concepts, terms, definitions and relationships which are used to unambiguously identify resources, allowing standardized indexing processes and making searches more efficient.",
+    "contactUrl": "agrovoc@fao.org",
+    "homepage": "https://www.fao.org/agrovoc/",
+    "api": "https://agrovoc.fao.org/browse/rest/v1",
+    "type": "skosmos",
+    "logo": "https://www.fao.org/images/corporatelibraries/fao-logo/fao-logo-archive/fao-logo-blue-2lines-en.svg",
+    "logo_background_color": "white"
+  },
+  "gnd": {
+    "title": "GND",
+    "description": "GND stands for “Gemeinsame Normdatei”, or Integrated Authority File. Originally, the word “Gemeinsam” (“integrated”, but also “together”, “collaboratively”, etc.) related to the merger of previously separate authority files. Today, GND stands for collaborative working, collectively setting standards and for the communal preservation of the GND. GND therefore represents the vision of promoting the commons of knowledge with the aid of freely usable authority data. The GND originates from the German library community and aims to solve the name ambiguity problem in the library world. Corresponding data is usually expressed in a customized MARC 21 Authority Format (GND MARC Format) which is quite domain specific and is not used beyond the library and publisher world. The GND ontology tries to bridge this gap by providing a format specification for the usage in the semantic web.",
+    "contactUrl": "https://github.com/hbz/lobid-organisations/issues",
+    "homepage": "https://lobid.org/index-en",
+    "api": "https://lobid.org/gnd/api",
+    "type": "gnd",
+    "logo": "https://lobid.org/images/lobid.png",
+    "logo_background_color": "white"
+  },
+  "dante": {
+    "title": "DANTE",
+    "description": "DANTE is a semantic data model for the description of the content of digital artefacts. It is based on the W3C Web Ontology Language (OWL) and the Dublin Core Metadata Initiative (DCMI) and is developed by the DANTE Consortium. DANTE is a joint initiative of the German Research Centre for Artificial Intelligence (DFKI) and the University of Stuttgart. DANTE is used by the DANTE-project and DANTE-Consortium.",
+    "contactUrl": "dante-support@lists.gbv.de",
+    "homepage": "https://dante.gbv.de/search",
+    "api": "https://api.dante.gbv.de",
+    "type": "jskos",
+    "logo": "https://api.dante.gbv.de/images/dante.png",
+    "logo_background_color": "white"
+  },
+  "coli-conc": {
+    "title": "COLI-CONC",
+    "description": "coli-conc enables interoperability between Knowledge Organization Systems (KOS) with focus on German library KOS. It provides a technical infrastructure to manage KOS and KOS mappings in order to facilitate a seamless access and use. ",
+    "contactUrl": "https://coli-conc.gbv.de/contact/",
+    "homepage": "https://coli-conc.gbv.de/",
+    "api": "https://coli-conc.gbv.de/api",
+    "type": "jskos2",
+    "logo": "https://coli-conc.gbv.de/images/coli-conc.svg",
+    "logo_background_color": "white"
+  },
+  "nerc": {
+    "title": "NERC",
+    "description": "The NVS is a service providing access to centrally managed and uniquely identified lists of terms for annotating data in the marine and related earth science domains. It is managed by the British Oceanographic Data Centre (BODC) at the National Oceanography Centre (NOC). It is funded by the UK Research and Innovation Natural Environment Research Council (UKRI-NERC) as part of its Environmental Data Services (EDS) national capabilities, with additional funding from European projects. Standardised controlled vocabularies are used by data creators, data managers, and tool developers for indexing, annotating, and searching for data, enabling greater interoperability and reuse.",
+    "contactUrl": "vocab.services@bodc.ac.uk",
+    "homepage": "https://vocab.nerc.ac.uk/",
+    "api": "https://vocab.nerc.ac.uk",
+    "type": "nerc",
+    "logo": "https://vocab.nerc.ac.uk/static/eds.svg",
+    "logo_background_color": "white"
+  },
+}

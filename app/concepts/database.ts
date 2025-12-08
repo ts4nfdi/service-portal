@@ -7,6 +7,10 @@ export type PortalDatabaseJsonData = {
   name: string;
   searchUrl: string;
   artefactsUrl: string;
+  description: string;
+  contactUrl: string;
+  title: string;
+  bartocUrl: string;
 }
 
 
@@ -16,6 +20,10 @@ export class PortalDatabase {
   private _name: string;
   private _searchUrl: string;
   private _artefactsUrl: string;
+  private _description: string;
+  private _contactUrl: string;
+  private _title: string;
+  private _bartocUrl: string;
 
   constructor(dbData: Database = {}) {
     this._type = dbData.type ?? "";
@@ -23,6 +31,10 @@ export class PortalDatabase {
     this._name = dbData.name ?? "";
     this._searchUrl = dbData.searchUrl ?? "";
     this._artefactsUrl = dbData.artefactsUrl ?? "";
+    this._description = "";
+    this._contactUrl = "";
+    this._title = "";
+    this._bartocUrl = "";
   }
 
   get type() {
@@ -43,6 +55,19 @@ export class PortalDatabase {
 
   get artefactsUrl() {
     return this._artefactsUrl;
+  }
+  get description(): string {
+    return this._description;
+  }
+  get contactUrl(): string {
+    return this._contactUrl;
+  }
+  get title(): string {
+    return this._title;
+  }
+
+  get bartocUrl(): string {
+    return this._bartocUrl;
   }
 
   set type(val: string) {
@@ -65,13 +90,45 @@ export class PortalDatabase {
     this._artefactsUrl = val;
   }
 
+  set description(val: { [key: string]: string[] } | string) {
+    if (typeof val === "string") {
+      this._description = val;
+    } else if ("en" in val) {
+      this._description = val["en"].join("\n");
+    } else {
+      this._description = "";
+    }
+  }
+
+  set contactUrl(val: string) {
+    this._contactUrl = val;
+  }
+
+  set title(val: { [key: string]: string } | string) {
+    if (typeof val === "string") {
+      this._title = val;
+    } else if ("en" in val) {
+      this._title = val["en"];
+    } else {
+      this._title = "";
+    }
+  }
+
+  set bartocUrl(val: string) {
+    this._bartocUrl = val;
+  }
+
   toJson(): PortalDatabaseJsonData {
     return {
       type: this.type,
       url: this.url,
       name: this.name,
       searchUrl: this.searchUrl,
-      artefactsUrl: this.artefactsUrl
+      artefactsUrl: this.artefactsUrl,
+      description: this.description,
+      contactUrl: this.contactUrl,
+      title: this.title,
+      bartocUrl: this.bartocUrl
     };
   }
 
@@ -82,6 +139,10 @@ export class PortalDatabase {
     pdb.name = data.name;
     pdb.searchUrl = data.searchUrl;
     pdb.artefactsUrl = data.artefactsUrl;
+    pdb.description = data.description;
+    pdb.contactUrl = data.contactUrl;
+    pdb.title = data.title;
+    pdb.bartocUrl = data.bartocUrl;
     return pdb;
   }
 }
