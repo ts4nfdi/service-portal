@@ -14,11 +14,11 @@ type NavbarItem = {
 const navItems: NavbarItem[] = [
   {
     href: "", text: "Tools", children: [
-      { href: "/databases", text: "API Gateway" },
       { href: "https://coli-conc.gbv.de/cocoda/ts4nfdi/", text: "Mapping Service" },
       { href: "/tss/comp/latest/", text: "Terminology Service Suite" }
     ]
   },
+  { href: "/databases", text: "Terminology Providers" },
   { href: "/collection/collections", text: "Collections" },
   { href: "/incubators", text: "Incubators" },
   {
@@ -26,10 +26,10 @@ const navItems: NavbarItem[] = [
       { href: "/about", text: "About" },
       { href: "/documentation", text: "Documentation" },
       { href: "/events", text: "Events" },
-      { href: "/publications", text: "Publications" }
+      { href: "/publications", text: "Publications" },
+      { href: "/contact", text: "Contact us" },
     ]
   },
-  { href: "/contact", text: "Contact" },
 ];
 
 
