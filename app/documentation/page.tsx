@@ -72,7 +72,7 @@ export default function Documentation() {
         TS4NFDI reduces the complexity of integrating semantic information into NFDI platforms.
         This includes widgets for browsing ontologies, performing term lookups, and visualizing mappings between concepts.
         Furthur widget documentations and their storybook is available at:
-        <a href="https://ts4nfdi.github.io/terminology-service-suite/comp/latest/?path=/docs/overview--docs" target="_blank">TSS widgets storybook</a>
+        <a href="https://terminology.services.base4nfdi.de/tss/comp/latest/?path=/docs/overview--docs" target="_blank">TSS widgets storybook</a>
       </p>
 
       <a href="#mapping-service"><p className="header-2" id="mapping-service">4. Mapping Service </p></a>

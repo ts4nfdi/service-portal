@@ -20,8 +20,9 @@ export default function IncubatorRequestCard() {
         <span className="name-badge" key={'no-consortia'}>no consortia - external</span>
       </div>
       <p className="header-4" >Duration</p>
-      <p key={'in-the-future'}>6 months somewhere in the future. The next call for incubators will be published in
-          December 2025. The next incubator cycle itself will start in Q1/2026.</p>
+      <p key={'in-the-future'}>6 months somewhere in the future. The next call for incubators is currently open.
+          The submission deadline is on the 9nd January 2026. The next incubator cycle itself will start in the middle
+          of Q1/2026.</p>
       <p className="header-4" >Description</p>
       <p className="text-justify" key={'contact-us-description'}>
         Have you considered one or more of the possible goals listed below? However, you may not have the resources
