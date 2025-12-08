@@ -140,6 +140,13 @@ function RenderAsDropdown(props: { navItem: NavbarItem, selected: boolean, isMob
 
   const navbarClass = isMobile ? "navbar-links-mobile " : "navbar-links ";
 
+  document.addEventListener("click", (e: MouseEvent) => {
+    if (e.target instanceof HTMLElement && e.target.closest("#dropdownNavbarLink")) {
+      return;
+    }
+    setIsOpen(false);
+  });
+
   return (
     <div className="relative inline-block text-left">
       <Link href={""} id="dropdownNavbarLink" className={navbarClass + (selected ? "navbar-link-active" : "")} onClick={() => setIsOpen(!isOpen)}>
