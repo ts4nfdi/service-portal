@@ -66,6 +66,12 @@
         },
         {
           "imagePath": "blank.jpg",
+          "name": "Rayya, Noura",
+          "affiliation": "TIB - Leibniz Information Centre for Science and Technology, Hannover",
+          "orcid": "https://orcid.org/0009-0001-5998-5030"
+        },
+        {
+          "imagePath": "blank.jpg",
           "name": "Frey, Kevin",
           "affiliation": "RPTU University of Kaiserslautern-Landau",
           "orcid": "https://orcid.org/0000-0002-8510-6810"
@@ -77,10 +83,10 @@
           "orcid": "https://orcid.org/0000-0002-5042-1087"
         },
         {
-          "imagePath": "ds.jpg",
-          "name": "Schäfer, Domenic",
+          "imagePath": "blank.jpg",
+          "name": "Matoni, Markus",
           "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
-          "orcid": "https://orcid.org/0000-0001-7118-3295"
+          "orcid": "https://orcid.org/0000-0003-4389-5871"
         }
       ]
     },
@@ -92,11 +98,18 @@
           "name": "Bouazzouni, Syphax",
           "affiliation": "Institute for Applied Informatics (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-2069-8739"
-        },{
+        },
+        {
           "imagePath": "blank.jpg",
           "name": "Fillies, Jan",
           "affiliation": "Institute for Applied Informatics (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-2997-4656"
+        },
+        {
+          "imagePath": "ds.jpg",
+          "name": "Schäfer, Domenic",
+          "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
+          "orcid": "https://orcid.org/0000-0001-7118-3295"
         }
       ]
     }
