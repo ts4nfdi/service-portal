@@ -65,6 +65,7 @@ body {
     margin-bottom: 40px;
     color: rgb(69, 84, 107);
 }
+
 .header-main-2 {
     @apply text-4xl;
     margin-bottom: 40px;
@@ -74,7 +75,7 @@ body {
 
 .header-main-3 {
     @apply text-3xl;
-    color:#6c808099;
+    color: #6c808099;
     margin-bottom: 20px;
 }
 
@@ -103,19 +104,19 @@ a {
 }
 
 .status-badge {
-    @apply badge bg-[rgb(251,188,67)];
+    @apply badge bg-[rgb(251, 188, 67)];
 }
 
 .cycle-badge {
-    @apply badge bg-[rgb(163,199,23)];
+    @apply badge bg-[rgb(163, 199, 23)];
 }
 
 .name-badge {
-    @apply badge bg-[rgb(69,84,107)] !text-white;
+    @apply badge bg-[rgb(69, 84, 107)] !text-white;
 }
 
 .terminology-badge {
-    @apply badge bg-[rgb(69,84,107)] !text-white;
+    @apply badge bg-[rgb(69, 84, 107)] !text-white;
 }
 
 .form {
@@ -126,17 +127,11 @@ a {
     @apply mx-auto mb-5 w-4/5;
 }
 
-body input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
-    @apply
-    bg-gray-50
-    w-full
-    p-2
-    rounded-lg
-    border
-    border-gray-300
-    text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2
-    dark-mode-bg-color dark:!text-white
-    !important;
+body input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color dark: !text-white !important;
 }
 
 .file-input {
@@ -148,7 +143,7 @@ textarea {
 }
 
 .radio-btn {
-    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked:!text-blue-500 ;
+    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked: !text-blue-500;
 }
 
 .btn {
@@ -177,9 +172,6 @@ ul {
     @apply dark-mode-bg-color md:px-4 px-0;
 }
 
-li {
-    @apply ml-6 mr-3;
-}
 
 ol {
     list-style: decimal !important;
@@ -189,7 +181,7 @@ ol {
     @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
 }
 
-.h1-service-portal img{
+.h1-service-portal img {
     float: left;
     margin-right: 10px;
 }
