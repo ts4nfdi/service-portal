@@ -172,6 +172,9 @@ ul {
     @apply dark-mode-bg-color md:px-4 px-0;
 }
 
+li {
+    @apply ml-6 mr-3;
+}
 
 ol {
     list-style: decimal !important;
