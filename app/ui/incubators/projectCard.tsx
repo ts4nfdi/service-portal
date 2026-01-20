@@ -1,4 +1,4 @@
-import {Project} from "./types";
+import { Project } from "./types";
 import Image from "next/image";
 
 
@@ -51,7 +51,7 @@ export default function ProjectCard(props: { incubator: Project }) {
                                     {
                                         project.goals.map((goals) => {
                                             return (
-                                                <li className="list-disc ml-6 text-justify mb-2 hover:bg-blue"
+                                                <li className="list-item list-disc ml-6 text-justify mb-2 hover:bg-blue"
                                                     key={goals}>{goals}</li>
                                             )
                                         })
@@ -69,7 +69,7 @@ export default function ProjectCard(props: { incubator: Project }) {
                                 {
                                     project.publications.map((publication: string) => {
                                         return (
-                                            <li className="list-disc ml-6 text-justify mb-2 hover:underline"
+                                            <li className="list-item list-disc ml-6 text-justify mb-2 hover:underline"
                                                 key={publication}>
                                                 <a className="" href={publication} target={"_blank"}>{publication}</a>
                                             </li>
@@ -82,9 +82,9 @@ export default function ProjectCard(props: { incubator: Project }) {
                 }
                 {
                     project.activityPage !== undefined &&
-                  <div>
-                    <a className="btn float-right mt-5" href={project.activityPage} target={"_blank"}>Activity Page</a>
-                  </div>
+                    <div>
+                        <a className="btn float-right mt-5" href={project.activityPage} target={"_blank"}>Activity Page</a>
+                    </div>
                 }
             </div>
         </>

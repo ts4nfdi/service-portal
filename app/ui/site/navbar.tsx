@@ -15,7 +15,7 @@ const navItems: NavbarItem[] = [
   {
     href: "", text: "Tools", children: [
       { href: "https://coli-conc.gbv.de/cocoda/ts4nfdi/", text: "Mapping Service" },
-      { href: "/tss/comp/latest/", text: "Terminology Service Suite" }
+      { href: "https://terminology.services.base4nfdi.de/tss/comp/latest/", text: "Terminology Service Suite" }
     ]
   },
   { href: "/databases", text: "Terminology Providers" },

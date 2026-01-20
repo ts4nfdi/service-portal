@@ -2,19 +2,19 @@
 
 
 import dynamic from 'next/dynamic';
-import {EditorProps} from 'react-draft-wysiwyg';
+import { EditorProps } from 'react-draft-wysiwyg';
 
 const Editor = dynamic<EditorProps>(() =>
-        import("react-draft-wysiwyg").then((mod) => mod.Editor)
-    , {ssr: false}) as React.ComponentType<EditorProps>;
+    import("react-draft-wysiwyg").then((mod) => mod.Editor)
+    , { ssr: false }) as React.ComponentType<EditorProps>;
 
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import {convertToRaw, EditorState, convertFromRaw, ContentState} from 'draft-js';
+import { convertToRaw, EditorState, convertFromRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import DOMPurify from 'dompurify';
-import {TextEditorProps} from '../types';
-import {useState, useEffect} from 'react';
+import { TextEditorProps } from '../types';
+import { useState, useEffect } from 'react';
 import './styles.css';
 
 
@@ -45,7 +45,7 @@ const TextEditor = (props: TextEditorProps) => {
 
     useEffect(() => {
         const loadHtmlToState = async () => {
-            const {default: htmlToDraft} = await import("html-to-draftjs");
+            const { default: htmlToDraft } = await import("html-to-draftjs");
             if (props.content) {
                 const blocksFromHTML = htmlToDraft(props.content ?? "");
                 const contentState = ContentState.createFromBlockArray(
@@ -64,7 +64,7 @@ const TextEditor = (props: TextEditorProps) => {
     return (
         <>
             <label htmlFor={""}
-                   className={"block " + (props.required ? "required-label" : "")}>{props.labelText}</label>
+                className={"block " + (props.required ? "required-label" : "")}>{props.labelText}</label>
             <div onClick={onModalClick}>
                 <Editor
                     editorState={editorState}
@@ -85,9 +85,10 @@ const TextEditor = (props: TextEditorProps) => {
                             inDropdown: true,
                             options: ['unordered', 'ordered'],
                         },
+
                     }}
                 />
-                <input type="hidden" name={props.name} id="hidden-input"/>
+                <input type="hidden" name={props.name} id="hidden-input" />
             </div>
         </>
     );
@@ -114,7 +115,7 @@ export function createHtmlFromEditorState(editorState: EditorState) {
     try {
         let noteContent = convertToRaw(editorState.getCurrentContent());
         let htmlContent = draftToHtml(noteContent);
-        return DOMPurify.sanitize(htmlContent, {USE_PROFILES: {html: true}});
+        return DOMPurify.sanitize(htmlContent, { USE_PROFILES: { html: true } });
     } catch {
         return "";
     }
@@ -136,7 +137,7 @@ export function createHtmlFromEditorJson(jsonInput: any) {
         let editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(jsonInput)));
         let noteContent = convertToRaw(editorState.getCurrentContent());
         let htmlContent = draftToHtml(noteContent);
-        return DOMPurify.sanitize(htmlContent, {USE_PROFILES: {html: true}});
+        return DOMPurify.sanitize(htmlContent, { USE_PROFILES: { html: true } });
     } catch {
         return "";
     }
