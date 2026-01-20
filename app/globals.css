@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
     --background: #dae0e8;
@@ -104,19 +104,23 @@ a {
 }
 
 .status-badge {
-    @apply badge bg-[rgb(251, 188, 67)];
+    @apply badge;
+    background-color: rgb(251, 188, 67);
 }
 
 .cycle-badge {
-    @apply badge bg-[rgb(163, 199, 23)];
+    @apply badge;
+    background-color: rgb(163, 199, 23);
 }
 
 .name-badge {
-    @apply badge bg-[rgb(69, 84, 107)] !text-white;
+    @apply badge !text-white;
+    background-color: rgb(69, 84, 107);
 }
 
 .terminology-badge {
-    @apply badge bg-[rgb(69, 84, 107)] !text-white;
+    @apply badge !text-white;
+    background-color: rgb(69, 84, 107);
 }
 
 .form {
@@ -131,7 +135,9 @@ body input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="file"] {
-    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color dark: !text-white !important;
+    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color;
+    @apply dark:!text-white;
+
 }
 
 .file-input {
@@ -143,7 +149,7 @@ textarea {
 }
 
 .radio-btn {
-    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked: !text-blue-500;
+    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked:!text-blue-500;
 }
 
 .btn {
@@ -172,8 +178,8 @@ ul {
     @apply dark-mode-bg-color md:px-4 px-0;
 }
 
-li {
-    @apply ml-6 mr-3;
+.list-item {
+    @apply ml-6 mr-3 dark-mode-bg-color;
 }
 
 ol {

@@ -21,8 +21,8 @@ export default function IncubatorRequestCard() {
       </div>
       <p className="header-4" >Duration</p>
       <p key={'in-the-future'}>6 months somewhere in the future. The next call for incubators is currently open.
-          The submission deadline is on the 9nd January 2026. The next incubator cycle itself will start in the middle
-          of Q1/2026.</p>
+        The submission deadline is on the 9nd January 2026. The next incubator cycle itself will start in the middle
+        of Q1/2026.</p>
       <p className="header-4" >Description</p>
       <p className="text-justify" key={'contact-us-description'}>
         Have you considered one or more of the possible goals listed below? However, you may not have the resources
@@ -37,12 +37,12 @@ export default function IncubatorRequestCard() {
       </p>
       <p className="header-4" >Possible Goals</p>
       <ul>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal1'}>Hosting of terminologies</li>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal2'}>Setup a terminology service</li>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal3'}>Adding terminology services to the API Gateway</li>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal4'}>Integration of TSS widgets</li>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal5'}>Provision of collection(s) via API Gateway</li>
-        <li className="list-disc ml-6 text-justify mb-2" key={'goal6'}>Adding mappings to the mapping service</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal1'}>Hosting of terminologies</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal2'}>Setup a terminology service</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal3'}>Adding terminology services to the API Gateway</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal4'}>Integration of TSS widgets</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal5'}>Provision of collection(s) via API Gateway</li>
+        <li className="list-item list-disc ml-6 text-justify mb-2" key={'goal6'}>Adding mappings to the mapping service</li>
       </ul>
       <Link className="btn mt-5 float-right" href="/incubators/new/" key={"new-incubator-anchor"}>Send us your request</Link>
     </div>

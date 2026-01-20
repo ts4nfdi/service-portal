@@ -98,17 +98,17 @@ export default function Documentation() {
         centralized access point for all requests pertaining to terminology, providing a cohesive API for accessing and managing terminologies
         across diverse domains. This ensures a standardised and harmonised interface, facilitating streamlined operations.
         The functionalities offered by the API Gateway are as follows:
-        <li className="p-4">
+        <li className="p-4 list-item">
           Standardized API Access: The API Gateway abstracts the complexity of the underlying terminology services,
           enabling users to access multiple service APIs through a common one without needing to understand the specificities of
           each service. This includes operations such as searching, suggesting, and retrieving information about terms, terminologies, or mappings.
         </li>
-        <li className="p-4">
+        <li className="p-4 list-item">
           Cross-Domain Support: The API Gateway will provide access to cross-domain terminologies and mappings,
           allowing users to explore and map concepts across multiple disciplines. This supports more effective inter-disciplinary
           collaboration and data interoperability within the NFDI community.
         </li>
-        <li className="p-4">
+        <li className="p-4 list-item">
           Routing and Load Balancing: The API Gateway manages the routing of incoming requests to the appropriate services,
           including load balancing to ensure efficient resource usage and optimal performance for high-traffic requests.
         </li>

@@ -17,20 +17,20 @@ export default function About() {
           In the ongoing integration phase, TS4NFDI will extend features and available service components:
         </p>
         <ul>
-          <li className="text-justify" key={1}>
+          <li className="text-justify list-item" key={1}>
             The <a href="documentation#service-portal">Service Portal</a> offers personalized access via Integration of IAM4NFDI and enables users to
             manage terminologies, entity sets, and access to licensed terminologies.
           </li>
-          <li className="text-justify" key={2}>
+          <li className="text-justify list-item" key={2}>
             A <a href="documentation#mapping-service">Mapping Service</a> facilitates the creation, curation, and accessibility of terminology mappings.
           </li>
-          <li className="text-justify" key={4}>
+          <li className="text-justify list-item" key={4}>
             The <a href="documentation#gateway">API Gateway</a> backend architecture integrates external terminology sources and allows to store curated collections of terminologies.
           </li>
-          <li className="text-justify" key={5}>
+          <li className="text-justify list-item" key={5}>
             The <a href="documentation#tss">Terminology Service Suite (TSS)</a> provides GUI widgets for integration of terminologies into existing applications.
           </li>
-          <li className="text-justify" key={3}>
+          <li className="text-justify list-item" key={3}>
             TS4NFDI will enhance Terminology Curation Workflows to enable instant application of curated terminologies.
           </li>
         </ul>
