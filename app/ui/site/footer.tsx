@@ -4,8 +4,8 @@ import Image from "next/image";
 export default function Footer() {
     return (
         <footer className="grid grid-rows-[1fr-auto] text-xs sm:text-base md:text-x1 h-10 bottom-0 inset-x-0 mt-auto"
-                key={"site-footer"}>
-            <div className="grid grid-cols-3 gap-2 bg-white p-10">
+            key={"site-footer"}>
+            <div className="grid grid-cols-3 gap-2 bg-white p-10 dark:bg-gray-800">
                 <div className="col-span-1">
                     <Image
                         src={'/img/base.png'}
@@ -24,10 +24,10 @@ export default function Footer() {
                 </div>
                 <div className="col-span-1">
                     Resources
-                    <ul className="dark:!bg-white">
+                    <ul>
                         <li>
                             <a href="/tss/comp/latest/"
-                               target="_blank">
+                                target="_blank">
                                 TSS Widgets
                             </a>
                         </li>
@@ -37,7 +37,7 @@ export default function Footer() {
                     </ul>
                 </div>
             </div>
-            <div className="bg-ts4nfdi-brand-color text-white text-center">
+            <div className="bg-ts4nfdi-brand-color text-white text-center dark:bg-gray-700">
                 <a className="text-white pr-4 pl-4" href='/contact'>Contact</a>|
                 <a className="text-white pr-4 pl-4" href='/termsofuse'>Terms of use</a>|
                 <a className="text-white pr-4 pl-4" href="/imprint">Imprint</a>|

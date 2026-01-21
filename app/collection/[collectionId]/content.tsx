@@ -26,7 +26,7 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
     <>
       <div className="grid grid-cols-10" key={"collection-card-header"}>
         <div className="col-span-9 flex flex-col flex-wrap gap-6">
-          <div key={"label-and-copy"} className="border rounded bg-gray-100 md:p-3 md:w-1/4">
+          <div key={"label-and-copy"} className="border rounded bg-gray-100 md:p-3 md:w-1/4 dark:bg-gray-700">
             <CopyToClipboard textToCopy={props.collection.id!} key={"copy"} />
             <p key={"collection-id"} className="inline-block  text-sm">{props.collection.id}</p>
           </div>

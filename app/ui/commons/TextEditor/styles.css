@@ -7,7 +7,7 @@
 }
 
 .rdw-editor-toolbar{
-  @apply !bg-gray-50;
+  @apply !bg-gray-50 dark:!bg-gray-700;
 }
 
 .rdw-editor-main{
@@ -20,3 +20,15 @@
 .rdw-editor-main h4 { font-size: 1em; font-weight: bold; }
 .rdw-editor-main h5 { font-size: 0.83em; font-weight: bold; }
 .rdw-editor-main h6 { font-size: 0.67em; font-weight: bold; }
+
+.rdw-option-wrapper, .rdw-dropdown-wrapper{
+  @apply dark:!bg-gray-400;
+}
+
+.rdw-dropdown-selectedtext{
+  @apply dark:!text-white;
+}
+
+.rdw-option-active{
+  @apply dark:!bg-gray-500;
+}
