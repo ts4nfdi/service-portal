@@ -134,7 +134,7 @@ export default function NewCollection() {
               className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               {dbs.map((db: PortalDatabase) => {
                 return (
-                  <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600"
+                  <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
                     key={db.name}>
                     <CheckBox id={db.name} label={db.name} onChange={loadTerminologies} />
                   </li>

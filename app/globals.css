@@ -136,7 +136,7 @@ input[type="email"],
 input[type="password"],
 input[type="file"] {
     @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color;
-    @apply dark:!text-white;
+    @apply dark:!text-white dark:bg-gray-700;
 
 }
 
@@ -146,6 +146,7 @@ input[type="file"] {
 
 textarea {
     @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2;
+    @apply dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
 }
 
 .radio-btn {
@@ -179,11 +180,15 @@ ul {
 }
 
 .list-item {
-    @apply ml-6 mr-3 dark-mode-bg-color;
+    @apply ml-6 mr-3 dark-mode-bg-color dark:text-white;
 }
 
 ol {
     list-style: decimal !important;
+}
+
+li {
+    @apply dark:text-gray-700;
 }
 
 .card-background {

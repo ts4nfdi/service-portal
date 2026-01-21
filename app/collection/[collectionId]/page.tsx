@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
 import { PortalCollectionJsonData } from "@/app/concepts";
 import { getUserToken } from "@/app/libs/auth";
+import "../../ui/collection/styles.css";
 
 
 //@ts-ignore
@@ -37,7 +38,7 @@ export default async function CollectionPage({ params }) {
 
   return (
     <>
-      <div className="col-span-3 bg-white p-4 flex flex-col flex-wrap">
+      <div className="collection-card col-span-3 bg-white p-4 flex flex-col flex-wrap">
         <p className="header-2 font-bold">
           {collection.label}
         </p>
