@@ -22,7 +22,7 @@ export default function UserProfileMenuItems(props: { username: string, email: s
           <span className="block text-sm text-gray-900 dark:text-white">{props.username}</span>
           <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{props.email}</span>
         </div>
-        <ul className="list-none p-0 m-0" aria-labelledby="user-menu-button">
+        <ul role="menu" aria-orientation="vertical" className="pl-0 m-0 list-none [&>li]:list-none [&>li::before]:content-none">
           <li>
             <Link href="/user/dashboard/" className="profile-menu-item" onClick={closeOrOpen}>Dashboard</Link>
           </li>
