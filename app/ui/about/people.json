@@ -72,6 +72,12 @@
         },
         {
           "imagePath": "blank.jpg",
+          "name": "Tzatchkova, Guergana",
+          "affiliation": "TIB - Leibniz Information Centre for Science and Technology, Hannover",
+          "orcid": "https://orcid.org/0009-0001-0754-5615"
+        },
+        {
+          "imagePath": "blank.jpg",
           "name": "Frey, Kevin",
           "affiliation": "RPTU University of Kaiserslautern-Landau",
           "orcid": "https://orcid.org/0000-0002-8510-6810"
