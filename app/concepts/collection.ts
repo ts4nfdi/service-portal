@@ -4,6 +4,7 @@ import { PortalTerminology, PortalTerminologyJsonData } from "./terminology";
 
 export type PortalCollectionJsonData = {
   id: string,
+  creator: string,
   description: string,
   label: string,
   isPublic: boolean,
@@ -15,6 +16,7 @@ export type PortalCollectionJsonData = {
 
 export class PortalCollection {
   private _id: string;
+  private _creator: string;
   private _description: string;
   private _label: string;
   private _isPublic: boolean;
@@ -24,6 +26,7 @@ export class PortalCollection {
   constructor(collection: Collection = {}) {
     this._description = collection.description ?? "";
     this._id = collection.id ?? "";
+    this._creator = collection.creator ?? "";
     this._label = collection.label ?? "";
     this._isPublic = collection.isPublic ?? false;
     this._collaborators = collection.collaborators ?? [];
@@ -32,6 +35,10 @@ export class PortalCollection {
 
   get id() {
     return this._id;
+  }
+
+  get creator() {
+    return this._creator;
   }
 
   get description() {
@@ -56,6 +63,10 @@ export class PortalCollection {
 
   set id(value: string) {
     this._id = value;
+  }
+
+  set creator(value: string) {
+    this._creator = value;
   }
 
   set description(value: string) {
@@ -85,6 +96,7 @@ export class PortalCollection {
     }
     return {
       id: this.id,
+      creator: this.creator,
       description: this.description,
       label: this.label,
       isPublic: this.isPublic,
@@ -97,6 +109,7 @@ export class PortalCollection {
   static toObject(data: PortalCollectionJsonData): PortalCollection {
     let pcol = new PortalCollection();
     pcol.id = data.id;
+    pcol.creator = data.creator;
     pcol.description = data.description;
     pcol.label = data.label;
     pcol.isPublic = data.isPublic;

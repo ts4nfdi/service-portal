@@ -1,15 +1,17 @@
 'use client'
 
-// import { Modal } from "@/app/ui/commons/modal";
-// import { EditIcon, TrashIcon } from "@/app/ui/commons/icons";
-// import { WarningAlert } from "@/app/ui/commons/snippets";
-// import { deleteCollection } from "@/app/api/actions/collections";
+import { Modal, ModalButton } from "@/app/ui/commons/modal";
+import { EditIcon, TrashIcon } from "@/app/ui/commons/icons";
+import { WarningAlert } from "@/app/ui/commons/snippets";
+import { deleteCollection } from "@/app/api/actions/collections";
 import { CopyToClipboard } from "@/app/clientExports";
 import { PortalCollection, PortalTerminology, PortalCollectionJsonData } from "@/app/concepts";
+import { useSession } from "next-auth/react";
 
 
 
 export default function CollectionContentCmp(props: { collection: PortalCollectionJsonData }) {
+  const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
 
   function renderTerminologies(terminologies: PortalTerminology[]) {
@@ -30,30 +32,34 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
             <CopyToClipboard textToCopy={props.collection.id!} key={"copy"} />
             <p key={"collection-id"} className="inline-block  text-sm">{props.collection.id}</p>
           </div>
+          <p key={"collection-creator"} className="text-sm">Created by: {props.collection.creator}</p>
           <p key={"collection-desc"} dangerouslySetInnerHTML={{ __html: props.collection.description }}></p>
           <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
             <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
           </div>
         </div>
-        {/*<div className="col-span-1 flex flex-col flex-wrap" key={"trash-icon"}>
-          <ModalButton label={<TrashIcon />} targetModalId={"delete-collection-conf-" + props.collection.id}
-            classNames="!bg-transparent !p-0 !text-white" />
-          <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
-            key={"edit-collection"}><EditIcon /></a>
-        </div>*/}
+        {session?.data?.user?.username === props.collection.creator &&
+          <div className="col-span-1 flex flex-col flex-wrap" key={"trash-icon"}>
+            <ModalButton label={<TrashIcon />} targetModalId={"delete-collection-conf-" + props.collection.id}
+              classNames="!bg-transparent !p-0 !text-white" />
+            <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
+              key={"edit-collection"}><EditIcon /></a>
+          </div>
+        }
       </div>
-      {/*<Modal
-        id={"delete-collection-conf-" + props.collection.id}
-        title={"Delete Collection: " + props.collection.label}
-        content={<WarningAlert
-          message="Are you sure about deleting this collection? This action is irreversible!" />}
-        actionBtn
-        actionBtnLabel="Yes, I am sure"
-        actionBtnCallback={async () => {
-          let resp = await deleteCollection(props.collection.id!);
-          window.location.href = `/collection/myCollections?deleted=${resp.status}`;
-        }}
-      />*/}
+      {session?.data?.user?.username === props.collection.creator &&
+        <Modal
+          id={"delete-collection-conf-" + props.collection.id}
+          title={"Delete Collection: " + props.collection.label}
+          content={<WarningAlert
+            message="Are you sure about deleting this collection? This action is irreversible!" />}
+          actionBtn
+          actionBtnLabel="Yes, I am sure"
+          actionBtnCallback={async () => {
+            let resp = await deleteCollection(props.collection.id!);
+            window.location.href = `/collection/myCollections?deleted=${resp.status}`;
+          }}
+        />}
     </>
   )
 }

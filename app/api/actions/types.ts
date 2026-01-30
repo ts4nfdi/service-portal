@@ -20,6 +20,7 @@ export type NewIncubatorForm = {
 
 export type Collection = {
   id?: string,
+  creator?: string,
   description?: string,
   label?: string,
   terminologies?: Terminology[],
