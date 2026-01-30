@@ -1,6 +1,6 @@
 {
   "stats": {
-    "In preparation": 0,
+    "In preparation": 10,
     "Running": 12,
     "Finished": 4
   },
@@ -236,6 +236,136 @@
       "logo": "dalia.png",
       "logoW": 300,
       "logoH": 300
+    },
+    {
+      "title": "TS4NDSI integration in Galaxy",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "To strengthen FAIR data practices and semantic interoperability within research tools and workflows, we propose to integrate Galaxy with the TS4NFDI Terminology Service. This integration will allow Galaxy datatype definitions to be annotated with standardized concepts from the EDAM ontology, accessed dynamically through TS4NFDI. By linking Galaxy datatypes to persistent ontology identifiers, researchers will be supported in selecting, interpreting, and reusing data in a more transparent and interoperable way. As a demonstrator, we will extend a subset of Galaxy datatype descriptors with references to EDAM terms served via TS4NFDI. When users interact with these datatypes in Galaxy, they will be able to view the corresponding ontology concepts and their definitions directly within the platform via the TS4nfdi widgets. Workflows and outputs will then carry these semantic annotations forward, enabling improved provenance tracking, automated metadata enrichment, and easier integration with NFDI services. This work will demonstrate how Galaxy can adopt shared terminology infrastructures to lower barriers to FAIR data compliance and enable consistent, domain-appropriate semantic annotation across research communities.",
+      "goals": [],
+      "consortium": [],
+      "logo": "galaxy-eu.svg",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "AIMS",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "AIMS (Applying Interoperable Metadata Standards) is developing a platform for creating, sharing, and reusing interoperable and machine-readable metadata profiles based on SHACL shapes. The project addresses key challenges in research data management by enabling researchers to model semantic metadata schemas in a modular and hierarchical fashion using elements from established controlled terminologies. AIMS provides a central web-UI for managing profiles, backed by repositories for storing validated metadata sets and integrating with electronic lab notebooks (ELNs) like eLabFTW and openBIS. The project consortium includes ULB Darmstadt, RWTH Aachen IT Center, University of Rostock, Fraunhofer IWM, and University of Freiburg.",
+      "goals": [],
+      "consortium": ["NFDI4Ing"],
+      "logo": "AIMS-Logo.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "DMP4NFDI provides the DMP tool RDMO for NFDI consortia and develops the DMP Template Framework to ensure interoperability across different DMP services in NFDI. Vocabularies, terminologies and ontologies already play an important role in the data management planning process. Our goal for this project is to integrate the TS4NFDI service into the RDMO interview section, allowing users to choose items from predefined vocabularies. We are collaborating with the FAIRagro consortium to make community standards available within their templates.",
+      "goals": [],
+      "consortium": ["Base4NFDI"],
+      "logo": "DMP4NFDI.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Enabling Semantic Interoperability via DataCite Terminologies",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "This incubator project aims to host the DataCite metadata model and controlled vocabularies within the TIB Terminology Services (TS) infrastructure and expose them through the TS4NFDI API Gateway. The goal is to provide a canonical, machine-actionable representation of DataCite terms, including stable URIs, labels, definitions, and versioning, that can be reused consistently across NFDI services and beyond. Rather than introducing a new ontology for metadata, the project operationalises an existing, widely adopted metadata standard inside the TS ecosystem, enabling downstream propagation to TS4NFDI services and client applications. In this way other services such as ELNs, DMPs or other data repositories could use the well-established DataCite terms through the API Gateway and the widgets of the Terminology Service Suite. In addition, the project will establish and maintain curated mappings between DataCite vocabularies and related schemas such as schema.org and DCAT, using the TS4NFDI mapping service. These centrally managed mappings will be provided via the mapping service to support semantic interoperability without requiring hard-coded, system-specific alignments across different knowledge domains.",
+      "goals": [],
+      "consortium": ["Base4NFDI"],
+      "logo": "PID4NFDI.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Metabase",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "Metabase is the central metadata service for the research data management container (RDMC) developed in the NFDIxCS consortium. As metadata is highly heterogeneous in different fields of computer science, the service incorporates a repository for community-specific metadata vocabularies (schemas) defined as OWL2 ontologies. Metadata of an RDMC can thus be expressed in one of these vocabularies, and the Metabase service uses the underlying ontology to automatically check for inconsistencies, as well as to enrich the supplied metadata with derived facts. To enable metadata-aware services in NFDIxCS (e.g., for finding RDMCs), Metabase can also export the metadata in various forms, for instance as an open research knowledge graph (ORKG). Further, Metabase allows to define morphisms to translate between vocabularies and bridge the gap between metadata of different communities.",
+      "goals": [],
+      "consortium": ["NFDIxCS"],
+      "logo": "NFDIxCS_Logo2024_deepblue_crop.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "MathModDB",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "MathModDB is a database of mathematical models, developed by the Mathematical Research Data Initiative (MaRDI) as an ontology and knowledge graph. Its aim is to store information of mathematical models in a structured way, describing a mathematical model as a semantic object. A model consists, for example, of mathematical expressions and quantities, and can be linked with a specific computational task. Moreover, a mathematical model is used to model a specific research problem, embedded in an academic discipline.",
+      "goals": [],
+      "consortium": ["MaRDI"],
+      "logo": "MathModDBLogo.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "FAIRagro Terminology Service",
+      "cycle": "3",
+      "status": "In preparation",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "The main purpose of the incubator project is a strong integration of TS4NFDI services with FAIRagro products and services. This includes the following concrete project objectives: 1)Automatic instantiation and updating of a FAIRagro Terminology Service Instance based on the FAIRagro Standards Inventory, 2) Implementation of mappings (preferably using the SciWin workflow engine developed in FAIRagro) for terminologies that are not yet available in a form directly usable for consumption by the TS4NFDI infrastructure, by map terminology distribution files in different formats to e.g. SKOS thesauri that can be used in a backend Skosmos service and 3) Demonstration of use of the TS4NFDI instance in selected FAIRagro products.",
+      "goals": [],
+      "consortium": ["FAIRagro"],
+      "logo": "FAIRagro.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "This incubator integrates the DataCite metadata properties and controlled vocabularies into core ELN workflows in RSpace enabling researchers to enrich metadata early in the research lifecycle and export interoperable records to repositories. In collaboration with PID4NFDI, controlled vocabularies will be exposed via the TS4NFDI API gateway and made available in RSpace through integration of TS4NFDI widgets. The incubator prototypes a user friendly and robust way of curating RSpace ELN object metadata and set the foundation for interoperable ELN objects using one of the NFDI endorsed metadata standards.",
+      "goals": [],
+      "consortium": [],
+      "logo": "RSpace.svg",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "NFDI4Immuno works with various standardized terminologies and ontologies to describe immunological data and its metadata. Currently, future users of the NFDI4Immuno Excel template are required to manually enter relevant terminologies and ontology terms into the corresponding metadata fields.",
+      "goals": [],
+      "consortium": ["NFDI4Immuno"],
+      "logo": "nfdi4immuno.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "SensorCV",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "The Sensor Management System (SMS) serves as a central infrastructure for collecting and managing sensor metadata for scientific projects across four Helmholtz Centers (GFZ, UFZ, FZJ, and KIT). To ensure metadata consistency across different SMS-instances, an independent but central Controlled Vocabulary (CV) Service provides curated terms for attributes such as device types, units, and measured quantities. The project aims to modernize the SMS-CV architecture by transforming it from an SMS-specific solution into an integrated component within the NFDI ecosystem, especially useful within the Earth System Science community (NFDI4Earth) and beyond.",
+      "goals": [],
+      "consortium": ["NFDI4Earth"],
+      "logo": "sms.png",
+      "logoW": 400,
+      "logoH": 400
     }
   ]
 }
