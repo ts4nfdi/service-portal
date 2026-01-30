@@ -65,7 +65,7 @@ export default function CollectionListCmp(props: { collections: PortalCollection
           name="collection-filter"
           type="text"
           labelText="Search For Collection"
-          placeHolder="enter search query ..."
+          placeHolder="search for collections ..."
           key={"collection-filter"}
           required={false}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
