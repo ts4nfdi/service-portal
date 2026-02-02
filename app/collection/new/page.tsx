@@ -1,7 +1,6 @@
 'use client'
 
 import { CheckBox, TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
-import { MultiSelectDropdownOption } from "@/app/ui/commons/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { useEffect, useState } from "react";
@@ -20,10 +19,6 @@ export default function NewCollection() {
 
   const session = useSession();
 
-  const options = {
-    options: [{ name: 'Option 1️⃣', id: 1 }, { name: 'Option 2️⃣', id: 2 }]
-  };
-
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,8 +29,8 @@ export default function NewCollection() {
     source: string
   }[]>([]);
   const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
-  const [users, setUsers] = useState<{ name: string, id: number }[]>([]);
-  const [selectedCollaborators, setSelectedCollaborators] = useState<MultiSelectDropdownOption[]>([]);
+  const [users, setUsers] = useState<string[]>([]);
+  const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
 
 
   async function submit(e: React.FormEvent) {
@@ -51,8 +46,8 @@ export default function NewCollection() {
       let pCollection = new PortalCollection();
       pCollection.description = formData.get("collection-desc")! as string;
       pCollection.label = formData.get("collection-title")! as string;
-      pCollection.collaborators = selectedCollaborators.map((user: MultiSelectDropdownOption) => {
-        return { username: user.name, role: "ADMIN" };
+      pCollection.collaborators = selectedCollaborators.map((username: string) => {
+        return { username: username, role: "ADMIN" };
       });
       pCollection.isPublic = visBox.checked;
       pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
@@ -96,11 +91,11 @@ export default function NewCollection() {
     }
   }
 
-  function onSelect(selectedList: MultiSelectDropdownOption[], selectedItem: MultiSelectDropdownOption) {
+  function onSelect(selectedList: string[], selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
-  function onRemove(selectedList: MultiSelectDropdownOption[], removedItem: MultiSelectDropdownOption) {
+  function onRemove(selectedList: string[], removedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
@@ -120,12 +115,7 @@ export default function NewCollection() {
       if (!resp.status) {
         return;
       }
-      let users = [];
-      let idCounter = 0;
-      for (let user of resp.content) {
-        users.push({ name: user.username, id: idCounter });
-        idCounter++;
-      }
+      let users = resp.content.map((user: { username: string }) => user.username);
       setUsers(users);
 
     });

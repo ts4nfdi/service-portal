@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
-import { Loading, TextArea, TextInput, ToggleButton } from "@/app/ui/commons/snippets";
+import { Loading, TextArea, TextInput, ToggleButton, MultiSelectDropdown } from "@/app/ui/commons/snippets";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import { PortalCollection, PortalTerminology } from "@/app/concepts";
+import { getUserList } from "@/app/api/actions/users";
 
 
 
@@ -19,6 +20,8 @@ export default function CollectionEdit() {
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [preselectedTerminologies, setPreselectedTerminologies] = useState<{ "label": string, "iri": string }[]>();
+  const [users, setUsers] = useState<string[]>([]);
+  const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
 
   const params = useParams();
   const slug = params?.slug;
@@ -37,7 +40,9 @@ export default function CollectionEdit() {
       pCollection.id = collection.id;
       pCollection.description = (document.getElementById("description")! as HTMLTextAreaElement).value;
       pCollection.label = formData.get("collection-title")! as string;
-      pCollection.collaborators = [];
+      pCollection.collaborators = selectedCollaborators.map((username: string) => {
+        return { username: username, role: "ADMIN" };
+      });
       pCollection.isPublic = visBox.checked;
       pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
         let t = new PortalTerminology();
@@ -57,7 +62,23 @@ export default function CollectionEdit() {
     }
   }
 
+  function onSelect(selectedList: string[], selectedItem: string) {
+    setSelectedCollaborators(selectedList);
+  }
+
+  function onRemove(selectedList: string[], removedItem: string) {
+    setSelectedCollaborators(selectedList);
+  }
+
   useEffect(() => {
+    getUserList().then((resp) => {
+      if (!resp.status) {
+        return;
+      }
+      let users = resp.content.map((user: { username: string }) => user.username);
+      setUsers(users);
+
+    });
     getUserCollectionList().then((resp: ActionResponse) => {
       if (!resp.status) {
         setError(resp.content);
@@ -73,7 +94,8 @@ export default function CollectionEdit() {
       for (let terminology of targetCollection.terminologies) {
         preselected.push({ label: terminology.label, iri: "" });
       }
-
+      let collaborators = targetCollection.collaborators.map((user: { username: string }) => user.username);
+      setSelectedCollaborators(collaborators);
       setPreselectedTerminologies(preselected);
       setCollection(targetCollection);
 
@@ -139,6 +161,19 @@ export default function CollectionEdit() {
                   labelText="Description"
                   rows={10}
                   defaultValue={collection.description}
+                />
+              </div>
+              <div className="form-input-group" key={"collaborators-list"}>
+                <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Collaborators (attention: collaborators will have full control over the collection)
+                </label>
+                <MultiSelectDropdown
+                  id="collection-collaborators"
+                  placeholder="Search for users ..."
+                  options={users}
+                  selectedValues={selectedCollaborators}
+                  onSelect={onSelect}
+                  onRemove={onRemove}
                 />
               </div>
               <div className="text-end" key={"submit-btn"}>

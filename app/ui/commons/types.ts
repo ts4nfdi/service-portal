@@ -89,13 +89,9 @@ export type CheckboxProps = {
 export type MultiSelectDropdownProps = {
     id: string,
     placeholder?: string,
-    options: MultiSelectDropdownOption[],
-    selectedValues: MultiSelectDropdownOption[],
-    onSelect: (selectedList: MultiSelectDropdownOption[], selectedItem: MultiSelectDropdownOption) => void,
-    onRemove: (selectedList: MultiSelectDropdownOption[], removedItem: MultiSelectDropdownOption) => void,
+    options: string[],
+    selectedValues: string[],
+    onSelect: (selectedList: string[], selectedItem: string) => void,
+    onRemove: (selectedList: string[], removedItem: string) => void,
 }
 
-export type MultiSelectDropdownOption = {
-    name: string,
-    id: number
-}

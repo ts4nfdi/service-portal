@@ -259,6 +259,7 @@ export function MultiSelectDropdown(props: MultiSelectDropdownProps) {
             displayValue="name"
             className="multiselect-dropdown"
             avoidHighlightFirstOption
+            isObject={false}
         />
     );
 }
