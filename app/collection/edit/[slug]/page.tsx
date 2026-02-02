@@ -89,6 +89,7 @@ export default function CollectionEdit() {
     visBox.checked = collection.isPublic;
   }, [collection]);
 
+
   return (
     <>
       {loading && <Loading />}

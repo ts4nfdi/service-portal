@@ -7,8 +7,8 @@ import { getUserToken } from "@/app/libs/auth";
 import "../../ui/collection/styles.css";
 
 
-//@ts-ignore
-export default async function CollectionPage({ params }) {
+export default async function CollectionPage({ params }: { params: Promise<{ collectionId: string }> }) {
+  const { collectionId } = await params;
 
   let token = await getUserToken();
   let collectionsListResp: any;
@@ -21,7 +21,7 @@ export default async function CollectionPage({ params }) {
     return renderNotFoundPage();
   }
 
-  const collection = collectionsListResp.content.find((data: PortalCollectionJsonData) => data.id === params.collectionId);
+  const collection = collectionsListResp.content.find((data: PortalCollectionJsonData) => data.id === collectionId);
 
   if (!collection) {
     return renderNotFoundPage();
