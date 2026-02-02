@@ -91,11 +91,13 @@ export default function NewCollection() {
     }
   }
 
-  //@ts-ignore
+
+  //@typescript-eslint / no - unused - vars
   function onSelect(selectedList: string[], _selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
+  //@typescript-eslint / no - unused - vars
   function onRemove(selectedList: string[], _removedItem: string) {
     setSelectedCollaborators(selectedList);
   }
