@@ -6,10 +6,13 @@ import {
     SelectionInputProps,
     TextAreaProps,
     RadioButtonProps,
-    ToggleButtonProps, CheckboxProps
+    ToggleButtonProps,
+    CheckboxProps,
+    MultiSelectDropdownProps
 } from "./types";
 import { useState } from "react";
 import { TickIcon } from "@/app/ui/commons/icons";
+import Multiselect from "multiselect-react-dropdown";
 
 
 export function TextInput(props: TextInputProps) {
@@ -241,6 +244,23 @@ export function CheckBox(props: CheckboxProps) {
                 className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{props.label}</label>
         </div>
     )
+}
+
+
+export function MultiSelectDropdown(props: MultiSelectDropdownProps) {
+    return (
+        <Multiselect
+            id={props.id}
+            placeholder={props.placeholder ?? "Select..."}
+            options={props.options}
+            selectedValues={props.selectedValues}
+            onSelect={props.onSelect}
+            onRemove={props.onRemove}
+            displayValue="name"
+            className="multiselect-dropdown"
+            avoidHighlightFirstOption
+        />
+    );
 }
 
 

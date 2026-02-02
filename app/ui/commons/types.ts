@@ -85,3 +85,17 @@ export type CheckboxProps = {
     checked?: boolean,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
 }
+
+export type MultiSelectDropdownProps = {
+    id: string,
+    placeholder?: string,
+    options: MultiSelectDropdownOption[],
+    selectedValues: MultiSelectDropdownOption[],
+    onSelect: (selectedList: MultiSelectDropdownOption[], selectedItem: MultiSelectDropdownOption) => void,
+    onRemove: (selectedList: MultiSelectDropdownOption[], removedItem: MultiSelectDropdownOption) => void,
+}
+
+export type MultiSelectDropdownOption = {
+    name: string,
+    id: number
+}

@@ -1,6 +1,7 @@
 'use client'
 
-import { CheckBox, TextInput } from "@/app/ui/commons/snippets";
+import { CheckBox, TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
+import { MultiSelectDropdownOption } from "@/app/ui/commons/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { useEffect, useState } from "react";
@@ -12,11 +13,16 @@ import { getAllDatabases, getDatabasedListOfTerminologies } from "@/app/api/acti
 import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
+import { getUserList } from "@/app/api/actions/users";
 
 
 export default function NewCollection() {
 
   const session = useSession();
+
+  const options = {
+    options: [{ name: 'Option 1️⃣', id: 1 }, { name: 'Option 2️⃣', id: 2 }]
+  };
 
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
@@ -28,6 +34,8 @@ export default function NewCollection() {
     source: string
   }[]>([]);
   const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
+  const [users, setUsers] = useState<{ name: string, id: number }[]>([]);
+  const [selectedCollaborators, setSelectedCollaborators] = useState<MultiSelectDropdownOption[]>([]);
 
 
   async function submit(e: React.FormEvent) {
@@ -43,7 +51,9 @@ export default function NewCollection() {
       let pCollection = new PortalCollection();
       pCollection.description = formData.get("collection-desc")! as string;
       pCollection.label = formData.get("collection-title")! as string;
-      pCollection.collaborators = [];
+      pCollection.collaborators = selectedCollaborators.map((user: MultiSelectDropdownOption) => {
+        return { username: user.name, role: "ADMIN" };
+      });
       pCollection.isPublic = visBox.checked;
       pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
         let t = new PortalTerminology();
@@ -86,6 +96,14 @@ export default function NewCollection() {
     }
   }
 
+  function onSelect(selectedList: MultiSelectDropdownOption[], selectedItem: MultiSelectDropdownOption) {
+    setSelectedCollaborators(selectedList);
+  }
+
+  function onRemove(selectedList: MultiSelectDropdownOption[], removedItem: MultiSelectDropdownOption) {
+    setSelectedCollaborators(selectedList);
+  }
+
   useEffect(() => {
     setAutocompleteIsLoaded(true)
   }, [preselectedTerminologies]);
@@ -97,7 +115,20 @@ export default function NewCollection() {
         databases.push(PortalDatabase.toObject(db));
       }
       setDbs(databases);
-    })
+    });
+    getUserList().then((resp) => {
+      if (!resp.status) {
+        return;
+      }
+      let users = [];
+      let idCounter = 0;
+      for (let user of resp.content) {
+        users.push({ name: user.username, id: idCounter });
+        idCounter++;
+      }
+      setUsers(users);
+
+    });
   }, []);
 
   if (!session?.data?.user.token && session.status !== "loading") {
@@ -112,7 +143,16 @@ export default function NewCollection() {
       <p className="header-2" key={"heading"}>Define your new collection</p>
       {loading && <Loading />}
       {!formIsSubmitted &&
-        <form key={"collection-form"} className="mt-10" onSubmit={submit}>
+        <form
+          key={"collection-form"}
+          className="mt-10"
+          onSubmit={submit}
+          onKeyDown={(e: React.KeyboardEvent<HTMLFormElement>) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
+        >
           <div className="form-input-group">
             <ToggleButton id={"visibility"} label="Public" />
           </div>
@@ -167,6 +207,19 @@ export default function NewCollection() {
               placeholder="please add a description for your collection ..."
               labelText="Description"
               rows={10}
+            />
+          </div>
+          <div className="form-input-group" key={"collaborators-list"}>
+            <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Collaborators (attention: collaborators will have full control over the collection)
+            </label>
+            <MultiSelectDropdown
+              id="collection-collaborators"
+              placeholder="Search for users ..."
+              options={users}
+              selectedValues={selectedCollaborators}
+              onSelect={onSelect}
+              onRemove={onRemove}
             />
           </div>
           <div className="text-end" key={"submit-btn"}>

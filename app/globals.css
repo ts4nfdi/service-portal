@@ -203,3 +203,19 @@ li {
 .h1-service-portal h1 {
     position: relative;
 }
+
+.multiselect-dropdown .searchWrapper{
+    @apply p-0;
+}
+
+.multiselect-dropdown .chip{
+    @apply bg-ts4nfdi-brand-color dark:bg-gray-700 text-white mt-1 ml-1 dark:text-white;
+}
+
+.multiselect-dropdown .option{
+    @apply dark:text-white;
+}
+
+.multiselect-dropdown .option:hover, .multiselect-dropdown .highlight{
+    @apply bg-ts4nfdi-brand-color dark:bg-gray-600 dark:text-white;
+}
