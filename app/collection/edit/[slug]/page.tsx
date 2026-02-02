@@ -156,7 +156,16 @@ export default function CollectionEdit() {
             list</a>
           <p className="header-2" key={"heading"}>Edit your collection: {collection.label}</p>
           {!formIsSubmitted &&
-            <form key={"collection-form"} className="mt-10" onSubmit={submit}>
+            <form
+              key={"collection-form"}
+              className="mt-10"
+              onSubmit={submit}
+              onKeyDown={(e: React.KeyboardEvent<HTMLFormElement>) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                }
+              }}
+            >
               <div className="form-input-group">
                 <ToggleButton id={"visibility"} label="Public" />
               </div>
