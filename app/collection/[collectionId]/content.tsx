@@ -33,6 +33,7 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
             <p key={"collection-id"} className="inline-block  text-sm">{props.collection.id}</p>
           </div>
           <p key={"collection-creator"} className="text-sm">Created by: {props.collection.creator}</p>
+          <p key={"collection-collaborators"} className="text-sm">Collaborators: {props.collection.collaborators.length ? props.collection.collaborators.map((user: any) => user.username).join(", ") : "None"}</p>
           <p key={"collection-desc"} dangerouslySetInnerHTML={{ __html: props.collection.description }}></p>
           <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
             <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
