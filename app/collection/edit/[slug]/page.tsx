@@ -87,11 +87,13 @@ export default function CollectionEdit() {
     setAutocompleteIsLoaded(true);
   }
 
-  function onSelect(selectedList: string[], selectedItem: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function onSelect(selectedList: string[], _selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
-  function onRemove(selectedList: string[], removedItem: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function onRemove(selectedList: string[], _removedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
