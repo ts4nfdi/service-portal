@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
-import { Loading, TextArea, TextInput, ToggleButton, MultiSelectDropdown } from "@/app/ui/commons/snippets";
+import { Loading, TextArea, TextInput, ToggleButton, MultiSelectDropdown, CheckBox } from "@/app/ui/commons/snippets";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
-import { PortalCollection, PortalTerminology } from "@/app/concepts";
+import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
+import { getDatabasedListOfTerminologies, getAllDatabases } from "@/app/api/actions/databases";
 
 
 
@@ -19,9 +20,11 @@ export default function CollectionEdit() {
   const [collection, setCollection] = useState<PortalCollection>(new PortalCollection());
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
-  const [preselectedTerminologies, setPreselectedTerminologies] = useState<{ "label": string, "iri": string }[]>();
+  const [preselectedTerminologies, setPreselectedTerminologies] = useState<{ "label": string, "iri": string, source: string }[]>();
   const [users, setUsers] = useState<string[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
+  const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
+  const [dbs, setDbs] = useState<PortalDatabase[]>([]);
 
   const params = useParams();
   const slug = params?.slug;
@@ -62,6 +65,28 @@ export default function CollectionEdit() {
     }
   }
 
+  function loadTerminologies(e: React.ChangeEvent<HTMLInputElement>) {
+    let db = e.target.id;
+    setAutocompleteIsLoaded(false);
+    if (e.target.checked) {
+      getDatabasedListOfTerminologies(db).then((terminologies) => {
+        let preselected = [];
+        for (let terminology of terminologies) {
+          preselected.push({ label: terminology.label, iri: terminology.iri, source: db });
+        }
+        if (preselectedTerminologies) {
+          setPreselectedTerminologies([...preselectedTerminologies, ...preselected]);
+        } else {
+          setPreselectedTerminologies(preselected);
+        }
+      })
+    } else {
+      let preselected = preselectedTerminologies?.filter((item) => item.source != db);
+      setPreselectedTerminologies(preselected);
+    }
+    setAutocompleteIsLoaded(true);
+  }
+
   function onSelect(selectedList: string[], selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
@@ -71,6 +96,13 @@ export default function CollectionEdit() {
   }
 
   useEffect(() => {
+    getAllDatabases().then((dbs: PortalDatabaseJsonData[]) => {
+      let databases = [];
+      for (let db of dbs) {
+        databases.push(PortalDatabase.toObject(db));
+      }
+      setDbs(databases);
+    });
     getUserList().then((resp) => {
       if (!resp.status) {
         return;
@@ -92,7 +124,7 @@ export default function CollectionEdit() {
       }
       let preselected = [];
       for (let terminology of targetCollection.terminologies) {
-        preselected.push({ label: terminology.label, iri: "" });
+        preselected.push({ label: terminology.label, iri: "", source: terminology.source });
       }
       let collaborators = targetCollection.collaborators.map((user: { username: string }) => user.username);
       setSelectedCollaborators(collaborators);
@@ -138,19 +170,37 @@ export default function CollectionEdit() {
                   required
                 />
               </div>
+              <div className="form-input-group">
+                <p className="" key={"title"}>You can import all the terminologies from the selected terminology
+                  services.</p>
+                <ul
+                  className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  {dbs.map((db: PortalDatabase) => {
+                    return (
+                      <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
+                        key={db.name}>
+                        <CheckBox id={db.name} label={db.name} onChange={loadTerminologies} />
+                      </li>
+                    );
+                  })
+                  }
+                </ul>
+              </div>
               <div className="form-input-group" key={"terminology-list"}>
-                <AutoCompleteTSS
-                  setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
-                    setSelectedTerminologies(terms);
-                    (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
-                  }}
-                  label="Terminologies"
-                  placeholder="Choose your terminologies ..."
-                  parameter="type=ontology"
-                  //@ts-ignore
-                  preselected={preselectedTerminologies}
-                  required
-                />
+                {autocompleteIsLoaded && preselectedTerminologies &&
+                  <AutoCompleteTSS
+                    setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
+                      let selected = terms.filter((term) => !preselectedTerminologies.find((preSelectedTerm) => preSelectedTerm.iri === term.iri));
+                      setSelectedTerminologies([...preselectedTerminologies, ...selected]);
+                      (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
+                    }}
+                    label="Terminologies"
+                    placeholder="Choose your terminologies ..."
+                    parameter="type=ontology"
+                    required
+                    preselected={preselectedTerminologies}
+                  />
+                }
               </div>
               <div className="form-input-group" key="description">
                 <TextArea
