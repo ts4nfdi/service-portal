@@ -87,11 +87,11 @@ export default function CollectionEdit() {
     setAutocompleteIsLoaded(true);
   }
 
-  function onSelect(selectedList: string[], selectedItem: string) {
+  function onSelect(selectedList: string[], _selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
-  function onRemove(selectedList: string[], removedItem: string) {
+  function onRemove(selectedList: string[], _removedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 

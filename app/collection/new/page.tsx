@@ -91,11 +91,12 @@ export default function NewCollection() {
     }
   }
 
-  function onSelect(selectedList: string[], selectedItem: string) {
+  //@ts-ignore
+  function onSelect(selectedList: string[], _selectedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
-  function onRemove(selectedList: string[], removedItem: string) {
+  function onRemove(selectedList: string[], _removedItem: string) {
     setSelectedCollaborators(selectedList);
   }
 
