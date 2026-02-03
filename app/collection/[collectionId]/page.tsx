@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
 import { PortalCollectionJsonData } from "@/app/concepts";
 import { getUserToken } from "@/app/libs/auth";
+import { ActionResponse } from "@/app/api/actions/types";
 import "../../ui/collection/styles.css";
 
 
@@ -11,17 +12,18 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
   const { collectionId } = await params;
 
   let token = await getUserToken();
-  let collectionsListResp: any;
-  if (!token) {
-    collectionsListResp = await getPublicCollectionList();
-  } else {
-    collectionsListResp = await getUserCollectionList();
+  let publicCollectionsListResp: ActionResponse = { status: false, content: [] };
+  let userCollectionsListResp: ActionResponse = { status: false, content: [] };
+  publicCollectionsListResp = await getPublicCollectionList();
+  if (token) {
+    userCollectionsListResp = await getUserCollectionList();
   }
-  if (!collectionsListResp.status) {
+  if (!publicCollectionsListResp.status && !userCollectionsListResp.status) {
     return renderNotFoundPage();
   }
+  let collectionList = [...publicCollectionsListResp.content, ...userCollectionsListResp.content];
 
-  const collection = collectionsListResp.content.find((data: PortalCollectionJsonData) => data.id === collectionId);
+  const collection = collectionList.find((data: PortalCollectionJsonData) => data.id === collectionId);
 
   if (!collection) {
     return renderNotFoundPage();
