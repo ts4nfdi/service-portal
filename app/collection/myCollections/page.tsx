@@ -19,10 +19,10 @@ export default async function MyCollections() {
   }
 
   return (
-    <div className="md:col-span-3 p-4" key={"my_collection"}>
+    <div className="md:col-span-3" key={"my_collection"}>
       <Suspense> <CollectionListMessages /> </Suspense>
-      <p className="header-2">TS4NFDI Collections</p>
-      <Link href="/collection/new/" className="btn">Create Collection</Link>
+      <p className="header-2 !mt-0 inline-block">My Collections</p>
+      <Link href="/collection/new?from=my-collections" className="btn !p-1 !text-sm ml-2">Create Collection</Link>
       <CollectionList collections={collectionsResp.content} />
     </div>
   );

@@ -13,11 +13,14 @@ import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJson
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
+import { useSearchParams } from "next/navigation";
 
 
 export default function NewCollection() {
 
   const session = useSession();
+
+  const searchParams = useSearchParams();
 
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
@@ -63,7 +66,11 @@ export default function NewCollection() {
       setLoading(true);
 
       let res = await createCollection(pCollection.toJson());
-      window.location.href = `/collection/myCollections?created=${res.status}`;
+      if (searchParams.get('from') === "my-collections") {
+        window.location.href = `/collection/myCollections?created=${res.status}`;
+      } else {
+        window.location.href = `/collection/collections?created=${res.status}`;
+      }
 
     } catch {
       return;
@@ -132,7 +139,10 @@ export default function NewCollection() {
 
   return (
     <div className="md:col-span-2 content-panel">
-      <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />Collection list</a>
+      {searchParams.get('from') === "my-collections"
+        ? <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
+        : <a className="btn" href="/collection/collections/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
+      }
       <p className="header-2" key={"heading"}>Define your new collection</p>
       {loading && <Loading />}
       {!formIsSubmitted &&
