@@ -24,10 +24,12 @@ export default async function Collections() {
   let collectionsList = [...publicCollectionsListResp.content, ...userCollectionsListResp.content];
 
   return (
-    <div className="md:col-span-3 p-4" key={"my_collection"}>
+    <div className="md:col-span-3" key={"my_collection"}>
       <Suspense> <CollectionListMessages /> </Suspense>
-      <p className="header-2">TS4NFDI Collections</p>
-      {token && <Link href="/collection/new/" className="btn">Create Collection</Link>}
+      <div className="">
+        <p className="header-2 !mt-0 inline-block">TS4NFDI Collections</p>
+        {token && <Link href="/collection/new/" className="btn !p-1 !text-sm ml-2">Create Collection</Link>}
+      </div>
       <CollectionList collections={collectionsList} />
     </div>
   );

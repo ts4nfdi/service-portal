@@ -3,7 +3,7 @@
 import CollectionCard from "@/app/ui/collection/collectionCard";
 import { TextInput } from "@/app/ui/commons/snippets";
 import { useEffect, useState } from "react";
-import { PortalTerminology, PortalCollection, PortalCollectionJsonData } from "@/app/concepts";
+import { PortalCollection, PortalCollectionJsonData } from "@/app/concepts";
 
 const COLLECTION_LIST_PAGE_SIZE = 5;
 
@@ -28,7 +28,7 @@ export default function CollectionListCmp(props: { collections: PortalCollection
         if (collection.description.toLowerCase().includes(query)) {
           return true;
         }
-        return collection.terminologies.find((terminology: PortalTerminology) => terminology.label.toLowerCase().includes(query));
+        return false;
       });
       setCollectionsList(filteredCollections);
       setCurrentPage(1);
@@ -51,39 +51,9 @@ export default function CollectionListCmp(props: { collections: PortalCollection
     }
   }
 
-  useEffect(() => {
-    setCollectionsList(collections);
-    setPageSize(collections.length < pageSize ? collections.length : COLLECTION_LIST_PAGE_SIZE);
-  }, []);
-
-
-  return (
-    <>
-      <div className="mt-5">
-        <TextInput
-          id="filter"
-          name="collection-filter"
-          type="text"
-          labelText="Search For Collection"
-          placeHolder="search for collections ..."
-          key={"collection-filter"}
-          required={false}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            filterList(e.target.value)
-          }}
-        />
-      </div>
-
-      {collectionsList.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((col: PortalCollection) => {
-        return (
-          <>
-            <div className="pt-5" key={"collections-list-container"}>
-              <CollectionCard collection={col} />
-            </div>
-          </>
-        )
-      })}
-      <div className="flex flex-col items-center mt-3">
+  function renderPagination() {
+    return (
+      <div className="flex flex-col items-end mt-3">
         <span className="text-sm text-gray-700 dark:text-gray-400">
           Showing <span className="mr-1 font-semibold text-gray-900 dark:text-white">{collectionsList.length ? (currentPage - 1) * pageSize + 1 : 0}</span>
           to
@@ -116,6 +86,48 @@ export default function CollectionListCmp(props: { collections: PortalCollection
           </button>
         </div>
       </div>
+    );
+  }
+
+  useEffect(() => {
+    setCollectionsList(collections);
+    setPageSize(collections.length < pageSize ? collections.length : COLLECTION_LIST_PAGE_SIZE);
+  }, []);
+
+
+  return (
+    <>
+      <div className="flex flex-row">
+        <div className="w-3/4">
+          <TextInput
+            id="filter"
+            name="collection-filter"
+            type="text"
+            labelText="Search For Collection"
+            placeHolder="search for collections ..."
+            key={"collection-filter"}
+            required={false}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              filterList(e.target.value)
+            }}
+          />
+        </div>
+        <div className="w-1/4">
+          {renderPagination()}
+        </div>
+
+      </div>
+      {collectionsList.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((col: PortalCollection) => {
+        return (
+          <>
+            <div className="pt-5" key={"collections-list-container"}>
+              <CollectionCard collection={col} />
+            </div>
+          </>
+        )
+      })}
+      {renderPagination()}
+
     </>
   );
 }
