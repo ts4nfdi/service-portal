@@ -34,7 +34,9 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
           </div>
           <p key={"collection-creator"} className="text-sm">Created by: {props.collection.creator}</p>
           <p key={"collection-collaborators"} className="text-sm">Collaborators: {props.collection.collaborators.length ? props.collection.collaborators.map((user: any) => user.username).join(", ") : "None"}</p>
-          <p key={"collection-desc"} className="bg-gray-100 p-4">{props.collection.description}</p>
+          {props.collection.description &&
+            <p key={"collection-desc"} className="bg-gray-100 p-4 dark:bg-gray-700 dark:!text-white">{props.collection.description}</p>
+          }
           <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
             <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
           </div>

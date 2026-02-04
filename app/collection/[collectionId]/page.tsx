@@ -44,7 +44,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
         <p className="header-2 font-bold">
           {collection.label}
           <p
-            className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:bg-white dark:text-black"
+            className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black"
             title="collection visibility"
             aria-label="collection visibility"
           >
