@@ -8,6 +8,6 @@ export function deleteParamsFromUrl(router: AppRouterInstance, paramsToDelete: s
   for (let param of paramsToDelete) {
     url.delete(param);
   }
-  router.push(window.location.origin + window.location.pathname + (url.toString() ?? ""))
+  router.push(window.location.origin + window.location.pathname + '?' + url.toString());
 }
 

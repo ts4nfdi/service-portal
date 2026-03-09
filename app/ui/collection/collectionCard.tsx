@@ -33,7 +33,10 @@ export default function CollectionCard(props: CmpProps) {
     <div className="collection-card" key={props.collection.id}>
       <div className="grid grid-cols-10" key={"collection-card-header"}>
         <Link href={"/collection/" + props.collection.id} className="col-span-9">
-          <p className="header-4" key={"collection-title"}>{props.collection.label}</p>
+          <p className="header-4 inline-block" key={"collection-title"}>{props.collection.label}</p>
+          {!props.collection.isPublic &&
+            <p className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black">private</p>
+          }
         </Link>
         {props.collection.creator === session?.data?.user?.username &&
           <div className="col-span-1 grid grid-rows-1 p-0" key={"trash-icon"}>

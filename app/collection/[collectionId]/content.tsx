@@ -28,12 +28,15 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
     <>
       <div className="grid grid-cols-10" key={"collection-card-header"}>
         <div className="col-span-9 flex flex-col flex-wrap gap-6">
-          <div key={"label-and-copy"} className="border rounded bg-gray-100 md:p-3 md:w-1/4 dark:bg-gray-700">
-            <CopyToClipboard textToCopy={props.collection.id!} key={"copy"} />
+          <div key={"label-and-copy"} className="border rounded bg-gray-100 px-1 md:w-1/4  dark:bg-gray-700" id="collection-id">
             <p key={"collection-id"} className="inline-block  text-sm">{props.collection.id}</p>
+            <CopyToClipboard textToCopy={props.collection.id!} key={"copy"} />
           </div>
           <p key={"collection-creator"} className="text-sm">Created by: {props.collection.creator}</p>
-          <p key={"collection-desc"} dangerouslySetInnerHTML={{ __html: props.collection.description }}></p>
+          <p key={"collection-collaborators"} className="text-sm">Collaborators: {props.collection.collaborators.length ? props.collection.collaborators.map((user: any) => user.username).join(", ") : "None"}</p>
+          {props.collection.description &&
+            <p key={"collection-desc"} className="bg-gray-100 p-4 dark:bg-gray-700 dark:!text-white">{props.collection.description}</p>
+          }
           <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
             <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
           </div>
