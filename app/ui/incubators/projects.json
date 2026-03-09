@@ -1,7 +1,7 @@
 {
   "stats": {
-    "In preparation": 10,
-    "Running": 12,
+    "In preparation": 7,
+    "Running": 15,
     "Finished": 4
   },
   "projects": [
@@ -44,7 +44,7 @@
       "status": "Running",
       "start": "~",
       "end": "~",
-      "description": "While several attempts have been made recently to create NMR databases from literature, they fall short of meeting the needs of modern chemical and related scientific communities. nmrXiv is the first open archive to preserve NMR data in its original instrument format, while offering tools for their analysis and promoting open data and standards for long-term sustainability and accessibility.\n\nnmrXiv revolutionizes NMR data management and archival by providing an open-access, standardized, and user-friendly platform. Our platform is public and interoperable to ensure that NMR data is freely accessible, transparent, and reproducible. We support standardized data formats to enhance consistency and facilitate data comparison and integration. ",
+      "description": "While several attempts have been made recently to create NMR databases from literature, they fall short of meeting the needs of modern chemical and related scientific communities. nmrXiv is the first open archive to preserve NMR data in its original instrument format, while offering tools for their analysis and promoting open data and standards for long-term sustainability and accessibility. nmrXiv revolutionizes NMR data management and archival by providing an open-access, standardized, and user-friendly platform. Our platform is public and interoperable to ensure that NMR data is freely accessible, transparent, and reproducible. We support standardized data formats to enhance consistency and facilitate data comparison and integration. ",
       "goals": ["Integration of TSS widgets"],
       "consortium": ["NFDI4Chem"],
       "logo": "nmrxiv_repository.png",
@@ -57,7 +57,7 @@
       "status": "Running",
       "start": "10.02.2025",
       "end": "11.2025",
-      "description": "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on ‘small’ chemical compounds. The term ‘molecular entity’ refers to any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer, etc., identifiable as a separately distinguishable entity. The molecular entities in question are either products of nature or synthetic products used to intervene in the processes of living organisms.\n\nChEBI incorporates an ontological classification, whereby the relationships between molecular entities or classes of entities and their parents and/or children are specified.",
+      "description": "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on ‘small’ chemical compounds. The term ‘molecular entity’ refers to any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer, etc., identifiable as a separately distinguishable entity. The molecular entities in question are either products of nature or synthetic products used to intervene in the processes of living organisms. ChEBI incorporates an ontological classification, whereby the relationships between molecular entities or classes of entities and their parents and/or children are specified.",
       "goals": ["Integration of the hierarchy widget for visualization and as navigation", "Visualization of the path via the graph widget"],
       "consortium": [],
       "logo": "chebi.png",
@@ -84,7 +84,7 @@
       "status": "Running",
       "start": "12.02.2025",
       "end": "10.2025",
-      "description": "NFDI4Cat is a community-driven and user-oriented initiative to secure the digital future of catalysis. NFDI4Cat has set up a data repository “Repo4Cat” based on the Dataverse platform (https://repository.nfdi4cat.org/). Due to the lack of catalysis-specific vocabularies and ontologies, NFDI4Cat has also created a community-managed SKOS vocabulary “Voc4Cat” (https://nfdi4cat.github.io/voc4cat/) to provide machine readable term definitions to be used for data annotation and in metadata schemas. Together with TS4NFDI NFDI4Cat wants to provide a better vocabulary  browsing and search experience by serving Voc4Cat via Skosmos, a terminology browsing tool specifically optimized for SKOS vocabularies. Moreover, we want to integrate Voc4Cat annotation-widgets in the Repo4Cat data sharing platform in order to improve the metadata entry and interoperability.\n",
+      "description": "NFDI4Cat is a community-driven and user-oriented initiative to secure the digital future of catalysis. NFDI4Cat has set up a data repository “Repo4Cat” based on the Dataverse platform (https://repository.nfdi4cat.org/). Due to the lack of catalysis-specific vocabularies and ontologies, NFDI4Cat has also created a community-managed SKOS vocabulary “Voc4Cat” (https://nfdi4cat.github.io/voc4cat/) to provide machine readable term definitions to be used for data annotation and in metadata schemas. Together with TS4NFDI NFDI4Cat wants to provide a better vocabulary  browsing and search experience by serving Voc4Cat via Skosmos, a terminology browsing tool specifically optimized for SKOS vocabularies. Moreover, we want to integrate Voc4Cat annotation-widgets in the Repo4Cat data sharing platform in order to improve the metadata entry and interoperability.",
       "goals": ["Setup a Skosmos terminology system", "Provide the skos-based Voc4Cat vocabulary via API", "Integration of Voc4Cat to Repo4Cat via Dataverse External Vocabulary Management"],
       "consortium": ["NFDI4Cat"],
       "logo": "nfdi4cat.png",
@@ -279,11 +279,11 @@
     {
       "title": "Enabling Semantic Interoperability via DataCite Terminologies",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
       "description": "This incubator project aims to host the DataCite metadata model and controlled vocabularies within the TIB Terminology Services (TS) infrastructure and expose them through the TS4NFDI API Gateway. The goal is to provide a canonical, machine-actionable representation of DataCite terms, including stable URIs, labels, definitions, and versioning, that can be reused consistently across NFDI services and beyond. Rather than introducing a new ontology for metadata, the project operationalises an existing, widely adopted metadata standard inside the TS ecosystem, enabling downstream propagation to TS4NFDI services and client applications. In this way other services such as ELNs, DMPs or other data repositories could use the well-established DataCite terms through the API Gateway and the widgets of the Terminology Service Suite. In addition, the project will establish and maintain curated mappings between DataCite vocabularies and related schemas such as schema.org and DCAT, using the TS4NFDI mapping service. These centrally managed mappings will be provided via the mapping service to support semantic interoperability without requiring hard-coded, system-specific alignments across different knowledge domains.",
-      "goals": [],
+      "goals": ["host a canonical, machine-actionable representation of DataCite terms", "provision of mappings in the mapping service"],
       "consortium": ["Base4NFDI"],
       "logo": "PID4NFDI.png",
       "logoW": 200,
@@ -292,24 +292,24 @@
     {
       "title": "Metabase",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
-      "description": "Metabase is the central metadata service for the research data management container (RDMC) developed in the NFDIxCS consortium. As metadata is highly heterogeneous in different fields of computer science, the service incorporates a repository for community-specific metadata vocabularies (schemas) defined as OWL2 ontologies. Metadata of an RDMC can thus be expressed in one of these vocabularies, and the Metabase service uses the underlying ontology to automatically check for inconsistencies, as well as to enrich the supplied metadata with derived facts. To enable metadata-aware services in NFDIxCS (e.g., for finding RDMCs), Metabase can also export the metadata in various forms, for instance as an open research knowledge graph (ORKG). Further, Metabase allows to define morphisms to translate between vocabularies and bridge the gap between metadata of different communities.",
-      "goals": [],
+      "description": "Metabase is the metadata service for research data management container (RDMC) in NFDIxCS. It incorporates community-specific metadata schemas via OWL2 ontologies to support the heterogeneity  of computer science. This semantic foundation allows Metabase to automatically check for inconsistencies in the metadata and to enrich metadata sets with derived facts. The service also allows to define morphisms to translate between different schemas and ontolgogies, and connects to external systems such as the open research knowledge graph (ORKG).",
+      "goals": ["Hosting terminologies for Metabase in a terminology service", "Connect TIB TS to metabase"],
       "consortium": ["NFDIxCS"],
-      "logo": "NFDIxCS_Logo2024_deepblue_crop.png",
+      "logo": "metabase-logo.svg",
       "logoW": 300,
       "logoH": 300
     },
     {
       "title": "MathModDB",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
       "description": "MathModDB is a database of mathematical models, developed by the Mathematical Research Data Initiative (MaRDI) as an ontology and knowledge graph. Its aim is to store information of mathematical models in a structured way, describing a mathematical model as a semantic object. A model consists, for example, of mathematical expressions and quantities, and can be linked with a specific computational task. Moreover, a mathematical model is used to model a specific research problem, embedded in an academic discipline.",
-      "goals": [],
+      "goals": ["Integration of MathModDB into the TS4NFDI services", "Visualisation of the MathModDB ontology and knowledge graph"],
       "consortium": ["MaRDI"],
       "logo": "MathModDBLogo.png",
       "logoW": 300,
@@ -338,8 +338,8 @@
       "goals": [],
       "consortium": [],
       "logo": "rspace_logo.svg",
-      "logoW": 300,
-      "logoH": 300
+      "logoW": 400,
+      "logoH": 400
     },
     {
       "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
