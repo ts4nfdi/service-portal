@@ -1,5 +1,25 @@
 [
   {
+    "name": "HMC Conference 2026, Heidelberg",
+    "date": "28 - 30 April 2026",
+    "formal_date": "2026-04-30",
+    "links": [
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://events.geomar.de/event/884/"
+      }
+    ]
+  },{
+    "name": "DAPHNE4NFDI Annual Meeting 2026, Karlsruhe",
+    "date": "23 - 25 March 2026",
+    "formal_date": "2026-03-25",
+    "links": [
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://events.hifis.net/event/3368/"
+      }
+    ]
+  },{
     "name": "2nd TS4NFDI Community Hands-On Workshop, Leipzig",
     "date": "10 - 12 March 2026",
     "formal_date": "2026-03-12"
@@ -15,12 +35,15 @@
     ]
   },{
     "name": "4. Workshop: Ontologies4Chem, Limburg",
-    "date": "11 + 13 November 2025",
+    "date": "11 - 13 November 2025",
     "formal_date": "2025-11-13",
     "links": [
       {
         "type" :  "webpage (workshop)",
         "link" :  "https://www.nfdi4chem.de/event/4-workshop-ontologies4chem/"
+      },{
+        "type" : "slides",
+        "link" : "https://doi.org/10.5281/zenodo.17579194"
       }
     ]
   },{
