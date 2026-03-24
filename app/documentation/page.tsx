@@ -31,7 +31,7 @@ export default function Documentation() {
         <a href="#tss">Terminology Service Suite</a>, the
         <a href="/incubators" target="_blank">Incubator Dashboard</a>, the frontend of the TS4NFDI Mapping Service and a Configuration Panel.
         The penultimate layer is constituted by the
-        <a href="#gateway">API Gateway</a>, which comprises service wrappers and the associated service databases.
+        <a href="#gateway">API Gateway</a>, which comprises service wrappers and the associated service sources.
         The final layer provides details on the backend of the TS4NFDI
         <a href="#mapping-service">Mapping Service</a> and multiple terminology services.
         These terminology services have the potential to be hosted by third parties or alternatively by the project institutions of TS4NFDI.

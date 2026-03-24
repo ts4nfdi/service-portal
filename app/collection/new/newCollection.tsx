@@ -1,4 +1,3 @@
-
 'use client'
 
 import { CheckBox, TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
@@ -9,8 +8,8 @@ import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
 import { Loading, TextArea } from "@/app/ui/commons/snippets";
 import { ToggleButton } from "@/app/ui/commons/snippets";
-import { getAllDatabases, getDatabasedListOfTerminologies } from "@/app/api/actions/databases";
-import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
+import { getAllSources, getSourceListOfTerminologies } from "@/app/api/actions/sources";
+import { PortalCollection, PortalTerminology, PortalSource, PortalSourcesJsonData } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -19,218 +18,221 @@ import { useSearchParams } from "next/navigation";
 
 export default function NewCollection() {
 
-  const session = useSession();
+    const session = useSession();
 
-  const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
 
-  const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
-  const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [dbs, setDbs] = useState<PortalDatabase[]>([]);
-  const [preselectedTerminologies, setPreselectedTerminologies] = useState<{
-    "label": string,
-    "iri": string,
-    source: string
-  }[]>([]);
-  const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
-  const [users, setUsers] = useState<string[]>([]);
-  const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
+    const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
+    const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [scs, setScs] = useState<PortalSource[]>([]);
+    const [preselectedTerminologies, setPreselectedTerminologies] = useState<{
+        "label": string,
+        "iri": string,
+        source: string
+    }[]>([]);
+    const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
+    const [users, setUsers] = useState<string[]>([]);
+    const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
 
 
-  async function submit(e: React.FormEvent) {
-    try {
-      e.preventDefault();
-      if (selectedTermonologies.length === 0) {
-        (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "1px solid #445669";
-        return;
-      }
-      let visBox = (document.getElementById("visibility")! as HTMLInputElement);
-      let form = document.querySelector('form')!;
-      let formData = new FormData(form);
-      let pCollection = new PortalCollection();
-      pCollection.description = formData.get("collection-desc")! as string;
-      pCollection.label = formData.get("collection-title")! as string;
-      pCollection.collaborators = selectedCollaborators.map((username: string) => {
-        return { username: username, role: "ADMIN" };
-      });
-      pCollection.isPublic = visBox.checked;
-      pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
-        let t = new PortalTerminology();
-        t.label = terminilogy.label ?? "";
-        t.uri = terminilogy.iri ?? "";
-        t.source = terminilogy.source ?? "";
-        t.type = "DATABASE";
-        return t;
-      });
+    async function submit(e: React.FormEvent) {
+        try {
+            e.preventDefault();
+            if (selectedTermonologies.length === 0) {
+                (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "1px solid #445669";
+                return;
+            }
+            let visBox = (document.getElementById("visibility")! as HTMLInputElement);
+            let form = document.querySelector('form')!;
+            let formData = new FormData(form);
+            let pCollection = new PortalCollection();
+            pCollection.description = formData.get("collection-desc")! as string;
+            pCollection.label = formData.get("collection-title")! as string;
+            pCollection.collaborators = selectedCollaborators.map((username: string) => {
+                return { username: username, role: "ADMIN" };
+            });
+            pCollection.isPublic = visBox.checked;
+            pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
+                let t = new PortalTerminology();
+                t.label = terminilogy.label ?? "";
+                t.uri = terminilogy.iri ?? "";
+                t.source = terminilogy.source ?? "";
+                t.type = "SOURCE";
+                return t;
+            });
 
-      setFormIsSubmited(true);
-      setLoading(true);
+            setFormIsSubmited(true);
+            setLoading(true);
 
-      let res = await createCollection(pCollection.toJson());
-      if (searchParams.get('from') === "my-collections") {
-        window.location.href = `/collection/myCollections?created=${res.status}`;
-      } else {
-        window.location.href = `/collection/collections?created=${res.status}`;
-      }
+            let res = await createCollection(pCollection.toJson());
+            if (searchParams.get('from') === "my-collections") {
+                window.location.href = `/collection/myCollections?created=${res.status}`;
+            } else {
+                window.location.href = `/collection/collections?created=${res.status}`;
+            }
 
-    } catch {
-      return;
-    }
-  }
-
-  function loadTerminologies(e: React.ChangeEvent<HTMLInputElement>) {
-    let db = e.target.id;
-    setAutocompleteIsLoaded(false)
-    if (e.target.checked) {
-      getDatabasedListOfTerminologies(db).then((terminologies) => {
-        let preselected = [];
-        for (let terminology of terminologies) {
-          preselected.push({ label: terminology.label, iri: terminology.iri, source: db });
+        } catch {
+            return;
         }
-        if (preselectedTerminologies) {
-          setPreselectedTerminologies([...preselectedTerminologies, ...preselected]);
+    }
+
+    function loadTerminologies(e: React.ChangeEvent<HTMLInputElement>) {
+        let db = e.target.id;
+        setAutocompleteIsLoaded(false)
+        if (e.target.checked) {
+            getSourceListOfTerminologies(db).then((terminologies) => {
+                let preselected = [];
+                for (let terminology of terminologies) {
+                    preselected.push({ label: terminology.label, iri: terminology.iri, source: db });
+                }
+                if (preselectedTerminologies) {
+                    setPreselectedTerminologies([...preselectedTerminologies, ...preselected]);
+                } else {
+                    setPreselectedTerminologies(preselected);
+                }
+            })
         } else {
-          setPreselectedTerminologies(preselected);
+            let preselected = preselectedTerminologies?.filter((item) => item.source != db);
+            setPreselectedTerminologies(preselected);
         }
-      })
-    } else {
-      let preselected = preselectedTerminologies?.filter((item) => item.source != db);
-      setPreselectedTerminologies(preselected);
     }
-  }
 
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function onSelect(selectedList: string[], _selectedItem: string) {
-    setSelectedCollaborators(selectedList);
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    function onSelect(selectedList: string[], _selectedItem: string) {
+        setSelectedCollaborators(selectedList);
+    }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function onRemove(selectedList: string[], _removedItem: string) {
-    setSelectedCollaborators(selectedList);
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    function onRemove(selectedList: string[], _removedItem: string) {
+        setSelectedCollaborators(selectedList);
+    }
 
-  useEffect(() => {
-    setAutocompleteIsLoaded(true)
-  }, [preselectedTerminologies]);
+    useEffect(() => {
+        setAutocompleteIsLoaded(true)
+    }, [preselectedTerminologies]);
 
-  useEffect(() => {
-    getAllDatabases().then((dbs: PortalDatabaseJsonData[]) => {
-      let databases = [];
-      for (let db of dbs) {
-        databases.push(PortalDatabase.toObject(db));
-      }
-      setDbs(databases);
-    });
-    getUserList().then((resp) => {
-      if (!resp.status) {
-        return;
-      }
-      let users = resp.content.map((user: { username: string }) => user.username);
-      setUsers(users);
-
-    });
-  }, []);
-
-  if (!session?.data?.user.token && session.status !== "loading") {
-    return <><LoginFormWrapper /></>;
-  } else if (session.status === "loading") {
-    return <div className="md:col-span-2"><Loading /></div>;
-  }
-
-  return (
-    <div className="">
-      {searchParams.get('from') === "my-collections"
-        ? <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
-        : <a className="btn" href="/collection/collections/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
-      }
-      <p className="header-2" key={"heading"}>Define your new collection</p>
-      {loading && <Loading />}
-      {!formIsSubmitted &&
-        <form
-          key={"collection-form"}
-          className="mt-10"
-          onSubmit={submit}
-          onKeyDown={(e: React.KeyboardEvent<HTMLFormElement>) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
+    useEffect(() => {
+        getAllSources().then((scs: PortalSourcesJsonData[]) => {
+            let sources = [];
+            for (let sc of scs) {
+                sources.push(PortalSource.toObject(sc));
             }
-          }}
-        >
-          <div className="form-input-group">
-            <ToggleButton id={"visibility"} label="Public" />
-          </div>
-          <div className="form-input-group">
-            <TextInput
-              id="collection-title"
-              name="collection-title"
-              type="text"
-              labelText="Collection Title"
-              placeHolder="please add the collection title ..."
-              key={"collection-title"}
-              required
-            />
-          </div>
-          <div className="form-input-group">
-            <p className="" key={"title"}>You can import all the terminologies from the selected terminology
-              services.</p>
-            <ul
-              className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              {dbs.map((db: PortalDatabase) => {
-                return (
-                  <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
-                    key={db.name}>
-                    <CheckBox id={db.name} label={db.name} onChange={loadTerminologies} />
-                  </li>
-                );
-              })
-              }
-            </ul>
-          </div>
-          <div className="form-input-group" key={"terminology-list"}>
-            {autocompleteIsLoaded &&
-              <AutoCompleteTSS
-                setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
-                  let selected = terms.filter((term) => !preselectedTerminologies.find((preSelectedTerm) => preSelectedTerm.iri === term.iri));
-                  setSelectedTerminologies([...preselectedTerminologies, ...selected]);
-                  (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
-                }}
-                label="Terminologies"
-                placeholder="Choose your terminologies ..."
-                parameter="type=ontology"
-                required
-                preselected={preselectedTerminologies}
-              />
+            setScs(sources);
+        });
+        getUserList().then((resp) => {
+            if (!resp.status) {
+                return;
             }
-          </div>
-          <div className="form-input-group" key="description">
-            <TextArea
-              id="description"
-              required
-              name="collection-desc"
-              placeholder="please add a description for your collection ..."
-              labelText="Description"
-              rows={10}
-            />
-          </div>
-          <div className="form-input-group" key={"collaborators-list"}>
-            <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Collaborators (attention: collaborators will have full control over the collection)
-            </label>
-            <MultiSelectDropdown
-              id="collection-collaborators"
-              placeholder="Search for users ..."
-              options={users}
-              selectedValues={selectedCollaborators}
-              onSelect={onSelect}
-              onRemove={onRemove}
-            />
-          </div>
-          <div className="text-end" key={"submit-btn"}>
-            <button type="submit" className="btn">Create</button>
-          </div>
-        </form>
-      }
-    </div>
-  );
+            let users = resp.content.map((user: { username: string }) => user.username);
+            setUsers(users);
+
+        });
+    }, []);
+
+    if (!session?.data?.user.token && session.status !== "loading") {
+        return <><LoginFormWrapper /></>;
+    } else if (session.status === "loading") {
+        return <div className="md:col-span-2"><Loading /></div>;
+    }
+
+    return (
+        <div className="">
+            {searchParams.get('from') === "my-collections"
+                ?
+                <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
+                :
+                <a className="btn" href="/collection/collections/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
+            }
+            <p className="header-2" key={"heading"}>Define your new collection</p>
+            {loading && <Loading />}
+            {!formIsSubmitted &&
+                <form
+                    key={"collection-form"}
+                    className="mt-10"
+                    onSubmit={submit}
+                    onKeyDown={(e: React.KeyboardEvent<HTMLFormElement>) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                        }
+                    }}
+                >
+                    <div className="form-input-group">
+                        <ToggleButton id={"visibility"} label="Public" />
+                    </div>
+                    <div className="form-input-group">
+                        <TextInput
+                            id="collection-title"
+                            name="collection-title"
+                            type="text"
+                            labelText="Collection Title"
+                            placeHolder="please add the collection title ..."
+                            key={"collection-title"}
+                            required
+                        />
+                    </div>
+                    <div className="form-input-group">
+                        <p className="" key={"title"}>You can import all the terminologies from the selected terminology
+                            services.</p>
+                        <ul
+                            className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            {scs.map((sc: PortalSource) => {
+                                return (
+                                    <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
+                                        key={sc.name}>
+                                        <CheckBox id={sc.name} label={sc.name} onChange={loadTerminologies} />
+                                    </li>
+                                );
+                            })
+                            }
+                        </ul>
+                    </div>
+                    <div className="form-input-group" key={"terminology-list"}>
+                        {autocompleteIsLoaded &&
+                            <AutoCompleteTSS
+                                setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
+                                    let selected = terms.filter((term) => !preselectedTerminologies.find((preSelectedTerm) => preSelectedTerm.iri === term.iri));
+                                    setSelectedTerminologies([...preselectedTerminologies, ...selected]);
+                                    (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
+                                }}
+                                label="Terminologies"
+                                placeholder="Choose your terminologies ..."
+                                parameter="type=ontology"
+                                required
+                                preselected={preselectedTerminologies}
+                            />
+                        }
+                    </div>
+                    <div className="form-input-group" key="description">
+                        <TextArea
+                            id="description"
+                            required
+                            name="collection-desc"
+                            placeholder="please add a description for your collection ..."
+                            labelText="Description"
+                            rows={10}
+                        />
+                    </div>
+                    <div className="form-input-group" key={"collaborators-list"}>
+                        <label htmlFor="collection-collaborators"
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Collaborators (attention: collaborators will have full control over the collection)
+                        </label>
+                        <MultiSelectDropdown
+                            id="collection-collaborators"
+                            placeholder="Search for users ..."
+                            options={users}
+                            selectedValues={selectedCollaborators}
+                            onSelect={onSelect}
+                            onRemove={onRemove}
+                        />
+                    </div>
+                    <div className="text-end" key={"submit-btn"}>
+                        <button type="submit" className="btn">Create</button>
+                    </div>
+                </form>
+            }
+        </div>
+    );
 }
