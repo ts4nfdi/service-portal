@@ -1,8 +1,8 @@
 {
   "stats": {
-    "In preparation": 7,
-    "Running": 15,
-    "Finished": 4
+    "In preparation": 4,
+    "Running": 14,
+    "Finished": 8
   },
   "projects": [
     {
@@ -28,7 +28,7 @@
     {
       "title": "WDCC - World Data Center for Climate",
       "cycle": 1,
-      "status": "Running",
+      "status": "Finished",
       "start": "26.02.2025",
       "end": "10.2025",
       "description": "The WDCC has the mission to archive, disseminate and publish Earth System model data and related data products to support the international climate research community. The WDCC is a discipline specific repository providing active preservation for research only. Therefore WDCC is using common metadata standards and is recommending the usage of community data standards like the Climate Forecast (CF) Conventions. The WDCC is certified by Core Trust Seal (CTS) and an accredited regular member of the World Data System. WDCC is following the FAIR principles - all metadata is openly accessible, the access to the data is free of charge. The WDCC is hosted by the German Climate Computing Center (Deutsches Klimarechenzentrum - DKRZ) in Hamburg.",
@@ -36,7 +36,8 @@
       "consortium": ["NFDI4Earth"],
       "logo": "wdcc.png",
       "logoW": 300,
-      "logoH": 300
+      "logoH": 300,
+      "activityPage": "provider"
     },
     {
       "title": "nmrXiv",
@@ -54,7 +55,7 @@
     {
       "title": "ChEBI - Chemical Entities of Biological Interest",
       "cycle": 1,
-      "status": "Running",
+      "status": "Finished",
       "start": "10.02.2025",
       "end": "11.2025",
       "description": "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on ‘small’ chemical compounds. The term ‘molecular entity’ refers to any constitutionally or isotopically distinct atom, molecule, ion, ion pair, radical, radical ion, complex, conformer, etc., identifiable as a separately distinguishable entity. The molecular entities in question are either products of nature or synthetic products used to intervene in the processes of living organisms. ChEBI incorporates an ontological classification, whereby the relationships between molecular entities or classes of entities and their parents and/or children are specified.",
@@ -63,6 +64,7 @@
       "logo": "chebi.png",
       "logoW": 400,
       "logoH": 400,
+      "publications": ["https://doi.org/10.1093/nar/gkaf1271"],
       "activityPage": "https://www.ebi.ac.uk/chebi/CHEBI:27732"
     },
     {
@@ -200,7 +202,7 @@
     {
       "title": "Ontology of the historical German-language nomenclature",
       "cycle": "2",
-      "status": "Running",
+      "status": "Finished",
       "start": "14.08.2025",
       "end": "02.2026",
       "description": "The Ontology of the historical German-language nomenclature for offices and professions (OhdAB) provides classifications according to job profiles and requirement levels based on the \"Classification of Occupations 2010/2020\" (KldB 2010) for historical professions. The OhdAB is maintained and curated within FactGrid. FactGrid is an instance of Wikibase.",
@@ -208,14 +210,15 @@
       "consortium": ["NFDI4Memory", "BERD@NFDI"],
       "logo": "ohdab.png",
       "logoW": 200,
-      "logoH": 200
+      "logoH": 200,
+      "activityPage": "https://terminology.tib.eu/ts/ontologies/ohdab"
     },
     {
       "title": "Health Study Hub",
       "cycle": "2",
-      "status": "Running",
+      "status": "Finished",
       "start": "11.08.2025",
-      "end": "02.2026",
+      "end": "05.03.2026",
       "description": "The Health Study Hub is a central discovery platform developed within the NFDI4Health initiative. It provides structured metadata about health studies, enabling researchers, scientists, and other stakeholders to explore and understand available research data without requiring direct access to sensitive datasets. The Hub emphasizes metadata transparency, interoperability, and usability, supporting FAIR data principles and promoting responsible data reuse.",
       "goals": ["Restrict autocomplete/search to a subtree within an ontology", "Providing additional terminologies"],
       "consortium": ["NFDI4Health"],
@@ -253,11 +256,11 @@
     {
       "title": "AIMS",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
       "description": "AIMS (Applying Interoperable Metadata Standards) is developing a platform for creating, sharing, and reusing interoperable and machine-readable metadata profiles based on SHACL shapes. The project addresses key challenges in research data management by enabling researchers to model semantic metadata schemas in a modular and hierarchical fashion using elements from established controlled terminologies. AIMS provides a central web-UI for managing profiles, backed by repositories for storing validated metadata sets and integrating with electronic lab notebooks (ELNs) like eLabFTW and openBIS. The project consortium includes ULB Darmstadt, RWTH Aachen IT Center, University of Rostock, Fraunhofer IWM, and University of Freiburg.",
-      "goals": [],
+      "goals": ["Replace current terminology providers with TS4NFDI API Gateway as unified terminology service", "Integrate TS4NFDI Service Suite widgets to AIMS"],
       "consortium": ["NFDI4Ing"],
       "logo": "AIMS-Logo.png",
       "logoW": 200,
@@ -266,11 +269,11 @@
     {
       "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
       "description": "DMP4NFDI provides the DMP tool RDMO for NFDI consortia and develops the DMP Template Framework to ensure interoperability across different DMP services in NFDI. Vocabularies, terminologies and ontologies already play an important role in the data management planning process. Our goal for this project is to integrate the TS4NFDI service into the RDMO interview section, allowing users to choose items from predefined vocabularies. We are collaborating with the FAIRagro consortium to make community standards available within their templates.",
-      "goals": [],
+      "goals": ["Integrate TS4NFDI Service Suite widgets into the RDMO"],
       "consortium": ["Base4NFDI"],
       "logo": "DMP4NFDI.png",
       "logoW": 200,
@@ -318,11 +321,11 @@
     {
       "title": "FAIRagro Terminology Service",
       "cycle": "3",
-      "status": "In preparation",
+      "status": "Running",
       "start": "03.2026",
       "end": "09.2026",
       "description": "The main purpose of the incubator project is a strong integration of TS4NFDI services with FAIRagro products and services. This includes the following concrete project objectives: 1)Automatic instantiation and updating of a FAIRagro Terminology Service Instance based on the FAIRagro Standards Inventory, 2) Implementation of mappings (preferably using the SciWin workflow engine developed in FAIRagro) for terminologies that are not yet available in a form directly usable for consumption by the TS4NFDI infrastructure, by map terminology distribution files in different formats to e.g. SKOS thesauri that can be used in a backend Skosmos service and 3) Demonstration of use of the TS4NFDI instance in selected FAIRagro products.",
-      "goals": [],
+      "goals": ["Provision of terminologies in a Terminlogy Service", "Establishing workflow of alignment integration", "Establishing transformation workflow for the integration in TS systems", "Demonstration of use of the TS4NFDI instance in selected FAIRagro products"],
       "consortium": ["FAIRagro"],
       "logo": "FAIRagro.png",
       "logoW": 300,
