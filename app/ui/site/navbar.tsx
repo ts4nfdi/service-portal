@@ -19,7 +19,7 @@ const navItems: NavbarItem[] = [
     ]
   },
   { href: "/databases", text: "Terminology Providers" },
-  { href: "/collection/collections", text: "Collections" },
+  { href: "/collection/", text: "Collections" },
   { href: "/incubators", text: "Incubators" },
   {
     href: "", text: "Info", children: [

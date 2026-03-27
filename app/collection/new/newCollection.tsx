@@ -54,11 +54,11 @@ export default function NewCollection() {
         return { username: username, role: "ADMIN" };
       });
       pCollection.isPublic = visBox.checked;
-      pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
+      pCollection.terminologies = selectedTermonologies.map((terminology: AutoCompleteSelectedTermType) => {
         let t = new PortalTerminology();
-        t.label = terminilogy.label ?? "";
-        t.uri = terminilogy.iri ?? "";
-        t.source = terminilogy.source ?? "";
+        t.label = terminology.label ?? "";
+        t.uri = terminology.iri ?? "";
+        t.source = terminology.source ?? "";
         t.type = "DATABASE";
         return t;
       });
@@ -70,7 +70,7 @@ export default function NewCollection() {
       if (searchParams.get('from') === "my-collections") {
         window.location.href = `/collection/myCollections?created=${res.status}`;
       } else {
-        window.location.href = `/collection/collections?created=${res.status}`;
+        window.location.href = `/collection/?created=${res.status}`;
       }
 
     } catch {
@@ -142,7 +142,7 @@ export default function NewCollection() {
     <div className="">
       {searchParams.get('from') === "my-collections"
         ? <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
-        : <a className="btn" href="/collection/collections/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
+        : <a className="btn" href="/collection/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
       }
       <p className="header-2" key={"heading"}>Define your new collection</p>
       {loading && <Loading />}

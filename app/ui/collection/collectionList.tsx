@@ -97,7 +97,7 @@ export default function CollectionListCmp(props: { collections: PortalCollection
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row my-5">
         <div className="w-3/4">
           <TextInput
             id="filter"
