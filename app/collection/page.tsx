@@ -32,12 +32,12 @@ export default async function Collections() {
       </div>
       <div className='grid md:grid-cols-9 md:gap-4'>
         <div className="card-background md:col-span-5">
-            <h3 className='header-main-3'>What is a terminology collection?</h3>
-            <p>
-                A Terminology Collection is a set of terminologies that was created for a specific purpose or context in
-                which this set is relevant. This terminology collection can be shared with the community and can contain
-                ontologies, thesauri, etc, without any rating. A Terminology Collection can therefore be considered a
-                grouping within the vast space of existing terminologies.
+            <h3 className='header-main-3'>What is a Terminology Collection?</h3>
+            <p className='text-justify'>
+                A <b>Terminology Collection</b> is a set of terminologies that was created for a specific purpose or
+                context in which this set is relevant. This terminology collection can be shared with the community and
+                can contain ontologies, thesauri, etc, without any rating. A Terminology Collection can therefore be
+                considered a grouping within the vast space of existing terminologies.
             </p>
 
             {token && <Link href="/collection/new/" className="btn !p-2 !text-sm mt-10 float-right">Create Collection</Link>}
