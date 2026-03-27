@@ -8,9 +8,9 @@ import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading, TextArea, TextInput, ToggleButton, MultiSelectDropdown, CheckBox } from "@/app/ui/commons/snippets";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
-import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
+import { PortalCollection, PortalTerminology, PortalProvider, PortalSourcesJsonData } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
-import { getDatabasedListOfTerminologies, getAllDatabases } from "@/app/api/actions/databases";
+import { getSourcesListOfTerminologies, getAllProviders } from "@/app/api/actions/providers";
 
 
 
@@ -24,7 +24,7 @@ export default function CollectionEdit() {
   const [users, setUsers] = useState<string[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
-  const [dbs, setDbs] = useState<PortalDatabase[]>([]);
+  const [dbs, setDbs] = useState<PortalProvider[]>([]);
 
   const params = useParams();
   const slug = params?.slug;
@@ -69,7 +69,7 @@ export default function CollectionEdit() {
     let db = e.target.id;
     setAutocompleteIsLoaded(false);
     if (e.target.checked) {
-      getDatabasedListOfTerminologies(db).then((terminologies) => {
+      getSourcesListOfTerminologies(db).then((terminologies) => {
         let preselected = [];
         for (let terminology of terminologies) {
           preselected.push({ label: terminology.label, iri: terminology.iri, source: db });
@@ -98,12 +98,12 @@ export default function CollectionEdit() {
   }
 
   useEffect(() => {
-    getAllDatabases().then((dbs: PortalDatabaseJsonData[]) => {
-      let databases = [];
+    getAllProviders().then((dbs: PortalSourcesJsonData[]) => {
+      let providers = [];
       for (let db of dbs) {
-        databases.push(PortalDatabase.toObject(db));
+        providers.push(PortalProvider.toObject(db));
       }
-      setDbs(databases);
+      setDbs(providers);
     });
     getUserList().then((resp) => {
       if (!resp.status) {
@@ -186,7 +186,7 @@ export default function CollectionEdit() {
                   services.</p>
                 <ul
                   className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  {dbs.map((db: PortalDatabase) => {
+                  {dbs.map((db: PortalProvider) => {
                     return (
                       <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
                         key={db.name}>
@@ -246,4 +246,4 @@ export default function CollectionEdit() {
       }
     </>
   );
-} 
+}

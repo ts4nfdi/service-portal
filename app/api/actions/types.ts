@@ -35,7 +35,7 @@ export type Terminology = {
   uri?: string,
 }
 
-export type Database = {
+export type Source = {
   type?: string,
   name?: string,
   url?: string,
@@ -43,7 +43,7 @@ export type Database = {
   artefactsUrl?: string,
 }
 
-export type DatabaseJson = {
+export type SourcesJson = {
   [key: string]: {
     type: string,
     name: string,

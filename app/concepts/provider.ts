@@ -1,7 +1,7 @@
-import { Database } from "../api/actions/types";
+import { Source } from "../api/actions/types";
 
 
-export type PortalDatabaseJsonData = {
+export type PortalSourcesJsonData = {
   type: string;
   url: string;
   name: string;
@@ -22,7 +22,7 @@ const defatultLogoW = 150;
 const defatultLogoH = 150;
 
 
-export class PortalDatabase {
+export class PortalProvider {
   private _type: string;
   private _url: string;
   private _name: string;
@@ -38,12 +38,12 @@ export class PortalDatabase {
   private _logoW: number;
   private _logoH: number;
 
-  constructor(dbData: Database = {}) {
-    this._type = dbData.type ?? "";
-    this._url = dbData.url ?? "";
-    this._name = dbData.name ?? "";
-    this._searchUrl = dbData.searchUrl ?? "";
-    this._artefactsUrl = dbData.artefactsUrl ?? "";
+  constructor(provider: Source = {}) {
+    this._type = provider.type ?? "";
+    this._url = provider.url ?? "";
+    this._name = provider.name ?? "";
+    this._searchUrl = provider.searchUrl ?? "";
+    this._artefactsUrl = provider.artefactsUrl ?? "";
     this._description = "";
     this._contactUrl = "";
     this._title = "";
@@ -176,7 +176,7 @@ export class PortalDatabase {
 
 
 
-  toJson(): PortalDatabaseJsonData {
+  toJson(): PortalSourcesJsonData {
     return {
       type: this.type,
       url: this.url,
@@ -195,8 +195,8 @@ export class PortalDatabase {
     };
   }
 
-  static toObject(data: PortalDatabaseJsonData): PortalDatabase {
-    let pdb = new PortalDatabase();
+  static toObject(data: PortalSourcesJsonData): PortalProvider {
+    let pdb = new PortalProvider();
     pdb.type = data.type;
     pdb.url = data.url;
     pdb.name = data.name;

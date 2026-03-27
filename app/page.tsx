@@ -135,7 +135,7 @@ export default function Home() {
                         OntoPortal and Skosmos APIs.
                     </p>
                     <p className='text-right'>
-                        <a className='text-base' href="/databases">{">>> Read more"}</a>
+                        <a className='text-base' href="/documentation#gateway">{">>> Read more"}</a>
                     </p>
                 </div>
                 <div className='md:col-span-3 card-background'>

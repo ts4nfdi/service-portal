@@ -18,7 +18,7 @@ const navItems: NavbarItem[] = [
       { href: "https://terminology.services.base4nfdi.de/tss/comp/latest/", text: "Terminology Service Suite" }
     ]
   },
-  { href: "/databases", text: "Terminology Providers" },
+  { href: "/provider", text: "Terminology Providers" },
   { href: "/collection/", text: "Collections" },
   { href: "/incubators", text: "Incubators" },
   {
