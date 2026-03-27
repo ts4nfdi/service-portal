@@ -79,7 +79,7 @@ export default function Home() {
                         <p className='text-justify my-5'>
                             The configuration panel displays a comprehensive list of all available terminologies from
                             the various terminology services accessed by the API Gateway. These terminologies could be
-                            combined and published in<a className='text-base' href="/collection/collections">terminology
+                            combined and published in<a className='text-base' href="/collection/">terminology
                                 collections</a>which are provided by and hosted at the TS4NFDI Service Portal.
                         </p>
 
@@ -135,7 +135,7 @@ export default function Home() {
                         OntoPortal and Skosmos APIs.
                     </p>
                     <p className='text-right'>
-                        <a className='text-base' href="/databases">{">>> Read more"}</a>
+                        <a className='text-base' href="/documentation#gateway">{">>> Read more"}</a>
                     </p>
                 </div>
                 <div className='md:col-span-3 card-background'>

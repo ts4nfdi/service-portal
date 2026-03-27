@@ -9,8 +9,8 @@ import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
 import { Loading, TextArea } from "@/app/ui/commons/snippets";
 import { ToggleButton } from "@/app/ui/commons/snippets";
-import { getAllDatabases, getDatabasedListOfTerminologies } from "@/app/api/actions/databases";
-import { PortalCollection, PortalTerminology, PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
+import { getAllProviders, getSourcesListOfTerminologies } from "@/app/api/actions/providers";
+import { PortalCollection, PortalTerminology, PortalProvider, PortalSourcesJsonData } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -26,7 +26,7 @@ export default function NewCollection() {
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [dbs, setDbs] = useState<PortalDatabase[]>([]);
+  const [sources, setSources] = useState<PortalProvider[]>([]);
   const [preselectedTerminologies, setPreselectedTerminologies] = useState<{
     "label": string,
     "iri": string,
@@ -54,11 +54,11 @@ export default function NewCollection() {
         return { username: username, role: "ADMIN" };
       });
       pCollection.isPublic = visBox.checked;
-      pCollection.terminologies = selectedTermonologies.map((terminilogy: AutoCompleteSelectedTermType) => {
+      pCollection.terminologies = selectedTermonologies.map((terminology: AutoCompleteSelectedTermType) => {
         let t = new PortalTerminology();
-        t.label = terminilogy.label ?? "";
-        t.uri = terminilogy.iri ?? "";
-        t.source = terminilogy.source ?? "";
+        t.label = terminology.label ?? "";
+        t.uri = terminology.iri ?? "";
+        t.source = terminology.source ?? "";
         t.type = "DATABASE";
         return t;
       });
@@ -70,7 +70,7 @@ export default function NewCollection() {
       if (searchParams.get('from') === "my-collections") {
         window.location.href = `/collection/myCollections?created=${res.status}`;
       } else {
-        window.location.href = `/collection/collections?created=${res.status}`;
+        window.location.href = `/collection/?created=${res.status}`;
       }
 
     } catch {
@@ -79,13 +79,13 @@ export default function NewCollection() {
   }
 
   function loadTerminologies(e: React.ChangeEvent<HTMLInputElement>) {
-    let db = e.target.id;
+    let source = e.target.id;
     setAutocompleteIsLoaded(false)
     if (e.target.checked) {
-      getDatabasedListOfTerminologies(db).then((terminologies) => {
+      getSourcesListOfTerminologies(source).then((terminologies) => {
         let preselected = [];
         for (let terminology of terminologies) {
-          preselected.push({ label: terminology.label, iri: terminology.iri, source: db });
+          preselected.push({ label: terminology.label, iri: terminology.iri, source: source });
         }
         if (preselectedTerminologies) {
           setPreselectedTerminologies([...preselectedTerminologies, ...preselected]);
@@ -94,7 +94,7 @@ export default function NewCollection() {
         }
       })
     } else {
-      let preselected = preselectedTerminologies?.filter((item) => item.source != db);
+      let preselected = preselectedTerminologies?.filter((item) => item.source != source);
       setPreselectedTerminologies(preselected);
     }
   }
@@ -115,12 +115,12 @@ export default function NewCollection() {
   }, [preselectedTerminologies]);
 
   useEffect(() => {
-    getAllDatabases().then((dbs: PortalDatabaseJsonData[]) => {
-      let databases = [];
-      for (let db of dbs) {
-        databases.push(PortalDatabase.toObject(db));
+    getAllProviders().then((sources: PortalSourcesJsonData[]) => {
+      let providers = [];
+      for (let source of sources) {
+        providers.push(PortalProvider.toObject(source));
       }
-      setDbs(databases);
+      setSources(providers);
     });
     getUserList().then((resp) => {
       if (!resp.status) {
@@ -142,7 +142,7 @@ export default function NewCollection() {
     <div className="">
       {searchParams.get('from') === "my-collections"
         ? <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
-        : <a className="btn" href="/collection/collections/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
+        : <a className="btn" href="/collection/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
       }
       <p className="header-2" key={"heading"}>Define your new collection</p>
       {loading && <Loading />}
@@ -176,7 +176,7 @@ export default function NewCollection() {
               services.</p>
             <ul
               className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              {dbs.map((db: PortalDatabase) => {
+              {sources.map((db: PortalProvider) => {
                 return (
                   <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
                     key={db.name}>

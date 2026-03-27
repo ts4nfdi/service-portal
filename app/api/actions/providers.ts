@@ -1,11 +1,11 @@
 'use server';
 
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
-import { Database, DatabaseJson } from "@/app/api/actions/types";
-import { PortalDatabase, PortalDatabaseJsonData } from "@/app/concepts";
-import DatabaseJsonMetadata from "../../databases/databases.json";
+import { Source, SourcesJson } from "@/app/api/actions/types";
+import {PortalProvider, PortalSourcesJsonData} from "@/app/concepts";
+import SourcesJsonMetadata from "../../provider/provider.json";
 
-export async function getAllDatabases(): Promise<PortalDatabaseJsonData[]> {
+export async function getAllProviders(): Promise<PortalSourcesJsonData[]> {
   try {
     let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/config/databases", {
       headers: await getHttpHeaderForGateway()
@@ -13,11 +13,11 @@ export async function getAllDatabases(): Promise<PortalDatabaseJsonData[]> {
     if (!resp.ok) {
       return [];
     }
-    let databases: Database[] = await resp.json();
-    let portalDatabases = [];
-    let extraMetadata = (DatabaseJsonMetadata as unknown) as DatabaseJson;
-    for (let db of databases) {
-      let pdb = new PortalDatabase(db);
+    let sources: Source[] = await resp.json();
+    let portalSources = [];
+    let extraMetadata = (SourcesJsonMetadata as unknown) as SourcesJson;
+    for (let source of sources) {
+      let pdb = new PortalProvider(source);
       let registry = extraMetadata[pdb.name];
       pdb.description = registry.description;
       pdb.contactUrl = registry.contactUrl;
@@ -27,16 +27,16 @@ export async function getAllDatabases(): Promise<PortalDatabaseJsonData[]> {
       pdb.homePage = registry.homepage;
       pdb.logoW = registry.logoW;
       pdb.logoH = registry.logoH;
-      portalDatabases.push(pdb.toJson());
+      portalSources.push(pdb.toJson());
     }
-    return portalDatabases;
+    return portalSources;
   } catch {
     return [];
   }
 }
 
 
-export async function getDatabasedListOfTerminologies(dbName: string): Promise<{ label: string, iri: string }[]> {
+export async function getSourcesListOfTerminologies(dbName: string): Promise<{ label: string, iri: string }[]> {
   try {
     let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + `/artefacts?database=${dbName}&showResponseConfiguration=false`, {
       headers: await getHttpHeaderForGateway()
