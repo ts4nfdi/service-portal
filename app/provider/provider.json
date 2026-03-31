@@ -6,8 +6,10 @@
     "homepage": "https://agroportal.lirmm.fr/",
     "api": "https://data.agroportal.lirmm.fr",
     "type": "ontoportal",
-    "logo": "https://agroportal.lirmm.fr/assets/logos/ontoportal-a6c2bfe19d47c0fb1f5a47dd71e3c30aea2364edb5c224ce5b78fdee4dd6eb34.svg",
-    "logo_background_color": "#3CB371"
+    "logo": "https://agroportal.eu/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
+    "logo_background_color": "#3CB371",
+    "logoW": 200,
+    "logoH": 200
   },
   "earthportal": {
     "title": "EarthPortal",
@@ -17,7 +19,9 @@
     "api": "https://data.earthportal.eu",
     "type": "ontoportal",
     "logo": "https://earthportal.eu/assets/earthportal_logo_transparent-d42fcf07702ab73e3cc2b66d4d602f55614c8f3c474466bca8460f60afa2877a.svg",
-    "logo_background_color": "#20214E"
+    "logo_background_color": "#20214E",
+    "logoW": 200,
+    "logoH": 200
   },
   "biodivportal": {
     "title": "BiodivPortal",
@@ -27,9 +31,11 @@
     "api": "https://data.biodivportal.gfbio.org",
     "type": "ontoportal",
     "logo": "https://biodivportal.gfbio.org/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
-    "logo_background_color": "#33691B"
+    "logo_background_color": "#33691B",
+    "logoW": 200,
+    "logoH": 200
   },
-  "ecoportal":{
+  "ecoportal": {
     "title": "EcoPortal",
     "description": "EcoPortal is an initiative of LifeWatch ERIC , the e-Science and Technology European Infrastructure for Biodiversity and Ecosystem Research. In the last decade, ecological research groups and infrastructures have contributed to the definition and the production of core and domain ontologies as well as of vocabularies and domain-relevant reference lists. In order to support the scientific community in the management and integration of these different approaches, LifeWatch ERIC has created EcoPortal, an online spe designed to collect semantic resources and provide the necessary services for enabling discovery and interoperability.",
     "contactUrl": "https://ecoportal.lifewatch.eu/feedback",
@@ -37,7 +43,9 @@
     "api": "https://data.ecoportal.lifewatch.eu",
     "type": "ontoportal",
     "logo": "https://ecoportal.lifewatch.eu/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
-    "logo_background_color": "#0F4E8B"
+    "logo_background_color": "#0F4E8B",
+    "logoW": 200,
+    "logoH": 200
   },
   "lovportal": {
     "title": "LovPortal",
@@ -47,7 +55,9 @@
     "api": "https://data.lovportal.lirmm.fr",
     "type": "ontoportal",
     "logo": "https://lovportal.lirmm.fr/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
-    "logo_background_color": "#F29E4C"
+    "logo_background_color": "#F29E4C",
+    "logoW": 200,
+    "logoH": 200
   },
   "ebi": {
     "title": "EBI Ontology Lookup Service",
@@ -57,7 +67,9 @@
     "api": "https://www.ebi.ac.uk/ols4/api/v2",
     "type": "ols",
     "logo": "https://www.ebi.ac.uk/ols4/logo.svg",
-    "logo_background_color": "#000000"
+    "logo_background_color": "#000000",
+    "logoW": 200,
+    "logoH": 200
   },
   "tib": {
     "title": "TIB Terminology Service",
@@ -67,7 +79,9 @@
     "api": "https://api.terminology.tib.eu/api",
     "type": "ols",
     "logo": "https://terminology.tib.eu/TIB_Logo_W_W.SVG",
-    "logo_background_color": "#0E6668"
+    "logo_background_color": "#0E6668",
+    "logoW": 200,
+    "logoH": 200
   },
   "zbmed": {
     "title": "ZB MED Semantic Lookup Service",
@@ -113,7 +127,9 @@
     "api": "https://api.dante.gbv.de",
     "type": "jskos",
     "logo": "https://api.dante.gbv.de/images/dante.png",
-    "logo_background_color": "white"
+    "logo_background_color": "white",
+    "logoW": 200,
+    "logoH": 200
   },
   "coli-conc": {
     "title": "COLI-CONC",
@@ -123,7 +139,9 @@
     "api": "https://coli-conc.gbv.de/api",
     "type": "jskos2",
     "logo": "https://coli-conc.gbv.de/images/coli-conc.svg",
-    "logo_background_color": "white"
+    "logo_background_color": "white",
+    "logoW": 200,
+    "logoH": 200
   },
   "nerc": {
     "title": "NERC",
@@ -136,5 +154,17 @@
     "logo_background_color": "white",
     "logoW": 400,
     "logoH": 400
+  },
+  "iconclass": {
+    "title": "ICONCLASS",
+    "description": "The comprehensive classification system for the content of images.",
+    "contactUrl": "info@iconclass.org",
+    "homepage": "https://iconclass.org/",
+    "api": "https://test.iconclass.org/api/jskos",
+    "type": "jskos",
+    "logo": "https://iconclass.org/static/media/ic_home_002.jpg",
+    "logo_background_color": "white",
+    "logoW": 200,
+    "logoH": 200
   }
 }
