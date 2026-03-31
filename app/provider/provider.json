@@ -29,7 +29,7 @@
     "logo": "https://biodivportal.gfbio.org/assets/logo-white-d9b8799b92fd0419f657fa6eea2114bde3f56205d75bfb4dbf5415563f05e263.svg",
     "logo_background_color": "#33691B"
   },
-  "ecoportal":{
+  "ecoportal": {
     "title": "EcoPortal",
     "description": "EcoPortal is an initiative of LifeWatch ERIC , the e-Science and Technology European Infrastructure for Biodiversity and Ecosystem Research. In the last decade, ecological research groups and infrastructures have contributed to the definition and the production of core and domain ontologies as well as of vocabularies and domain-relevant reference lists. In order to support the scientific community in the management and integration of these different approaches, LifeWatch ERIC has created EcoPortal, an online spe designed to collect semantic resources and provide the necessary services for enabling discovery and interoperability.",
     "contactUrl": "https://ecoportal.lifewatch.eu/feedback",
@@ -136,5 +136,17 @@
     "logo_background_color": "white",
     "logoW": 400,
     "logoH": 400
+  },
+  "iconclass": {
+    "title": "ICONCLASS",
+    "description": "The comprehensive classification system for the content of images.",
+    "contactUrl": "info@iconclass.org",
+    "homepage": "https://iconclass.org/",
+    "api": "https://test.iconclass.org/api/jskos",
+    "type": "jskos",
+    "logo": "https://iconclass.org/static/media/ic_home_002.jpg",
+    "logo_background_color": "white",
+    "logoW": 200,
+    "logoH": 200
   }
 }
