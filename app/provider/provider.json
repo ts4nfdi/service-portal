@@ -157,14 +157,14 @@
   },
   "iconclass": {
     "title": "ICONCLASS",
-    "description": "The comprehensive classification system for the content of images.",
+    "description": "Iconclass is an international classification system for iconographic research and the documentation of pictorial representations and works of art. It goes back to a universal classification system developed by Henri van de Waal in 1940 and has undergone many versions and revisions since then. The creation of the vocabulary was accompanied by several conferences and numerous publications. Today it is published by the \"Iconclass\" organisation and contains a collection of firmly defined, hierarchically ordered terms (28,000) relating to objects, people, events, situations and abstract ideas that can be the content of a picture or work of art. This means that information about everything represented visually can be indexed using alphanumeric codes. In addition, it offers an alphabetical index with 14,000 keywords for thematic searches and an extensive bibliography and overview of utilising institutions. It is currently available in eight different languages and has been supplemented with an RDF database.",
     "contactUrl": "info@iconclass.org",
     "homepage": "https://iconclass.org/",
     "api": "https://test.iconclass.org/api/jskos",
     "type": "jskos",
-    "logo": "https://iconclass.org/static/media/ic_home_002.jpg",
+    "logo": "https://forum.iconclass.org/uploads/default/original/1X/1cd78be71b290b545f34d6f18f9635300c0b0c13.png",
     "logo_background_color": "white",
-    "logoW": 200,
-    "logoH": 200
+    "logoW": 350,
+    "logoH": 350
   }
 }
