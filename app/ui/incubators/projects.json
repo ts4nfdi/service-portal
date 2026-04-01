@@ -1,8 +1,8 @@
 {
   "stats": {
     "In preparation": 4,
-    "Running": 14,
-    "Finished": 8
+    "Running": 13,
+    "Finished": 9
   },
   "projects": [
     {
@@ -175,13 +175,13 @@
     {
       "title": "Open Energy Platform",
       "cycle": 2,
-      "status": "Running",
+      "status": "Finished",
       "start": "20.08.2025",
-      "end": "02.2026",
+      "end": "01.04.2026",
       "description": "NFDI4Energy is developing a platform that integrates key services to support researchers in the energy domain. Central components are accessible through the Open Energy Platform (OEP). A core element is the Open Energy Ontology (OEO), a dynamic domain ontology for energy system modeling. Additional complementary ontologies are currently in development to broaden the semantic framework.",
       "goals": ["Hosting of the Open Energy Ontology", "Integration of TSS widgets for visualization and as navigation"],
       "consortium": ["NFDI4Energy"],
-      "logo": "oep.svg",
+      "logo": "OpenEnergyFamily_Logo_OpenEnergyPlatform_OEP.png",
       "logoW": 200,
       "logoH": 200,
       "activityPage": "https://openenergyplatform.org/viewer/oeo/"
@@ -189,9 +189,9 @@
     {
       "title": "ICONCLASS",
       "cycle": "2",
-      "status": "Running",
+      "status": "Finished",
       "start": "03.09.2025",
-      "end": "02.2026",
+      "end": "31.03.2026",
       "description": "Adding support for the globally used cultural heritage subject classification system iconclass.org to the Terminology Services 4 NFDI. This will allow Iconclass to be selected as a base data source, and to allow other systems to make use of the TS4NFDI hierarchy and graph widgets for visualization and as navigation aids.",
       "goals": ["Providing ICONCLASS as a backend for the TS4NFDI API Gateway", "Usage of ICONCLASS via TSS widgets"],
       "consortium": ["NFDI4Culture", "NFDI4Memory", "Text+", "NFDI4Objects"],
@@ -216,9 +216,9 @@
     {
       "title": "Health Study Hub",
       "cycle": "2",
-      "status": "Finished",
+      "status": "Running",
       "start": "11.08.2025",
-      "end": "05.03.2026",
+      "end": "04.2026",
       "description": "The Health Study Hub is a central discovery platform developed within the NFDI4Health initiative. It provides structured metadata about health studies, enabling researchers, scientists, and other stakeholders to explore and understand available research data without requiring direct access to sensitive datasets. The Hub emphasizes metadata transparency, interoperability, and usability, supporting FAIR data principles and promoting responsible data reuse.",
       "goals": ["Restrict autocomplete/search to a subtree within an ontology", "Providing additional terminologies"],
       "consortium": ["NFDI4Health"],
@@ -299,7 +299,7 @@
       "start": "03.2026",
       "end": "09.2026",
       "description": "Metabase is the metadata service for research data management container (RDMC) in NFDIxCS. It incorporates community-specific metadata schemas via OWL2 ontologies to support the heterogeneity  of computer science. This semantic foundation allows Metabase to automatically check for inconsistencies in the metadata and to enrich metadata sets with derived facts. The service also allows to define morphisms to translate between different schemas and ontolgogies, and connects to external systems such as the open research knowledge graph (ORKG).",
-      "goals": ["Hosting terminologies for Metabase in a terminology service", "Connect TIB TS to metabase"],
+      "goals": ["Hosting terminologies for Metabase in a terminology service", "Connect TIB TS to Metabase"],
       "consortium": ["NFDIxCS"],
       "logo": "metabase-logo.svg",
       "logoW": 300,
