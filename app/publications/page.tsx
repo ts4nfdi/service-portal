@@ -1,6 +1,6 @@
 'use server';
 
-import { PublicationCards } from "../clientExports";
+import {InfoAlert, PublicationCards} from "../clientExports";
 
 
 export default async function Publications() {
@@ -10,8 +10,16 @@ export default async function Publications() {
           <div className="">
               <p className="header-main-1 !mt-0 inline-block">Publications</p>
           </div>
-          <div className="col-span-3">
-
+          <div className="flex flex-col md:col-span-3 w-full">
+              <InfoAlert
+                  title={"Peer-reviewed Publications"}
+                  body={
+                      `The following section presents a collection of peer-reviewed publications which where published 
+                      during the project Terminology Services 4 NFDI (TS4NFDI). All publications have been evaluated 
+                      through established peer-review processes. They provide a comprehensive overview of the work of 
+                      TS4NFDI.`
+                  }
+              />
               <div className="card" key="">
                   <a className="header-main-3 !text-[#45546b]" href="https://doi.org/10.11588/heibooks.1652" target="_blank">1. Terminology
                       Services in the DACH Region Landscape – What Are the Essential Requirements? </a>
@@ -66,7 +74,7 @@ export default async function Publications() {
           </div>
 
           <div className="">
-              <p className="header-main-1 mt-10 inline-block">Publications on Zenodo</p>
+              <p className="header-main-1 mt-10 inline-block">Further publications integrated from Zenodo</p>
           </div>
           <div className="md:col-span-3 p-4" key={"publications"}>
               <PublicationCards />
