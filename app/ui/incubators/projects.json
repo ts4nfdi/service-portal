@@ -1,16 +1,16 @@
 {
   "stats": {
     "In preparation": 4,
-    "Running": 13,
-    "Finished": 9
+    "Running": 10,
+    "Finished": 12
   },
   "projects": [
     {
       "title": "RADAR",
       "cycle": 1,
-      "status": "Running",
+      "status": "Finished",
       "start": "21.02.2025",
-      "end": "10.2025",
+      "end": "23.09.2025",
       "description": "RADAR is a multidisciplinary research data repository operated by FIZ Karlsruhe, offering institutions a secure and user-friendly platform to archive, manage, let peer review and publish research data. With the cost-free and low-threshold publication services RADAR4Chem (for chemistry) and RADAR4Culture (for cultural heritage and humanities), FIZ Karlsruhe provides tailored solutions for discipline-specific research needs based on RADAR and developed in the framework of the NFDI.",
       "goals": [
         "Expand metadata editor: Implement a type-ahead selection in the keyword field for standardized term suggestions via the TS4NFDI Gateway API.",
@@ -83,7 +83,7 @@
     {
       "title": "NFDI4Cat Central Data Repository (Repo4Cat)",
       "cycle": 1,
-      "status": "Running",
+      "status": "Finished",
       "start": "12.02.2025",
       "end": "10.2025",
       "description": "NFDI4Cat is a community-driven and user-oriented initiative to secure the digital future of catalysis. NFDI4Cat has set up a data repository “Repo4Cat” based on the Dataverse platform (https://repository.nfdi4cat.org/). Due to the lack of catalysis-specific vocabularies and ontologies, NFDI4Cat has also created a community-managed SKOS vocabulary “Voc4Cat” (https://nfdi4cat.github.io/voc4cat/) to provide machine readable term definitions to be used for data annotation and in metadata schemas. Together with TS4NFDI NFDI4Cat wants to provide a better vocabulary  browsing and search experience by serving Voc4Cat via Skosmos, a terminology browsing tool specifically optimized for SKOS vocabularies. Moreover, we want to integrate Voc4Cat annotation-widgets in the Repo4Cat data sharing platform in order to improve the metadata entry and interoperability.",
@@ -162,7 +162,7 @@
     {
       "title": "Discuss Data",
       "cycle": 1,
-      "status": "Running",
+      "status": "Finished",
       "start": "20.02.2025",
       "end": "10.2025",
       "description": "Discuss Data (www.discuss-data.net) is an open repository for storing, sharing and discussing research data on Eastern Europe, South Caucasus and Central Asia and is currently building further Community Spaces, for example for the Digital Humanities .The platform, launched in September 2020, is funded by the German Research Foundation (DFG, Project number 493011772) and operated by the Research Centre for East European Studies at the University of Bremen (FSO) and the Göttingen State and University Library (SUB). Discuss Data goes beyond ordinary repositories and offers an interactive online platform for the discussion and quality assessment of research data and creates a space for academic communication and for the community-specific publication, curation, annotation and discussion of research data. ",
