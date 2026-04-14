@@ -60,11 +60,13 @@ export default function CollectionCard(props: CmpProps) {
                   </div>
                 }
             </div>
-            <div key={"label-and-copy"}>
+            <div key={"label-and-copy"} className="!text-sm">
+                <p className="font-bold inline mr-2">uuid:</p>
                 <p key={"collection-id"} className="inline-block">{props.collection.id}</p>
                 <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
             </div>
-            <div key={"permalink-and-copy"}>
+            <div key={"permalink-and-copy"} className="!text-sm">
+                <p className="font-bold inline mr-2">PermaLink:</p>
                 <p key={"collection-permalink"}
                    className="inline-block">{`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}</p>
                 <CopyToClipboard textToCopy={`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}
