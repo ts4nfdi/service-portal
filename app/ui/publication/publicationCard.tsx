@@ -32,6 +32,7 @@ export default function PublicationCardsCmp() {
               <br />
               <small key={"created_at"}>{getCurrentDate(pub.created)}</small>
               <br />
+              <div dangerouslySetInnerHTML={{__html: pub.description}}></div>
             </div>
           )
         })

@@ -64,6 +64,7 @@ export type ZenodoPublication = {
   doi_url?: string,
   title?: string,
   metadata?: {
+    description?: string,
     resource_type: {
       title: string
     }

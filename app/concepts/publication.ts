@@ -7,6 +7,7 @@ export type PortalPublicationJsonData = {
   title: string;
   created: string;
   type: string;
+  description: string;
 }
 
 
@@ -17,6 +18,7 @@ export class PortalPublication {
   private _title: string;
   private _type: string;
   private _created: string;
+  private _description: string;
 
   constructor(pub: ZenodoPublication = {}) {
     this._doi = pub.doi ?? "";
@@ -24,6 +26,7 @@ export class PortalPublication {
     this._title = pub.title ?? "";
     this._created = pub.created ?? "";
     this._type = pub.metadata?.resource_type?.title ?? "unknown";
+    this._description = pub.metadata?.description ?? "";
   }
 
   get doi() {
@@ -46,6 +49,10 @@ export class PortalPublication {
     return this._type;
   }
 
+  get description() {
+    return this._description;
+  }
+
   set doi(val: string) {
     this._doi = val;
   }
@@ -62,13 +69,18 @@ export class PortalPublication {
     this._type = val;
   }
 
+  set description(val: string) {
+    this._description = val;
+  }
+
   toJson(): PortalPublicationJsonData {
     return {
       doi: this.doi,
       doi_url: this.doi_url,
       title: this.title,
       created: this.created,
-      type: this.type
+      type: this.type,
+      description: this.description
     };
   }
 
@@ -79,6 +91,7 @@ export class PortalPublication {
     pub.created = pubData.created;
     pub.title = pubData.title;
     pub.type = pubData.type;
+    pub.description = pubData.description;
     return pub;
   }
 
