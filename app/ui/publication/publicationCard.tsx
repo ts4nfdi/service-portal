@@ -1,6 +1,6 @@
 'use client'
 
-import { PortalPublication, PortalPublicationJsonData } from "@/app/concepts";
+import { PortalPublication } from "@/app/concepts";
 import { getCurrentDate } from "@/app/libs/toolkit";
 import { fetchPublications } from "@/app/api/actions/publications";
 import { useEffect, useState } from "react";
@@ -44,15 +44,18 @@ export default function PublicationCardsCmp() {
 
   return (
     <div className="col-span-3">
-      <Pagination
-        page={page}
-        size={DEFAULT_PAGE_SIZE}
-        objectName="Publications"
-        total={totalPubCount}
-        handleNextPageClick={handleNextPageClick}
-        handlePrevPageClick={handlePrevPageClick}
-        className="mb-4"
+      <div className="grid grid-cols-3 gap-4">
+        <p className="header-main-1 inline-block col-span-2">Further publications integrated from Zenodo</p>
+        <Pagination
+            page={page}
+            size={DEFAULT_PAGE_SIZE}
+            objectName="Publications"
+            total={totalPubCount}
+            handleNextPageClick={handleNextPageClick}
+            handlePrevPageClick={handlePrevPageClick}
+            className="mb-4 col-span-1"
         />
+      </div>
       {pubs.length === 0 &&
         <CardSkeleton className="" count={5} />
       }

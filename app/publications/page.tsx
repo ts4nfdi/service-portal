@@ -72,11 +72,7 @@ export default async function Publications() {
                   <br />
               </div>
           </div>
-
-          <div className="">
-              <p className="header-main-1 mt-10 inline-block">Further publications integrated from Zenodo</p>
-          </div>
-          <div className="md:col-span-3 p-4" key={"publications"}>
+          <div className="md:col-span-3 p-4 mt-8" key={"publications"}>
               <PublicationCards />
           </div>
       </div>
