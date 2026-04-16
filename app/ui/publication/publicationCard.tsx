@@ -28,7 +28,7 @@ export default function PublicationCardsCmp() {
           return (
             <div className='card' key={pub.doi}>
               <a href={pub.doi_url} target="_blank" key={"title"}>{`${i + 1}. ${pub.title}`}</a>
-              <span className='name-badge' key={"type"}>{pub.metadata.resource_type.title}</span>
+              <span className='name-badge' key={"type"}>{pub.type}</span>
               <br />
               <small key={"created_at"}>{getCurrentDate(pub.created)}</small>
               <br />
