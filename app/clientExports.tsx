@@ -42,4 +42,8 @@ export const PublicationCards = dynamic(() => import('@/app/ui/publication/publi
   loading: () => <CardSkeleton count={5} className="" />
 });
 
+export const Pagination = dynamic(() => import('@/app/ui/commons/pagination'), {
+  ssr: false,
+});
+
 

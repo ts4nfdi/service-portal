@@ -188,7 +188,7 @@ ol {
 }
 
 li {
-    @apply dark:text-gray-700;
+    @apply dark:text-white;
 }
 
 .card-background {

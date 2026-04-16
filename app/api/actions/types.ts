@@ -1,3 +1,5 @@
+import {PortalPublicationJsonData} from "@/app/concepts";
+
 export type ActionResponse = {
   status: boolean,
   content: any
@@ -64,9 +66,15 @@ export type ZenodoPublication = {
   doi_url?: string,
   title?: string,
   metadata?: {
+    description?: string,
     resource_type: {
       title: string
     }
   },
   created?: string
+}
+
+export type PublicationActionResp ={
+  publications?: PortalPublicationJsonData[],
+  total?: number
 }
