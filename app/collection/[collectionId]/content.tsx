@@ -1,7 +1,7 @@
 'use client'
 
 import {Modal, ModalButton} from "@/app/ui/commons/modal";
-import {EditIcon, TrashIcon} from "@/app/ui/commons/icons";
+import {DownloadIcon, EditIcon, TrashIcon} from "@/app/ui/commons/icons";
 import {WarningAlert} from "@/app/ui/commons/snippets";
 import {deleteCollection} from "@/app/api/actions/collections";
 import {CopyToClipboard} from "@/app/clientExports";
@@ -23,8 +23,42 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
         return result;
     }
 
+    function downloadCollectionJsonData() {
+        const json = JSON.stringify(collection.toJson(), null, 2);
+        const blob = new Blob([json], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const filenameBase = props.collection.label || props.collection.id || "collection";
+
+        link.href = url;
+        link.download = `${filenameBase.replace(/[^a-z0-9-_]+/gi, "-")}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    }
+
     return (
         <>
+            <div className="mb-4 flex flex-row flex-wrap items-center gap-2">
+                <p className="text-3xl font-bold inline-block">{props.collection.label}</p>
+                <span
+                    className="badge inline-block bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black"
+                    title="collection visibility"
+                    aria-label="collection visibility"
+                >
+                    {props.collection.isPublic ? "public" : "private"}
+                </span>
+                <button
+                    aria-label="Download collection JSON"
+                    className="!bg-transparent p-0"
+                    onClick={downloadCollectionJsonData}
+                    title="Download collection JSON"
+                    type="button"
+                >
+                    <DownloadIcon/>
+                </button>
+            </div>
             <div className="grid grid-cols-10" key={"collection-card-header"}>
                 <div className="col-span-9 flex flex-col flex-wrap gap-6">
                     <div className="grid grid-cols-2 gap-4">
@@ -43,9 +77,9 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
                                  id="collection-id">
                                 <p className="font-bold">PermaLink</p>
                                 <p key={"collection-id"}
-                                   className="inline-block  text-sm">{`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}</p>
+                                   className="inline-block  text-sm">{collection.permaLink}</p>
                                 <CopyToClipboard
-                                    textToCopy={`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}
+                                    textToCopy={collection.permaLink}
                                     key={"copy"}/>
                             </div>
                         </div>
@@ -62,14 +96,17 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
                         <b>Terminologies:</b> {renderTerminologies(collection.terminologies)}
                     </div>
                 </div>
-                {session?.data?.user?.username === props.collection.creator &&
-                  <div className="col-span-1 flex flex-col flex-wrap" key={"trash-icon"}>
-                    <ModalButton label={<TrashIcon/>} targetModalId={"delete-collection-conf-" + props.collection.id}
-                                 classNames="!bg-transparent !p-0 !text-white"/>
-                    <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
-                       key={"edit-collection"}><EditIcon/></a>
-                  </div>
-                }
+                <div className="col-span-1 flex flex-col flex-wrap items-end gap-2" key={"collection-actions"}>
+                    {session?.data?.user?.username === props.collection.creator &&
+                      <>
+                        <ModalButton label={<TrashIcon/>}
+                                     targetModalId={"delete-collection-conf-" + props.collection.id}
+                                     classNames="!bg-transparent !p-0 !text-white"/>
+                        <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
+                           key={"edit-collection"}><EditIcon/></a>
+                      </>
+                    }
+                </div>
             </div>
             {session?.data?.user?.username === props.collection.creator &&
               <Modal
