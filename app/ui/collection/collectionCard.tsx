@@ -97,8 +97,8 @@ export default function CollectionCard(props: CmpProps) {
             <div key={"permalink-and-copy"} className="!text-sm">
                 <p className="font-bold inline mr-2">PermaLink:</p>
                 <p key={"collection-permalink"}
-                   className="inline-block">{`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}</p>
-                <CopyToClipboard textToCopy={`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}
+                   className="inline-block">{props.collection.permaLink}</p>
+                <CopyToClipboard textToCopy={props.collection.permaLink}
                                  key={"copy"}/>
             </div>
             <p key={"creator"} className="text-sm">Created by: {props.collection.creator}</p>

@@ -20,9 +20,9 @@ export default function CollectionListCmp(props: {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(COLLECTION_LIST_PAGE_SIZE);
 
-    function downloadCollectionsJsonData() {
-        const publicCollections = props.collections.filter((collection) => collection.isPublic);
-        const json = JSON.stringify(publicCollections, null, 2);
+  function downloadCollectionsJsonData() {
+    const publicCollections = props.collections.filter((collection) => collection.isPublic);
+    const json = JSON.stringify(publicCollections, null, 2);
         const blob = new Blob([json], {type: "application/json"});
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");

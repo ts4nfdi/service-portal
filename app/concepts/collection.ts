@@ -4,6 +4,7 @@ import {PortalTerminology, PortalTerminologyJsonData} from "./terminology";
 
 export type PortalCollectionJsonData = {
     id: string,
+    permaLink?: string,
     creator: string,
     description: string,
     label: string,
@@ -34,6 +35,10 @@ export class PortalCollection {
 
     get id() {
         return this._id;
+    }
+
+    get permaLink() {
+        return `https://w3id.org/ts4nfdi/collection/${this._id}`;
     }
 
     get creator() {
@@ -95,6 +100,7 @@ export class PortalCollection {
         }
         return {
             id: this.id,
+            permaLink: this.permaLink,
             creator: this.creator,
             description: this.description,
             label: this.label,
@@ -132,4 +138,3 @@ export class PortalCollection {
 
 
 }
-

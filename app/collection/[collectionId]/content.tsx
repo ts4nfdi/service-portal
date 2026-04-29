@@ -24,7 +24,7 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
     }
 
     function downloadCollectionJsonData() {
-        const json = JSON.stringify(props.collection, null, 2);
+        const json = JSON.stringify(collection.toJson(), null, 2);
         const blob = new Blob([json], {type: "application/json"});
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -77,9 +77,9 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
                                  id="collection-id">
                                 <p className="font-bold">PermaLink</p>
                                 <p key={"collection-id"}
-                                   className="inline-block  text-sm">{`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}</p>
+                                   className="inline-block  text-sm">{collection.permaLink}</p>
                                 <CopyToClipboard
-                                    textToCopy={`https://w3id.org/ts4nfdi/collection/${props.collection.id}`}
+                                    textToCopy={collection.permaLink}
                                     key={"copy"}/>
                             </div>
                         </div>
