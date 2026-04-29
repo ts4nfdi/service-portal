@@ -76,15 +76,17 @@ export default function CollectionCard(props: CmpProps) {
                            key={"edit-collection"}><EditIcon/></a>
                       </>
                     }
-                    <button
-                        aria-label="Download collection as JSON"
-                        className="!bg-transparent text-end p-0"
-                        onClick={downloadCollectionJsonData}
-                        title="Download collection as JSON"
-                        type="button"
-                    >
-                        <DownloadIcon/>
-                    </button>
+                    {props.collection.isPublic &&
+                      <button
+                          aria-label="Download collection as JSON"
+                          className="!bg-transparent text-end p-0"
+                          onClick={downloadCollectionJsonData}
+                          title="Download collection as JSON"
+                          type="button"
+                      >
+                          <DownloadIcon/>
+                      </button>
+                    }
                 </div>
             </div>
             <div key={"label-and-copy"} className="!text-sm">
