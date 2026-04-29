@@ -5,16 +5,31 @@ import { TextInput } from "@/app/ui/commons/snippets";
 import { useEffect, useState } from "react";
 import { PortalCollection, PortalCollectionJsonData } from "@/app/concepts";
 import {Pagination} from "@/app/clientExports";
+import {DownloadIcon} from "@/app/ui/commons/icons";
 
 
 const COLLECTION_LIST_PAGE_SIZE = 5;
 
-export default function CollectionListCmp(props: { collections: PortalCollectionJsonData[] }) {
+export default function CollectionListCmp(props: { collections: PortalCollectionJsonData[], showDownloadButton?: boolean }) {
   const collections = props.collections.map((data: PortalCollectionJsonData) => PortalCollection.toObject(data));
 
   const [collectionsList, setCollectionsList] = useState<PortalCollection[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(COLLECTION_LIST_PAGE_SIZE);
+
+  function downloadCollectionsJsonData() {
+    const json = JSON.stringify(props.collections, null, 2);
+    const blob = new Blob([json], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "my-collections.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
 
   function filterList(query: string) {
     let filteredCollections: PortalCollection[] = [];
@@ -88,6 +103,20 @@ export default function CollectionListCmp(props: { collections: PortalCollection
         </div>
 
       </div>
+      {props.showDownloadButton &&
+        <div className="mb-2 flex justify-start">
+          <button
+            aria-label="Download my collections as JSON"
+            className="btn !mb-0 !me-0 !p-2 !text-sm flex items-center gap-2"
+            onClick={downloadCollectionsJsonData}
+            title="Download my collections as JSON"
+            type="button"
+          >
+            <DownloadIcon/>
+            Download my collections
+          </button>
+        </div>
+      }
       {collectionsList.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((col: PortalCollection) => {
         return (
           <>

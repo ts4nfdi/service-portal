@@ -1,30 +1,63 @@
 import {getPublicCollectionList, getUserCollectionList} from "@/app/api/actions/collections";
 import {CollectionListMessages} from "@/app/ui/collection/collectionListMessages";
-import {Suspense} from "react";
+import {cache, Suspense} from "react";
 import {CollectionList} from "@/app/clientExports";
 import {getUserToken} from "@/app/libs/auth";
 import Link from "next/link";
 import {ActionResponse} from "@/app/api/actions/types";
 import Image from "next/image";
+import DownloadCollectionsButton from "@/app/ui/collection/downloadCollectionsButton";
+import {PortalCollectionJsonData} from "@/app/concepts";
 
+const getCollectionsData = cache(async (token: string | null): Promise<PortalCollectionJsonData[] | null> => {
+    let publicCollectionsListResp: ActionResponse = await getPublicCollectionList();
+    let userCollectionsListResp: ActionResponse = {status: false, content: []};
+
+    if (token) {
+        userCollectionsListResp = await getUserCollectionList();
+    }
+
+    return [
+        ...(publicCollectionsListResp.status ? publicCollectionsListResp.content : []),
+        ...(userCollectionsListResp.status ? userCollectionsListResp.content : []),
+    ];
+});
+
+async function DownloadCollectionsButtonSection({token}: { token: string | null }) {
+    const collectionsList = await getCollectionsData(token);
+    if (!collectionsList) {
+        return null;
+    }
+
+    return <DownloadCollectionsButton collections={collectionsList}/>;
+}
+
+async function CollectionsSection({token}: { token: string | null }) {
+    const collectionsList = await getCollectionsData(token);
+    if (!collectionsList) {
+        return null;
+    }
+
+    return <CollectionList collections={collectionsList}/>;
+}
+
+function DownloadButtonLoading() {
+    return <div className="btn !p-2 !text-sm mt-10 opacity-60">Loading collections...</div>;
+}
+
+function CollectionListLoading() {
+    return (
+        <div className="mt-6 space-y-3">
+            <div className="h-24 w-full animate-pulse rounded-md bg-gray-200"/>
+            <div className="h-24 w-full animate-pulse rounded-md bg-gray-200"/>
+            <div className="h-24 w-full animate-pulse rounded-md bg-gray-200"/>
+        </div>
+    );
+}
 
 export default async function Collections() {
 
     let token = await getUserToken();
-
-    let publicCollectionsListResp: ActionResponse = {status: false, content: []};
-    let userCollectionsListResp: ActionResponse = {status: false, content: []};
-    publicCollectionsListResp = await getPublicCollectionList();
-    if (token) {
-        userCollectionsListResp = await getUserCollectionList();
-    }
-    if (!publicCollectionsListResp.status && (!token || !userCollectionsListResp.status)) {
-        return "";
-    }
-    let collectionsList = [
-        ...(publicCollectionsListResp.status ? publicCollectionsListResp.content : []),
-        ...(userCollectionsListResp.status ? userCollectionsListResp.content : []),
-    ];
 
     return (
         <div className="md:col-span-3" key={"my_collection"}>
@@ -45,8 +78,13 @@ export default async function Collections() {
                         considered a grouping within the vast space of existing terminologies.
                     </p>
 
-                    {token && <Link href="/collection/new/" className="btn !p-2 !text-sm mt-10 float-right">Create
-                      Collection</Link>}
+                    <div className="mt-10 flex flex-col flex-wrap justify-start gap-2 w-1/2">
+                        <Suspense fallback={<DownloadButtonLoading/>}>
+                            <DownloadCollectionsButtonSection token={token}/>
+                        </Suspense>
+                        {token && <Link href="/collection/new/" className="btn !p-2 !text-sm text-center">Create
+                          Collection</Link>}
+                    </div>
                 </div>
                 <div className='md:col-span-4 card-background float-right'>
                     <h4 className='header-main-3'> Figure of a Terminology Collection</h4>
@@ -61,7 +99,9 @@ export default async function Collections() {
                     />
                 </div>
             </div>
-            <CollectionList collections={collectionsList}/>
+            <Suspense fallback={<CollectionListLoading/>}>
+                <CollectionsSection token={token}/>
+            </Suspense>
         </div>
     );
 }
