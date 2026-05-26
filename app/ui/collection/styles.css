@@ -1,3 +1,11 @@
 .collection-card {
     @apply bg-white rounded border-ts4nfdi-brand-color p-4  dark:bg-gray-800;
 }
+
+.terminology-badge-button {
+    @apply border-0 cursor-pointer;
+}
+
+.ontology-info-widget .euiCard {
+    @apply shadow-none;
+}
