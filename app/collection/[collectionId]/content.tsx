@@ -7,6 +7,7 @@ import {deleteCollection} from "@/app/api/actions/collections";
 import {CopyToClipboard} from "@/app/clientExports";
 import {PortalCollection, PortalTerminology, PortalCollectionJsonData} from "@/app/concepts";
 import {useSession} from "next-auth/react";
+import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
 
 
 export default function CollectionContentCmp(props: { collection: PortalCollectionJsonData }) {
@@ -17,7 +18,11 @@ export default function CollectionContentCmp(props: { collection: PortalCollecti
         let result = [];
         for (let terminology of terminologies) {
             result.push(
-                <span className="badge terminology-badge">{terminology.label} ({terminology.source})</span>
+                <TerminologyInfoModal
+                    collectionId={props.collection.id}
+                    key={`${props.collection.id}-${terminology.source}-${terminology.label}`}
+                    terminology={terminology}
+                />
             );
         }
         return result;

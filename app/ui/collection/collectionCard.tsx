@@ -9,6 +9,7 @@ import './styles.css';
 import Link from "next/link";
 import {PortalTerminology, PortalCollection} from "@/app/concepts";
 import {useSession} from "next-auth/react";
+import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
 
 
 type CmpProps = {
@@ -38,7 +39,11 @@ export default function CollectionCard(props: CmpProps) {
         let result = [];
         for (let terminology of terminologies) {
             result.push(
-                <span className="badge terminology-badge">{terminology.label} ({terminology.source})</span>
+                <TerminologyInfoModal
+                    collectionId={props.collection.id}
+                    key={`${props.collection.id}-${terminology.source}-${terminology.label}`}
+                    terminology={terminology}
+                />
             );
         }
         return result;
