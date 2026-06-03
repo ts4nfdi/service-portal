@@ -1,38 +1,99 @@
-.text-editor-wrapper{
-  @apply bg-gray-50 w-full rounded-lg border border-gray-300; 
+.text-editor-loading {
+  height: 458px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #f9fafb 0%, #eef2f7 50%, #f9fafb 100%);
+  background-size: 200% 100%;
+  animation: text-editor-loading-pulse 1.2s ease-in-out infinite;
 }
 
-.text-editor{
- @apply bg-gray-50 text-sm p-2; 
+.text-editor-wrapper {
+  animation: text-editor-enter 500ms ease-out both;
 }
 
-.rdw-editor-toolbar{
+@keyframes text-editor-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes text-editor-loading-pulse {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-editor-loading,
+  .text-editor-wrapper {
+    animation: none;
+  }
+}
+
+.text-editor-wrapper {
+  @apply bg-gray-50 w-full rounded-lg border border-gray-300;
+}
+
+.text-editor {
+  @apply bg-gray-50 text-sm p-2;
+}
+
+.rdw-editor-toolbar {
   @apply !bg-gray-50 dark:!bg-gray-700;
 }
 
-.rdw-editor-main{
+.rdw-editor-main {
   @apply !h-[400px] dark:bg-gray-800;
 }
 
-.rdw-editor-main h1 { font-size: 2em; font-weight: bold; }
-.rdw-editor-main h2 { font-size: 1.5em; font-weight: bold; }
-.rdw-editor-main h3 { font-size: 1.17em; font-weight: bold; }
-.rdw-editor-main h4 { font-size: 1em; font-weight: bold; }
-.rdw-editor-main h5 { font-size: 0.83em; font-weight: bold; }
-.rdw-editor-main h6 { font-size: 0.67em; font-weight: bold; }
+.rdw-editor-main h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+.rdw-editor-main h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.rdw-editor-main h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.rdw-editor-main h4 {
+  font-size: 1em;
+  font-weight: bold;
+}
+.rdw-editor-main h5 {
+  font-size: 0.83em;
+  font-weight: bold;
+}
+.rdw-editor-main h6 {
+  font-size: 0.67em;
+  font-weight: bold;
+}
 
-.rdw-option-wrapper, .rdw-dropdown-wrapper{
+.rdw-option-wrapper,
+.rdw-dropdown-wrapper {
   @apply dark:!bg-gray-400;
 }
 
-.rdw-dropdown-selectedtext{
+.rdw-dropdown-selectedtext {
   @apply dark:!text-white;
 }
 
-.rdw-option-active{
+.rdw-option-active {
   @apply dark:!bg-gray-500;
 }
 
-.rdw-dropdownoption-default{
+.rdw-dropdownoption-default {
   @apply dark:!text-gray-700;
 }

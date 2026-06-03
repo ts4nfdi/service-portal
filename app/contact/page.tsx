@@ -1,29 +1,35 @@
-'use client'
+"use client";
 
 import { sendContactForm } from "../api/actions/contact";
 import TextEditor from "../ui/commons/TextEditor/TextEditor";
-import { highlightEditorIsEmpty, isTextEditorEmpty } from "../ui/commons/TextEditor/TextEditor";
+import {
+  highlightEditorIsEmpty,
+  isTextEditorEmpty,
+} from "../ui/commons/TextEditor/TextEditor";
 import { useState } from "react";
 import { ActionResponse, ContactForm } from "../api/actions/types";
-import { Loading, SuccessAlert, ErrorAlert, TextInput } from "../ui/commons/snippets";
+import {
+  Loading,
+  SuccessAlert,
+  ErrorAlert,
+  TextInput,
+} from "../ui/commons/snippets";
 import { Captcha } from "../ui/commons/captcha";
-
 
 export default function Contact() {
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    let form = document.querySelector('form')!;
+    let form = document.querySelector("form")!;
     let formData = new FormData(form);
     let contactFormData: ContactForm = {
-      title: formData.get('title')! as string,
-      email: formData.get('email')! as string,
-      content: formData.get('content') as string,
-      captcha: formData.get("frc-captcha-response") as string
+      title: formData.get("title")! as string,
+      email: formData.get("email")! as string,
+      content: formData.get("content") as string,
+      captcha: formData.get("frc-captcha-response") as string,
     };
     if (isTextEditorEmpty()) {
       highlightEditorIsEmpty();
@@ -31,18 +37,17 @@ export default function Contact() {
     }
     setFormIsSubmited(true);
     setLoading(true);
-    let res = await sendContactForm(contactFormData) as ActionResponse;
+    let res = (await sendContactForm(contactFormData)) as ActionResponse;
     if (!res.status) {
       setError(true);
     }
     setLoading(false);
   }
 
-
   return (
-    <div className="md:col-span-2">
+    <div className="md:col-span-2 contact-page-content">
       <p className="header-1">Contact us</p>
-      {!formIsSubmitted &&
+      {!formIsSubmitted && (
         <form onSubmit={submit}>
           <div className="grid grid-rows-1 form">
             <div className="w-3/4 mb-2">
@@ -69,7 +74,17 @@ export default function Contact() {
               <TextEditor
                 placeholder="Please describe your query..."
                 wrapperId=""
-                textSizeOptions={['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
+                textSizeOptions={[
+                  "Normal",
+                  "H1",
+                  "H2",
+                  "H3",
+                  "H4",
+                  "H5",
+                  "H6",
+                  "Blockquote",
+                  "Code",
+                ]}
                 labelText="Message"
                 name="content"
                 required={true}
@@ -79,25 +94,25 @@ export default function Contact() {
               <Captcha />
             </div>
             <div className="text-right">
-              <button type="submit" className="btn">Submit</button>
+              <button type="submit" className="btn">
+                Submit
+              </button>
             </div>
           </div>
         </form>
-      }
+      )}
       {loading && <Loading />}
-      {formIsSubmitted && !error && !loading &&
-        <SuccessAlert
-          message="Thank you for your message! We will contact you as soon as possible."
-        />
-      }
-      {formIsSubmitted && error && !loading &&
-        <ErrorAlert
-          message="Sorry! Something went wrong."
-        />
-      }
-      {formIsSubmitted && !loading &&
-        <a className="btn" href={'/contact'}>New message</a>
-      }
+      {formIsSubmitted && !error && !loading && (
+        <SuccessAlert message="Thank you for your message! We will contact you as soon as possible." />
+      )}
+      {formIsSubmitted && error && !loading && (
+        <ErrorAlert message="Sorry! Something went wrong." />
+      )}
+      {formIsSubmitted && !loading && (
+        <a className="btn" href={"/contact"}>
+          New message
+        </a>
+      )}
     </div>
   );
 }
