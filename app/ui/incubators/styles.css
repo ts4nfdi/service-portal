@@ -1,6 +1,5 @@
 .status-card {
-    @apply
-    border-black
+  @apply border-black
     bg-white
     rounded-lg
     shadow-sm
@@ -14,13 +13,45 @@
 }
 
 .clicked-status-card {
-    @apply status-card !bg-[#45546B] !text-white !font-bold;
+  @apply status-card !bg-[#45546B] !text-white !font-bold;
 }
 
 .status-card p {
-    padding-right: 0;
+  padding-right: 0;
 }
 
 .incubator-project-card {
-    @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+  @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+}
+
+.incubator-project-card-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.incubator-project-card-loaded {
+  animation: incubator-project-card-enter 600ms ease-out both;
+}
+
+@keyframes incubator-project-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .incubator-project-card-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .incubator-project-card-loaded {
+    animation: none;
+  }
 }

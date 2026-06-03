@@ -1,221 +1,342 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
-    --background: #dae0e8;
-    --foreground: #171717;
-    --fontFamily: Arial, Helvetica, sans-serif;
-    --siteMainColor: rgb(69, 84, 107);
-    --elementDarkModeBgColor: #1f2937;
+  --background: #dae0e8;
+  --foreground: #171717;
+  --fontFamily: Arial, Helvetica, sans-serif;
+  --siteMainColor: rgb(69, 84, 107);
+  --elementDarkModeBgColor: #1f2937;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 @layer site-globals {
-    .dark-mode-bg-color {
-        @apply dark:bg-gray-800;
-    }
+  .dark-mode-bg-color {
+    @apply dark:bg-gray-800;
+  }
 }
 
 body {
-    color: var(--foreground);
-    background: var(--background);
-    font-family: var(--fontFamily);
-    @apply overflow-x-hidden text-base dark:text-white;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--fontFamily);
+  @apply overflow-x-hidden text-base dark:text-white;
 }
 
 .site-content {
-    @apply container grid md:grid-cols-3 sm:grid-rows-1 gap-4 min-h-screen pt-5 mx-auto md:pl-10 md:pr-10 pb-20;
+  @apply container grid md:grid-cols-3 sm:grid-rows-1 gap-4 min-h-screen pt-5 mx-auto md:pl-10 md:pr-10 pb-20;
 }
 
 .content-panel {
-    @apply bg-white p-4 dark:bg-gray-800;
+  @apply bg-white p-4 dark:bg-gray-800;
 }
 
 .header-1 {
-    @apply text-5xl;
-    margin-bottom: 40px;
-    margin-top: 40px;
+  @apply text-5xl;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 .header-2 {
-    @apply text-3xl;
-    margin-bottom: 40px;
-    margin-top: 80px;
+  @apply text-3xl;
+  margin-bottom: 40px;
+  margin-top: 80px;
 }
 
 .header-3 {
-    @apply text-xl;
-    margin-bottom: 40px;
-    margin-top: 80px;
+  @apply text-xl;
+  margin-bottom: 40px;
+  margin-top: 80px;
 }
 
 .header-4 {
-    @apply text-lg font-bold;
+  @apply text-lg font-bold;
 }
 
 .header-main-1 {
-    @apply text-5xl;
-    margin-bottom: 40px;
-    color: rgb(69, 84, 107);
+  @apply text-5xl;
+  margin-bottom: 40px;
+  color: rgb(69, 84, 107);
 }
 
 .header-main-2 {
-    @apply text-4xl;
-    margin-bottom: 40px;
-    margin-top: 40px;
-    color: rgb(69, 84, 107);
+  @apply text-4xl;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  color: rgb(69, 84, 107);
 }
 
 .header-main-3 {
-    @apply text-3xl;
-    color: #6c808099;
-    margin-bottom: 20px;
+  @apply text-3xl;
+  color: #6c808099;
+  margin-bottom: 20px;
 }
 
 .card {
-    @apply border-black bg-white rounded-lg shadow-sm p-2 mb-2 dark:bg-gray-800;
+  @apply border-black bg-white rounded-lg shadow-sm p-2 mb-2 dark:bg-gray-800;
 }
 
 .card-sm {
-    @apply card md:max-w-xs text-sm text-center;
+  @apply card md:max-w-xs text-sm text-center;
 }
 
 p {
-    @apply md:px-0 px-4 mb-2 dark:text-white;
+  @apply md:px-0 px-4 mb-2 dark:text-white;
 }
 
 a {
-    @apply pl-1 pr-1 sm:text-sm text-[#054484] font-bold dark:text-blue-400;
+  @apply pl-1 pr-1 sm:text-sm text-[#054484] font-bold dark:text-blue-400;
 }
 
 .orcid-id-btn {
-    @apply bg-[#A5CD39] text-white rounded-xl text-base p-1;
+  @apply bg-[#A5CD39] text-white rounded-xl text-base p-1;
 }
 
 .badge {
-    @apply text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-full whitespace-nowrap;
+  @apply text-black text-xs font-medium me-2 px-2.5 py-0.5 rounded-full whitespace-nowrap;
 }
 
 .status-badge {
-    @apply badge;
-    background-color: rgb(251, 188, 67);
+  @apply badge;
+  background-color: rgb(251, 188, 67);
 }
 
 .cycle-badge {
-    @apply badge;
-    background-color: rgb(163, 199, 23);
+  @apply badge;
+  background-color: rgb(163, 199, 23);
 }
 
 .name-badge {
-    @apply badge !text-white;
-    background-color: rgb(69, 84, 107);
+  @apply badge !text-white;
+  background-color: rgb(69, 84, 107);
 }
 
 .terminology-badge {
-    @apply badge !text-white;
-    background-color: rgb(69, 84, 107);
+  @apply badge !text-white;
+  background-color: rgb(69, 84, 107);
 }
 
 .form {
-    @apply bg-[#FFFFFF] p-10 dark:bg-gray-900;
+  @apply bg-[#FFFFFF] p-10 dark:bg-gray-900;
 }
 
 .form-input-group {
-    @apply mx-auto mb-5 w-4/5;
+  @apply mx-auto mb-5 w-4/5;
 }
 
 body input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="file"] {
-    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color placeholder-gray-400;
-    @apply dark:!text-white dark:bg-gray-700;
-
+  @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 dark-mode-bg-color placeholder-gray-400;
+  @apply dark:!text-white dark:bg-gray-700;
 }
 
 .file-input {
-    @apply block w-full text-sm border border-gray-300 rounded-lg cursor-pointer p-0 file:bg-[var(--siteMainColor)] file:text-white file:rounded-lg file:mr-3 file:py-2 file:px-4 file:border-0;
+  @apply block w-full text-sm border border-gray-300 rounded-lg cursor-pointer p-0 file:bg-[var(--siteMainColor)] file:text-white file:rounded-lg file:mr-3 file:py-2 file:px-4 file:border-0;
 }
 
 textarea {
-    @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 placeholder-gray-400;
-    @apply dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  @apply bg-gray-50 w-full p-2 rounded-lg border border-gray-300 text-sm focus:ring-0 focus:outline-none focus:border-[var(--siteMainColor)] focus:border-2 placeholder-gray-400;
+  @apply dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
 }
 
 .radio-btn {
-    @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked:!text-blue-500;
+  @apply appearance-none w-4 h-4 checked:text-[var(--siteMainColor)] dark:checked:!text-blue-500;
 }
 
 .btn {
-    @apply inline-block bg-[var(--siteMainColor)] text-white md:font-medium rounded text-sm md:px-5 md:py-2.5 px-3 me-2 mb-2;
+  @apply inline-block bg-[var(--siteMainColor)] text-white md:font-medium rounded text-sm md:px-5 md:py-2.5 px-3 me-2 mb-2;
 }
 
 .required-label::after {
-    content: " *";
-    color: red;
+  content: " *";
+  color: red;
 }
 
 select {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
 }
 
 .autocomplete-in-form input {
-    @apply placeholder:text-sm placeholder:text-[#9197A3] font-[var(--fontFamily)] pl-0;
+  @apply placeholder:text-sm placeholder:text-[#9197A3] font-[var(--fontFamily)] pl-0;
 }
 
 .modal-bg {
-    @apply fixed top-0 left-0 z-10 w-screen h-screen bg-black/40 backdrop-blur-md;
+  @apply fixed top-0 left-0 z-10 w-screen h-screen bg-black/40 backdrop-blur-md;
 }
 
 ul {
-    list-style: square !important;
-    @apply dark-mode-bg-color md:px-4 px-0;
+  list-style: square !important;
+  @apply dark-mode-bg-color md:px-4 px-0;
 }
 
 .list-item {
-    @apply ml-6 mr-3 dark-mode-bg-color dark:text-white;
+  @apply ml-6 mr-3 dark-mode-bg-color dark:text-white;
 }
 
 ol {
-    list-style: decimal !important;
+  list-style: decimal !important;
 }
 
 li {
-    @apply dark:text-white;
+  @apply dark:text-white;
 }
 
 .card-background {
-    @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+  @apply border-black bg-white rounded-lg shadow-sm items-center p-10 dark:bg-gray-800;
+}
+
+.contact-page-content {
+  animation: contact-page-content-enter 700ms ease-out both;
+}
+
+@keyframes contact-page-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-page-content {
+    animation: none;
+  }
+}
+
+.home-page-content {
+  animation: home-page-content-enter 700ms ease-out both;
+}
+
+@keyframes home-page-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page-content {
+    animation: none;
+  }
+}
+
+.about-person-card {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.about-person-card-loaded {
+  animation: about-person-card-enter 600ms ease-out both;
+}
+
+@keyframes about-person-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-person-card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .about-person-card-loaded {
+    animation: none;
+  }
+}
+
+.provider-card {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.provider-card-logo-wrap {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.provider-card-logo {
+  width: 180px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.provider-card-loaded {
+  animation: provider-card-enter 600ms ease-out both;
+}
+
+@keyframes provider-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .provider-card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .provider-card-loaded {
+    animation: none;
+  }
 }
 
 .h1-service-portal img {
-    float: left;
-    margin-right: 10px;
+  float: left;
+  margin-right: 10px;
 }
 
 .h1-service-portal h1 {
-    position: relative;
+  position: relative;
 }
 
-.multiselect-dropdown .searchWrapper{
-    @apply p-0;
+.multiselect-dropdown .searchWrapper {
+  @apply p-0;
 }
 
-.multiselect-dropdown .chip{
-    @apply bg-ts4nfdi-brand-color dark:bg-gray-700 text-white mt-1 ml-1 dark:text-white;
+.multiselect-dropdown .chip {
+  @apply bg-ts4nfdi-brand-color dark:bg-gray-700 text-white mt-1 ml-1 dark:text-white;
 }
 
-.multiselect-dropdown .option{
-    @apply dark:text-white;
+.multiselect-dropdown .option {
+  @apply dark:text-white;
 }
 
-.multiselect-dropdown .option:hover, .multiselect-dropdown .highlight{
-    @apply bg-ts4nfdi-brand-color dark:bg-gray-600 dark:text-white;
+.multiselect-dropdown .option:hover,
+.multiselect-dropdown .highlight {
+  @apply bg-ts4nfdi-brand-color dark:bg-gray-600 dark:text-white;
 }
