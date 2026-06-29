@@ -5,7 +5,7 @@ before starting:
 - Read `.codex/instructions.md`
 - Do not read `.codex/specs/completed` 
 - Do not read anything from `public/`. Completely ignore it.
-- Ignoe also these directories: `.next`, `node_modules`, `out`, `playwright-report`, `test-results`
+- Ignore also these directories: `.next`, `node_modules`, `out`, `playwright-report`, `test-results`
 
 Tasks workflow:
 - Always look at the `.codex/specs/` unless you are instructed to do otherwise
