@@ -1,11 +1,12 @@
 import {test, expect} from '@playwright/test';
-import {isImageLoaded} from "@/tests/libs";
+import {acceptTrackingConsent, isImageLoaded} from "@/tests/libs";
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 
 test('site is loaded', async ({page}) => {
+    await acceptTrackingConsent(page);
     await page.goto(BASE_URL);
     await expect(page.locator('.site-content').first()).toBeVisible();
 });
@@ -15,6 +16,7 @@ test("site header is loaded", async ({page}) => {
      * Test the footer logo and the home tab (as example) is loaded.
      * Home tab has to be active when a user open the site url (default tab)
      */
+    await acceptTrackingConsent(page);
     await page.goto(BASE_URL);
     const siteLogo = await isImageLoaded(page, "img[alt='logo']");
     expect(siteLogo).toBe(true);
@@ -30,10 +32,12 @@ test("site header tab change acts correctly", async ({page}) => {
      * the active tab should change to the Event tab and the site content should change to the
      * Event page.
      */
+    await acceptTrackingConsent(page);
     await page.goto(BASE_URL);
     await expect(page.locator(".navbar-link-active").first()).toHaveText("Home");
-    await page.locator(".navbar-links").filter({hasText: "Events"}).click();
-    await expect(page.locator(".navbar-link-active").first()).toHaveText("Events");
+    await page.getByRole('link', {name: 'Info'}).click();
+    await page.getByRole('link', {name: 'Events'}).click();
+    await expect(page.locator(".navbar-link-active").first()).toHaveText("Info");
     await expect(page.locator(".site-content").first()).toContainText("Past Events");
 });
 
@@ -43,8 +47,9 @@ test("site header selected tab should work on first load", async ({page}) => {
      * a user open it via URL.
      * in this test, the user opens the event page via the url.
      */
+    await acceptTrackingConsent(page);
     await page.goto(BASE_URL + "/events");
-    await expect(page.locator(".navbar-link-active").first()).toHaveText("Events");
+    await expect(page.locator(".navbar-link-active").first()).toHaveText("Info");
     await expect(page.locator(".site-content").first()).toContainText("Past Events");
 });
 
@@ -52,13 +57,12 @@ test("site footer is loaded", async ({page}) => {
     /**
      * Site footers including the logos and footer links has to be loaded.
      */
+    await acceptTrackingConsent(page);
     await page.goto(BASE_URL);
     const isBaseLogoLoaded = await isImageLoaded(page, 'img[alt="Base4nfdi Logo"]');
     expect(isBaseLogoLoaded).toBe(true);
     const isDfgLogoLoaded = await isImageLoaded(page, 'img[alt="DFG Logo"]');
     expect(isDfgLogoLoaded).toBe(true);
-    await expect(page.locator("a[href='/termsofuse']")).toHaveText("Terms of use");
+    await expect(page.locator("footer a[href='/termsofuse']")).toHaveText("Terms of use");
 });
-
-
 

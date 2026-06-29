@@ -52,6 +52,10 @@ Playwright have been used for testing this application. To run test for Firefox:
 
 ```
 npx playwright test --project=firefox
+
+or 
+
+npm test
 ```
 
 you can also use **chromium** and **webkit** for Chrome and Safari. 
