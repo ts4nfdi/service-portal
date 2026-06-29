@@ -1,8 +1,12 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
+import { MOCK_GATEWAY_BASE_URL, startMockGateway } from "./tests/mockGateway";
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
+
+process.env.GATEWAY_BASE_URL = MOCK_GATEWAY_BASE_URL;
+startMockGateway();
 
 export default defineConfig({
   testDir: "./tests",

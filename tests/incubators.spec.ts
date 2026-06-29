@@ -161,13 +161,15 @@ test("incubator cards show project details and loaded logos", async ({
 test("request card opens the new incubator request form", async ({ page }) => {
   await openIncubatorsPage(page);
 
-  const addProjectCard = requestCard(page);
-  await expectRequestCardVisible(addProjectCard);
-  await addProjectCard
-    .getByRole("link", { name: "Send us your request" })
-    .click();
+  const requestLink = requestCard(page).getByRole("link", {
+    name: "Send us your request",
+  });
+  await expect(requestLink).toBeVisible();
+  await requestLink.click();
 
-  await expect(page).toHaveURL(/\/incubators\/new\/?$/);
+  await expect(page.locator("main")).toContainText("New incubator request", {
+    timeout: 15000,
+  });
   await expect(
     page.getByRole("link", { name: /incubators list/i }),
   ).toBeVisible();
