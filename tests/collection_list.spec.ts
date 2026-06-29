@@ -1,7 +1,10 @@
 import { expect, type Page, test } from "@playwright/test";
-import { readFile } from "node:fs/promises";
 import { MOCK_COLLECTIONS } from "@/tests/fixtures/collections";
-import { acceptTrackingConsent, isImageLoaded } from "@/tests/libs";
+import {
+  acceptTrackingConsent,
+  isImageLoaded,
+  readDownloadJson,
+} from "@/tests/libs";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const GATEWAY_BASE_URL =
@@ -29,11 +32,6 @@ function collectionCard(page: Page, label: string) {
 
 function paginationText(page: Page, pattern: RegExp) {
   return page.locator("span").filter({ hasText: pattern });
-}
-
-async function readDownloadJson(downloadPath: string | null) {
-  expect(downloadPath).toBeTruthy();
-  return JSON.parse(await readFile(downloadPath!, "utf8"));
 }
 
 test("collections page is reachable from the navbar and shows the explanation area", async ({
@@ -81,7 +79,9 @@ test("collections page downloads all public collections as JSON", async ({
 
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe("collections.json");
-  const json = await readDownloadJson(await download.path());
+  const downloadPath = await download.path();
+  expect(downloadPath).toBeTruthy();
+  const json = await readDownloadJson(downloadPath!);
   expect(json).toHaveLength(MOCK_COLLECTIONS.length);
   expect(json[0]).toMatchObject({
     id: MOCK_COLLECTIONS[0].id,
@@ -177,7 +177,9 @@ test("collection card downloads a single collection as JSON", async ({
 
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe(`collection-${collection.id}.json`);
-  const json = await readDownloadJson(await download.path());
+  const downloadPath = await download.path();
+  expect(downloadPath).toBeTruthy();
+  const json = await readDownloadJson(downloadPath!);
   expect(json).toMatchObject({
     id: collection.id,
     label: collection.label,
