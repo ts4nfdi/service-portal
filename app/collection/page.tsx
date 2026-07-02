@@ -118,10 +118,17 @@ export default async function Collections() {
           </div>
           <div className="flex flex-row flex-wrap justify-start px-1 mt-2">
             <div>
-              <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
-                API Endpoint:{" "}
+              <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded text-sm">
+                Endpoint:{" "}
               </p>
-              {(process.env.GATEWAY_BASE_URL! as string) + "/collections/"}
+              <a
+                href={
+                  (process.env.GATEWAY_BASE_URL! as string) + "/collections/"
+                }
+                target="_blank"
+              >
+                {(process.env.GATEWAY_BASE_URL! as string) + "/collections/"}
+              </a>
             </div>
             <CopyToClipboard
               textToCopy={
