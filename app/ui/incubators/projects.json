@@ -1,6 +1,6 @@
 {
   "stats": {
-    "In preparation": 4,
+    "In preparation": 9,
     "Running": 10,
     "Finished": 12
   },
@@ -241,19 +241,6 @@
       "logoH": 300
     },
     {
-      "title": "TS4NDSI integration in Galaxy",
-      "cycle": "3",
-      "status": "In preparation",
-      "start": "03.2026",
-      "end": "09.2026",
-      "description": "To strengthen FAIR data practices and semantic interoperability within research tools and workflows, we propose to integrate Galaxy with the TS4NFDI Terminology Service. This integration will allow Galaxy datatype definitions to be annotated with standardized concepts from the EDAM ontology, accessed dynamically through TS4NFDI. By linking Galaxy datatypes to persistent ontology identifiers, researchers will be supported in selecting, interpreting, and reusing data in a more transparent and interoperable way. As a demonstrator, we will extend a subset of Galaxy datatype descriptors with references to EDAM terms served via TS4NFDI. When users interact with these datatypes in Galaxy, they will be able to view the corresponding ontology concepts and their definitions directly within the platform via the TS4nfdi widgets. Workflows and outputs will then carry these semantic annotations forward, enabling improved provenance tracking, automated metadata enrichment, and easier integration with NFDI services. This work will demonstrate how Galaxy can adopt shared terminology infrastructures to lower barriers to FAIR data compliance and enable consistent, domain-appropriate semantic annotation across research communities.",
-      "goals": [],
-      "consortium": [],
-      "logo": "galaxy-eu.svg",
-      "logoW": 300,
-      "logoH": 300
-    },
-    {
       "title": "AIMS",
       "cycle": "3",
       "status": "Running",
@@ -332,28 +319,41 @@
       "logoH": 300
     },
     {
-      "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
+      "title": "TS4NDSI integration in Galaxy",
       "cycle": "4",
       "status": "In preparation",
       "start": "Q3/2026",
       "end": "-",
-      "description": "This incubator integrates the DataCite metadata properties and controlled vocabularies into core ELN workflows in RSpace enabling researchers to enrich metadata early in the research lifecycle and export interoperable records to repositories. In collaboration with PID4NFDI, controlled vocabularies will be exposed via the TS4NFDI API gateway and made available in RSpace through integration of TS4NFDI widgets. The incubator prototypes a user friendly and robust way of curating RSpace ELN object metadata and set the foundation for interoperable ELN objects using one of the NFDI endorsed metadata standards.",
+      "description": "To strengthen FAIR data practices and semantic interoperability within research tools and workflows, we propose to integrate Galaxy with the TS4NFDI Terminology Service. This integration will allow Galaxy datatype definitions to be annotated with standardized concepts from the EDAM ontology, accessed dynamically through TS4NFDI. By linking Galaxy datatypes to persistent ontology identifiers, researchers will be supported in selecting, interpreting, and reusing data in a more transparent and interoperable way. As a demonstrator, we will extend a subset of Galaxy datatype descriptors with references to EDAM terms served via TS4NFDI. When users interact with these datatypes in Galaxy, they will be able to view the corresponding ontology concepts and their definitions directly within the platform via the TS4nfdi widgets. Workflows and outputs will then carry these semantic annotations forward, enabling improved provenance tracking, automated metadata enrichment, and easier integration with NFDI services. This work will demonstrate how Galaxy can adopt shared terminology infrastructures to lower barriers to FAIR data compliance and enable consistent, domain-appropriate semantic annotation across research communities.",
       "goals": [],
       "consortium": [],
-      "logo": "rspace_logo.svg",
-      "logoW": 400,
-      "logoH": 400
+      "logo": "galaxy-eu.svg",
+      "logoW": 300,
+      "logoH": 300
     },
     {
-      "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
+      "title": "TeSS - Training eSupport System",
       "cycle": "4",
       "status": "In preparation",
       "start": "Q3/2026",
       "end": "-",
-      "description": "NFDI4Immuno works with various standardized terminologies and ontologies to describe immunological data and its metadata. Currently, future users of the NFDI4Immuno Excel template are required to manually enter relevant terminologies and ontology terms into the corresponding metadata fields.",
+      "description": "TeSS is a platform that was developed to provide a one-stop shop for trainers and trainees to discover online information and content,  including training materials, events and interactive tutorials. For training providers, TeSS provides opportunities to promote training events and news, and to contribute to a growing catalogue of materials; for trainers, the portal offers an environment for sharing materials and event information; for trainees, it offers a convenient gateway via which to identify relevant training events and resources, and to perform specific, guided analysis tasks via customised training workflows. TeSS is used as the basis for training catalogues such as PaN-Training (photon and neutron science) and HEP Training (high energy physics).",
       "goals": [],
-      "consortium": ["NFDI4Immuno"],
-      "logo": "nfdi4immuno.png",
+      "consortium": ["DAPHNE4NFDI", "PUNCH4NFDI"],
+      "logo": "tess-logo.svg",
+      "logoW": 250,
+      "logoH": 250
+    },
+    {
+      "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "DAPHNE4NFDI represents the Photon and Neutron (PaN) research community in the German National Research Data Infrastructure (NFDI). The community has developed and maintains the PaNET ontology, a domain ontology that systematises experimental techniques used at e.g. photon and neutron research infrastructure. The PaN community requires a sustainable approach for managing and using terminology mappings while preserving the integrity and governance of the PaNET ontology itself.",
+      "goals": [],
+      "consortium": ["DAPHNE4NFDI"],
+      "logo": "DAPHNE4NFDI_logo.png",
       "logoW": 300,
       "logoH": 300
     },
@@ -369,6 +369,71 @@
       "logo": "sms.png",
       "logoW": 400,
       "logoH": 400
+    },
+    {
+      "title": "Improving Interoperability for Climate and Energy Policy Ontologies",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "The Climate and Energy Policy Ontology (CEPO) is an ontology built within NFDI4Energy which provides explicit definitions, classifications, and relationships among climate policy instruments. It was developed by practitioners at the FAU in close collaboration with climate data providers (Climate Policy Radar, Climate Policy Database, and the Organization for Economic Cooperation and Development) and aims for interoperability with them in order to harmonize the climate policy data space. The ontology was also co-designed with experts from the OEO and is certified by the Energy-related reference ontologies Foundry (ENERO).",
+      "goals": [],
+      "consortium": ["NFDI4Energy"],
+      "logo": "CEPO-logo.png",
+      "logoW": 250,
+      "logoH": 250
+    },
+    {
+      "title": "Terminology Service Suite integration for WissKI authority data enrichment",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "SODa's Semantic Co-Working Space (SCS) provides a cloud environment for deploying WissKI-based research applications. WissKI Barrels are containerised, domain-specific researchenvironments built on WissKI and CIDOC-CRM. Today, each Barrel manages terminology lookups independently – with fragmented provider integrations (GND, Getty, GeoNames, Wikidata) and bespoke UI components. This incubator integrates the TS4NFDI Terminology Service Suite into WissKI's Authority Document module and publishes SODa-maintained controlled vocabularies (e.g. provenance event types, conservation treatment categories) via the API Gateway.",
+      "goals": [],
+      "consortium": ["NFDI4Culture", "NFDI4Memory", "NFDI4Objects"],
+      "logo": "WissKI_logo_2026.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "OstData & 4MMS",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "OstData is a research data repository and research data service designed specifically for scholars working on Eastern, East Central, and Southeast European Studies. The OstData Research Data Types are a controlled vocabulary used to classify the research data holdings in the OstData research data repository according to overarching formal and conceptual characteristics. Next to the OstData vocabulary the incubator will focus on the Metadatenschema für NFDI4Memory (4MMS).",
+      "goals": [],
+      "consortium": ["NFDI4Memory"],
+      "logo": "ostdata.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
+      "cycle": "5",
+      "status": "In preparation",
+      "start": "Q1/2027",
+      "end": "-",
+      "description": "This incubator integrates the DataCite metadata properties and controlled vocabularies into core ELN workflows in RSpace enabling researchers to enrich metadata early in the research lifecycle and export interoperable records to repositories. In collaboration with PID4NFDI, controlled vocabularies will be exposed via the TS4NFDI API gateway and made available in RSpace through integration of TS4NFDI widgets. The incubator prototypes a user friendly and robust way of curating RSpace ELN object metadata and set the foundation for interoperable ELN objects using one of the NFDI endorsed metadata standards.",
+      "goals": [],
+      "consortium": [],
+      "logo": "rspace_logo.svg",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
+      "cycle": "5",
+      "status": "In preparation",
+      "start": "Q1/2027",
+      "end": "-",
+      "description": "NFDI4Immuno works with various standardized terminologies and ontologies to describe immunological data and its metadata. Currently, future users of the NFDI4Immuno Excel template are required to manually enter relevant terminologies and ontology terms into the corresponding metadata fields.",
+      "goals": [],
+      "consortium": ["NFDI4Immuno"],
+      "logo": "nfdi4immuno.png",
+      "logoW": 300,
+      "logoH": 300
     }
   ]
 }

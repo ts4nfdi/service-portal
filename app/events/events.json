@@ -2,7 +2,23 @@
   {
     "name": "3rd Base4NFDI User Conference, Berlin",
     "date": "24 + 25 November 2026",
-    "formal_date": "2026-11-25"
+    "formal_date": "2026-11-25",
+    "links": [
+        {
+          "type" :  "webpage (conference)",
+          "link" :  "https://events.gwdg.de/event/1337/overview"
+        }
+      ]
+  },{
+    "name": "TDWG 2026, Oslo",
+    "date": "21 - 25 September 2026",
+    "formal_date": "2026-09-25",
+    "links": [
+      {
+        "type" :  "webpage (conference)",
+        "link" :  "https://www.tdwg.org/conferences/2026/"
+      }
+    ]
   },{
     "name": "Scoping-Workshop: Zukunftskompetenzen Forschungsdatenmanagement gestalten, Hannover",
     "date": "01 - 03 July 2026",
