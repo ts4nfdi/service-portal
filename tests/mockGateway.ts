@@ -15,6 +15,32 @@ const mockProviders = Object.entries(ProvidersJson).map(([name, provider]) => ({
 
 export function startMockGateway() {
   const mockGateway = createServer((request, response) => {
+    const requestUrl = new URL(request.url!, MOCK_GATEWAY_BASE_URL);
+    if (requestUrl.pathname === "/api-gateway/auth/sso/authorize") {
+      const redirectUri = new URL(requestUrl.searchParams.get("redirect_uri")!);
+      redirectUri.searchParams.set("code", "mock-oauth-code");
+      response.writeHead(302, { Location: redirectUri.toString() });
+      response.end();
+      return;
+    }
+
+    if (requestUrl.pathname === "/api-gateway/auth/token" && request.method === "POST") {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({
+        acces_token: "mock-access-token",
+        id_token: "header.eyJwcmVmZXJyZWRfdXNlcm5hbWUiOiJPQXV0aCBVc2VyIn0.signature",
+        scope: "oidc",
+        expires_in: "3600"
+      }));
+      return;
+    }
+
+    if (requestUrl.pathname === "/api-gateway/auth/login" && request.method === "POST") {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ token: "mock-jwt", username: "OAuth User" }));
+      return;
+    }
+
     if (
       request.url === "/collections/" ||
       request.url === "/users/collections/"
