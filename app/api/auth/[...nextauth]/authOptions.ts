@@ -1,32 +1,76 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = ({
+export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "OAuth callback",
       credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
-      }, async authorize(credentials) {
-        const req = await fetch(process.env.GATEWAY_BASE_URL! as string + "/auth/login", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(credentials)
-        });
-
-        const user = await req.json();
-        if (req.ok && user) {
-          return { ...user, token: user?.token, username: user?.username };
+        code: { label: "Code", type: "text" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.code) {
+          return null;
         }
-        return null;
 
-      }
-    })
+        const redirectUri = process.env.NEXTAUTH_URL!;
+        const tokenResponse = await fetch(
+          process.env.GATEWAY_BASE_URL! + "/auth/sso/token",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              code: credentials.code,
+              redirect_uri: redirectUri,
+            }),
+          },
+        );
+        if (!tokenResponse.ok) {
+          return null;
+        }
+        const tokens = await tokenResponse.json();
+        const loginResponse = await fetch(
+          process.env.GATEWAY_BASE_URL! + "/auth/sso/login",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_token: tokens.access_token,
+              id_token: tokens.id_token,
+            }),
+          },
+        );
+        if (!loginResponse.ok) {
+          return null;
+        }
+
+        const user = await loginResponse.json();
+        const identity = getIdentity(tokens.id_token);
+        const token = user.token ?? user.jwt ?? user.access_token;
+        if (!token) {
+          return null;
+        }
+
+        const username =
+          user.username ??
+          identity.preferred_username ??
+          identity.name ??
+          "User";
+        return {
+          id: username,
+          token,
+          username,
+          email: user.email ?? identity.email,
+        };
+      },
+    }),
   ],
   callbacks: {
     //@ts-ignore
     async jwt({ token, user }) {
-      if (token?.expiration && new Date(token.expiration).getTime() < Date.now()) {
+      if (
+        token?.expiration &&
+        new Date(token.expiration).getTime() < Date.now()
+      ) {
         token.token = "";
         token.username = "";
         token.expiration = "";
@@ -35,7 +79,7 @@ export const authOptions = ({
       if (user) {
         token.token = user.token;
         token.username = user.username;
-        token.expiration = user.expiration;
+        token.email = user.email;
       }
 
       return token;
@@ -47,13 +91,24 @@ export const authOptions = ({
       }
       session.user.token = token.token as string;
       session.user.username = token.username as string;
+      session.user.email = token.email as string | undefined;
       return session;
-    }
+    },
   },
   pages: {
     signIn: "/user/login",
-    signOut: "/user/logout"
+    signOut: "/user/logout",
   },
   // url: process.env.NEXTAUTH_URL,
-  secret: process.env.NEXTAUTH_SECRET
-});
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+function getIdentity(idToken: string): Record<string, string> {
+  try {
+    return JSON.parse(
+      Buffer.from(idToken.split(".")[1], "base64url").toString(),
+    );
+  } catch {
+    return {};
+  }
+}

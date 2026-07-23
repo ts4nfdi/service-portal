@@ -5,6 +5,8 @@ import Header from "./ui/site/header";
 import { MatomoTracker, TrackingConsentForm } from "@/app/clientExports";
 import 'flowbite';
 import { SessionProviderWrapper } from "./libs/sessionProvider";
+import OAuthCallback from "./ui/user/oauthCallback";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "TS4NFDI Service Portal",
@@ -23,6 +25,9 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+        <Suspense>
+          <OAuthCallback />
+        </Suspense>
         <MatomoTracker />
         <div className="grid min-h-screen" id="app-layout">
           <SessionProviderWrapper>
