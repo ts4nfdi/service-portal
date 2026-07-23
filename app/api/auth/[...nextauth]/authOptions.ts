@@ -29,9 +29,7 @@ export const authOptions = {
         }
         const tokens = await tokenResponse.json();
         const loginResponse = await fetch(
-          process.env.GATEWAY_BASE_URL! +
-            "/auth/sso/login?redirect_url=" +
-            redirectUri,
+          process.env.GATEWAY_BASE_URL! + "/auth/sso/login",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
