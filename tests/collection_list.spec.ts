@@ -81,7 +81,7 @@ test("collections page downloads all public collections as JSON", async ({
   expect(download.suggestedFilename()).toBe("collections.json");
   const downloadPath = await download.path();
   expect(downloadPath).toBeTruthy();
-  const json = await readDownloadJson(downloadPath!);
+  const json = (await readDownloadJson(downloadPath!)) as typeof MOCK_COLLECTIONS;
   expect(json).toHaveLength(MOCK_COLLECTIONS.length);
   expect(json[0]).toMatchObject({
     id: MOCK_COLLECTIONS[0].id,

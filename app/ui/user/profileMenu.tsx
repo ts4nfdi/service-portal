@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import UserProfileMenuItems from "./profileMenuItems";
 import Link from "next/link";
 import "./styles.css";
-import { getCodeUrl } from "@/app/api/auth/route";
+import { getCodeUrl } from "@/app/libs/authUrl";
 
 export default async function UserProfileMenu() {
   const session = await getServerSession(authOptions);

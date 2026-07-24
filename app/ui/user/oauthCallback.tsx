@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCodeUrl } from "@/app/api/auth/route";
+import { getCodeUrl } from "@/app/libs/authUrl";
 
 export default function OAuthCallback() {
   const searchParams = useSearchParams();
