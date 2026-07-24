@@ -24,10 +24,10 @@ export function startMockGateway() {
       return;
     }
 
-    if (requestUrl.pathname === "/api-gateway/auth/token" && request.method === "POST") {
+    if (requestUrl.pathname === "/auth/sso/token" && request.method === "POST") {
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify({
-        acces_token: "mock-access-token",
+        access_token: "mock-access-token",
         id_token: "header.eyJwcmVmZXJyZWRfdXNlcm5hbWUiOiJPQXV0aCBVc2VyIn0.signature",
         scope: "oidc",
         expires_in: "3600"
@@ -35,7 +35,7 @@ export function startMockGateway() {
       return;
     }
 
-    if (requestUrl.pathname === "/api-gateway/auth/login" && request.method === "POST") {
+    if (requestUrl.pathname === "/auth/sso/login" && request.method === "POST") {
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify({ token: "mock-jwt", username: "OAuth User" }));
       return;
