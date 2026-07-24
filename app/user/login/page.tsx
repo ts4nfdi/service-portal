@@ -2,7 +2,7 @@
 
 import { Loading } from "@/app/ui/commons/snippets";
 import { useEffect } from "react";
-import { getCodeUrl } from "@/app/api/auth/route";
+import { getCodeUrl } from "@/app/libs/authUrl";
 
 export default function LoginFormWrapper() {
   useEffect(() => {
