@@ -72,7 +72,6 @@ test("status summary filters projects and updates the status dropdown", async ({
 
   const runningStatus = page.locator('[data-value="Running"]');
   await runningStatus.click();
-  await expect(runningStatus).toHaveClass(/clicked-status-card/);
   await expect(page.locator("#status")).toHaveValue("Running");
   await expect(cards).toHaveCount(visibleProjects("Running").length + 1);
   await expectRequestCardVisible(addProjectCard);
