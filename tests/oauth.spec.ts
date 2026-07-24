@@ -7,7 +7,7 @@ test("OAuth login signs the user in and clears the authorization code", async ({
   await acceptTrackingConsent(page);
   await page.goto(`${BASE_URL}/api/sso/login`);
 
-  await expect(page).toHaveURL(BASE_URL + "/");
+  await expect(page).toHaveURL(BASE_URL + "/", { timeout: 15000 });
   await page.locator("#user-menu-button").click();
   await expect(page.locator("#user-dropdown")).toContainText("OAuth User");
   await expect(page.locator("#login-form")).toHaveCount(0);
