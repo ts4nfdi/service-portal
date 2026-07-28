@@ -12,7 +12,7 @@ export const authOptions = {
           return null;
         }
 
-        const redirectUri = process.env.IAM_REDIRECT_URL!;
+        const redirectUri = process.env.NEXT_IAM_REDIRECT_URL!;
         const tokenResponse = await fetch(
           process.env.GATEWAY_BASE_URL! + "/auth/sso/token",
           {
