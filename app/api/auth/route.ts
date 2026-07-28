@@ -1,5 +1,5 @@
 export function getCodeUrl() {
-  const redirectUri = process.env.NEXTAUTH_URL ?? "";
+  const redirectUri = process.env.IAM_REDIRECT_URL ?? "";
   const authorizeUrl = new URL(
     "/api-gateway/auth/sso/authorize",
     process.env.GATEWAY_BASE_URL ??
