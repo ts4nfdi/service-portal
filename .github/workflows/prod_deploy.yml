@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Do you really want to update the production instance'
+        description: "Do you really want to update the production instance"
         required: false
         type: boolean
       image_sha:
-        description: 'Image SHA ID, Optional '
+        description: "Image SHA ID, Optional "
         type: string
         required: false
 
@@ -111,8 +111,12 @@ jobs:
             --from-literal=NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }} \
             --namespace='ts4nfdi' \
             --dry-run=client -o yaml | kubectl apply -f -
-
-
+      - name: Create K8s secret for IAM_REDIRECT_URL
+        run: |
+          kubectl create secret generic ts4nfdi-service-portal-iam-redirect-url \
+            --from-literal=IAM_REDIRECT_URL=${{ vars.IAM_REDIRECT_URL }} \
+            --namespace='ts4nfdi' \
+            --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy to Kubernetes
         uses: stefanprodan/kube-tools@v1
