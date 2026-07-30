@@ -4,6 +4,7 @@ export type TextEditorProps = {
     placeholder: string,
     wrapperId: string,
     textSizeOptions: any,
+    textEditorTranslations?: Record<string, string>,
     labelText: string,
     required: boolean,
     name: string,
@@ -94,4 +95,3 @@ export type MultiSelectDropdownProps = {
     onSelect: (selectedList: string[], selectedItem: string) => void,
     onRemove: (selectedList: string[], removedItem: string) => void,
 }
-

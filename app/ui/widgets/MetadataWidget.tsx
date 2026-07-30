@@ -10,12 +10,15 @@ const MetadataWidget = dynamic<MetadataWidgetProps>(() =>
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AutoCompleteSelectedTermType } from './types';
 import './styles.css';
+import { useLocale } from '@/app/i18n';
+import { widgetUiMessages } from './messages';
 
 type CmpProp = {
   selectedTerm: AutoCompleteSelectedTermType
 }
 
 export default function MetadataWidgetTSS(props: CmpProp) {
+  const t = widgetUiMessages[useLocale()];
   const queryClient = new QueryClient();
   const selectedTerm = props.selectedTerm;
 
@@ -38,7 +41,7 @@ export default function MetadataWidgetTSS(props: CmpProp) {
     <>
       <p className='header-2'>MetadataWidget</p>
       {!selectedTerm &&
-        <p className='header-4'>Please select a term from the Autocomplete widget on the left side.</p>
+        <p className='header-4'>{t.metadataSelect}</p>
       }
       {selectedTerm &&
         <QueryClientProvider client={queryClient}>

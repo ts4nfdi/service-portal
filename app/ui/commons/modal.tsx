@@ -1,6 +1,8 @@
 'use client'
 
 import { ModalButtonProps, ModalProps } from "./types";
+import { useLocale } from "@/app/i18n";
+import { commonMessages } from "./messages";
 
 export function ModalButton(props: ModalButtonProps) {
   return (
@@ -25,6 +27,7 @@ export function ModalButton(props: ModalButtonProps) {
 
 
 export function Modal(props: ModalProps) {
+  const t = commonMessages[useLocale()];
 
   function closeModal() {
     let modal = (document.getElementById(props.id)! as HTMLDivElement);
@@ -51,7 +54,7 @@ export function Modal(props: ModalProps) {
                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>
-                <span className="sr-only">Close modal</span>
+                <span className="sr-only">{t.closeModal}</span>
               </button>
             </div>
             <div className="p-4 md:p-5 space-y-4" key={"modal-body"}>
@@ -71,7 +74,7 @@ export function Modal(props: ModalProps) {
                 </div>
               }
               {props.withCloseBtn &&
-                <div><button className="btn !bg-gray-300 !text-black float-end" onClick={closeModal}>Close</button></div>
+                <div><button className="btn !bg-gray-300 !text-black float-end" onClick={closeModal}>{t.close}</button></div>
               }
             </div>
           </div>

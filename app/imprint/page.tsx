@@ -1,13 +1,18 @@
+"use client";
+
+import { useLocale } from "../i18n";
+import { imprintMessages } from "./messages";
 
 export default function Imprint() {
+  const t = imprintMessages[useLocale()];
   return (
     <div className="col-span-3 content-panel">
-      <p className="header-2">Imprint</p>
+      <p className="header-2">{t.title}</p>
       <p>
-        The corresponding legal notice is located on a page outside the TS4NFDI Service Portal web app and is therefore opened in a new tab.
+        {t.body}
       </p>
       <p>
-        Go to the imprint at
+        {t.linkLabel}
         <a href="https://www.zbmed.de/en/legal-notice" target="_blank">https://www.zbmed.de/en/legal-notice</a>
       </p>
     </div>

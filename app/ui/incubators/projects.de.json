@@ -1,0 +1,578 @@
+{
+  "stats": {
+    "In preparation": 9,
+    "Running": 10,
+    "Finished": 12
+  },
+  "projects": [
+    {
+      "title": "RADAR",
+      "cycle": 1,
+      "status": "Finished",
+      "start": "21.02.2025",
+      "end": "23.09.2025",
+      "description": "RADAR ist ein multidisziplinäres Forschungsdatenrepositorium, das von FIZ Karlsruhe betrieben wird und Institutionen eine sichere und benutzerfreundliche Plattform zur Archivierung, Verwaltung, Begutachtung und Veröffentlichung von Forschungsdaten bietet. Mit den kostenlosen und niederschwelligen Publikationsdiensten RADAR4Chem (für Chemie) und RADAR4Culture (für Kulturerbe und Geisteswissenschaften) bietet FIZ Karlsruhe maßgeschneiderte Lösungen für fachspezifische Forschungsbedarfe auf Basis von RADAR an, die im Rahmen der NFDI entwickelt wurden.",
+      "goals": [
+        "Metadaten-Editor erweitern: Implementieren Sie eine Type-Ahead-Auswahl im Schlüsselwortfeld für standardisierte Begriffsvorschläge über die TS4NFDI Gateway API.",
+        "Zielseite verbessern: Verknüpfen Sie Schlüsselwörter über die TS4NFDI-Widgets direkt mit ihren jeweiligen Standardbegriffen.",
+        "Verbessern Sie die Auffindbarkeit von Daten: Aktivieren Sie „Schlüsselwort“ als zusätzliche Filteroption in der Datenveröffentlichungsliste."
+      ],
+      "consortium": [
+        "NFDI4Chem",
+        "NFDI4Culture",
+        "NFDI4Memory"
+      ],
+      "logo": "radar.svg",
+      "logoW": 300,
+      "logoH": 300,
+      "publications": [
+        "https://doi.org/10.5281/zenodo.17090276",
+        "https://doi.org/10.5281/zenodo.16736267",
+        "https://radar.products.fiz-karlsruhe.de/en/nachricht/radar-release-v123-ts4nfdi-integration-abgeschlossen"
+      ],
+      "activityPage": "https://dx.doi.org/10.22000/35t5h4hmfjx1ugbu"
+    },
+    {
+      "title": "WDCC - World Data Center for Climate",
+      "cycle": 1,
+      "status": "Finished",
+      "start": "26.02.2025",
+      "end": "10.2025",
+      "description": "Das WDCC hat die Aufgabe, Modelldaten des Erdsystems und zugehörige Datenprodukte zu archivieren, zu verbreiten und zu veröffentlichen, um die internationale Klimaforschungsgemeinschaft zu unterstützen. Das WDCC ist ein fachspezifisches Repositorium, das eine aktive Bewahrung ausschließlich für Forschungszwecke ermöglicht. Daher verwendet WDCC gemeinsame Metadatenstandards und empfiehlt die Verwendung von Community-Datenstandards wie den Climate Forecast (CF) Conventions. Das WDCC ist durch das Core Trust Seal (CTS) zertifiziert und ein akkreditiertes reguläres Mitglied des World Data System. WDCC folgt den FAIR-Prinzipien – alle Metadaten sind offen zugänglich, der Zugriff auf die Daten ist kostenlos. Gastgeber des WDCC ist das Deutsche Klimarechenzentrum (DKRZ) in Hamburg.",
+      "goals": [
+        "Integration des NERC Vocabulary Service in das API Gateway"
+      ],
+      "consortium": [
+        "NFDI4Earth"
+      ],
+      "logo": "wdcc.png",
+      "logoW": 300,
+      "logoH": 300,
+      "activityPage": "provider"
+    },
+    {
+      "title": "nmrXiv",
+      "cycle": 0,
+      "status": "Running",
+      "start": "~",
+      "end": "~",
+      "description": "Obwohl in letzter Zeit mehrere Versuche unternommen wurden, NMR-Datenbanken aus der Literatur zu erstellen, werden diese den Anforderungen moderner chemischer und verwandter wissenschaftlicher Gemeinschaften nicht gerecht. nmrXiv ist das erste offene Archiv, das NMR-Daten in ihrem ursprünglichen Instrumentenformat speichert, gleichzeitig Tools für deren Analyse bietet und offene Daten und Standards für langfristige Nachhaltigkeit und Zugänglichkeit fördert. nmrXiv revolutioniert die Verwaltung und Archivierung von NMR-Daten durch die Bereitstellung einer offen zugänglichen, standardisierten und benutzerfreundlichen Plattform. Unsere Plattform ist öffentlich und interoperabel, um sicherzustellen, dass NMR-Daten frei zugänglich, transparent und reproduzierbar sind. Wir unterstützen standardisierte Datenformate, um die Konsistenz zu verbessern und den Datenvergleich und die Integration zu erleichtern.",
+      "goals": [
+        "Integration von TSS-Widgets"
+      ],
+      "consortium": [
+        "NFDI4Chem"
+      ],
+      "logo": "nmrxiv_repository.png",
+      "logoW": 400,
+      "logoH": 200
+    },
+    {
+      "title": "ChEBI - Chemical Entities of Biological Interest",
+      "cycle": 1,
+      "status": "Finished",
+      "start": "10.02.2025",
+      "end": "11.2025",
+      "description": "Chemical Entities of Biological Interest (ChEBI) ist ein frei verfügbares Wörterbuch molekularer Einheiten mit Schwerpunkt auf „kleinen“ chemischen Verbindungen. Der Begriff „molekulare Einheit“ bezieht sich auf jedes konstitutionell oder isotopisch unterschiedliche Atom, Molekül, Ion, Ionenpaar, Radikal, Radikalion, Komplex, Konformer usw., das als separat unterscheidbare Einheit identifizierbar ist. Bei den molekularen Einheiten handelt es sich entweder um Naturprodukte oder um synthetische Produkte, die dazu dienen, in die Prozesse lebender Organismen einzugreifen. ChEBI beinhaltet eine ontologische Klassifikation, bei der die Beziehungen zwischen molekularen Einheiten oder Klassen von Einheiten und ihren Eltern und/oder Kindern spezifiziert werden.",
+      "goals": [
+        "Integration des Hierarchie-Widgets zur Visualisierung und als Navigation",
+        "Visualisierung des Pfades über das Graph-Widget"
+      ],
+      "consortium": [],
+      "logo": "chebi.png",
+      "logoW": 400,
+      "logoH": 400,
+      "publications": [
+        "https://doi.org/10.1093/nar/gkaf1271"
+      ],
+      "activityPage": "https://www.ebi.ac.uk/chebi/CHEBI:27732"
+    },
+    {
+      "title": "Coconut",
+      "cycle": 0,
+      "status": "Running",
+      "start": "~",
+      "end": "~",
+      "description": "Eine umfassende Plattform, die die Naturstoffforschung durch die Bereitstellung von Daten, Werkzeugen und Diensten für die Ablagerung, Kuratierung und Wiederverwendung erleichtert. Ziel ist es, Forschern, Wissenschaftlern und Enthusiasten umfassende und leicht zugängliche Daten zu einer Vielzahl natürlicher Verbindungen bereitzustellen. Die Datenbank enthält detaillierte Informationen zu den chemischen Strukturen, Literaturreferenzen und Quellen dieser Verbindungen und erleichtert so die Forschung und Entdeckung von Naturstoffen.",
+      "goals": [
+        "Integration von TSS-Widgets"
+      ],
+      "consortium": [
+        "NFDI4Chem"
+      ],
+      "logo": "coconut.png",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "title": "NFDI4Cat Central Data Repository (Repo4Cat)",
+      "cycle": 1,
+      "status": "Finished",
+      "start": "12.02.2025",
+      "end": "10.2025",
+      "description": "NFDI4Cat ist eine von der Community getragene und benutzerorientierte Initiative zur Sicherung der digitalen Zukunft der Katalyse. NFDI4Cat hat ein Datenrepository „Repo4Cat“ auf Basis der Dataverse-Plattform eingerichtet (https://repository.nfdi4cat.org/). Aufgrund des Mangels an katalysespezifischen Vokabularien und Ontologien hat NFDI4Cat außerdem ein von der Community verwaltetes SKOS-Vokabular „Voc4Cat“ (https://nfdi4cat.github.io/voc4cat/) erstellt, um maschinenlesbare Begriffsdefinitionen bereitzustellen, die für Datenannotationen und in Metadatenschemata verwendet werden können. Zusammen mit TS4NFDI möchte NFDI4Cat ein besseres Vokabel-Browsing- und Sucherlebnis bieten, indem es Voc4Cat über Skosmos bereitstellt, ein Tool zum Durchsuchen von Terminologie, das speziell für SKOS-Vokabulare optimiert ist. Darüber hinaus möchten wir Voc4Cat-Annotations-Widgets in die Datenaustauschplattform Repo4Cat integrieren, um die Metadateneingabe und Interoperabilität zu verbessern.",
+      "goals": [
+        "Richten Sie ein Skosmos-Terminologiesystem ein",
+        "Stellen Sie das Skos-basierte Voc4Cat-Vokabular über die API bereit",
+        "Integration von Voc4Cat in Repo4Cat über Dataverse External Vocabulary Management"
+      ],
+      "consortium": [
+        "NFDI4Cat"
+      ],
+      "logo": "nfdi4cat.png",
+      "logoW": 300,
+      "logoH": 200,
+      "publications": [
+        "https://doi.org/10.5281/zenodo.16736362"
+      ],
+      "activityPage": "https://semanticlookup.zbmed.de/skosmos/voc4cat/en/"
+    },
+    {
+      "title": "BERD Terminology Service",
+      "cycle": 0,
+      "status": "Finished",
+      "start": "29.05.2024",
+      "end": "19.11.2024",
+      "description": "BERD@NFDI widmet sich dem Aufbau einer Forschungsdateninfrastruktur, die das Management von Geschäfts-, Wirtschafts- und verwandten Daten verändert. Unsere Mission ist es, Forschern der Sozialwissenschaften die Werkzeuge und Dienste zur Verfügung zu stellen, die sie benötigen, um das volle Potenzial unstrukturierter Daten wie Bilder, Videos, Audio- und Textdateien auszuschöpfen. Der BERD Terminology Service bietet einen zentralen Zugangspunkt zu Terminologien und Ontologien aus den Bereichen Wirtschaft, Wirtschaft und verwandten Bereichen.",
+      "goals": [
+        "Einrichten eines Terminologiedienstes für BERD@NFDI mit der Terminology Service Suite (TSS)",
+        "Bereitstellung von BERD-bezogenen Terminologien"
+      ],
+      "consortium": [
+        "BERD@NFDI"
+      ],
+      "logo": "berd.png",
+      "logoW": 300,
+      "logoH": 200,
+      "activityPage": "https://ts.berd-nfdi.de/",
+      "publications": [
+        "https://doi.org/10.5281/zenodo.14230727"
+      ]
+    },
+    {
+      "title": "Terminology service for Plasma-MDS",
+      "cycle": 0,
+      "status": "Finished",
+      "start": "~",
+      "end": "19.11.2024",
+      "description": "Die Plasmaontologie (Plasma-O) ist eine domänenspezifische Ontologie für die Niedertemperaturplasmawissenschaft und -technologie. Ziel ist es, die standardisierte Dokumentation und Annotation von Daten und Informationen in diesem Bereich zu unterstützen. Die Ontologie enthält Klassen und Eigenschaften für die Entitäten, die in typischen Plasmastudien relevant sind, wie beispielsweise plasmaerzeugende Geräte, Medien, Materialien und Diagnosemethoden.",
+      "goals": [
+        "Bereitstellung von Plasma-O in einem selbstgehosteten Terminologiedienst"
+      ],
+      "consortium": [
+        "NFDI4BIOIMAGE"
+      ],
+      "logo": "plasma-mds_logo.svg",
+      "logoW": 200,
+      "logoH": 200,
+      "activityPage": "https://ols.plasma-mds.org/",
+      "publications": [
+        "https://doi.org/10.5281/zenodo.14412030"
+      ]
+    },
+    {
+      "title": "preVIEW",
+      "cycle": 0,
+      "status": "Finished",
+      "start": "~",
+      "end": "~",
+      "description": "Während der aktuellen COVID-19-Pandemie ist die schnelle Verfügbarkeit fundierter Informationen von entscheidender Bedeutung, um Informationen über Diagnose, Krankheitsverlauf, Behandlung abzuleiten oder die Verhaltensregeln in der Öffentlichkeit anzupassen. Die zunehmende Bedeutung von Preprints für die COVID-19-Forschung veranlasste die Entwicklung der Preprint-Suchmaschine preVIEW. Vom Konzept her handelt es sich um eine leichtgewichtige semantische Suchmaschine, die sich auf die einfache Einbindung spezieller COVID-19-Textsammlungen konzentriert und eine benutzerfreundliche Weboberfläche für den Abruf semantischer Informationen bietet. Um die semantische Suchfunktionalität zu unterstützen, haben wir einen Text-Mining-Workflow zur Indizierung mit relevanten Terminologien integriert. Derzeit werden Krankheiten, menschliche Gene und SARS-CoV-2-Proteine ​​annotiert, und in Zukunft werden weitere hinzugefügt. Das System integriert Sammlungen von mehreren verschiedenen Preprint-Servern, die im biomedizinischen Bereich zur Veröffentlichung nicht peer-reviewter Arbeiten verwendet werden, und ermöglicht so den Benutzern einen zentralen Zugangspunkt. Darüber hinaus bietet unser Service eine Facettensuche, Exportfunktionalität und einen API-Zugriff.",
+      "goals": [
+        "Verwendung der Terminologien von SemLookP zum Kommentieren und Durchsuchen von Vorabdrucken",
+        "Stellen Sie Informationen zu Begriffen über das TSS-Metadaten-Widget bereit",
+        "Verwenden Sie das Titel-Widget als Facette"
+      ],
+      "consortium": [
+        "NFDI4Health"
+      ],
+      "logo": "preVIEW.svg",
+      "logoW": 300,
+      "logoH": 300,
+      "activityPage": "https://preview.zbmed.de/"
+    },
+    {
+      "title": "Metadata Annotation Workbench",
+      "cycle": 0,
+      "status": "Finished",
+      "start": "~",
+      "end": "~",
+      "description": "Die Metadata Annotation Workbench wird im NFDI4Health-Projekt entwickelt. Ziel des Dienstes ist es, Forscher bei der semantischen Annotation von Datenwörterbüchern, Fragebögen oder anderen Datenerfassungsinstrumenten zu unterstützen.",
+      "goals": [
+        "Verwendung von SemLookP-Terminologien als Quelle für Anmerkungen",
+        "Stellen Sie Informationen zu Begriffen über das TSS-Metadaten-Widget bereit"
+      ],
+      "consortium": [
+        "NFDI4Health"
+      ],
+      "contactPersons": [
+        {
+          "person": "",
+          "consortium": []
+        }
+      ],
+      "logo": "nfdi4health.png",
+      "logoW": 300,
+      "logoH": 300,
+      "activityPage": "https://mda.nfdi4health.de/"
+    },
+    {
+      "title": "Discuss Data",
+      "cycle": 1,
+      "status": "Finished",
+      "start": "20.02.2025",
+      "end": "10.2025",
+      "description": "Discuss Data (www.discuss-data.net) ist ein offenes Repositorium zum Speichern, Teilen und Diskutieren von Forschungsdaten zu Osteuropa, dem Südkaukasus und Zentralasien und baut derzeit weitere Community Spaces, beispielsweise für die Digital Humanities, auf. Die im September 2020 gestartete Plattform wird von der Deutschen Forschungsgemeinschaft (DFG, Projektnummer 493011772) gefördert und von der Forschungsstelle Osteuropa der Universität Bremen (BFS) und dem betrieben Niedersächsische Staats- und Universitätsbibliothek Göttingen (SUB). Discuss Data geht über gewöhnliche Repositorien hinaus und bietet eine interaktive Online-Plattform für die Diskussion und Qualitätsbewertung von Forschungsdaten und schafft einen Raum für akademische Kommunikation und für die community-spezifische Veröffentlichung, Kuratierung, Annotation und Diskussion von Forschungsdaten.",
+      "goals": [
+        "Einrichten eines selbstgehosteten Terminologiedienstes auf Basis von OLS",
+        "Hinzufügen dieses TS als Backend-Quelle zum TS4NFDI API Gateway",
+        "Bereitstellung der Sammlung(en) über API Gateway",
+        "Integration von TSS-Widgets"
+      ],
+      "consortium": [
+        "Text+"
+      ],
+      "logo": "discuss-data.svg",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "title": "Open Energy Platform",
+      "cycle": 2,
+      "status": "Finished",
+      "start": "20.08.2025",
+      "end": "01.04.2026",
+      "description": "NFDI4Energy entwickelt eine Plattform, die wichtige Dienste zur Unterstützung von Forschern im Energiebereich integriert. Zentrale Komponenten sind über die Open Energy Platform (OEP) zugänglich. Ein Kernelement ist die Open Energy Ontology (OEO), eine dynamische Domänenontologie zur Energiesystemmodellierung. Weitere ergänzende Ontologien sind derzeit in der Entwicklung, um den semantischen Rahmen zu erweitern.",
+      "goals": [
+        "Hosting der Open Energy Ontology",
+        "Integration von TSS-Widgets zur Visualisierung und als Navigation"
+      ],
+      "consortium": [
+        "NFDI4Energy"
+      ],
+      "logo": "OpenEnergyFamily_Logo_OpenEnergyPlatform_OEP.png",
+      "logoW": 200,
+      "logoH": 200,
+      "activityPage": "https://openenergyplatform.org/viewer/oeo/"
+    },
+    {
+      "title": "ICONCLASS",
+      "cycle": "2",
+      "status": "Finished",
+      "start": "03.09.2025",
+      "end": "31.03.2026",
+      "description": "Unterstützung für das weltweit verwendete Fachklassifizierungssystem für Kulturerbe iconclass.org zu Terminology Services 4 NFDI hinzugefügt. Dadurch kann Iconclass als Basisdatenquelle ausgewählt werden und andere Systeme können die TS4NFDI-Hierarchie und Diagramm-Widgets zur Visualisierung und als Navigationshilfen nutzen.",
+      "goals": [
+        "Bereitstellung von ICONCLASS als Backend für das TS4NFDI API Gateway",
+        "Nutzung von ICONCLASS über TSS-Widgets"
+      ],
+      "consortium": [
+        "NFDI4Culture",
+        "NFDI4Memory",
+        "Text+",
+        "NFDI4Objects"
+      ],
+      "logo": "ICONCLASS.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "Ontology of the historical German-language nomenclature",
+      "cycle": "2",
+      "status": "Finished",
+      "start": "14.08.2025",
+      "end": "02.2026",
+      "description": "Die Ontologie der historischen deutschsprachigen Nomenklatur für Ämter und Berufe (OhdAB) bietet Einteilungen nach Berufsbildern und Anforderungsniveaus auf Basis der „Klassifikation der Berufe 2010/2020“ (KldB 2010) für historische Berufe. Das OhdAB wird innerhalb von FactGrid gepflegt und kuratiert. FactGrid ist eine Instanz von Wikibase.",
+      "goals": [
+        "Bereitstellung des OhdAB in einem Terminologiedienst",
+        "Automatisierter Workflow zur Aktualisierung des OhdAB"
+      ],
+      "consortium": [
+        "NFDI4Memory",
+        "BERD@NFDI"
+      ],
+      "logo": "ohdab.png",
+      "logoW": 200,
+      "logoH": 200,
+      "activityPage": "https://terminology.tib.eu/ts/ontologies/ohdab"
+    },
+    {
+      "title": "Health Study Hub",
+      "cycle": "2",
+      "status": "Running",
+      "start": "11.08.2025",
+      "end": "04.2026",
+      "description": "Der Health Study Hub ist eine zentrale Discovery-Plattform, die im Rahmen der NFDI4Health-Initiative entwickelt wurde. Es stellt strukturierte Metadaten zu Gesundheitsstudien bereit und ermöglicht es Forschern, Wissenschaftlern und anderen Interessengruppen, verfügbare Forschungsdaten zu erkunden und zu verstehen, ohne direkten Zugriff auf sensible Datensätze zu benötigen. Der Hub legt Wert auf Metadatentransparenz, Interoperabilität und Benutzerfreundlichkeit, unterstützt FAIR-Datengrundsätze und fördert eine verantwortungsvolle Datenwiederverwendung.",
+      "goals": [
+        "Beschränken Sie die automatische Vervollständigung/Suche auf einen Teilbaum innerhalb einer Ontologie",
+        "Bereitstellung zusätzlicher Terminologien"
+      ],
+      "consortium": [
+        "NFDI4Health"
+      ],
+      "logo": "nfdi4health.png",
+      "logoW": 300,
+      "logoH": 300,
+      "activityPage": "https://health-study-hub.de/resource/nfdi4health-108"
+    },
+    {
+      "title": "DALIA Search Portal",
+      "cycle": "2",
+      "status": "Running",
+      "start": "08.08.2025",
+      "end": "02.2026",
+      "description": "DALIA steht für die „Data Literacy Alliance“, die eine benutzerzentrierte Suchplattform nach den FAIR-Prinzipien entwickelt, um qualitativ hochwertige Suchergebnisse für Bildungsressourcen von und für die RDM- und Data Literacy-Community anzubieten. Mithilfe von Wissensgraphen und semantischen Technologien wird eine „GERECHTE Datennutzung und -versorgung“ angeboten, einschließlich Angeboten für Best Practices, offene Bildungsressourcen und Lernpfade.",
+      "goals": [
+        "Hosting der MoDALIA Ontology",
+        "Hosting der DALIA Picklist-Ontologie",
+        "Integration von Terminologiedaten in das DALIA-Kurationsformular"
+      ],
+      "consortium": [],
+      "logo": "dalia.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "AIMS",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "AIMS (Applying Interoperable Metadata Standards) entwickelt eine Plattform zum Erstellen, Teilen und Wiederverwenden interoperabler und maschinenlesbarer Metadatenprofile basierend auf SHACL-Formen. Das Projekt befasst sich mit zentralen Herausforderungen im Forschungsdatenmanagement, indem es Forschern ermöglicht, semantische Metadatenschemata auf modulare und hierarchische Weise unter Verwendung von Elementen aus etablierten kontrollierten Terminologien zu modellieren. AIMS bietet eine zentrale Web-Benutzeroberfläche zum Verwalten von Profilen, unterstützt durch Repositories zum Speichern validierter Metadatensätze und zur Integration mit elektronischen Labornotizbüchern (ELNs) wie eLabFTW und openBIS. Zum Projektkonsortium gehören die ULB Darmstadt, das IT-Zentrum der RWTH Aachen, die Universität Rostock, das Fraunhofer IWM und die Universität Freiburg.",
+      "goals": [
+        "Ersetzen Sie aktuelle Terminologieanbieter durch das TS4NFDI API Gateway als einheitlichen Terminologiedienst",
+        "Integrieren Sie TS4NFDI Service Suite-Widgets in AIMS"
+      ],
+      "consortium": [
+        "NFDI4Ing"
+      ],
+      "logo": "AIMS-Logo.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "DMP4NFDI stellt das DMP-Tool RDMO für NFDI-Konsortien bereit und entwickelt das DMP Template Framework, um die Interoperabilität zwischen verschiedenen DMP-Diensten in NFDI sicherzustellen. Vokabulare, Terminologien und Ontologien spielen bereits eine wichtige Rolle im Planungsprozess des Datenmanagements. Unser Ziel für dieses Projekt ist die Integration des TS4NFDI-Dienstes in den RDMO-Interviewbereich, sodass Benutzer Elemente aus vordefinierten Vokabularien auswählen können. Wir arbeiten mit dem FAIRagro-Konsortium zusammen, um Community-Standards in deren Vorlagen verfügbar zu machen.",
+      "goals": [
+        "Integrieren Sie TS4NFDI Service Suite-Widgets in das RDMO"
+      ],
+      "consortium": [
+        "Base4NFDI"
+      ],
+      "logo": "DMP4NFDI.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Enabling Semantic Interoperability via DataCite Terminologies",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "Dieses Inkubatorprojekt zielt darauf ab, das DataCite-Metadatenmodell und die kontrollierten Vokabulare innerhalb der TIB Terminology Services (TS)-Infrastruktur zu hosten und sie über das TS4NFDI API Gateway verfügbar zu machen. Das Ziel besteht darin, eine kanonische, maschinenverwertbare Darstellung von DataCite-Begriffen bereitzustellen, einschließlich stabiler URIs, Labels, Definitionen und Versionierung, die in allen NFDI-Diensten und darüber hinaus konsistent wiederverwendet werden kann. Anstatt eine neue Ontologie für Metadaten einzuführen, implementiert das Projekt einen bestehenden, weit verbreiteten Metadatenstandard innerhalb des TS-Ökosystems und ermöglicht so die Weitergabe an TS4NFDI-Dienste und Client-Anwendungen. Auf diese Weise könnten andere Dienste wie ELNs, DMPs oder andere Datenrepositorys die etablierten DataCite-Begriffe über das API Gateway und die Widgets der Terminology Service Suite nutzen. Darüber hinaus wird das Projekt mithilfe des TS4NFDI-Zuordnungsdienstes kuratierte Zuordnungen zwischen DataCite-Vokabularen und verwandten Schemata wie schema.org und DCAT erstellen und pflegen. Diese zentral verwalteten Zuordnungen werden über den Zuordnungsdienst bereitgestellt, um die semantische Interoperabilität zu unterstützen, ohne dass fest codierte, systemspezifische Ausrichtungen über verschiedene Wissensdomänen hinweg erforderlich sind.",
+      "goals": [
+        "Hosten Sie eine kanonische, maschinenverwertbare Darstellung von DataCite-Begriffen",
+        "Bereitstellung von Karten im Kartendienst"
+      ],
+      "consortium": [
+        "Base4NFDI"
+      ],
+      "logo": "PID4NFDI.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "Metabase",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "Metabase ist der Metadatendienst für den Forschungsdatenverwaltungscontainer (RDMC) in NFDIxCS. Es integriert gemeinschaftsspezifische Metadatenschemata über OWL2-Ontologien, um die Heterogenität der Informatik zu unterstützen. Diese semantische Grundlage ermöglicht es Metabase, automatisch auf Inkonsistenzen in den Metadaten zu prüfen und Metadatensätze mit abgeleiteten Fakten anzureichern. Der Dienst ermöglicht auch die Definition von Morphismen zur Übersetzung zwischen verschiedenen Schemata und Ontologien und stellt eine Verbindung zu externen Systemen wie dem Open Research Knowledge Graph (ORKG) her.",
+      "goals": [
+        "Hosten von Terminologien für Metabase in einem Terminologiedienst",
+        "Verbinden Sie TIB TS mit Metabase"
+      ],
+      "consortium": [
+        "NFDIxCS"
+      ],
+      "logo": "metabase-logo.svg",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "MathModDB",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "MathModDB ist eine Datenbank mathematischer Modelle, die von der Mathematical Research Data Initiative (MaRDI) als Ontologie- und Wissensgraph entwickelt wurde. Sein Ziel ist es, Informationen mathematischer Modelle strukturiert zu speichern und ein mathematisches Modell als semantisches Objekt zu beschreiben. Ein Modell besteht beispielsweise aus mathematischen Ausdrücken und Größen und kann mit einer bestimmten Rechenaufgabe verknüpft werden. Darüber hinaus wird ein mathematisches Modell verwendet, um ein spezifisches Forschungsproblem zu modellieren, das in eine akademische Disziplin eingebettet ist.",
+      "goals": [
+        "Integration von MathModDB in die TS4NFDI-Dienste",
+        "Visualisierung des MathModDB-Ontologie- und Wissensgraphen"
+      ],
+      "consortium": [
+        "MaRDI"
+      ],
+      "logo": "MathModDBLogo.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "FAIRagro Terminology Service",
+      "cycle": "3",
+      "status": "Running",
+      "start": "03.2026",
+      "end": "09.2026",
+      "description": "Der Hauptzweck des Inkubatorprojekts ist eine starke Integration der TS4NFDI-Dienste mit den Produkten und Dienstleistungen von FAIRagro. Dies umfasst die folgenden konkreten Projektziele: 1) Automatische Instanziierung und Aktualisierung einer FAIRagro-Terminologiedienstinstanz auf Basis des FAIRagro-Standardinventars, 2) Implementierung von Zuordnungen (vorzugsweise unter Verwendung der in FAIRagro entwickelten SciWin-Workflow-Engine) für Terminologien, die noch nicht in einer direkt für den Verbrauch durch die TS4NFDI-Infrastruktur verwendbaren Form verfügbar sind, durch Zuordnung von Terminologieverteilungsdateien in verschiedenen Formaten, um z. B. SKOS-Thesauri, die in einem Backend-Skosmos-Dienst verwendet werden können und 3) Demonstration der Verwendung der TS4NFDI-Instanz in ausgewählten FAIRagro-Produkten.",
+      "goals": [
+        "Bereitstellung von Terminologien in einem Terminologiedienst",
+        "Einrichtung des Workflows für die Ausrichtungsintegration",
+        "Etablierung des Transformationsworkflows für die Integration in TS-Systeme",
+        "Demonstration des Einsatzes der TS4NFDI-Instanz in ausgewählten FAIRagro-Produkten"
+      ],
+      "consortium": [
+        "FAIRagro"
+      ],
+      "logo": "FAIRagro.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "TS4NDSI integration in Galaxy",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "Um FAIR-Datenpraktiken und semantische Interoperabilität innerhalb von Forschungstools und Arbeitsabläufen zu stärken, schlagen wir vor, Galaxy in den TS4NFDI-Terminologiedienst zu integrieren. Durch diese Integration können Galaxy-Datentypdefinitionen mit standardisierten Konzepten aus der EDAM-Ontologie annotiert werden, auf die dynamisch über TS4NFDI zugegriffen werden kann. Durch die Verknüpfung von Galaxy-Datentypen mit persistenten Ontologie-Identifikatoren werden Forscher dabei unterstützt, Daten transparenter und interoperabler auszuwählen, zu interpretieren und wiederzuverwenden. Als Demonstrator werden wir eine Teilmenge der Galaxy-Datentypdeskriptoren um Verweise auf EDAM-Begriffe erweitern, die über TS4NFDI bereitgestellt werden. Wenn Benutzer mit diesen Datentypen in Galaxy interagieren, können sie die entsprechenden Ontologiekonzepte und ihre Definitionen direkt innerhalb der Plattform über die TS4nfdi-Widgets anzeigen. Workflows und Ausgaben übertragen diese semantischen Annotationen dann weiter und ermöglichen so eine verbesserte Herkunftsverfolgung, eine automatisierte Metadatenanreicherung und eine einfachere Integration mit NFDI-Diensten. Diese Arbeit wird zeigen, wie Galaxy gemeinsame Terminologieinfrastrukturen übernehmen kann, um Hindernisse für die Einhaltung von FAIR-Daten zu senken und eine konsistente, domänengerechte semantische Annotation in allen Forschungsgemeinschaften zu ermöglichen.",
+      "goals": [],
+      "consortium": [],
+      "logo": "galaxy-eu.svg",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "TeSS - Training eSupport System",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "TeSS ist eine Plattform, die entwickelt wurde, um Trainern und Auszubildenden eine zentrale Anlaufstelle zum Entdecken von Online-Informationen und -Inhalten zu bieten, darunter Schulungsmaterialien, Veranstaltungen und interaktive Tutorials. Für Schulungsanbieter bietet TeSS die Möglichkeit, Schulungsveranstaltungen und Neuigkeiten zu bewerben und zu einem wachsenden Materialkatalog beizutragen; Für Trainer bietet das Portal eine Umgebung zum Austausch von Materialien und Veranstaltungsinformationen. Für Auszubildende bietet es einen bequemen Zugang, über den sie relevante Schulungsveranstaltungen und -ressourcen identifizieren und über individuelle Schulungsworkflows spezifische, geführte Analyseaufgaben durchführen können. TeSS dient als Grundlage für Schulungskataloge wie PaN-Training (Photonen- und Neutronenwissenschaft) und HEP-Training (Hochenergiephysik).",
+      "goals": [],
+      "consortium": [
+        "DAPHNE4NFDI",
+        "PUNCH4NFDI"
+      ],
+      "logo": "tess-logo.svg",
+      "logoW": 250,
+      "logoH": 250
+    },
+    {
+      "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "DAPHNE4NFDI vertritt die Forschungsgemeinschaft Photonen und Neutronen (PaN) in der Nationalen Forschungsdateninfrastruktur Deutschlands (NFDI). Die Community hat die PaNET-Ontologie entwickelt und pflegt sie, eine Domänen-Ontologie, die experimentelle Techniken systematisiert, die z. Photonen- und Neutronenforschungsinfrastruktur. Die PaN-Community benötigt einen nachhaltigen Ansatz für die Verwaltung und Nutzung von Terminologiezuordnungen unter Wahrung der Integrität und Governance der PaNET-Ontologie selbst.",
+      "goals": [],
+      "consortium": [
+        "DAPHNE4NFDI"
+      ],
+      "logo": "DAPHNE4NFDI_logo.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "SensorCV",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "Das Sensor Management System (SMS) dient als zentrale Infrastruktur zur Sammlung und Verwaltung von Sensormetadaten für wissenschaftliche Projekte in vier Helmholtz-Zentren (GFZ, UFZ, FZJ und KIT). Um die Konsistenz der Metadaten über verschiedene SMS-Instanzen hinweg sicherzustellen, stellt ein unabhängiger, aber zentraler Controlled Vocabulary (CV)-Dienst kuratierte Begriffe für Attribute wie Gerätetypen, Einheiten und gemessene Mengen bereit. Das Projekt zielt darauf ab, die SMS-CV-Architektur zu modernisieren, indem sie von einer SMS-spezifischen Lösung in eine integrierte Komponente innerhalb des NFDI-Ökosystems umgewandelt wird, was insbesondere innerhalb der Erdsystemwissenschaftsgemeinschaft (NFDI4Earth) und darüber hinaus nützlich ist.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Earth"
+      ],
+      "logo": "sms.png",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "title": "Improving Interoperability for Climate and Energy Policy Ontologies",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "Die Climate and Energy Policy Ontology (CEPO) ist eine innerhalb von NFDI4Energy erstellte Ontologie, die explizite Definitionen, Klassifizierungen und Beziehungen zwischen klimapolitischen Instrumenten bereitstellt. Es wurde von Praktikern der FAU in enger Zusammenarbeit mit Klimadatenanbietern (Climate Policy Radar, Climate Policy Database und der Organisation für wirtschaftliche Zusammenarbeit und Entwicklung) entwickelt und zielt auf Interoperabilität mit diesen ab, um den klimapolitischen Datenraum zu harmonisieren. Die Ontologie wurde außerdem gemeinsam mit Experten des OEO entwickelt und ist von der Energy-Related Reference Ontologies Foundry (ENERO) zertifiziert.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Energy"
+      ],
+      "logo": "CEPO-logo.png",
+      "logoW": 250,
+      "logoH": 250
+    },
+    {
+      "title": "Terminology Service Suite integration for WissKI authority data enrichment",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "Der Semantic Co-Working Space (SCS) von SODa bietet eine Cloud-Umgebung für die Bereitstellung WissKI-basierter Forschungsanwendungen. WissKI Barrels sind containerisierte, domänenspezifische Forschungsumgebungen, die auf WissKI und CIDOC-CRM basieren. Heute verwaltet jedes Barrel die Terminologiesuche unabhängig – mit fragmentierten Anbieterintegrationen (GND, Getty, GeoNames, Wikidata) und maßgeschneiderten UI-Komponenten. Dieser Inkubator integriert die TS4NFDI Terminology Service Suite in das Normdokumentmodul von WissKI und veröffentlicht SODa-gepflegte kontrollierte Vokabulare (z. B. Provenienzereignistypen, Konservierungsbehandlungskategorien) über das API-Gateway.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Culture",
+        "NFDI4Memory",
+        "NFDI4Objects"
+      ],
+      "logo": "WissKI_logo_2026.png",
+      "logoW": 200,
+      "logoH": 200
+    },
+    {
+      "title": "OstData & 4MMS",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "OstData ist ein Forschungsdaten-Repository und Forschungsdatendienst, der speziell für Wissenschaftler entwickelt wurde, die sich mit Ost-, Ostmittel- und Südosteuropastudien befassen. Die OstData-Forschungsdatentypen sind ein kontrolliertes Vokabular, mit dem die Forschungsdatenbestände im OstData-Forschungsdatenrepositorium nach übergeordneten formalen und konzeptionellen Merkmalen klassifiziert werden. Neben dem OstData-Vokabular wird sich der Inkubator auf das Metadatenschema für NFDI4Memory (4MMS) konzentrieren.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Memory"
+      ],
+      "logo": "ostdata.png",
+      "logoW": 300,
+      "logoH": 300
+    },
+    {
+      "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
+      "cycle": "5",
+      "status": "In preparation",
+      "start": "Q1/2027",
+      "end": "-",
+      "description": "Dieser Inkubator integriert die DataCite-Metadateneigenschaften und kontrollierten Vokabulare in die zentralen ELN-Workflows in RSpace und ermöglicht es Forschern, Metadaten frühzeitig im Forschungslebenszyklus anzureichern und interoperable Datensätze in Repositories zu exportieren. In Zusammenarbeit mit PID4NFDI werden kontrollierte Vokabulare über das TS4NFDI-API-Gateway verfügbar gemacht und durch die Integration von TS4NFDI-Widgets in RSpace verfügbar gemacht. Der Inkubator stellt einen Prototyp einer benutzerfreundlichen und robusten Methode zur Kuratierung von RSpace-ELN-Objektmetadaten dar und legt die Grundlage für interoperable ELN-Objekte unter Verwendung eines der von der NFDI empfohlenen Metadatenstandards.",
+      "goals": [],
+      "consortium": [],
+      "logo": "rspace_logo.svg",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
+      "cycle": "5",
+      "status": "In preparation",
+      "start": "Q1/2027",
+      "end": "-",
+      "description": "NFDI4Immuno arbeitet mit verschiedenen standardisierten Terminologien und Ontologien, um immunologische Daten und deren Metadaten zu beschreiben. Derzeit müssen zukünftige Benutzer der NFDI4Immuno-Excel-Vorlage relevante Terminologien und Ontologiebegriffe manuell in die entsprechenden Metadatenfelder eingeben.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Immuno"
+      ],
+      "logo": "nfdi4immuno.png",
+      "logoW": 300,
+      "logoH": 300
+    }
+  ]
+}

@@ -12,6 +12,9 @@ import Image from "next/image";
 import DownloadCollectionsButton from "@/app/ui/collection/downloadCollectionsButton";
 import { PortalCollectionJsonData } from "@/app/concepts";
 import { CopyToClipboard } from "@/app/clientExports";
+import { getRequestLocale } from "../libs/locale";
+import { collectionMessages } from "./messages";
+import { localizePath } from "../libs/localePath";
 
 const getCollectionsData = cache(
   async (token: string | null): Promise<PortalCollectionJsonData[] | null> => {
@@ -59,10 +62,10 @@ async function CollectionsSection({ token }: { token: string | null }) {
   return <CollectionList collections={collectionsList} />;
 }
 
-function DownloadButtonLoading() {
+function DownloadButtonLoading({ label }: { label: string }) {
   return (
     <div className="btn !p-2 !text-sm mt-10 opacity-60">
-      Loading collections...
+      {label}
     </div>
   );
 }
@@ -79,6 +82,8 @@ function CollectionListLoading() {
 
 export default async function Collections() {
   let token = await getUserToken();
+  const locale = await getRequestLocale();
+  const t = collectionMessages[locale];
 
   return (
     <div className="md:col-span-3" key={"my_collection"}>
@@ -88,38 +93,33 @@ export default async function Collections() {
       </Suspense>
       <div className="">
         <p className="header-main-1 !mt-0 inline-block">
-          TS4NFDI Terminology Collections
+          {t.title}
         </p>
       </div>
       <div className="grid md:grid-cols-9 md:gap-4">
         <div className="card-background md:col-span-5">
-          <h3 className="header-main-3">What is a Terminology Collection?</h3>
+          <h3 className="header-main-3">{t.what}</h3>
           <p className="text-justify">
-            A <b>Terminology Collection</b> is a set of terminologies that was
-            created for a specific purpose or context in which this set is
-            relevant. This terminology collection can be shared with the
-            community and can contain ontologies, thesauri, etc, without any
-            rating. A Terminology Collection can therefore be considered a
-            grouping within the vast space of existing terminologies.
+            {t.descriptionStart}<b>{t.collection}</b>{t.descriptionEnd}
           </p>
 
           <div className="mt-10 flex flex-col flex-wrap justify-start gap-2 w-1/2">
-            <Suspense fallback={<DownloadButtonLoading />}>
+            <Suspense fallback={<DownloadButtonLoading label={t.loading} />}>
               <DownloadCollectionsButtonSection token={token} />
             </Suspense>
             {token && (
               <Link
-                href="/collection/new/"
+                href={localizePath("/collection/new/", locale)}
                 className="btn !p-2 !text-sm text-center"
               >
-                Create Collection
+                {t.create}
               </Link>
             )}
           </div>
           <div className="flex flex-row flex-wrap justify-start px-1 mt-2">
             <div>
               <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
-                API Endpoint:{" "}
+                {t.apiEndpoint}
               </p>
               {(process.env.GATEWAY_BASE_URL! as string) + "/collections/"}
             </div>
@@ -131,12 +131,12 @@ export default async function Collections() {
           </div>
         </div>
         <div className="md:col-span-4 card-background float-right">
-          <h4 className="header-main-3"> Figure of a Terminology Collection</h4>
+          <h4 className="header-main-3">{t.figure}</h4>
           <Image
             src={"img/collections.png"}
             width={525}
             height={130}
-            alt="example of a terminology collection"
+            alt={t.alt}
             placeholder="blur"
             blurDataURL="/blur.webp"
             style={{ margin: "auto" }}

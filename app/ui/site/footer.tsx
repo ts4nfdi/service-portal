@@ -1,7 +1,14 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "@/app/i18n";
 
 
 export default function Footer() {
+    const pathname = usePathname();
+    const t = useTranslations("Footer");
+    const href = (path: string) => `${pathname === "/de" || pathname.startsWith("/de/") ? "/de" : ""}${path}`;
     return (
         <footer className="grid grid-rows-[1fr-auto] text-xs sm:text-base md:text-x1 h-10 bottom-0 inset-x-0 mt-auto"
             key={"site-footer"}>
@@ -23,7 +30,7 @@ export default function Footer() {
                     />
                 </div>
                 <div className="col-span-1">
-                    Resources
+                    {t("resources")}
                     <ul>
                         <li>
                             <a href="/tss/comp/latest/"
@@ -38,11 +45,11 @@ export default function Footer() {
                 </div>
             </div>
             <div className="bg-ts4nfdi-brand-color text-white text-center dark:bg-gray-700">
-                <a className="text-white pr-4 pl-4" href='/contact'>Contact</a>|
-                <a className="text-white pr-4 pl-4" href='/termsofuse'>Terms of use</a>|
-                <a className="text-white pr-4 pl-4" href="/imprint">Imprint</a>|
-                <a className="text-white pr-4 pl-4" href="/privacypolicy">Privacy Policy</a>|
-                <a className="text-white pr-4 pl-4" href="/accessibillity">Accessibility</a>
+                <a className="text-white pr-4 pl-4" href={href('/contact')}>{t("contact")}</a>|
+                <a className="text-white pr-4 pl-4" href={href('/termsofuse')}>{t("terms")}</a>|
+                <a className="text-white pr-4 pl-4" href={href('/imprint')}>{t("imprint")}</a>|
+                <a className="text-white pr-4 pl-4" href={href('/privacypolicy')}>{t("privacy")}</a>|
+                <a className="text-white pr-4 pl-4" href={href('/accessibillity')}>{t("accessibility")}</a>
             </div>
         </footer>
     );

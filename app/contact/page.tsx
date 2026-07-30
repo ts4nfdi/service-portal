@@ -15,8 +15,13 @@ import {
   TextInput,
 } from "../ui/commons/snippets";
 import { Captcha } from "../ui/commons/captcha";
+import { useLocale } from "../i18n";
+import { contactMessages } from "./messages";
+import { localizePath } from "../libs/localePath";
 
 export default function Contact() {
+  const locale = useLocale();
+  const t = contactMessages[locale];
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +51,7 @@ export default function Contact() {
 
   return (
     <div className="md:col-span-2 contact-page-content">
-      <p className="header-1">Contact us</p>
+      <p className="header-1">{t.title}</p>
       {!formIsSubmitted && (
         <form onSubmit={submit}>
           <div className="grid grid-rows-1 form">
@@ -55,8 +60,8 @@ export default function Contact() {
                 id="title-input"
                 type="text"
                 name="title"
-                placeHolder="Please enter your topic"
-                labelText="Title"
+                placeHolder={t.topicPlaceholder}
+                labelText={t.topic}
                 required={true}
               />
             </div>
@@ -65,14 +70,14 @@ export default function Contact() {
                 id="email-input"
                 type="email"
                 name="email"
-                placeHolder="Please enter your email"
-                labelText="E-mail"
+                placeHolder={t.emailPlaceholder}
+                labelText={t.email}
                 required={true}
               />
             </div>
             <div className="w-3/4 mb-2">
               <TextEditor
-                placeholder="Please describe your query..."
+                placeholder={t.messagePlaceholder}
                 wrapperId=""
                 textSizeOptions={[
                   "Normal",
@@ -85,7 +90,8 @@ export default function Contact() {
                   "Blockquote",
                   "Code",
                 ]}
-                labelText="Message"
+                textEditorTranslations={t.textEditorTranslations}
+                labelText={t.message}
                 name="content"
                 required={true}
               />
@@ -95,7 +101,7 @@ export default function Contact() {
             </div>
             <div className="text-right">
               <button type="submit" className="btn">
-                Submit
+                {t.submit}
               </button>
             </div>
           </div>
@@ -103,14 +109,14 @@ export default function Contact() {
       )}
       {loading && <Loading />}
       {formIsSubmitted && !error && !loading && (
-        <SuccessAlert message="Thank you for your message! We will contact you as soon as possible." />
+        <SuccessAlert message={t.success} />
       )}
       {formIsSubmitted && error && !loading && (
-        <ErrorAlert message="Sorry! Something went wrong." />
+        <ErrorAlert message={t.error} />
       )}
       {formIsSubmitted && !loading && (
-        <a className="btn" href={"/contact"}>
-          New message
+        <a className="btn" href={localizePath("/contact", locale)}>
+          {t.newMessage}
         </a>
       )}
     </div>

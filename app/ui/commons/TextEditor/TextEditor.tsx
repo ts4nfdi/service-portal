@@ -88,6 +88,9 @@ const TextEditor = (props: TextEditorProps) => {
           }
           editorClassName={props.editorClassName ?? "" + " text-editor"}
           placeholder={props.placeholder}
+          localization={{
+            translations: props.textEditorTranslations,
+          }}
           toolbar={{
             options: [
               "inline",

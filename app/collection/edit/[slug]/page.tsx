@@ -11,10 +11,15 @@ import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
 import { PortalCollection, PortalTerminology, PortalProvider, PortalSourcesJsonData } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { getSourcesListOfTerminologies, getAllProviders } from "@/app/api/actions/providers";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "@/app/ui/collection/messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 
 export default function CollectionEdit() {
+  const locale = useLocale();
+  const t = collectionUiMessages[locale];
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [collection, setCollection] = useState<PortalCollection>(new PortalCollection());
@@ -58,7 +63,7 @@ export default function CollectionEdit() {
       setFormIsSubmited(true);
       setLoading(true);
       let res = await updateCollection(pCollection.toJson());
-      window.location.href = `/collection/myCollections?edited=${res.status}`;
+      window.location.href = localizePath(`/collection/myCollections?edited=${res.status}`, locale);
 
     } catch {
       return;
@@ -152,9 +157,8 @@ export default function CollectionEdit() {
       {error && !loading && <p>{error}</p>}
       {!error && !loading &&
         <div className="md:col-span-2 content-panel">
-          <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />Collection
-            list</a>
-          <p className="header-2" key={"heading"}>Edit your collection: {collection.label}</p>
+          <a className="btn" href={localizePath("/collection/myCollections/", locale)} key={"back-btn"}><LeftArrowIcon />{t.collectionList}</a>
+          <p className="header-2" key={"heading"}>{t.edit}{collection.label}</p>
           {!formIsSubmitted &&
             <form
               key={"collection-form"}
@@ -167,23 +171,22 @@ export default function CollectionEdit() {
               }}
             >
               <div className="form-input-group">
-                <ToggleButton id={"visibility"} label="Public" />
+                <ToggleButton id={"visibility"} label={t.public} />
               </div>
               <div className="form-input-group">
                 <TextInput
                   id="collection-title"
                   name="collection-title"
                   type="text"
-                  labelText="Collection Title"
-                  placeHolder="please add the collection title ..."
+                  labelText={t.title}
+                  placeHolder={t.titlePlaceholder}
                   key={"collection-title"}
                   defaultValue={collection.label}
                   required
                 />
               </div>
               <div className="form-input-group">
-                <p className="" key={"title"}>You can import all the terminologies from the selected terminology
-                  services.</p>
+                <p className="" key={"title"}>{t.importHelp}</p>
                 <ul
                   className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                   {dbs.map((db: PortalProvider) => {
@@ -205,8 +208,8 @@ export default function CollectionEdit() {
                       setSelectedTerminologies([...preselectedTerminologies, ...selected]);
                       (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
                     }}
-                    label="Terminologies"
-                    placeholder="Choose your terminologies ..."
+                    label={t.terminologies}
+                    placeholder={t.terminologyPlaceholder}
                     parameter="type=ontology"
                     required
                     preselected={preselectedTerminologies}
@@ -218,19 +221,19 @@ export default function CollectionEdit() {
                   id="description"
                   required
                   name="collection-desc"
-                  placeholder="please add a description for your collection ..."
-                  labelText="Description"
+                  placeholder={t.descriptionPlaceholder}
+                  labelText={t.description}
                   rows={10}
                   defaultValue={collection.description}
                 />
               </div>
               <div className="form-input-group" key={"collaborators-list"}>
                 <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Collaborators (attention: collaborators will have full control over the collection)
+                  {t.collaboratorsFull}
                 </label>
                 <MultiSelectDropdown
                   id="collection-collaborators"
-                  placeholder="Search for users ..."
+                  placeholder={t.usersPlaceholder}
                   options={users}
                   selectedValues={selectedCollaborators}
                   onSelect={onSelect}
@@ -238,7 +241,7 @@ export default function CollectionEdit() {
                 />
               </div>
               <div className="text-end" key={"submit-btn"}>
-                <button type="submit" className="btn">Save</button>
+                <button type="submit" className="btn">{t.save}</button>
               </div>
             </form>
           }

@@ -1,15 +1,19 @@
 
+"use client";
 
+import { useLocale } from "../i18n";
+import { privacyPolicyMessages } from "./messages";
 
 export default function PrivacyPolicy() {
+  const t = privacyPolicyMessages[useLocale()];
   return (
     <div className="col-span-3 content-panel">
-      <p className="header-2">Privacy Policy</p>
+      <p className="header-2">{t.title}</p>
       <p>
-        The corresponding privacy policy is located on a page outside the TS4NFDI Service Portal web app and is therefore opened in a new tab.
+        {t.body}
       </p>
       <p>
-        Go to the privacy policy at
+        {t.linkLabel}
         <a href="https://www.zbmed.de/en/privacy-policy" target="_blank">https://www.zbmed.de/en/privacy-policy</a>
       </p>
     </div>

@@ -3,8 +3,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "@/app/i18n";
+import { incubatorMessages } from "./messages";
+import { localizePath } from "@/app/libs/localePath";
 
 export default function IncubatorRequestCard() {
+  const locale = useLocale();
+  const t = incubatorMessages[locale];
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
@@ -20,100 +25,89 @@ export default function IncubatorRequestCard() {
           src={"/img/incubator_placeholder.jpg"}
           width={150}
           height={150}
-          alt={"Add your project"}
+          alt={t.requestAlt}
           className="mx-auto"
           onLoad={() => setIsImageLoaded(true)}
           onError={() => setIsImageLoaded(true)}
         />
       </div>
       <p className="header-3" key={"title"}>
-        <b>Would you like to collaborate with us as an Incubator?</b>
+        <b>{t.requestTitle}</b>
       </p>
-      <p className="header-4">Status</p>
+      <p className="header-4">{t.status}</p>
       <div className="flex flex-wrap gap-2 mb-10">
         <span className="status-badge" key={"first contact"}>
-          We could help you
+          {t.requestStatus}
         </span>
         <span className="cycle-badge" key={"Cycle ?"}>
-          Cycle ?
+          {t.requestCycle}
         </span>
       </div>
-      <p className="header-4">Related Consortia</p>
+      <p className="header-4">{t.relatedConsortia}</p>
       <div className="flex flex-wrap gap-2 mb-10" key={"tags"}>
         <span className="name-badge" key={"NFDI-consortia"}>
-          some NFDI consortia
+          {t.requestConsortium1}
         </span>
         <span className="name-badge" key={"no-consortia"}>
-          no consortia - external
+          {t.requestConsortium2}
         </span>
       </div>
-      <p className="header-4">Duration</p>
+      <p className="header-4">{t.duration}</p>
       <p key={"in-the-future"}>
-        6 months somewhere in the future. The next call for incubators is
-        currently open. The submission deadline will be in early January 2027. The
-        next incubator cycle itself will start in the middle of Q1/2027.
+        {t.requestDuration}
       </p>
-      <p className="header-4">Description</p>
+      <p className="header-4">{t.description}</p>
       <p className="text-justify" key={"contact-us-description"}>
-        Have you considered one or more of the possible goals listed below?
-        However, you may not have the resources or expertise to make it happen.
-        Terminology Services 4 NFDI (TS4NFDI) can provide the assistance you
-        need to bring your use case to life.
+        {t.requestDescription}
         <br />
         <br />
-        We offer incubator projects to interested parties to support them in the
-        interaction, integration or handling of terminology services. TS4NFDI
-        will offer at least two incubator cycles per year. These cycles will be
-        user-driven and will include requirements analysis, service integration,
-        testing and user feedback. Each cycle is expected to span six months,
-        during which TS4NFDI will allocate resources (e.g. developer capacity)
-        to support your specific use case.
+        {t.requestDescription2}
       </p>
-      <p className="header-4">Possible Goals</p>
+      <p className="header-4">{t.possibleGoals}</p>
       <ul>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal1"}
         >
-          Hosting of terminologies
+          {t.requestGoal1}
         </li>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal2"}
         >
-          Setup a terminology service
+          {t.requestGoal2}
         </li>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal3"}
         >
-          Adding terminology services to the API Gateway
+          {t.requestGoal3}
         </li>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal4"}
         >
-          Integration of TSS widgets
+          {t.requestGoal4}
         </li>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal5"}
         >
-          Provision of collection(s) via API Gateway
+          {t.requestGoal5}
         </li>
         <li
           className="list-item list-disc ml-6 text-justify mb-2"
           key={"goal6"}
         >
-          Adding mappings to the mapping service
+          {t.requestGoal6}
         </li>
       </ul>
       <Link
         className="btn mt-5 float-right"
-        href="/incubators/new/"
+        href={localizePath("/incubators/new/", locale)}
         key={"new-incubator-anchor"}
       >
-        Send us your request
+        {t.requestLink}
       </Link>
     </div>
   );

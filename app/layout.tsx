@@ -7,21 +7,24 @@ import 'flowbite';
 import { SessionProviderWrapper } from "./libs/sessionProvider";
 import OAuthCallback from "./ui/user/oauthCallback";
 import { Suspense } from "react";
+import { headers } from "next/headers";
+import { LocaleProvider, type Locale } from "./i18n";
 
 export const metadata: Metadata = {
   title: "TS4NFDI Service Portal",
   description: "",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = ((await headers()).get("x-locale") || "en") as Locale;
 
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`antialiased`}
       >
@@ -30,14 +33,16 @@ export default function RootLayout({
         </Suspense>
         <MatomoTracker />
         <div className="grid min-h-screen" id="app-layout">
-          <SessionProviderWrapper>
-            <Header />
-            <main className="site-content" key={"site-content"}>
-              <TrackingConsentForm />
-              {children}
-            </main>
-            <Footer />
-          </SessionProviderWrapper>
+          <LocaleProvider locale={locale}>
+            <SessionProviderWrapper>
+              <Header />
+              <main className="site-content" key={"site-content"}>
+                <TrackingConsentForm />
+                {children}
+              </main>
+              <Footer />
+            </SessionProviderWrapper>
+          </LocaleProvider>
         </div>
       </body>
     </html>

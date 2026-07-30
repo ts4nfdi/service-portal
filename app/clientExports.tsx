@@ -5,12 +5,35 @@ import Image from "next/image";
 import { useState } from "react";
 import type { PortalSourcesJsonData } from "@/app/concepts";
 import { CardSkeleton, DefaultSkeleton } from "@/app/ui/commons/skeletons";
+import { useLocale } from "./i18n";
+
+const providerMessages = {
+  en: {
+    homePage: "Home Page:",
+    contact: "Contact:",
+    providerSingular: "terminology provider",
+    providerPlural: "terminology providers",
+    available: "available",
+    total: "total",
+    allTypes: "All types",
+  },
+  de: {
+    homePage: "Homepage:",
+    contact: "Kontakt:",
+    providerSingular: "Terminologieanbieter",
+    providerPlural: "Terminologieanbieter",
+    available: "verfuegbar",
+    total: "gesamt",
+    allTypes: "Alle Typen",
+  },
+} as const;
 
 export function ProviderCard({
   provider,
 }: {
   provider: PortalSourcesJsonData;
 }) {
+  const t = providerMessages[useLocale()];
   const [isLogoLoaded, setIsLogoLoaded] = useState(false);
   const providerTitle = provider.title ? provider.title : provider.name;
 
@@ -40,7 +63,7 @@ export function ProviderCard({
         />
       </div>
       <div className="flex items-center mt-2 mb-3" key="homepage-url">
-        <b className="me-2">Home Page:</b>
+        <b className="me-2">{t.homePage}</b>
         <a href={provider.homePage} className="mt-1" target={"_blank"}>
           {provider.homePage}
         </a>
@@ -50,7 +73,7 @@ export function ProviderCard({
         />
       </div>
       <div className="flex items-center mt-2 mb-3" key="contact-url">
-        <b className="me-2">Contact:</b>
+        <b className="me-2">{t.contact}</b>
         <a href={provider.contactUrl} className="mt-1" target={"_blank"}>
           {provider.contactUrl}
         </a>
@@ -78,6 +101,7 @@ export function ProviderList({
 }: {
   providers: PortalSourcesJsonData[];
 }) {
+  const t = providerMessages[useLocale()];
   const [selectedType, setSelectedType] = useState("all");
   const providerTypes = Array.from(
     new Set(providers.map((provider) => provider.type).filter(Boolean)),
@@ -91,12 +115,11 @@ export function ProviderList({
     <>
       <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div className="provider-count text-left text-sm font-semibold text-[var(--siteMainColor)] dark:text-white">
-          {filteredProviders.length} terminology provider
-          {filteredProviders.length === 1 ? "" : "s"} available
+          {filteredProviders.length} {filteredProviders.length === 1 ? t.providerSingular : t.providerPlural} {t.available}
           {selectedType === "all" ? (
             ""
           ) : (
-            <span> ({providers.length} total)</span>
+            <span> ({providers.length} {t.total})</span>
           )}
         </div>
         <label className="flex items-center gap-2 text-sm font-semibold text-[var(--siteMainColor)] dark:text-white">
@@ -105,7 +128,7 @@ export function ProviderList({
             value={selectedType}
             onChange={(event) => setSelectedType(event.target.value)}
           >
-            <option value="all">All types</option>
+            <option value="all">{t.allTypes}</option>
             {providerTypes.map((providerType) => (
               <option value={providerType} key={providerType}>
                 {providerType}

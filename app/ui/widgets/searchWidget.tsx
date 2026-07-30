@@ -10,15 +10,18 @@ const SearchResultsListWidget = dynamic<SearchResultsListWidgetProps>(() =>
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import './styles.css';
+import { useLocale } from '@/app/i18n';
+import { widgetUiMessages } from './messages';
 
 
 export default function SearchResultsListWidgetTSS() {
+  const t = widgetUiMessages[useLocale()];
   const queryClient = new QueryClient();
 
   return (
     <>
       <p className='header-2'>SearchResultsListWidget</p>
-      <p>Search in the collection <b>DataPLANT</b> hosted by TIB (OLS4: https://api.terminology.tib.eu/api/)</p>
+      <p>{t.searchBody}<b>DataPLANT</b>{t.searchBodyEnd}</p>
       <QueryClientProvider client={queryClient}>
         <SearchResultsListWidget
           api="https://api.terminology.tib.eu/api/"
@@ -41,4 +44,3 @@ export default function SearchResultsListWidgetTSS() {
     </>
   );
 }
-

@@ -6,9 +6,14 @@ import { PortalCollectionJsonData } from "@/app/concepts";
 import { getUserToken } from "@/app/libs/auth";
 import { ActionResponse } from "@/app/api/actions/types";
 import "../../ui/collection/styles.css";
+import { getRequestLocale } from "@/app/libs/locale";
+import { collectionUiMessages } from "@/app/ui/collection/messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 export default async function CollectionPage({ params }: { params: Promise<{ collectionId: string }> }) {
+  const locale = await getRequestLocale();
+  const t = collectionUiMessages[locale];
   const { collectionId } = await params;
 
   let token = await getUserToken();
@@ -32,8 +37,8 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
   function renderNotFoundPage() {
     return (
       <div className="col-span-2">
-        <Link href="/collection/myCollections" className="btn">Back to collection list</Link>
-        <ErrorAlert message="Collection not found" />
+        <Link href={localizePath("/collection/myCollections", locale)} className="btn">{t.backToList}</Link>
+        <ErrorAlert message={t.notFound} />
       </div>
     )
   }

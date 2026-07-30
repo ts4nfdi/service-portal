@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {PortalCollection, PortalCollectionJsonData} from "@/app/concepts";
 import {Pagination} from "@/app/clientExports";
 import {DownloadIcon} from "@/app/ui/commons/icons";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "./messages";
 
 
 const COLLECTION_LIST_PAGE_SIZE = 5;
@@ -14,6 +16,7 @@ export default function CollectionListCmp(props: {
     collections: PortalCollectionJsonData[],
     showDownloadButton?: boolean
 }) {
+    const t = collectionUiMessages[useLocale()];
     const collections = props.collections.map((data: PortalCollectionJsonData) => PortalCollection.toObject(data));
 
     const [collectionsList, setCollectionsList] = useState<PortalCollection[]>([]);
@@ -86,8 +89,8 @@ export default function CollectionListCmp(props: {
                         id="filter"
                         name="collection-filter"
                         type="text"
-                        labelText="Search For Collection"
-                        placeHolder="search for collections ..."
+                        labelText={t.searchLabel}
+                        placeHolder={t.searchPlaceholder}
                         key={"collection-filter"}
                         required={false}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +102,7 @@ export default function CollectionListCmp(props: {
                     <Pagination
                         size={pageSize}
                         page={currentPage}
-                        objectName="Collections"
+                        objectName={t.collections}
                         total={collectionsList.length}
                         handleNextPageClick={handleNextPageClick}
                         handlePrevPageClick={handlePrevPageClick}
@@ -110,14 +113,14 @@ export default function CollectionListCmp(props: {
             {props.showDownloadButton &&
               <div className="mb-2 flex justify-start">
                 <button
-                  aria-label="Download my public collections as JSON"
+                  aria-label={t.downloadMyPublicJson}
                   className="btn !mb-0 !me-0 !p-2 !text-sm flex items-center gap-2"
                   onClick={downloadCollectionsJsonData}
-                  title="Download public collections as JSON"
+                  title={t.downloadPublicJson}
                   type="button"
                 >
                   <DownloadIcon/>
-                  Download my public collections
+                  {t.downloadMyPublic}
                 </button>
               </div>
             }
@@ -133,7 +136,7 @@ export default function CollectionListCmp(props: {
             <Pagination
                 size={pageSize}
                 page={currentPage}
-                objectName="Collections"
+                objectName={t.collections}
                 total={collectionsList.length}
                 handleNextPageClick={handleNextPageClick}
                 handlePrevPageClick={handlePrevPageClick}

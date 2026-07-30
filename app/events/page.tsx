@@ -1,5 +1,9 @@
+"use client";
+
 import eventsInfo from "./events.json";
 import { getCurrentDate } from "../libs/toolkit";
+import { useLocale } from "../i18n";
+import { eventMessages } from "./messages";
 
 type Event = {
   name: string;
@@ -9,6 +13,8 @@ type Event = {
 };
 
 export default function Events() {
+  const locale = useLocale();
+  const t = eventMessages[locale];
   const now = getCurrentDate();
   const pastEvents = (eventsInfo as Event[]).filter(
     (ev) => ev.formal_date < now,
@@ -33,7 +39,7 @@ export default function Events() {
 
   return (
     <div className="col-span-3">
-      <p className="header-2">Upcoming Events</p>
+      <p className="header-2">{t.upcoming}</p>
       <div className="grid md:grid-cols-4 md:gap-4" key={"upcoming"}>
         {upcomingEvents.map((ev) => {
           return (
@@ -61,7 +67,7 @@ export default function Events() {
           );
         })}
       </div>
-      <p className="header-2">Past Events</p>
+      <p className="header-2">{t.past}</p>
       <div className="grid md:grid-cols-4 md:gap-4" key={"past"}>
         {pastEvents.map((ev) => {
           return (

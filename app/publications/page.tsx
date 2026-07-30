@@ -1,27 +1,24 @@
-'use server';
-
 import {InfoAlert, PublicationCards} from "../clientExports";
 import peerReviewedPublications from "./peerReviewdPublications.json";
 import {PeerReviewedPublicationData} from "@/app/publications/types";
+import { getRequestLocale } from "../libs/locale";
+import { publicationMessages } from "./messages";
 
 
 export default async function Publications() {
+    const locale = await getRequestLocale();
+    const t = publicationMessages[locale];
     const publications: PeerReviewedPublicationData[] = peerReviewedPublications;
 
     return (
         <div className='col-span-3'>
             <div className="">
-                <p className="header-main-1 !mt-0 inline-block">Publications</p>
+                <p className="header-main-1 !mt-0 inline-block">{t.title}</p>
             </div>
             <div className="flex flex-col md:col-span-3 w-full">
                 <InfoAlert
-                    title={"Peer-reviewed Publications"}
-                    body={
-                        `The following section presents a collection of peer-reviewed publications which where published 
-                      during the project Terminology Services 4 NFDI (TS4NFDI). All publications have been evaluated 
-                      through established peer-review processes. They provide a comprehensive overview of the work of 
-                      TS4NFDI.`
-                    }
+                    title={t.peerReviewed}
+                    body={t.intro}
                 />
                 {publications.map((pub: PeerReviewedPublicationData, index: number) => {
                     return (
@@ -32,21 +29,21 @@ export default async function Publications() {
                             </a>
                             <br/><br/>
                             <p key="contributor">
-                                <b>Authors: </b>{pub.authors}
+                                <b>{t.authors}</b>{pub.authors}
                                 <small className="float-right" key="created_at">
-                                    <span className="name-badge" key="type">{pub.type}</span> Published on:
+                                    <span className="name-badge" key="type">{pub.type}</span>{t.publishedOn}
                                     {pub.date}
                                 </small>
                             </p>
                             <br/>
-                            <p className="text-justify"><b>Abstract: </b>{pub.abstract}</p>
+                            <p className="text-justify"><b>{t.abstract}</b>{pub.abstract}</p>
                             <p className="float-right" key="type">
                                 <a className="name-badge text-white text-xs"
                                    href={pub.doi}
                                    target="_blank"
                                    rel="noopener noreferrer"
                                 >
-                                    <b>DOI: </b>{pub.doi}
+                                    <b>{t.doi}</b>{pub.doi}
                                 </a>
                             </p>
                             <br/>
