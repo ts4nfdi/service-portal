@@ -6,9 +6,12 @@ import {ErrorAlert} from "@/app/ui/commons/snippets";
 import {Captcha} from "@/app/ui/commons/captcha";
 import {SignUpFormProps} from "@/app/api/auth/types";
 import {signUpUser} from "@/app/api/auth/actions";
+import { useLocale } from "@/app/i18n";
+import { userPageMessages } from "../messages";
 
 
 export default function SignupForm() {
+    const t = userPageMessages[useLocale()];
 
     const [internalError, setInternalError] = useState<boolean>(false);
     const [passNotMatch, setPassNotMatch] = useState<boolean>(false);
@@ -47,19 +50,19 @@ export default function SignupForm() {
         <>
             <div className="md:col-span-1 md:col-start-2">
                 {internalError &&
-                  <ErrorAlert message="Something went wrong from ourside. Please try later."/>
+                  <ErrorAlert message={t.signupInternalError}/>
                 }
                 {!internalError && passNotMatch &&
-                  <ErrorAlert message="Passwords are not matched."/>
+                  <ErrorAlert message={t.signupPasswordMismatch}/>
                 }
-                <p className="header-2">Sign up in TS4NFDI service portal</p>
+                <p className="header-2">{t.signupTitle}</p>
                 <form onSubmit={submit}>
                     <TextInput
                         id="username"
                         type="text"
-                        placeHolder="Please enter your username"
+                        placeHolder={t.usernamePlaceholder}
                         key={"username"}
-                        labelText="Username"
+                        labelText={t.username}
                         name="username"
                         required
                     />
@@ -67,9 +70,9 @@ export default function SignupForm() {
                         <TextInput
                             id="password"
                             type="password"
-                            placeHolder="Please enter your password"
+                            placeHolder={t.passwordPlaceholder}
                             key={"password"}
-                            labelText="Password"
+                            labelText={t.password}
                             name="password"
                             required
                         />
@@ -78,9 +81,9 @@ export default function SignupForm() {
                         <TextInput
                             id="repeat-password"
                             type="password"
-                            placeHolder="Repeat your password"
+                            placeHolder={t.repeatPasswordPlaceholder}
                             key={"password-repeat"}
-                            labelText="Repeat Password"
+                            labelText={t.repeatPassword}
                             name="password-repeat"
                             required
                         />
@@ -89,7 +92,7 @@ export default function SignupForm() {
                         <Captcha/>
                     </div>
                     <div className="mt-4 text-center">
-                        <button type="submit" className="btn mx-auto">Sign up</button>
+                        <button type="submit" className="btn mx-auto">{t.signup}</button>
                     </div>
                 </form>
             </div>

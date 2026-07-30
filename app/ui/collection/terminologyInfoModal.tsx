@@ -6,6 +6,8 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {OntologyInfoWidgetProps} from "@ts4nfdi/terminology-service-suite";
 import {Modal} from "@/app/ui/commons/modal";
 import {PortalTerminology} from "@/app/concepts";
+import {useLocale} from "@/app/i18n";
+import {collectionUiMessages} from "@/app/ui/collection/messages";
 
 const OntologyInfoWidget = dynamic<OntologyInfoWidgetProps>(() =>
     import("@ts4nfdi/terminology-service-suite").then((mod) => mod.OntologyInfoWidget)
@@ -40,6 +42,7 @@ function modalSafeId(value: string) {
 }
 
 export default function TerminologyInfoModal(props: CmpProps) {
+    const t = collectionUiMessages[useLocale()];
     const [queryClient] = useState(() => new QueryClient());
     const [isOpen, setIsOpen] = useState(false);
     const database = DATABASES[props.terminology.source.toLowerCase()];
@@ -58,10 +61,10 @@ export default function TerminologyInfoModal(props: CmpProps) {
     return (
         <>
             <button
-                aria-label={`Show ontology information for ${props.terminology.label}`}
+                aria-label={`${t.showOntologyInfo} ${props.terminology.label}`}
                 className="badge terminology-badge terminology-badge-button"
                 onClick={openModal}
-                title={`Show ontology information for ${props.terminology.label}`}
+                title={`${t.showOntologyInfo} ${props.terminology.label}`}
                 type="button"
             >
                 {props.terminology.label} ({props.terminology.source})

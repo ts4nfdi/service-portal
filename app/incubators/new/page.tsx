@@ -8,9 +8,14 @@ import { sendIncubatorRequest } from "@/app/api/actions/incubators";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { NewIncubatorForm } from "@/app/api/actions/types";
 import { Captcha } from "@/app/ui/commons/captcha";
+import { useLocale } from "@/app/i18n";
+import { newIncubatorMessages } from "./messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 export default function AddIncubator() {
+  const locale = useLocale();
+  const t = newIncubatorMessages[locale];
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,11 +52,11 @@ export default function AddIncubator() {
 
   return (
     <div className="md:col-span-2">
-      <p className="header-1">New incubator request</p>
+      <p className="header-1">{t.title}</p>
       {!loading &&
-        <a className="btn" href="/incubators/">
+        <a className="btn" href={localizePath("/incubators/", locale)}>
           <LeftArrowIcon />
-          incubators list
+          {t.back}
         </a>
       }
       <br /> <br />
@@ -63,8 +68,8 @@ export default function AddIncubator() {
                 id="title-input"
                 type="text"
                 name="title"
-                placeHolder="Please enter your project title"
-                labelText="Title"
+                placeHolder={t.titlePlaceholder}
+                labelText={t.projectTitle}
                 required={true}
               />
             </div>
@@ -73,16 +78,17 @@ export default function AddIncubator() {
                 id="email-input"
                 type="email"
                 name="email"
-                placeHolder="Please enter your email"
-                labelText="E-mail"
+                placeHolder={t.emailPlaceholder}
+                labelText={t.email}
                 required={true}
               />
             </div>
             <TextEditor
-              placeholder="Please describe your project..."
+              placeholder={t.descriptionPlaceholder}
               wrapperId=""
               textSizeOptions={['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code']}
-              labelText="Description"
+              textEditorTranslations={t.textEditorTranslations}
+              labelText={t.description}
               name="description"
               required={true}
             />
@@ -90,8 +96,8 @@ export default function AddIncubator() {
               <FileInput
                 id="logo-input"
                 name="logo"
-                placeHolder={"Please submit a logo image for your project"}
-                labelText={`Project Logo <small>(only image file: ${acceptedFileExt.join(", ")})</small>`}
+                placeHolder={t.logoPlaceholder}
+                labelText={`${t.logo} <small>(${t.logoHint}: ${acceptedFileExt.join(", ")})</small>`}
                 required={false}
                 accept={acceptedFileExt.join(", ")}
               />
@@ -99,7 +105,7 @@ export default function AddIncubator() {
 
             <Captcha />
             <div className="text-right">
-              <button type="submit" className="btn">Submit</button>
+              <button type="submit" className="btn">{t.submit}</button>
             </div>
           </div>
         </form>
@@ -108,16 +114,16 @@ export default function AddIncubator() {
       {loading && <Loading />}
       {formIsSubmitted && !error && !loading &&
         <SuccessAlert
-          message="Thank you for your query! We will contact you as soon as possible."
+          message={t.success}
         />
       }
       {formIsSubmitted && error && !loading &&
         <ErrorAlert
-          message="Sorry! Something went wrong."
+          message={t.error}
         />
       }
       {formIsSubmitted && !loading &&
-        <a className="btn" href={'/incubators/new/'}>New request</a>
+        <a className="btn" href={localizePath("/incubators/new/", locale)}>{t.newRequest}</a>
       }
 
     </div>

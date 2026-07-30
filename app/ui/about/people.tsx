@@ -5,8 +5,11 @@ import { useState } from "react";
 import { SectionData, PersonData } from "./types";
 import { CSSProperties } from "react";
 import peopleJson from "./people.json";
+import peopleJsonDe from "./people.de.json";
+import { useLocale } from "@/app/i18n";
 
 export default function AboutPeople() {
+  const people = useLocale() === "de" ? peopleJsonDe : peopleJson;
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   const [imgW, imgH] = [150, 150];
   const imageContainerSyle = {
@@ -18,7 +21,7 @@ export default function AboutPeople() {
 
   return (
     <>
-      {peopleJson?.["sections"].map((section: SectionData) => {
+      {people?.["sections"].map((section: SectionData) => {
         return (
           <>
             <p className="header-2" key={"header-ppl"}>

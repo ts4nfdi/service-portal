@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useLocale, useTranslations } from "./i18n";
+import { localizePath } from "./libs/localePath";
 
 export default function Home() {
+  const locale = useLocale();
+  const t = useTranslations("Home");
   return (
     <div className="col-span-3 home-page-content">
       <div className="grid md:grid-cols-9 md:gap-4">
@@ -12,39 +19,21 @@ export default function Home() {
               alt="TS4NFDI"
               src={"img/TS4NFDI-small-grey.svg"}
             />
-            Service Portal
+            {t("title")}
           </h1>
         </div>
         <div className="md:col-span-5 card-background min-h-[50px]">
-          <h3 className="header-main-3">What is TS4NFDI?</h3>
-          <p className="text-justify my-5">
-            An overarching research data management across all domains is built
-            upon metadata describing research data and their generation. To make
-            sure that disciplines can create and share a common understanding of
-            the concepts and relations used to describe data, we need
-            terminologies as a formal representation of domain knowledge.
-          </p>
-          <p className="text-justify my-5">
-            Terminology Services 4 NFDI (TS4NFDI) is a cross-domain service for
-            the provision, curation, development, harmonization, and mapping of
-            terminologies. It aims to facilitate consensus-building and
-            interoperability of services across disciplines to achieve a shared
-            knowledge representation and knowledge engineering framework. The
-            service seeks to integrate and converge individual solutions into a
-            standardized, interoperable, and sustainable architecture.
-          </p>
-          <p className="text-justify my-5">
-            In order to accomplish these objectives, TS4NFDI provides the
-            following tools: the TS4NFDI Service Portal, a Terminology Service
-            Suite (TSS), an centralised API Gateway, and a mapping service.
-          </p>
+          <h3 className="header-main-3">{t("whatIs")}</h3>
+          <p className="text-justify my-5">{t("intro1")}</p>
+          <p className="text-justify my-5">{t("intro2")}</p>
+          <p className="text-justify my-5">{t("intro3")}</p>
         </div>
         <div className="md:col-span-4 card-background float-right">
           <iframe
             className="w-full aspect-video self-stretch md:min-h-96"
             src="https://www.youtube.com/embed/OT4YUTvqKRI"
             frameBorder="0"
-            title="TS4NFDI quickly explained"
+            title={t("videoTitle")}
             aria-hidden="true"
             allow="fullscreen"
             allowFullScreen
@@ -60,7 +49,7 @@ export default function Home() {
               src={"img/TS4NFDI-Service-Portal-Hexagon-Dark.svg"}
               width={350}
               height={350}
-              alt="Logo TS4NFDI Service Portal"
+              alt={t("portalLogoAlt")}
               placeholder="blur"
               blurDataURL="/blur.webp"
               style={{ margin: "auto" }}
@@ -68,62 +57,35 @@ export default function Home() {
           </div>
           <div className="md:col-span-6">
             <h3 className="header-main-3 text-right">
-              About the TS4NFDI Service Portal
+              {t("aboutPortal")}
             </h3>
+            <p className="text-justify my-5">{t("portal1")}</p>
+            <p className="text-justify my-5">{t("portal2")}</p>
             <p className="text-justify my-5">
-              The basic service TS4NFDI provides a centralised access point in
-              the form of the TS4NFDI Service Portal. The purpose of the portal
-              is to facilitate the integration, usage and customisation of the
-              TS4NFDI tools into the services of NFDI consortia.
-            </p>
-            <p className="text-justify my-5">
-              This feature empowers domain experts to tailor the response of the
-              centralised API Gateway or the Terminology Service Suite (TSS) to
-              meet their exact requirements. To enable customisation, an
-              administrator user interface is provided within a dashboard,
-              including a configuration panel.
-            </p>
-            <p className="text-justify my-5">
-              The configuration panel displays a comprehensive list of all
-              available terminologies from the various terminology services
-              accessed by the API Gateway. These terminologies could be combined
-              and published in
-              <a className="text-base" href="/collection/">
-                terminology collections
-              </a>
-              which are provided by and hosted at the TS4NFDI Service Portal.
+              {t("portal3Start")}
+              <Link className="text-base" href={localizePath("/collection/", locale)}>{t("collections")}</Link>
+              {t("portal3End")}
             </p>
           </div>
         </div>
         <div className="md:col-span-9">
-          <h2 className="header-main-2">Tools</h2>
+          <h2 className="header-main-2">{t("tools")}</h2>
         </div>
         <div className="md:col-span-3 card-background">
           <Image
             src={"img/TS4NFDI-Terminology-Service-Suite-Hexagon-Dark.svg"}
             width={350}
             height={350}
-            alt="TS4NFDI Terminology Service Suite"
+            alt={t("tssLogoAlt")}
             placeholder="blur"
             blurDataURL="/blur.webp"
             style={{ margin: "auto" }}
           />
-          <p className="text-justify my-5">
-            Integrating terminology data into other web services, such as
-            annotation services or data repositories, is crucial for generating
-            and handling FAIR data. The Terminology Service Suite (TSS) is a
-            collection of interactive web components (widgets) designed to ease
-            the integration of terminology service functions into third-party
-            applications.
-          </p>
-          <p className="text-justify my-5">
-            The widgets are built using React and TypeScript and can be used in
-            both React and plain HTML applications. The functionality and
-            arguments are the same for the React and plain HTML versions.
-          </p>
+          <p className="text-justify my-5">{t("tss1")}</p>
+          <p className="text-justify my-5">{t("tss2")}</p>
           <p className="text-right">
-            <a className="text-base" href="/documentation#tss">
-              {">>> Read more"}
+            <a className="text-base" href={localizePath("/documentation#tss", locale)}>
+              {t("readMore")}
             </a>
           </p>
         </div>
@@ -132,28 +94,16 @@ export default function Home() {
             src={"img/TS4NFDI-API-Gateway-Hexagon-Dark.svg"}
             width={350}
             height={350}
-            alt="TS4NFDI API Gateway"
+            alt={t("gatewayLogoAlt")}
             placeholder="blur"
             blurDataURL="/blur.webp"
             style={{ margin: "auto" }}
           />
-          <p className="text-justify my-5">
-            For the acceptance and use of terminology data, it is essential that
-            the data is easily accessible. The TS4NFDI API Gateway is a
-            sophisticated, flexible solution that can make federated calls
-            across multiple terminology services within the NFDI and beyond. It
-            can query all terminology services based on the technology of
-            Ontology Lookup Service (OLS), OntoPortal and Skosmos.
-          </p>
-          <p className="text-justify my-5">
-            The API output is provided in MOD (Metadata for Ontology Description
-            and Publication) format. In future, the TS4NFDI API Gateway will
-            also provide output in the formats of the OLS, OntoPortal and
-            Skosmos APIs.
-          </p>
+          <p className="text-justify my-5">{t("gateway1")}</p>
+          <p className="text-justify my-5">{t("gateway2")}</p>
           <p className="text-right">
-            <a className="text-base" href="/documentation#gateway">
-              {">>> Read more"}
+            <a className="text-base" href={localizePath("/documentation#gateway", locale)}>
+              {t("readMore")}
             </a>
           </p>
         </div>
@@ -162,30 +112,15 @@ export default function Home() {
             src={"img/TS4NFDI-Mapping-Service-Hexagon-Dark.svg"}
             width={350}
             height={350}
-            alt="TS4NFDI Mapping Service"
+            alt={t("mappingLogoAlt")}
             placeholder="blur"
             blurDataURL="/blur.webp"
             style={{ margin: "auto" }}
           />
-          <p className="text-justify my-5">
-            Mappings between terminologies are crucial for interoperability
-            within NFDI consortia. The TS4NFDI Mapping service acts as a mapping
-            registry and is based on the software Cocoda. Cocoda is a web
-            application to manage and create mappings between knowledge
-            organization systems, such as classifications, authority files, and
-            thesauri.
-          </p>
-          <p className="text-justify my-5">
-            Mappings between terminologies are crucial for interoperability
-            within NFDI consortia. The TS4NFDI Mapping service acts as a mapping
-            registry and is based on the software Cocoda. Cocoda is a web
-            application to manage and create mappings between knowledge
-            organization systems, such as classifications, authority files, and
-            thesauri.
-          </p>
+          <p className="text-justify my-5">{t("mapping")}</p>
           <p className="text-right">
-            <a className="text-base" href="/documentation#mapping-service">
-              {">>> Read more"}
+            <a className="text-base" href={localizePath("/documentation#mapping-service", locale)}>
+              {t("readMore")}
             </a>
           </p>
         </div>

@@ -4,9 +4,12 @@ import { SuccessAlert, ErrorAlert } from "../commons/snippets";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { deleteParamsFromUrl } from "@/app/libs/urlFactory";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "./messages";
 
 
 export function CollectionListMessages() {
+  const t = collectionUiMessages[useLocale()];
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -27,22 +30,22 @@ export function CollectionListMessages() {
   return (
     <>
       {collectionCreated === "true" &&
-        <SuccessAlert message="Collection has been created successfully." />
+        <SuccessAlert message={t.createdSuccess} />
       }
       {collectionCreated === "false" &&
-        <ErrorAlert message="Something went wrong with your collection creation. Please try later." />
+        <ErrorAlert message={t.createdError} />
       }
       {collectionEdited === "true" &&
-        <SuccessAlert message="Collection has been edited successfully." />
+        <SuccessAlert message={t.editedSuccess} />
       }
       {collectionEdited === "false" &&
-        <ErrorAlert message="Something went wrong with your collection edition. Please try later." />
+        <ErrorAlert message={t.editedError} />
       }
       {collectionDeleted === "true" &&
-        <SuccessAlert message="Collection has been deleted successfully." />
+        <SuccessAlert message={t.deletedSuccess} />
       }
       {collectionDeleted === "false" &&
-        <ErrorAlert message="Something went wrong with your collection deletion. Please try later." />
+        <ErrorAlert message={t.deletedError} />
       }
     </>
   );

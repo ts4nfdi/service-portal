@@ -10,6 +10,9 @@ import Link from "next/link";
 import {PortalTerminology, PortalCollection} from "@/app/concepts";
 import {useSession} from "next-auth/react";
 import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "./messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 type CmpProps = {
@@ -17,6 +20,8 @@ type CmpProps = {
 }
 
 export default function CollectionCard(props: CmpProps) {
+    const locale = useLocale();
+    const t = collectionUiMessages[locale];
 
     const session = useSession();
     const isOwner = props.collection.creator === session?.data?.user?.username;
@@ -52,11 +57,11 @@ export default function CollectionCard(props: CmpProps) {
     return (
         <div className="collection-card" key={props.collection.id}>
             <div className="grid grid-cols-10" key={"collection-card-header"}>
-                <Link href={"/collection/" + props.collection.id} className="col-span-9">
+                <Link href={localizePath("/collection/" + props.collection.id, locale)} className="col-span-9">
                     <p className="header-4 inline-block" key={"collection-title"}>{props.collection.label}</p>
                     {!props.collection.isPublic &&
                       <p
-                        className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black">private</p>
+                        className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black">{t.private}</p>
                     }
                 </Link>
                 <div className="col-span-1 flex flex-col items-end gap-2 p-0" key={"collection-actions"}>
@@ -67,26 +72,26 @@ export default function CollectionCard(props: CmpProps) {
                                      classNames="!bg-transparent !m-0 !p-0 !px-0 !pe-0 !text-white flex items-center justify-end"/>
                         <Modal
                           id={"delete-collection-conf-" + props.collection.id}
-                          title={"Delete Collection: " + props.collection.label}
+                          title={t.deleteCollection + props.collection.label}
                           content={<WarningAlert
-                              message="Are you sure about deleting this collection? This action is irreversible!"/>}
+                              message={t.deleteWarning}/>}
                           actionBtn
-                          actionBtnLabel="Yes, I am sure"
+                          actionBtnLabel={t.confirmDelete}
                           actionBtnCallback={async () => {
                               let resp = await deleteCollection(props.collection.id!);
-                              window.location.href = `/collection/myCollections?deleted=${resp.status}`;
+                              window.location.href = localizePath(`/collection/myCollections?deleted=${resp.status}`, locale);
                           }}
                         />
-                        <a className="!bg-transparent text-end p-0" href={`/collection/edit/${props.collection.id}`}
+                        <a className="!bg-transparent text-end p-0" href={localizePath(`/collection/edit/${props.collection.id}`, locale)}
                            key={"edit-collection"}><EditIcon/></a>
                       </>
                     }
                     {props.collection.isPublic &&
                       <button
-                          aria-label="Download collection as JSON"
+                          aria-label={t.downloadCollectionAsJson}
                           className="!bg-transparent text-end p-0"
                           onClick={downloadCollectionJsonData}
-                          title="Download collection as JSON"
+                          title={t.downloadCollectionAsJson}
                           type="button"
                       >
                           <DownloadIcon/>
@@ -106,10 +111,10 @@ export default function CollectionCard(props: CmpProps) {
                 <CopyToClipboard textToCopy={props.collection.permaLink}
                                  key={"copy"}/>
             </div>
-            <p key={"creator"} className="text-sm">Created by: {props.collection.creator}</p>
+            <p key={"creator"} className="text-sm">{t.createdBy}{props.collection.creator}</p>
             <p key={"collection-desc"}>{props.collection.description}</p>
             <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
-                <b>Terminologies:</b> {renderTerminologies(props.collection.terminologies)}</div>
+                <b>{t.terminologies}</b> {renderTerminologies(props.collection.terminologies)}</div>
         </div>
     );
 }

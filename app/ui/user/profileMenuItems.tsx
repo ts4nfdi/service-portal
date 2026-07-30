@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale, useTranslations } from "@/app/i18n";
+import { localizePath } from "@/app/libs/localePath";
 
 export default function UserProfileMenuItems(props: { username: string, email: string }) {
+  const locale = useLocale();
+  const t = useTranslations("User");
 
   function closeOrOpen() {
     let menu = document.getElementById("user-dropdown")! as HTMLDivElement;
@@ -24,18 +28,18 @@ export default function UserProfileMenuItems(props: { username: string, email: s
         </div>
         <ul role="menu" aria-orientation="vertical" className="pl-0 m-0 list-none [&>li]:list-none [&>li::before]:content-none">
           <li>
-            <Link href="/user/dashboard/" className="profile-menu-item" onClick={closeOrOpen}>Dashboard</Link>
+            <Link href={localizePath("/user/dashboard/", locale)} className="profile-menu-item" onClick={closeOrOpen}>{t("dashboard")}</Link>
           </li>
           <li>
-            <Link href="/collection/myCollections/" className="profile-menu-item" onClick={closeOrOpen}>My Collections</Link>
+            <Link href={localizePath("/collection/myCollections/", locale)} className="profile-menu-item" onClick={closeOrOpen}>{t("myCollections")}</Link>
           </li>
           <li>
-            <Link href="/api/auth/signout" className="profile-menu-item" onClick={closeOrOpen}>Sign out</Link>
+            <Link href="/api/auth/signout" className="profile-menu-item" onClick={closeOrOpen}>{t("signOut")}</Link>
           </li>
         </ul>
       </div>
       <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" onClick={closeOrOpen} key={"profilemenu-btn"}>
-        <span className="sr-only">Open user menu</span>
+        <span className="sr-only">{t("openMenu")}</span>
         <Image className="rounded-full" width={35} height={35} src="/img/blank.jpg" alt="user photo" />
       </button>
     </>

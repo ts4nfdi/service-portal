@@ -1,9 +1,13 @@
 import { getAllProviders } from "@/app/api/actions/providers";
 import { InfoAlert, ProviderList } from "@/app/clientExports";
 import { PortalProvider } from "../concepts";
+import { getRequestLocale } from "../libs/locale";
+import { providerMessages } from "./messages";
 
 export default async function providers() {
-  const sourcesList = await getAllProviders();
+  const locale = await getRequestLocale();
+  const t = providerMessages[locale];
+  const sourcesList = await getAllProviders(locale);
   const providers: PortalProvider[] = [];
   for (let source of sourcesList) {
     providers.push(PortalProvider.toObject(source));
@@ -14,10 +18,7 @@ export default async function providers() {
     <div className="flex flex-col md:col-span-3 w-full">
       <InfoAlert
         title={""}
-        body={`
-                The following Terminology Services are currently supported via the TS4NFDI API Gateway. For more information, please see:
-                    <a href="https://ts4nfdi.github.io/api-gateway/" rel="noopener" target="_blank">API Gateway documentation</a>         
-                `}
+        body={t.intro}
       />
       <ProviderList
         providers={providers.map((provider) => provider.toJson())}

@@ -1,0 +1,121 @@
+{
+  "sections": [
+    {
+      "title": "Projektleitende",
+      "persons": [
+        {
+          "imagePath": "rb.jpg",
+          "name": "Baum, Roman",
+          "affiliation": "ZB MED - Informationszentrum Lebenswissenschaften, Bonn",
+          "orcid": "https://orcid.org/0000-0001-5246-9351"
+        },
+        {
+          "imagePath": "nk.png",
+          "name": "Karam, Naouel",
+          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "orcid": "https://orcid.org/0000-0002-6762-6417"
+        },
+        {
+          "imagePath": "ok.png",
+          "name": "Koepler, Oliver",
+          "affiliation": "TIB - Leibniz-Informationszentrum Technik und Naturwissenschaften, Hannover",
+          "orcid": "https://orcid.org/0000-0003-3385-4232"
+        },
+        {
+          "imagePath": "jv.jpg",
+          "name": "Voß, Jakob",
+          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "orcid": "https://orcid.org/0000-0002-7613-4123"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Mühlhaus, Timo",
+          "affiliation": "RPTU Kaiserslautern-Landau",
+          "orcid": "https://orcid.org/0000-0003-3925-6778"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Bailly, Kolja",
+          "affiliation": "TIB - Leibniz-Informationszentrum Technik und Naturwissenschaften, Hannover",
+          "orcid": "https://orcid.org/0009-0001-3533-0275"
+        }
+      ]
+    },
+    {
+      "title": "Projektteam",
+      "persons": [
+        {
+          "imagePath": "blank.jpg",
+          "name": "Sasse, Julia",
+          "affiliation": "ZB MED - Informationszentrum Lebenswissenschaften, Bonn",
+          "orcid": "https://orcid.org/0000-0002-0660-7597"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Schäfermeier, Ralph",
+          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "orcid": "https://orcid.org/0000-0002-4349-6726"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Oladazimi, Pooya",
+          "affiliation": "TIB - Leibniz-Informationszentrum Technik und Naturwissenschaften, Hannover",
+          "orcid": "https://orcid.org/0000-0002-5117-070X"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Rayya, Noura",
+          "affiliation": "TIB - Leibniz-Informationszentrum Technik und Naturwissenschaften, Hannover",
+          "orcid": "https://orcid.org/0009-0001-5998-5030"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Tzatchkova, Guergana",
+          "affiliation": "TIB - Leibniz-Informationszentrum Technik und Naturwissenschaften, Hannover",
+          "orcid": "https://orcid.org/0009-0001-0754-5615"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Frey, Kevin",
+          "affiliation": "RPTU Kaiserslautern-Landau",
+          "orcid": "https://orcid.org/0000-0002-8510-6810"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Kesper, Arno",
+          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "orcid": "https://orcid.org/0000-0002-5042-1087"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Matoni, Markus",
+          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "orcid": "https://orcid.org/0000-0003-4389-5871"
+        }
+      ]
+    },
+    {
+      "title": "Ehemalige Projektteammitglieder",
+      "persons": [
+        {
+          "imagePath": "blank.jpg",
+          "name": "Bouazzouni, Syphax",
+          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "orcid": "https://orcid.org/0000-0002-2069-8739"
+        },
+        {
+          "imagePath": "blank.jpg",
+          "name": "Fillies, Jan",
+          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "orcid": "https://orcid.org/0000-0002-2997-4656"
+        },
+        {
+          "imagePath": "ds.jpg",
+          "name": "Schäfer, Domenic",
+          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "orcid": "https://orcid.org/0000-0001-7118-3295"
+        }
+      ]
+    }
+  ]
+}

@@ -1,14 +1,18 @@
+"use client";
 
+import { useLocale } from "../i18n";
+import { accessibilityMessages } from "./messages";
 
 export default function Accessibillity() {
+  const t = accessibilityMessages[useLocale()];
   return (
     <div className="col-span-3 content-panel">
-      <p className="header-2">Accessibility</p>
+      <p className="header-2">{t.title}</p>
       <p>
-        The corresponding accessibility statement is located on a page outside the TS4NFDI Service Portal web app and is therefore opened in a new tab.
+        {t.body}
       </p>
       <p>
-        Go to the accessibility explanation at
+        {t.linkLabel}
         <a href="https://base4nfdi.de/accessibility" target="_blank">https://base4nfdi.de/accessibility</a>
       </p>
     </div>

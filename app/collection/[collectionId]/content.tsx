@@ -12,10 +12,15 @@ import {
 } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "@/app/ui/collection/messages";
+import { localizePath } from "@/app/libs/localePath";
 
 export default function CollectionContentCmp(props: {
   collection: PortalCollectionJsonData;
 }) {
+  const locale = useLocale();
+  const t = collectionUiMessages[locale];
   const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
 
@@ -57,16 +62,16 @@ export default function CollectionContentCmp(props: {
         </p>
         <span
           className="badge inline-block bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black"
-          title="collection visibility"
-          aria-label="collection visibility"
+          title={t.visibility}
+          aria-label={t.visibility}
         >
-          {props.collection.isPublic ? "public" : "private"}
+          {props.collection.isPublic ? t.publicLower : t.private}
         </span>
         <button
-          aria-label="Download collection JSON"
+          aria-label={t.downloadCollectionJson}
           className="!bg-transparent p-0"
           onClick={downloadCollectionJsonData}
-          title="Download collection JSON"
+          title={t.downloadCollectionJson}
           type="button"
         >
           <DownloadIcon />
@@ -110,15 +115,15 @@ export default function CollectionContentCmp(props: {
           </div>
 
           <p key={"collection-creator"} className="text-sm">
-            Created by: {props.collection.creator}
+            {t.createdBy}{props.collection.creator}
           </p>
           <p key={"collection-collaborators"} className="text-sm">
-            Collaborators:{" "}
+            {t.collaborators}
             {props.collection.collaborators.length
               ? props.collection.collaborators
                   .map((user: any) => user.username)
                   .join(", ")
-              : "None"}
+              : t.none}
           </p>
           {props.collection.description && (
             <p
@@ -132,7 +137,7 @@ export default function CollectionContentCmp(props: {
             className="flex flex-row flex-wrap gap-2"
             key={"collection-terminologies"}
           >
-            <b>Terminologies:</b>{" "}
+            <b>{t.terminologies}</b>{" "}
             {renderTerminologies(collection.terminologies)}
           </div>
         </div>
@@ -149,7 +154,7 @@ export default function CollectionContentCmp(props: {
               />
               <a
                 className="!bg-transparent text-end p-0"
-                href={`/collection/edit/${props.collection.id}`}
+                href={localizePath(`/collection/edit/${props.collection.id}`, locale)}
                 key={"edit-collection"}
               >
                 <EditIcon />
@@ -161,15 +166,15 @@ export default function CollectionContentCmp(props: {
       {session?.data?.user?.username === props.collection.creator && (
         <Modal
           id={"delete-collection-conf-" + props.collection.id}
-          title={"Delete Collection: " + props.collection.label}
+          title={t.deleteCollection + props.collection.label}
           content={
-            <WarningAlert message="Are you sure about deleting this collection? This action is irreversible!" />
+            <WarningAlert message={t.deleteWarning} />
           }
           actionBtn
-          actionBtnLabel="Yes, I am sure"
+          actionBtnLabel={t.confirmDelete}
           actionBtnCallback={async () => {
             let resp = await deleteCollection(props.collection.id!);
-            window.location.href = `/collection/myCollections?deleted=${resp.status}`;
+            window.location.href = localizePath(`/collection/myCollections?deleted=${resp.status}`, locale);
           }}
         />
       )}

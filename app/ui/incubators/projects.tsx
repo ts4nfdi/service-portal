@@ -5,9 +5,13 @@ import {SelectionInput} from "../commons/snippets";
 import React, {useState, useEffect} from "react";
 import ProjectCard from "./projectCard";
 import IncubatorRequestCard from "./requestCard";
+import { useLocale } from "@/app/i18n";
+import { incubatorMessages, statusLabels } from "./messages";
 
 
 export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
+    const locale = useLocale();
+    const t = incubatorMessages[locale];
 
     const [selectedStatus, setSelectedStatus] = useState<string>(props.selectedStatus ?? "");
     const [selectedConsortium, setSelectedConsortium] = useState<string>("");
@@ -19,7 +23,7 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
     let projectsStatusOptions = [];
     for (let stat in props.projectsJson.stats) {
         if (!statusToSkip.includes(stat)) {
-            let option = {label: stat, value: stat};
+            let option = {label: statusLabels[locale][stat as ProjectStatus], value: stat};
             projectsStatusOptions.push(option);
         }
     }
@@ -70,8 +74,8 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
             <div className="grid md:grid-cols-3 mb-4 gap-4" key={"filter-project"}>
                 <SelectionInput
                     id="status"
-                    label="Status"
-                    defaultOptionLabel="any"
+                    label={t.status}
+                    defaultOptionLabel={t.any}
                     defaultValue=""
                     options={projectsStatusOptions}
                     onSelection={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -84,8 +88,8 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
                 />
                 <SelectionInput
                     id="consortium"
-                    label="Consortium"
-                    defaultOptionLabel="any"
+                    label={t.consortium}
+                    defaultOptionLabel={t.any}
                     defaultValue=""
                     options={consortiumOptions}
                     onSelection={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -95,8 +99,8 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
                 />
                 <SelectionInput
                     id="cycle"
-                    label="Cycle"
-                    defaultOptionLabel="any"
+                    label={t.cycle}
+                    defaultOptionLabel={t.any}
                     defaultValue=""
                     options={cycleOptions}
                     onSelection={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -119,7 +123,6 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
         </>
     );
 }
-
 
 
 

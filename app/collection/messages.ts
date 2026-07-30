@@ -1,0 +1,26 @@
+export const collectionMessages = {
+  en: {
+    loading: "Loading collections...",
+    title: "TS4NFDI Terminology Collections",
+    what: "What is a Terminology Collection?",
+    descriptionStart: "A ",
+    collection: "Terminology Collection",
+    descriptionEnd: " is a set of terminologies that was created for a specific purpose or context in which this set is relevant. This terminology collection can be shared with the community and can contain ontologies, thesauri, etc, without any rating. A Terminology Collection can therefore be considered a grouping within the vast space of existing terminologies.",
+    create: "Create Collection",
+    apiEndpoint: "API Endpoint: ",
+    figure: "Figure of a Terminology Collection",
+    alt: "example of a terminology collection",
+  },
+  de: {
+    loading: "Sammlungen werden geladen...",
+    title: "TS4NFDI-Terminologiesammlungen",
+    what: "Was ist eine Terminologiesammlung?",
+    descriptionStart: "Eine ",
+    collection: "Terminologiesammlung",
+    descriptionEnd: " ist eine Menge von Terminologien, die fuer einen bestimmten Zweck oder Kontext erstellt wurde. Sie kann mit der Community geteilt werden und Ontologien, Thesauri und weitere Terminologien ohne Bewertung enthalten. Eine Terminologiesammlung kann daher als Gruppierung im grossen Raum vorhandener Terminologien verstanden werden.",
+    create: "Sammlung erstellen",
+    apiEndpoint: "API-Endpunkt: ",
+    figure: "Abbildung einer Terminologiesammlung",
+    alt: "Beispiel einer Terminologiesammlung",
+  },
+} as const;

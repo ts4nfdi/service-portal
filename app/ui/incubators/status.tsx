@@ -2,9 +2,12 @@
 
 import {IncubatorsStatusCmpProps, ProjectStatus} from "./types";
 import {useEffect} from "react";
+import { useLocale } from "@/app/i18n";
+import { statusLabels } from "./messages";
 
 
 export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
+    const locale = useLocale();
     const stats = props.projectsJson?.stats ?? {};
     const statusToSkip = ['Requested', 'First contact', 'Postponed'];
 
@@ -45,7 +48,7 @@ export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
                                     }
                                 }}
                                 data-value={status}>
-                                <p className="lg:text-xl ">{status}: <b>{stats[status]}</b></p>
+                                <p className="lg:text-xl ">{statusLabels[locale][status]}: <b>{stats[status]}</b></p>
                             </div>
                         )
                     })

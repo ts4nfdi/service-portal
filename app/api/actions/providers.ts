@@ -4,8 +4,9 @@ import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {Source, SourcesJson} from "@/app/api/actions/types";
 import {PortalProvider, PortalSourcesJsonData} from "@/app/concepts";
 import SourcesJsonMetadata from "../../provider/provider.json";
+import SourcesJsonMetadataDe from "../../provider/provider.de.json";
 
-export async function getAllProviders(): Promise<PortalSourcesJsonData[]> {
+export async function getAllProviders(locale: "en" | "de" = "en"): Promise<PortalSourcesJsonData[]> {
     try {
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/config/databases", {
             headers: await getHttpHeaderForGateway()
@@ -15,7 +16,7 @@ export async function getAllProviders(): Promise<PortalSourcesJsonData[]> {
         }
         let sources: Source[] = await resp.json();
         let portalSources = [];
-        let extraMetadata = (SourcesJsonMetadata as unknown) as SourcesJson;
+        let extraMetadata = (locale === "de" ? SourcesJsonMetadataDe : SourcesJsonMetadata as unknown) as SourcesJson;
         for (let source of sources) {
             let pdb = new PortalProvider(source);
             let registry = extraMetadata[pdb.name];

@@ -15,9 +15,14 @@ import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
 import { useSearchParams } from "next/navigation";
+import { useLocale } from "@/app/i18n";
+import { collectionUiMessages } from "@/app/ui/collection/messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 export default function NewCollection() {
+  const locale = useLocale();
+  const t = collectionUiMessages[locale];
 
   const session = useSession();
 
@@ -68,9 +73,9 @@ export default function NewCollection() {
 
       let res = await createCollection(pCollection.toJson());
       if (searchParams.get('from') === "my-collections") {
-        window.location.href = `/collection/myCollections?created=${res.status}`;
+        window.location.href = localizePath(`/collection/myCollections?created=${res.status}`, locale);
       } else {
-        window.location.href = `/collection/?created=${res.status}`;
+        window.location.href = localizePath(`/collection/?created=${res.status}`, locale);
       }
 
     } catch {
@@ -141,10 +146,10 @@ export default function NewCollection() {
   return (
     <div className="">
       {searchParams.get('from') === "my-collections"
-        ? <a className="btn" href="/collection/myCollections/" key={"back-btn"}><LeftArrowIcon />My collection list</a>
-        : <a className="btn" href="/collection/" key={"back-btn"}><LeftArrowIcon />Collections list</a>
+        ? <a className="btn" href={localizePath("/collection/myCollections/", locale)} key={"back-btn"}><LeftArrowIcon />{t.myCollectionList}</a>
+        : <a className="btn" href={localizePath("/collection/", locale)} key={"back-btn"}><LeftArrowIcon />{t.collectionsList}</a>
       }
-      <p className="header-2" key={"heading"}>Define your new collection</p>
+      <p className="header-2" key={"heading"}>{t.defineNew}</p>
       {loading && <Loading />}
       {!formIsSubmitted &&
         <form
@@ -158,22 +163,21 @@ export default function NewCollection() {
           }}
         >
           <div className="form-input-group">
-            <ToggleButton id={"visibility"} label="Public" />
+            <ToggleButton id={"visibility"} label={t.public} />
           </div>
           <div className="form-input-group">
             <TextInput
               id="collection-title"
               name="collection-title"
               type="text"
-              labelText="Collection Title"
-              placeHolder="please add the collection title ..."
+              labelText={t.title}
+              placeHolder={t.titlePlaceholder}
               key={"collection-title"}
               required
             />
           </div>
           <div className="form-input-group">
-            <p className="" key={"title"}>You can import all the terminologies from the selected terminology
-              services.</p>
+            <p className="" key={"title"}>{t.importHelp}</p>
             <ul
               className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               {sources.map((db: PortalProvider) => {
@@ -195,8 +199,8 @@ export default function NewCollection() {
                   setSelectedTerminologies([...preselectedTerminologies, ...selected]);
                   (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
                 }}
-                label="Terminologies"
-                placeholder="Choose your terminologies ..."
+                label={t.terminologies}
+                placeholder={t.terminologyPlaceholder}
                 parameter="type=ontology"
                 required
                 preselected={preselectedTerminologies}
@@ -208,18 +212,18 @@ export default function NewCollection() {
               id="description"
               required
               name="collection-desc"
-              placeholder="please add a description for your collection ..."
-              labelText="Description"
+              placeholder={t.descriptionPlaceholder}
+              labelText={t.description}
               rows={10}
             />
           </div>
           <div className="form-input-group" key={"collaborators-list"}>
             <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Collaborators (attention: collaborators will have full control over the collection)
+              {t.collaboratorsFull}
             </label>
             <MultiSelectDropdown
               id="collection-collaborators"
-              placeholder="Search for users ..."
+              placeholder={t.usersPlaceholder}
               options={users}
               selectedValues={selectedCollaborators}
               onSelect={onSelect}
@@ -227,7 +231,7 @@ export default function NewCollection() {
             />
           </div>
           <div className="text-end" key={"submit-btn"}>
-            <button type="submit" className="btn">Create</button>
+            <button type="submit" className="btn">{t.create}</button>
           </div>
         </form>
       }

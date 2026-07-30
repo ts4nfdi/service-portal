@@ -1,30 +1,30 @@
 import Image from "next/image";
+import { getRequestLocale } from "../libs/locale";
+import { entitySetMessages } from "./messages";
 
 
-export default function EntitySet() {
+export default async function EntitySet() {
+  const t = entitySetMessages[await getRequestLocale()];
   return (
     <div className='col-span-3'>
         <div className="">
-            <p className="header-main-1 !mt-0 inline-block">TS4NFDI Entity Sets</p>
+            <p className="header-main-1 !mt-0 inline-block">{t.title}</p>
         </div>
         <div className='grid md:grid-cols-9 md:gap-4'>
             <div className="card-background md:col-span-5">
-                <h3 className='header-main-3'>What is an Entity Set?</h3>
+                <h3 className='header-main-3'>{t.what}</h3>
                 <p className='text-justify'>
-                    An <b>Entity Set</b> is a set of selected IRIs that is flat, optionally ordered, which means it
-                    contains no semantic relations among the entities in that set, and that was created for a specific
-                    purpose or context in which this set is relevant. An entity set can consist of entities from several
-                    terminologies from different sources.
+                    {t.descriptionStart}<b>{t.entitySet}</b>{t.descriptionEnd}
                 </p>
 
             </div>
             <div className='md:col-span-4 card-background float-right'>
-                <h4 className='header-main-3'> Figure of an Entity Set</h4>
+                <h4 className='header-main-3'>{t.figure}</h4>
                 <Image
                     src={"img/entity-sets.png"}
                     width={525}
                     height={130}
-                    alt="example of an entity set"
+                    alt={t.alt}
                     placeholder="blur"
                     blurDataURL="/blur.webp"
                     style={{ margin: 'auto' }}

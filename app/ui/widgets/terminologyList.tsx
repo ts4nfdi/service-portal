@@ -8,15 +8,18 @@ const ResourcesWidget = dynamic<ResourcesWidgetProps>(() =>
   , { ssr: false }) as React.ComponentType<ResourcesWidgetProps>;
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useLocale } from '@/app/i18n';
+import { widgetUiMessages } from './messages';
 
 
 export default function TerminologyListWidgetTSS() {
+  const t = widgetUiMessages[useLocale()];
   const queryClient = new QueryClient();
 
   return (
     <>
       <p className='header-2'>ResourcesWidget</p>
-      <p>Terminology list hosted by <b>Zbmed</b> (https://semanticlookup.zbmed.de/ols/api/)</p>
+      <p>{t.resourcesBody}<b>Zbmed</b>{t.resourcesBodyEnd}</p>
       <QueryClientProvider client={queryClient}>
         <ResourcesWidget
           actions={[]}
@@ -39,4 +42,3 @@ export default function TerminologyListWidgetTSS() {
     </>
   );
 }
-

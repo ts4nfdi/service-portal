@@ -7,10 +7,13 @@ import {useEffect, useState} from "react";
 import {CardSkeleton} from "../commons/skeletons";
 import {Pagination} from "@/app/clientExports";
 import {PublicationActionResp} from "@/app/api/actions/types";
+import { useLocale } from "@/app/i18n";
+import { publicationMessages } from "@/app/publications/messages";
 
 const DEFAULT_PAGE_SIZE = 5;
 
 export default function PublicationCardsCmp() {
+    const t = publicationMessages[useLocale()];
 
     const [pubs, setPubs] = useState<PortalPublication[]>([]);
     const [page, setPage] = useState<number>(1);
@@ -45,11 +48,11 @@ export default function PublicationCardsCmp() {
     return (
         <div className="col-span-3">
             <div className="grid grid-cols-3 gap-4">
-                <p className="header-main-1 inline-block col-span-2">Further publications integrated from Zenodo</p>
+                <p className="header-main-1 inline-block col-span-2">{t.further}</p>
                 <Pagination
                     page={page}
                     size={DEFAULT_PAGE_SIZE}
-                    objectName="Publications"
+                    objectName={t.objectName}
                     total={totalPubCount}
                     handleNextPageClick={handleNextPageClick}
                     handlePrevPageClick={handlePrevPageClick}
