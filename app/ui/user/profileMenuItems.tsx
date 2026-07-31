@@ -34,7 +34,7 @@ export default function UserProfileMenuItems(props: { username: string, email: s
             <Link href={localizePath("/collection/myCollections/", locale)} className="profile-menu-item" onClick={closeOrOpen}>{t("myCollections")}</Link>
           </li>
           <li>
-            <Link href="/api/auth/signout" className="profile-menu-item" onClick={closeOrOpen}>{t("signOut")}</Link>
+            <Link href={localizePath("/user/logout/", locale)} className="profile-menu-item" onClick={closeOrOpen}>{t("signOut")}</Link>
           </li>
         </ul>
       </div>
