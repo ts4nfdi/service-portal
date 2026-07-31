@@ -1,13 +1,49 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 
+type SsoTokens = {
+  access_token: string;
+  id_token: string;
+};
+
+const pendingRegistrations = new Map<
+  string,
+  { tokens: SsoTokens; expiresAt: number }
+>();
+const registrationTtl = 5 * 60 * 1000;
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "OAuth callback",
       credentials: {
         code: { label: "Code", type: "text" },
+        username: { label: "Username", type: "text" },
+        registrationId: { label: "Registration ID", type: "text" },
       },
       async authorize(credentials) {
+        if (credentials?.registrationId && credentials.username) {
+          const registration = pendingRegistrations.get(credentials.registrationId);
+          pendingRegistrations.delete(credentials.registrationId);
+          if (!registration || registration.expiresAt < Date.now()) {
+            return null;
+          }
+          const registerResponse = await fetch(
+            process.env.GATEWAY_BASE_URL! + "/auth/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                username: credentials.username,
+                id_token: registration.tokens.id_token,
+              }),
+            },
+          );
+          if (!registerResponse.ok) {
+            return null;
+          }
+          return await loginUser(registration.tokens);
+        }
+
         if (!credentials?.code) {
           return null;
         }
@@ -29,40 +65,21 @@ export const authOptions = {
         if (!tokenResponse.ok) {
           return null;
         }
-        const tokens = await tokenResponse.json();
-        const loginResponse = await fetch(
-          process.env.GATEWAY_BASE_URL! + "/auth/sso/login",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              access_token: tokens.access_token,
-              id_token: tokens.id_token,
-            }),
-          },
-        );
+        const tokens = (await tokenResponse.json()) as SsoTokens;
+        let loginResponse = await loginWithTokens(tokens);
+        if (loginResponse.status === 401) {
+          const registrationId = crypto.randomUUID();
+          pendingRegistrations.set(registrationId, {
+            tokens,
+            expiresAt: Date.now() + registrationTtl,
+          });
+          throw new Error(`UserNotRegistered:${registrationId}`);
+        }
         if (!loginResponse.ok) {
           return null;
         }
 
-        const user = await loginResponse.json();
-        const identity = getIdentity(tokens.id_token);
-        const token = user.token ?? user.jwt ?? user.access_token;
-        if (!token) {
-          return null;
-        }
-
-        const username =
-          user.username ??
-          identity.preferred_username ??
-          identity.name ??
-          "User";
-        return {
-          id: username,
-          token,
-          username,
-          email: user.email ?? identity.email,
-        };
+        return await loginUser(tokens, loginResponse);
       },
     }),
   ],
@@ -113,4 +130,41 @@ function getIdentity(idToken: string): Record<string, string> {
   } catch {
     return {};
   }
+}
+
+async function loginUser(tokens: SsoTokens, response?: Response) {
+  const loginResponse = response ?? await loginWithTokens(tokens);
+  if (!loginResponse.ok) {
+    return null;
+  }
+
+  const user = await loginResponse.json();
+  const identity = getIdentity(tokens.id_token);
+  const token = user.token ?? user.jwt ?? user.access_token;
+  if (!token) {
+    return null;
+  }
+
+  const username =
+    user.username ??
+    identity.preferred_username ??
+    identity.name ??
+    "User";
+  return {
+    id: username,
+    token,
+    username,
+    email: user.email ?? identity.email,
+  };
+}
+
+function loginWithTokens(tokens: SsoTokens) {
+  return fetch(process.env.GATEWAY_BASE_URL! + "/auth/sso/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      access_token: tokens.access_token,
+      id_token: tokens.id_token,
+    }),
+  });
 }
