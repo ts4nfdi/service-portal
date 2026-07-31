@@ -4,15 +4,16 @@ import {WarningAlert} from "@/app/ui/commons/snippets";
 import {signOut} from "next-auth/react";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "../messages";
+import { localizePath } from "@/app/libs/localePath";
 
 
 export default function Logout() {
-    const t = userPageMessages[useLocale()];
+    const locale = useLocale();
+    const t = userPageMessages[locale];
 
     function logout() {
-        // signOut({callbackUrl: "https://terminology.services.base4nfdi.de/"});
         signOut({redirect: false}).then(() => {
-            window.location.href = "https://terminology.services.base4nfdi.de/";
+            window.location.replace(localizePath("/", locale));
         });
     }
 

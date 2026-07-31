@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { getCodeUrl } from "@/app/libs/authUrl";
 import { useLocale } from "@/app/i18n";
@@ -12,7 +12,6 @@ type LoginStatus = "loading" | "needsRegistration" | "error";
 export default function OAuthCallback() {
   const t = userPageMessages[useLocale()];
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [status, setStatus] = useState<LoginStatus>("loading");
   const [username, setUsername] = useState("");
   const [registrationId, setRegistrationId] = useState("");
@@ -25,7 +24,7 @@ export default function OAuthCallback() {
     signIn("credentials", { code, redirect: false })
       .then((result) => {
         if (result?.ok) {
-          finishLogin(router);
+          finishLogin();
           return;
         }
         const nextRegistrationId = getRegistrationId(result?.error);
@@ -37,7 +36,7 @@ export default function OAuthCallback() {
         setStatus("error");
       })
       .catch(() => setStatus("error"));
-  }, [code, router]);
+  }, [code]);
 
   if (!code) {
     return null;
@@ -49,7 +48,7 @@ export default function OAuthCallback() {
     signIn("credentials", { registrationId, username, redirect: false })
       .then((result) => {
         if (result?.ok) {
-          finishLogin(router);
+          finishLogin();
           return;
         }
         setStatus("error");
@@ -103,9 +102,8 @@ export default function OAuthCallback() {
   );
 }
 
-function finishLogin(router: ReturnType<typeof useRouter>) {
-  window.history.replaceState({}, "", window.location.pathname);
-  router.refresh();
+function finishLogin() {
+  window.location.replace(window.location.pathname);
 }
 
 function getRegistrationId(error?: string | null) {
