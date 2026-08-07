@@ -1,0 +1,228 @@
+[
+  {
+    "id": "fc45621d-7e40-47ce-9616-4133f0b54edf",
+    "label": "FAIRagro Options",
+    "creator": "roman",
+    "description": "This is an example entity set for FAIRagro and the DMP4NFDI incubator",
+    "collaborators": [],
+    "entities": [
+      {
+        "uri": "http://opendata.inrae.fr/thesaurusINRAE/c_17625",
+        "label": [
+          {
+            "value": "field experiment",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+        ],
+        "terminology": "INRAETHES",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "http://opendata.inrae.fr/thesaurusINRAE/c_17114",
+        "label": [
+          {
+            "value": "In situ measurements",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+        ],
+        "terminology": "INRAETHES",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "http://opendata.inrae.fr/thesaurusINRAE/c_17552",
+        "label": [
+          {
+            "value": "greenhouse experiment",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+        ],
+        "terminology": "INRAETHES",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "http://opendata.inrae.fr/thesaurusINRAE/c_17520",
+        "label": [
+          {
+            "value": "laboratory experimentation",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+        ],
+        "terminology": "INRAETHES",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "https://lod.nal.usda.gov/nalt/35112",
+        "label": [
+          {
+            "value": "remote sensing",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+          {
+            "value": "https://lod.nal.usda.gov/nalt/35112_def",
+            "lang": "en"
+          }
+        ],
+        "terminology": "NALT",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_37359",
+        "label": [
+          {
+            "value": "image processing",
+            "lang": "en"
+          },
+          {
+            "value": "Bildverarbeitung",
+            "lang": "de"
+          }
+        ],
+        "definition": [
+          {
+            "value": "Procedure for restoring or enhancing images, often by computer",
+            "lang": "en"
+          }
+        ],
+        "terminology": "agrovoc",
+        "provider": "agrovoc"
+      },
+      {
+        "uri": "http://www.yso.fi/onto/yso/p21846",
+        "label": [
+          {
+            "value": "machine learning",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+        ],
+        "terminology": "AFO",
+        "provider": "agroportal"
+      },
+      {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_5209",
+        "label": [
+          {
+            "value": "simulation",
+            "lang": "en"
+          },
+          {
+            "value": "Simulation",
+            "lang": "de"
+          }
+        ],
+        "definition": [
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_01c21219",
+            "lang": "en"
+          },
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_98ef2e2a",
+            "lang": "en"
+          }
+        ],
+        "terminology": "agrovoc",
+        "provider": "agrovoc"
+      },
+      {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_295ae038",
+        "label": [
+          {
+            "value": "algorithms",
+            "lang": "en"
+          },
+          {
+            "value": "Algorithmus",
+            "lang": "de"
+          }
+        ],
+        "definition": [
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_1fad0719",
+            "lang": "en"
+          },
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_80d37af0",
+            "lang": "en"
+          },
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_8e91260e",
+            "lang": "en"
+          }
+        ],
+        "terminology": "agrovoc",
+        "provider": "agrovoc"
+      },
+      {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_7537",
+        "label": [
+          {
+            "value": "surveys",
+            "lang": "en"
+          },
+          {
+            "value": "Untersuchung",
+            "lang": "de"
+          }
+        ],
+        "definition": [
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_74a89f3c",
+            "lang": "en"
+          }
+        ],
+        "terminology": "agrovoc",
+        "provider": "agrovoc"
+      },
+      {
+        "uri": "http://purl.obolibrary.org/obo/NCIT_C180602",
+        "label": [
+          {
+            "value": "Workshop",
+            "lang": "en"
+          }
+        ],
+        "definition": [
+          {
+            "value": "A brief educational program, usually for a small group, that focuses on techniques, skills, and problem solving in a particular field.",
+            "lang": "en"
+          }
+        ],
+        "terminology": "ncit",
+        "provider": "tib"
+      },
+      {
+        "uri": "http://aims.fao.org/aos/agrovoc/c_201",
+        "label": [
+          {
+            "value": "agricultural policies",
+            "lang": "en"
+          },
+          {
+            "value": "Agrarpolitik",
+            "lang": "de"
+          }
+        ],
+        "definition": [
+          {
+            "value": "http://aims.fao.org/aos/agrovoc/xDef_1328252900437",
+            "lang": "en"
+          }
+        ],
+        "terminology": "agrovoc",
+        "provider": "agrovoc"
+      }
+    ],
+    "isPublic": true
+  }
+]

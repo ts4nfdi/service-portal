@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getRequestLocale } from "../libs/locale";
 import { entitySetMessages } from "./messages";
+import {CopyToClipboard} from "@/app/clientExports";
 
 
 export default async function EntitySet() {
@@ -16,7 +17,19 @@ export default async function EntitySet() {
                 <p className='text-justify'>
                     {t.descriptionStart}<b>{t.entitySet}</b>{t.descriptionEnd}
                 </p>
-
+                <div className="flex flex-row flex-wrap justify-start px-1 mt-2">
+                    <div>
+                        <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
+                            {t.apiEndpoint}
+                        </p>
+                        {(process.env.GATEWAY_BASE_URL! as string) + "/entitysets/"}
+                    </div>
+                    <CopyToClipboard
+                        textToCopy={
+                            (process.env.GATEWAY_BASE_URL! as string) + "/entitysets/"
+                        }
+                    />
+                </div>
             </div>
             <div className='md:col-span-4 card-background float-right'>
                 <h4 className='header-main-3'>{t.figure}</h4>
