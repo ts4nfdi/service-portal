@@ -6,7 +6,7 @@ export const imprintMessages = {
   },
   de: {
     title: "Impressum",
-    body: "Das zugehoerige Impressum befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geoeffnet.",
+    body: "Das zugehörige Impressum befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geöffnet.",
     linkLabel: "Zum Impressum:",
   },
 } as const;

@@ -14,7 +14,7 @@ export const entitySetMessages = {
     what: "Was ist ein Entity Set?",
     descriptionStart: "Ein ",
     entitySet: "Entity Set",
-    descriptionEnd: " ist eine Menge ausgewaehlter IRIs, die flach und optional sortiert ist. Das bedeutet, dass sie keine semantischen Beziehungen zwischen den enthaltenen Entitaeten beschreibt und fuer einen bestimmten Zweck oder Kontext erstellt wurde. Ein Entity Set kann Entitaeten aus mehreren Terminologien unterschiedlicher Quellen enthalten.",
+    descriptionEnd: " ist eine Menge ausgewählter IRIs, die flach und optional sortiert ist. Das bedeutet, dass sie keine semantischen Beziehungen zwischen den enthaltenen Entitäten beschreibt und für einen bestimmten Zweck oder Kontext erstellt wurde. Ein Entity Set kann Entitäten aus mehreren Terminologien unterschiedlicher Quellen enthalten.",
     apiEndpoint: "API-Endpunkt: ",
     figure: "Abbildung eines Entity Sets",
     alt: "Beispiel eines Entity Sets",

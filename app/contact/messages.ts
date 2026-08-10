@@ -22,7 +22,7 @@ export const contactMessages = {
     messagePlaceholder: "Bitte beschreiben Sie Ihr Anliegen ...",
     message: "Nachricht",
     submit: "Senden",
-    success: "Vielen Dank fuer Ihre Nachricht! Wir melden uns schnellstmoeglich bei Ihnen.",
+    success: "Vielen Dank für Ihre Nachricht! Wir melden uns schnellstmöglich bei Ihnen.",
     error: "Entschuldigung, es ist etwas schiefgelaufen.",
     newMessage: "Neue Nachricht",
     textEditorTranslations: {

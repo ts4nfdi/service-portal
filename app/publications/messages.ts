@@ -13,9 +13,9 @@ export const publicationMessages = {
   de: {
     title: "Publikationen",
     peerReviewed: "Peer-Review-Publikationen",
-    intro: "Der folgende Abschnitt zeigt eine Sammlung begutachteter Publikationen, die im Projekt Terminology Services 4 NFDI (TS4NFDI) veroeffentlicht wurden. Alle Publikationen wurden durch etablierte Peer-Review-Verfahren bewertet und geben einen umfassenden Ueberblick ueber die Arbeit von TS4NFDI.",
+    intro: "Der folgende Abschnitt zeigt eine Sammlung begutachteter Publikationen, die im Projekt Terminology Services 4 NFDI (TS4NFDI) veröffentlicht wurden. Alle Publikationen wurden durch etablierte Peer-Review-Verfahren bewertet und geben einen umfassenden Überblick über die Arbeit von TS4NFDI.",
     authors: "Autorinnen und Autoren: ",
-    publishedOn: " Veroeffentlicht am: ",
+    publishedOn: " Veröffentlicht am: ",
     abstract: "Zusammenfassung: ",
     doi: "DOI: ",
     further: "Weitere aus Zenodo integrierte Publikationen",

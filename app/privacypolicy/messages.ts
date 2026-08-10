@@ -5,8 +5,8 @@ export const privacyPolicyMessages = {
     linkLabel: "Go to the privacy policy at",
   },
   de: {
-    title: "Datenschutzerklaerung",
-    body: "Die zugehoerige Datenschutzerklaerung befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geoeffnet.",
-    linkLabel: "Zur Datenschutzerklaerung:",
+    title: "Datenschutzerklärung",
+    body: "Die zugehörige Datenschutzerklärung befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geöffnet.",
+    linkLabel: "Zur Datenschutzerklärung:",
   },
 } as const;
