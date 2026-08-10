@@ -16,13 +16,13 @@ export default function TermsOfUse() {
         <br /><br />
         {t.providedBy}
         <br /><br />
-        Deutsche Zentralbibliothek fuer Medizin (ZB MED) - Informationszentrum Lebenswissenschaften
+        Deutsche Zentralbibliothek für Medizin (ZB MED) - Informationszentrum Lebenswissenschaften
         <br />
         {t.director}
         <br />
         Gleueler Strasse 60
         <br />
-        50931 Koeln
+        50931 Köln
         <br />
         {t.germany}
         <br />

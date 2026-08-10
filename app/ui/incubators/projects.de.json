@@ -241,7 +241,7 @@
       "status": "Finished",
       "start": "20.08.2025",
       "end": "01.04.2026",
-      "description": "NFDI4Energy entwickelt eine Plattform, die wichtige Dienste zur Unterstützung von Forschern im Energiebereich integriert. Zentrale Komponenten sind über die Open Energy Platform (OEP) zugänglich. Ein Kernelement ist die Open Energy Ontology (OEO), eine dynamische Domänenontologie zur Energiesystemmodellierung. Weitere ergänzende Ontologien sind derzeit in der Entwicklung, um den semantischen Rahmen zu erweitern.",
+      "description": "NFDI4Energy entwickelt eine Plattform, die wichtige Dienste zur Unterstützung von Forschern im Energiebereich integriert. Zentrale Komponenten sind über die Open Energy Platform (öP) zugänglich. Ein Kernelement ist die Open Energy Ontology (OEO), eine dynamische Domänenontologie zur Energiesystemmodellierung. Weitere ergänzende Ontologien sind derzeit in der Entwicklung, um den semantischen Rahmen zu erweitern.",
       "goals": [
         "Hosting der Open Energy Ontology",
         "Integration von TSS-Widgets zur Visualisierung und als Navigation"

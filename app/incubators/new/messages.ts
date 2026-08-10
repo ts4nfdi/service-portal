@@ -26,11 +26,11 @@ export const newIncubatorMessages = {
     email: "E-Mail",
     descriptionPlaceholder: "Bitte beschreiben Sie Ihr Projekt...",
     description: "Beschreibung",
-    logoPlaceholder: "Bitte laden Sie ein Logo fuer Ihr Projekt hoch",
+    logoPlaceholder: "Bitte laden Sie ein Logo für Ihr Projekt hoch",
     logo: "Projektlogo",
     logoHint: "nur Bilddateien",
     submit: "Senden",
-    success: "Vielen Dank fuer Ihre Anfrage! Wir melden uns schnellstmoeglich bei Ihnen.",
+    success: "Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich bei Ihnen.",
     error: "Entschuldigung, es ist etwas schiefgelaufen.",
     newRequest: "Neue Anfrage",
     textEditorTranslations: {

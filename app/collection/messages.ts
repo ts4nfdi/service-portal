@@ -17,7 +17,7 @@ export const collectionMessages = {
     what: "Was ist eine Terminologiesammlung?",
     descriptionStart: "Eine ",
     collection: "Terminologiesammlung",
-    descriptionEnd: " ist eine Menge von Terminologien, die fuer einen bestimmten Zweck oder Kontext erstellt wurde. Sie kann mit der Community geteilt werden und Ontologien, Thesauri und weitere Terminologien ohne Bewertung enthalten. Eine Terminologiesammlung kann daher als Gruppierung im grossen Raum vorhandener Terminologien verstanden werden.",
+    descriptionEnd: " ist eine Menge von Terminologien, die für einen bestimmten Zweck oder Kontext erstellt wurde. Sie kann mit der Community geteilt werden und Ontologien, Thesauri und weitere Terminologien ohne Bewertung enthalten. Eine Terminologiesammlung kann daher als Gruppierung im grossen Raum vorhandener Terminologien verstanden werden.",
     create: "Sammlung erstellen",
     apiEndpoint: "API-Endpunkt: ",
     figure: "Abbildung einer Terminologiesammlung",
