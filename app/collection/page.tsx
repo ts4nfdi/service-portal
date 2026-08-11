@@ -133,7 +133,7 @@ export default async function Collections() {
         <div className="md:col-span-4 card-background float-right">
           <h4 className="header-main-3">{t.figure}</h4>
           <Image
-            src={"img/collections.png"}
+            src={"/img/collections.png"}
             width={525}
             height={130}
             alt={t.alt}

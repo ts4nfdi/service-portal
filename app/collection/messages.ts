@@ -18,6 +18,7 @@ export const collectionMessages = {
     descriptionStart: "Eine ",
     collection: "Terminologiesammlung",
     descriptionEnd: " ist eine Sammlung von Terminologien, die für einen bestimmten Zweck oder Kontext erstellt wurde. Eine solche Terminologiesammlung kann Ontologien, Thesauri und Ähnliches enthalten und wird in der Regel anhand definierter Kriterien für einen bestimmten Zweck zusammengestellt. Sie kann mit der Community geteilt werden und lässt sich als Teilmenge innerhalb des großen Raums bestehender Terminologien verstehen, die einen spezifischen Teilbereich eines Wissensgebietes abbildet.",
+    create: "Sammlung erstellen",
     apiEndpoint: "API-Endpunkt: ",
     figure: "Abbildung einer Terminologiesammlung",
     alt: "Beispiel einer Terminologiesammlung",

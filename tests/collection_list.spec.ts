@@ -15,8 +15,14 @@ test.use({ acceptDownloads: true });
 async function openCollectionsPage(page: Page) {
   await acceptTrackingConsent(page);
   await page.goto(BASE_URL);
-  await page.getByRole("link", { name: "Collections" }).first().click();
-  await expect(page).toHaveURL(/\/collection\/?$/);
+  const collectionsLink = page
+    .locator('nav a.navbar-links[href="/collection"]')
+    .first();
+  await expect(collectionsLink).toBeVisible();
+  await Promise.all([
+    page.waitForURL(/\/collection\/?$/),
+    collectionsLink.click(),
+  ]);
   await expect(page.locator(".collection-card")).toHaveCount(5);
 }
 

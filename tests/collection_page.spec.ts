@@ -11,7 +11,11 @@ test.use({ acceptDownloads: true });
 async function openCollectionPage(page: Page) {
   await acceptTrackingConsent(page);
   await page.goto(`${BASE_URL}/collection/${COLLECTION.id}`);
-  await expect(page.locator(".collection-card")).toBeVisible();
+  await expect(
+    page.locator(".collection-card").filter({
+      has: page.getByText(COLLECTION.label!, { exact: true }),
+    }),
+  ).toBeVisible();
 }
 
 function collectionBox(page: Page, text: string): Locator {
@@ -27,7 +31,7 @@ test("collection page is accessible by uuid and shows collection details", async
     page.getByText(COLLECTION.label!, { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByLabel("collection visibility", { exact: true }),
+    page.getByLabel("Collection visibility", { exact: true }),
   ).toHaveText("public");
   await expect(
     page.getByText(`Created by: ${COLLECTION.creator}`),
