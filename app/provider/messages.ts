@@ -4,7 +4,7 @@ export const providerMessages = {
                     <a href="https://ts4nfdi.github.io/api-gateway/" rel="noopener" target="_blank">API Gateway documentation</a>`,
   },
   de: {
-    intro: `Die folgenden Terminologiedienste werden derzeit ueber das TS4NFDI API-Gateway unterstuetzt. Weitere Informationen finden Sie in der:
+    intro: `Die folgenden Terminologiedienste werden derzeit über das TS4NFDI API-Gateway unterstützt. Weitere Informationen finden Sie in der:
                     <a href="https://ts4nfdi.github.io/api-gateway/" rel="noopener" target="_blank">API-Gateway-Dokumentation</a>`,
   },
 } as const;
