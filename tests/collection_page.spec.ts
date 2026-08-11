@@ -11,7 +11,11 @@ test.use({ acceptDownloads: true });
 async function openCollectionPage(page: Page) {
   await acceptTrackingConsent(page);
   await page.goto(`${BASE_URL}/collection/${COLLECTION.id}`);
-  await expect(page.locator(".collection-card")).toBeVisible();
+  await expect(
+    page.locator(".collection-card").filter({
+      has: page.getByText(COLLECTION.label!, { exact: true }),
+    }),
+  ).toBeVisible();
 }
 
 function collectionBox(page: Page, text: string): Locator {
