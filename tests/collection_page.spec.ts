@@ -27,7 +27,7 @@ test("collection page is accessible by uuid and shows collection details", async
     page.getByText(COLLECTION.label!, { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByLabel("collection visibility", { exact: true }),
+    page.getByLabel("Collection visibility", { exact: true }),
   ).toHaveText("public");
   await expect(
     page.getByText(`Created by: ${COLLECTION.creator}`),

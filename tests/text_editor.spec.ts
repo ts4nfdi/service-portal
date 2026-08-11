@@ -13,8 +13,24 @@ function editor(page: Page): Locator {
   return page.locator(".DraftEditor-editorContainer [contenteditable='true']");
 }
 
-function toolbarOption(page: Page, title: string): Locator {
-  return page.locator(`.rdw-option-wrapper[title="${title}"]`);
+const INLINE_TOOLBAR_OPTIONS = {
+  Bold: 0,
+  Italic: 1,
+  Underline: 2,
+  Strikethrough: 3,
+} as const;
+
+function inlineToolbarOption(
+  page: Page,
+  title: keyof typeof INLINE_TOOLBAR_OPTIONS,
+): Locator {
+  return page
+    .locator(".rdw-inline-wrapper .rdw-option-wrapper")
+    .nth(INLINE_TOOLBAR_OPTIONS[title]);
+}
+
+function linkToolbarOption(page: Page): Locator {
+  return page.locator(".rdw-link-wrapper .rdw-option-wrapper").first();
 }
 
 async function hiddenInputValue(page: Page) {
@@ -37,15 +53,20 @@ async function typeAndSelectText(page: Page, text: string) {
   await page.keyboard.press("Control+A");
 }
 
-async function formatSelectedText(page: Page, title: string, text: string) {
+async function formatSelectedText(
+  page: Page,
+  title: keyof typeof INLINE_TOOLBAR_OPTIONS,
+  text: string,
+) {
   await typeAndSelectText(page, text);
-  await toolbarOption(page, title).click();
+  await inlineToolbarOption(page, title).click();
 }
 
 async function chooseDropdownOption(
   page: Page,
   dropdownClass: string,
   optionText: string,
+  fallbackIndex?: number,
 ) {
   const dropdown = page.locator(dropdownClass);
   await dropdown.click();
@@ -58,6 +79,9 @@ async function chooseDropdownOption(
       .locator("li, .rdw-dropdownoption-default")
       .filter({ hasText: new RegExp(`^${optionText}$`) })
       .last();
+  }
+  if ((await option.count()) === 0 && fallbackIndex !== undefined) {
+    option = dropdown.locator(".rdw-dropdownoption-default").nth(fallbackIndex);
   }
   await option.click({ force: true });
 }
@@ -76,17 +100,21 @@ test("text editor toolbar actions are visible and clickable", async ({
   await openTextEditor(page);
 
   for (const title of ["Bold", "Italic", "Underline", "Strikethrough"]) {
-    await expect(toolbarOption(page, title)).toBeVisible();
-    await toolbarOption(page, title).click();
-    await expect(toolbarOption(page, title)).toHaveClass(/rdw-option-active/);
-    await toolbarOption(page, title).click();
+    const option = inlineToolbarOption(
+      page,
+      title as keyof typeof INLINE_TOOLBAR_OPTIONS,
+    );
+    await expect(option).toBeVisible();
+    await option.click();
+    await expect(option).toHaveClass(/rdw-option-active/);
+    await option.click();
   }
 
   await expect(page.locator(".rdw-block-dropdown")).toBeVisible();
   await expect(page.locator(".rdw-fontsize-dropdown")).toBeVisible();
   await expect(page.locator(".rdw-list-dropdown")).toBeVisible();
   await expect(page.locator(".rdw-colorpicker-wrapper")).toBeVisible();
-  await expect(toolbarOption(page, "Link")).toBeVisible();
+  await expect(linkToolbarOption(page)).toBeVisible();
 });
 
 test("text editor inline toolbar actions update the submitted html", async ({
@@ -115,7 +143,7 @@ test("text editor dropdown actions update heading and font size html", async ({
 }) => {
   await openTextEditor(page);
 
-  await chooseDropdownOption(page, ".rdw-block-dropdown", "H2");
+  await chooseDropdownOption(page, ".rdw-block-dropdown", "H2", 2);
   await editor(page).click();
   await page.keyboard.type("Styled heading");
   await expectHiddenInputToContain(page, /<h2>Styled heading<\/h2>/);
@@ -147,12 +175,12 @@ test("text editor color picker and link insertion update submitted html", async 
   await expectHiddenInputToContain(page, /color:\s*rgb|color:\s*#/i);
 
   await page.keyboard.press("Control+A");
-  await toolbarOption(page, "Link").click();
+  await linkToolbarOption(page).click();
   await page.locator("#linkTitle").fill("TS4NFDI");
   await page
     .locator("#linkTarget")
     .fill("https://terminology.services.base4nfdi.de/");
-  await page.getByRole("button", { name: "Add" }).click();
+  await page.locator(".rdw-link-modal-btn").first().click();
 
   await expectHiddenInputToContain(
     page,
