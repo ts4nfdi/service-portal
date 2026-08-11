@@ -6,7 +6,7 @@ export const accessibilityMessages = {
   },
   de: {
     title: "Barrierefreiheit",
-    body: "Die zugehoerige Erklaerung zur Barrierefreiheit befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geoeffnet.",
-    linkLabel: "Zur Erklaerung zur Barrierefreiheit:",
+    body: "Die Erklärung zur Barrierefreiheit befindet sich ausserhalb des TS4NFDI Service-Portals und wird daher in einem neuen Tab geöffnet.",
+    linkLabel: "Folgen Sie dem Link zur Erklärung zur Barrierefreiheit:",
   },
 } as const;

@@ -9,6 +9,6 @@ export const commonMessages = {
     loading: "Wird geladen...",
     closeModal: "Modal schliessen",
     close: "Schliessen",
-    openMainMenu: "Hauptmenue oeffnen",
+    openMainMenu: "Hauptmenü öffnen",
   },
 } as const;

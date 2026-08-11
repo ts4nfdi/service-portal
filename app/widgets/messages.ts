@@ -22,7 +22,7 @@ export const widgetMessages = {
   },
   de: {
     title: "TS4NFDI Service-Portal Lookup-Dienst",
-    introStart: "Hier koennen Sie Begriffe und Terminologien aus verschiedenen Terminologiediensten suchen, die von unserem API-Gateway unterstuetzt werden. Die UI-Komponenten fuer diesen Lookup stammen aus unseren ",
+    introStart: "Hier können Sie Begriffe und Terminologien aus verschiedenen Terminologiediensten suchen, die von unserem API-Gateway unterstützt werden. Die UI-Komponenten für diesen Lookup stammen aus unseren ",
     tssWidgets: "Widgets der TSS",
     alertTitle: "Kurz zu den TSS-Widgets",
     alertBody: `Das Projekt Terminologie-Service-Suite, abgeleitet aus dem
@@ -32,8 +32,8 @@ export const widgetMessages = {
         ist eine Sammlung interaktiver Widgets,
         die die Integration von Terminologiedienstfunktionen in Anwendungen Dritter erleichtern.
         Im Storybook finden Sie eine interaktive Dokumentation der Widget-Komponentenbibliothek.
-        Die Widgets sind mit React und TypeScript erstellt und koennen in React- und reinen HTML-Anwendungen genutzt werden.
-        Funktionalitaet und Argumente sind fuer beide Varianten gleich. `,
+        Die Widgets sind mit React und TypeScript erstellt und können in React- und reinen HTML-Anwendungen genutzt werden.
+        Funktionalität und Argumente sind für beide Varianten gleich. `,
     termLookup: "Begriffssuche",
     terminologyList: "Terminologieliste",
     search: "Suche",

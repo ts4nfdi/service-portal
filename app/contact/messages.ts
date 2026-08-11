@@ -15,14 +15,14 @@ export const contactMessages = {
   },
   de: {
     title: "Kontakt",
-    topicPlaceholder: "Bitte geben Sie Ihr Thema ein",
+    topicPlaceholder: "Bitte geben Sie das Thema ein",
     topic: "Betreff",
     emailPlaceholder: "Bitte geben Sie Ihre E-Mail-Adresse ein",
     email: "E-Mail",
     messagePlaceholder: "Bitte beschreiben Sie Ihr Anliegen ...",
     message: "Nachricht",
     submit: "Senden",
-    success: "Vielen Dank fuer Ihre Nachricht! Wir melden uns schnellstmoeglich bei Ihnen.",
+    success: "Vielen Dank für Ihre Nachricht! Wir melden uns schnellstmöglich bei Ihnen.",
     error: "Entschuldigung, es ist etwas schiefgelaufen.",
     newMessage: "Neue Nachricht",
     textEditorTranslations: {

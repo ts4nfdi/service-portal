@@ -12,7 +12,7 @@
         {
           "imagePath": "nk.png",
           "name": "Karam, Naouel",
-          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "affiliation": "Institut für Angewandte Informatik (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-6762-6417"
         },
         {
@@ -24,7 +24,7 @@
         {
           "imagePath": "jv.jpg",
           "name": "Voß, Jakob",
-          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
           "orcid": "https://orcid.org/0000-0002-7613-4123"
         },
         {
@@ -53,7 +53,7 @@
         {
           "imagePath": "blank.jpg",
           "name": "Schäfermeier, Ralph",
-          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "affiliation": "Institut für Angewandte Informatik (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-4349-6726"
         },
         {
@@ -83,13 +83,13 @@
         {
           "imagePath": "blank.jpg",
           "name": "Kesper, Arno",
-          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
           "orcid": "https://orcid.org/0000-0002-5042-1087"
         },
         {
           "imagePath": "blank.jpg",
           "name": "Matoni, Markus",
-          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
           "orcid": "https://orcid.org/0000-0003-4389-5871"
         }
       ]
@@ -100,19 +100,19 @@
         {
           "imagePath": "blank.jpg",
           "name": "Bouazzouni, Syphax",
-          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "affiliation": "Institut für Angewandte Informatik (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-2069-8739"
         },
         {
           "imagePath": "blank.jpg",
           "name": "Fillies, Jan",
-          "affiliation": "Institut fuer Angewandte Informatik (InfAI), Leipzig",
+          "affiliation": "Institut für Angewandte Informatik (InfAI), Leipzig",
           "orcid": "https://orcid.org/0000-0002-2997-4656"
         },
         {
           "imagePath": "ds.jpg",
           "name": "Schäfer, Domenic",
-          "affiliation": "Verbundzentrale des GBV (VZG), Goettingen",
+          "affiliation": "Verbundzentrale des GBV (VZG), Göttingen",
           "orcid": "https://orcid.org/0000-0001-7118-3295"
         }
       ]
