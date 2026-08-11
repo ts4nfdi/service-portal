@@ -15,7 +15,7 @@ export const contactMessages = {
   },
   de: {
     title: "Kontakt",
-    topicPlaceholder: "Bitte geben Sie Ihr Thema ein",
+    topicPlaceholder: "Bitte geben Sie das Thema ein",
     topic: "Betreff",
     emailPlaceholder: "Bitte geben Sie Ihre E-Mail-Adresse ein",
     email: "E-Mail",
