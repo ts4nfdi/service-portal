@@ -17,7 +17,7 @@ export default function Home() {
               width={255}
               height={255}
               alt="TS4NFDI"
-              src={"img/TS4NFDI-small-grey.svg"}
+              src={"/img/TS4NFDI-small-grey.svg"}
             />
             {t("title")}
           </h1>
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="card-background md:col-span-9 grid md:grid-cols-9">
           <div className="md:col-span-3">
             <Image
-              src={"img/TS4NFDI-Service-Portal-Hexagon-Dark.svg"}
+              src={"/img/TS4NFDI-Service-Portal-Hexagon-Dark.svg"}
               width={350}
               height={350}
               alt={t("portalLogoAlt")}
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
         <div className="md:col-span-3 card-background">
           <Image
-            src={"img/TS4NFDI-Terminology-Service-Suite-Hexagon-Dark.svg"}
+            src={"/img/TS4NFDI-Terminology-Service-Suite-Hexagon-Dark.svg"}
             width={350}
             height={350}
             alt={t("tssLogoAlt")}
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
         <div className="md:col-span-3 card-background">
           <Image
-            src={"img/TS4NFDI-API-Gateway-Hexagon-Dark.svg"}
+            src={"/img/TS4NFDI-API-Gateway-Hexagon-Dark.svg"}
             width={350}
             height={350}
             alt={t("gatewayLogoAlt")}
@@ -109,7 +109,7 @@ export default function Home() {
         </div>
         <div className="md:col-span-3 card-background">
           <Image
-            src={"img/TS4NFDI-Mapping-Service-Hexagon-Dark.svg"}
+            src={"/img/TS4NFDI-Mapping-Service-Hexagon-Dark.svg"}
             width={350}
             height={350}
             alt={t("mappingLogoAlt")}
