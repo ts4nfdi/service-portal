@@ -20,6 +20,7 @@ function getNavItems(t: ReturnType<typeof useTranslations>): NavbarItem[] {
             {href: "https://terminology.services.base4nfdi.de/tss/comp/latest/", text: t("terminologyServiceSuite")}
         ]
     },
+    {href: "/lookup-service", text: t("lookupService")},
     {href: "/provider", text: t("providers")},
     {href: "/collection", text: t("collections")},
     {href: "/incubators", text: t("incubators")},

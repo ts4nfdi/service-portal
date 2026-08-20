@@ -19,6 +19,8 @@ export const widgetMessages = {
     search: "Search",
     searchTitle: "Search for terms and terminologies",
     back: "Back to Lookup selection",
+    lookupTitle: "Lookup Service",
+    fallbackWarning: "The API gateway is down. Falling back to the TIB terminology service.",
   },
   de: {
     title: "TS4NFDI Service-Portal Lookup-Dienst",
@@ -39,5 +41,7 @@ export const widgetMessages = {
     search: "Suche",
     searchTitle: "Nach Begriffen und Terminologien suchen",
     back: "Zurueck zur Lookup-Auswahl",
+    lookupTitle: "Lookup-Dienst",
+    fallbackWarning: "Das API-Gateway ist nicht verfügbar. Der Lookup-Dienst verwendet ersatzweise den TIB-Terminologiedienst.",
   },
 } as const;
