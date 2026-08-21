@@ -1,7 +1,8 @@
 export const widgetMessages = {
   en: {
     title: "TS4NFDI Service Portal lookup service",
-    introStart: "Here you can look after terms and terminologies from variety of terminology services supported by our API Gateway. The UI component to build this lookup come from our ",
+    introStart:
+      "Here you can look after terms and terminologies from variety of terminology services supported by our API Gateway. The UI component to build this lookup come from our ",
     tssWidgets: "Widgets of the TSS",
     alertTitle: "A bit about TSS Widgets",
     alertBody: `The Terminology Service Suite project, derived from the
@@ -20,11 +21,13 @@ export const widgetMessages = {
     searchTitle: "Search for terms and terminologies",
     back: "Back to Lookup selection",
     lookupTitle: "Lookup Service",
-    fallbackWarning: "The API gateway is down. Falling back to the TIB terminology service.",
+    fallbackWarning:
+      "The Search endpoint of the API Gateway is currently unreachable. Falling back to the TIB Terminology Service.",
   },
   de: {
     title: "TS4NFDI Service-Portal Lookup-Dienst",
-    introStart: "Hier können Sie Begriffe und Terminologien aus verschiedenen Terminologiediensten suchen, die von unserem API-Gateway unterstützt werden. Die UI-Komponenten für diesen Lookup stammen aus unseren ",
+    introStart:
+      "Hier können Sie Begriffe und Terminologien aus verschiedenen Terminologiediensten suchen, die von unserem API-Gateway unterstützt werden. Die UI-Komponenten für diesen Lookup stammen aus unseren ",
     tssWidgets: "Widgets der TSS",
     alertTitle: "Kurz zu den TSS-Widgets",
     alertBody: `Das Projekt Terminologie-Service-Suite, abgeleitet aus dem
@@ -42,6 +45,7 @@ export const widgetMessages = {
     searchTitle: "Nach Begriffen und Terminologien suchen",
     back: "Zurueck zur Lookup-Auswahl",
     lookupTitle: "Lookup-Dienst",
-    fallbackWarning: "Das API-Gateway ist nicht verfügbar. Der Lookup-Dienst verwendet ersatzweise den TIB-Terminologiedienst.",
+    fallbackWarning:
+      "Der Search-Endpunkt des API-Gateways ist derzeit nicht erreichbar. Es wird auf den TIB Terminology Service zurückgegriffen.",
   },
 } as const;
