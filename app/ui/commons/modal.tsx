@@ -34,17 +34,19 @@ export function Modal(props: ModalProps) {
     modal.classList.add("hidden");
     document.body.style.overflow = '';
     (modal.previousSibling as HTMLDivElement).classList.add("hidden");
+    props.onClose?.();
   }
 
 
   return (
     <>
       <div className="modal-bg hidden" key={"modal-bg"}></div>
-      <div id={props.id} tabIndex={-1} aria-hidden="true" data-modal-backdrop="static" className="hidden overflow-y-auto overflow-x-hidden fixed inset-0 flex z-50 justify-center items-center" key={"modal"}>
-        <div className={"relative p-4 w-full  max-h-full " + (!props.imageExpandModal ? "max-w-2xl" : "")}>
+      <div id={props.id} tabIndex={-1} aria-hidden={props.isOpen === undefined ? true : !props.isOpen} data-modal-backdrop="static" className="hidden overflow-y-auto overflow-x-hidden fixed inset-0 flex z-50 justify-center items-center" key={"modal"}>
+        <div className={"relative p-4 w-full max-h-full " + (props.classNames ?? (!props.imageExpandModal ? "max-w-2xl" : ""))}>
           <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200" key={"modal-header"}>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{props.title}</h3>
+              {props.headerAction}
               <button
                 type="button"
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
