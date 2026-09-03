@@ -9,6 +9,15 @@ import { useLocale } from "@/app/i18n";
 import { widgetMessages } from "@/app/widgets/messages";
 import "./styles.css";
 
+type SearchResult = {
+  iri: string;
+  label: string;
+  description: string[];
+  ontology_name: string;
+  type: string;
+  short_form: string;
+};
+
 const SearchResultsListWidget = dynamic<SearchResultsListWidgetProps>(
   () =>
     import("@ts4nfdi/terminology-service-suite").then(
@@ -38,7 +47,7 @@ export default function LookupServiceWidget() {
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
-    const searchEndpoint = `${primaryApi}search?exact=false&obsoletes=false&q=*&groupField=true&rows=10&start=0&fieldList=description,label,iri,ontology_name,type,short_form`;
+    const searchEndpoint = `${primaryApi}search?exact=false&obsoletes=false&q=assay`;
 
     fetch(searchEndpoint, { signal: controller.signal })
       .then((response) => {
@@ -58,6 +67,7 @@ export default function LookupServiceWidget() {
   }, []);
 
   const [queryClient] = useState(() => new QueryClient());
+  console.log(api);
 
   return (
     <>
@@ -69,12 +79,13 @@ export default function LookupServiceWidget() {
             initialItemsPerPage={10}
             itemsPerPageOptions={[10, 25, 50, 100]}
             onNavigateToOntology={() => undefined}
-            parameter="fieldList=description,label,iri,ontology_name,type,short_form"
+            parameter=""
             preselected={[]}
-            query="*"
+            query="assay"
             targetLink=""
             className="search-widget"
             useLegacy={false}
+            OnNavigateToSearchResult={(res: SearchResult) => console.log(res)}
           />
         </QueryClientProvider>
       )}
