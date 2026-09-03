@@ -72,7 +72,6 @@ export default function AutoCompleteTSS(props: CmpType) {
             allowCustomTerms={props.preselected ? true : false}
             selectionChangedEvent={handleSelection}
             showApiSource={true}
-            ts4nfdiGateway={props.api ? false : true}
             singleSelection={props.singleSelect}
             className={props.className ?? "" + " autocomplete-widget"}
           />

@@ -14,7 +14,14 @@ import { useLocale } from '@/app/i18n';
 import { widgetUiMessages } from './messages';
 
 type CmpProp = {
-  selectedTerm: AutoCompleteSelectedTermType
+  selectedTerm: AutoCompleteSelectedTermType,
+  api?: string,
+  showTitle?: boolean
+}
+
+function entityType(type?: string): MetadataWidgetProps["entityType"] {
+  if (type === "class" || type === "property" || type === "individual") return type;
+  return "term";
 }
 
 export default function MetadataWidgetTSS(props: CmpProp) {
@@ -22,24 +29,24 @@ export default function MetadataWidgetTSS(props: CmpProp) {
   const queryClient = new QueryClient();
   const selectedTerm = props.selectedTerm;
 
-  let api = ""
-  if (!selectedTerm) {
+  let api = props.api ?? ""
+  if (!api && !selectedTerm) {
     api = ""
-  } else if (selectedTerm.source === "ols-ebi") {
+  } else if (!api && selectedTerm.source === "ols-ebi") {
     api = "https://www.ebi.ac.uk/ols4/api/";
-  } else if (selectedTerm.source === 'tib') {
+  } else if (!api && selectedTerm.source === 'tib') {
     api = "https://api.terminology.tib.eu/api/";
-  } else if (selectedTerm.source === 'agroportal') {
+  } else if (!api && selectedTerm.source === 'agroportal') {
     api = "https://data.agroportal.lirmm.fr/";
-  } else if (selectedTerm.source === 'biodivportal') {
+  } else if (!api && selectedTerm.source === 'biodivportal') {
     api = "https://data.biodivportal.gfbio.org/"
-  } else {
+  } else if (!api) {
     api = "https://api.terminology.tib.eu/api/";
   }
 
   return (
     <>
-      <p className='header-2'>MetadataWidget</p>
+      {props.showTitle !== false && <p className='header-2'>MetadataWidget</p>}
       {!selectedTerm &&
         <p className='header-4'>{t.metadataSelect}</p>
       }
@@ -49,7 +56,7 @@ export default function MetadataWidgetTSS(props: CmpProp) {
             altNamesTab
             api={api}
             crossRefTab
-            entityType="term"
+            entityType={entityType(selectedTerm.type)}
             hierarchyTab
             iri={selectedTerm.iri ?? ""}
             // onNavigateToDisambiguate={}
