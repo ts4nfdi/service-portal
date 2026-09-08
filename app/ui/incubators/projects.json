@@ -1,8 +1,8 @@
 {
   "stats": {
-    "In preparation": 9,
-    "Running": 10,
-    "Finished": 12
+    "In preparation": 8,
+    "Running": 8,
+    "Finished": 15
   },
   "projects": [
     {
@@ -256,9 +256,9 @@
     {
       "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
       "cycle": "3",
-      "status": "Running",
-      "start": "03.2026",
-      "end": "09.2026",
+      "status": "Finished",
+      "start": "17.03.2026",
+      "end": "08.09.2026",
       "description": "DMP4NFDI provides the DMP tool RDMO for NFDI consortia and develops the DMP Template Framework to ensure interoperability across different DMP services in NFDI. Vocabularies, terminologies and ontologies already play an important role in the data management planning process. Our goal for this project is to integrate the TS4NFDI service into the RDMO interview section, allowing users to choose items from predefined vocabularies. We are collaborating with the FAIRagro consortium to make community standards available within their templates.",
       "goals": ["Integrate TS4NFDI Service Suite widgets into the RDMO"],
       "consortium": ["Base4NFDI"],
@@ -282,9 +282,9 @@
     {
       "title": "Metabase",
       "cycle": "3",
-      "status": "Running",
-      "start": "03.2026",
-      "end": "09.2026",
+      "status": "Finished",
+      "start": "26.02.2026",
+      "end": "06.08.2026",
       "description": "Metabase is the metadata service for research data management container (RDMC) in NFDIxCS. It incorporates community-specific metadata schemas via OWL2 ontologies to support the heterogeneity  of computer science. This semantic foundation allows Metabase to automatically check for inconsistencies in the metadata and to enrich metadata sets with derived facts. The service also allows to define morphisms to translate between different schemas and ontolgogies, and connects to external systems such as the open research knowledge graph (ORKG).",
       "goals": ["Hosting terminologies for Metabase in a terminology service", "Connect TIB TS to Metabase"],
       "consortium": ["NFDIxCS"],
@@ -297,7 +297,7 @@
       "cycle": "3",
       "status": "Running",
       "start": "03.2026",
-      "end": "09.2026",
+      "end": "10.09.2026",
       "description": "MathModDB is a database of mathematical models, developed by the Mathematical Research Data Initiative (MaRDI) as an ontology and knowledge graph. Its aim is to store information of mathematical models in a structured way, describing a mathematical model as a semantic object. A model consists, for example, of mathematical expressions and quantities, and can be linked with a specific computational task. Moreover, a mathematical model is used to model a specific research problem, embedded in an academic discipline.",
       "goals": ["Integration of MathModDB into the TS4NFDI services", "Visualisation of the MathModDB ontology and knowledge graph"],
       "consortium": ["MaRDI"],
@@ -335,8 +335,8 @@
       "title": "TeSS - Training eSupport System",
       "cycle": "4",
       "status": "In preparation",
-      "start": "Q3/2026",
-      "end": "-",
+      "start": "Q4/2026",
+      "end": "Q4/2026",
       "description": "TeSS is a platform that was developed to provide a one-stop shop for trainers and trainees to discover online information and content,  including training materials, events and interactive tutorials. For training providers, TeSS provides opportunities to promote training events and news, and to contribute to a growing catalogue of materials; for trainers, the portal offers an environment for sharing materials and event information; for trainees, it offers a convenient gateway via which to identify relevant training events and resources, and to perform specific, guided analysis tasks via customised training workflows. TeSS is used as the basis for training catalogues such as PaN-Training (photon and neutron science) and HEP Training (high energy physics).",
       "goals": [],
       "consortium": ["DAPHNE4NFDI", "PUNCH4NFDI"],
@@ -386,7 +386,7 @@
     {
       "title": "Terminology Service Suite integration for WissKI authority data enrichment",
       "cycle": "4",
-      "status": "In preparation",
+      "status": "Running",
       "start": "Q3/2026",
       "end": "-",
       "description": "SODa's Semantic Co-Working Space (SCS) provides a cloud environment for deploying WissKI-based research applications. WissKI Barrels are containerised, domain-specific researchenvironments built on WissKI and CIDOC-CRM. Today, each Barrel manages terminology lookups independently – with fragmented provider integrations (GND, Getty, GeoNames, Wikidata) and bespoke UI components. This incubator integrates the TS4NFDI Terminology Service Suite into WissKI's Authority Document module and publishes SODa-maintained controlled vocabularies (e.g. provenance event types, conservation treatment categories) via the API Gateway.",
