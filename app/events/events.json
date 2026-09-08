@@ -1,5 +1,15 @@
 [
   {
+    "name": "5th BioHackathon Germany, Göttingen",
+    "date": "07 - 11 December 2026",
+    "formal_date": "2026-12-11",
+    "links": [
+      {
+        "type" :  "webpage (workshop)",
+        "link" :  "https://www.denbi.de/de-nbi-events/2051-5th-biohackathon-germany"
+      }
+    ]
+  },{
     "name": "3rd Base4NFDI User Conference, Berlin",
     "date": "24 + 25 November 2026",
     "formal_date": "2026-11-25",
