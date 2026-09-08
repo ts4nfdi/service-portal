@@ -260,7 +260,10 @@
       "start": "17.03.2026",
       "end": "08.09.2026",
       "description": "DMP4NFDI provides the DMP tool RDMO for NFDI consortia and develops the DMP Template Framework to ensure interoperability across different DMP services in NFDI. Vocabularies, terminologies and ontologies already play an important role in the data management planning process. Our goal for this project is to integrate the TS4NFDI service into the RDMO interview section, allowing users to choose items from predefined vocabularies. We are collaborating with the FAIRagro consortium to make community standards available within their templates.",
-      "goals": ["Integrate TS4NFDI Service Suite widgets into the RDMO"],
+      "goals": [
+        "Integration of terminology data to RDMO via TS4NFDI API Gateway",
+        "Provision of terminologies preselection for RDMO specified by subjects/topics/domains"
+      ],
       "consortium": ["Base4NFDI"],
       "logo": "DMP4NFDI.png",
       "logoW": 200,
