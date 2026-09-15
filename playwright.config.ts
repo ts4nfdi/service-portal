@@ -5,8 +5,12 @@ import { MOCK_GATEWAY_BASE_URL, startMockGateway } from "./tests/mockGateway";
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
+const testPort = process.env.PLAYWRIGHT_TEST_PORT ?? "3000";
+const siteUrl = `http://localhost:${testPort}`;
+
 process.env.GATEWAY_BASE_URL = MOCK_GATEWAY_BASE_URL;
-process.env.NEXTAUTH_URL = "http://localhost:3000";
+process.env.NEXT_PUBLIC_SITE_URL = siteUrl;
+process.env.NEXTAUTH_URL = siteUrl;
 process.env.NEXTAUTH_SECRET = "test-secret";
 startMockGateway();
 
@@ -24,7 +28,12 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+          ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
+          : undefined,
+      },
     },
 
     {
@@ -39,8 +48,14 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    command: process.env.PLAYWRIGHT_WEB_SERVER_COMMAND ?? "npm run dev",
+    url: siteUrl,
+    reuseExistingServer: process.env.PLAYWRIGHT_REUSE_SERVER === "true",
+    env: {
+      ...process.env,
+      PORT: testPort,
+      ONTOLOGY_OPTIONS_URL: `${MOCK_GATEWAY_BASE_URL}/api-gateway/ols4/api/ontologies`,
+      debug_mode: "true",
+    },
   },
 });

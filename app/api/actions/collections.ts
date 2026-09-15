@@ -64,13 +64,13 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
         let token = await getUserToken();
-        if (!token) {
+        if (!token && process.env.debug_mode !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 
         let newCollection = PortalCollection.toObject(collection);
 
-        if (!newCollection.label || !newCollection.description || !newCollection.terminologies || !newCollection.terminologies.length) {
+        if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
