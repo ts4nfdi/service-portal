@@ -11,7 +11,7 @@ async function openNewCollection(page: Page) {
 
 async function chooseManual(page: Page) {
   await page.getByRole("button", { name: "I want to add terminologies myself" }).click();
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "50");
   await expect(page.getByPlaceholder("Search terminologies ...")).toBeVisible();
 }
 
@@ -20,16 +20,78 @@ async function getCreatedCollection(request: APIRequestContext, label: string) {
   return response.json();
 }
 
-test("creation starts with method choices and preserves the bulk TSS path", async ({ page }) => {
+test("creation starts with method choices and enters bulk provider selection", async ({ page }) => {
   await openNewCollection(page);
 
   await expect(page.getByText("A terminology collection groups terminologies for a specific purpose or context.")).toBeVisible();
   await page.getByRole("button", { name: "I want to bulk import terminologies from source(s)" }).click();
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
-  await expect(page.getByText("You can import all the terminologies from the selected terminology services.")).toBeVisible();
-  await expect(page.getByRole("checkbox").first()).toBeVisible();
-  await expect(page.locator(".autocomplete-in-form")).toBeVisible();
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "20");
+  await expect(page.getByText("Select providers", { exact: true })).toBeVisible();
+  await expect(page.getByText("Select one or more providers to import terminologies from. The count shows how many terminologies each provider offers.", { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Next", exact: true })).toBeDisabled();
   await expect(page.getByRole("button", { name: "Back" })).toBeVisible();
+});
+
+test("bulk creation selects providers, filters the terminology table, and submits selected records", async ({ page, request }, testInfo: TestInfo) => {
+  const collectionLabel = `${testInfo.project.name}-bulk-selection`;
+  await openNewCollection(page);
+  await page.getByRole("button", { name: "I want to bulk import terminologies from source(s)" }).click();
+
+  const next = page.getByRole("button", { name: "Next", exact: true });
+  await expect(next).toBeDisabled();
+  await expect(page.getByText("tib", { exact: true })).toBeVisible();
+  await expect(page.getByText("2 terminologies", { exact: true })).toBeVisible();
+  await expect(page.getByText("Terminologies spanning science, engineering, architecture, and technology.", { exact: true })).toBeVisible();
+  await expect(page.getByText("ebi", { exact: true })).toBeVisible();
+  await expect(page.getByText("1 terminology", { exact: true })).toBeVisible();
+  await page.getByRole("checkbox", { name: "tib" }).check();
+  await page.getByRole("checkbox", { name: "ebi" }).check();
+  await expect(next).toBeEnabled();
+  await next.click();
+
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "60");
+  const table = page.getByRole("table");
+  await expect(table.getByRole("row")).toHaveCount(4);
+  await expect(page.getByText("3 of 3 terminologies selected", { exact: true })).toBeVisible();
+  await expect(table.getByRole("checkbox", { name: "alpha (tib)" })).toBeChecked();
+  await expect(table.getByRole("checkbox", { name: "beta (tib)" })).toBeChecked();
+  await expect(table.getByRole("checkbox", { name: "gamma (ebi)" })).toBeChecked();
+
+  const terminologySearch = page.getByPlaceholder("Search terminologies ...");
+  await terminologySearch.fill("beta");
+  await table.getByRole("checkbox", { name: "beta (tib)" }).uncheck();
+  await expect(page.getByText("2 of 3 terminologies selected", { exact: true })).toBeVisible();
+  await terminologySearch.fill("alpha");
+  const selectAll = table.getByRole("checkbox", { name: "Select or clear all matching terminologies" });
+  await selectAll.uncheck();
+  await expect(page.getByText("1 of 3 terminologies selected", { exact: true })).toBeVisible();
+  await selectAll.check();
+  await expect(page.getByText("2 of 3 terminologies selected", { exact: true })).toBeVisible();
+  await terminologySearch.fill("");
+  await next.click();
+
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "80");
+  await page.getByLabel("Collection Title").fill(collectionLabel);
+  await page.getByLabel("Description").fill("Bulk collection description");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "100");
+  await expect(page.getByText("private", { exact: true })).toHaveClass(/font-semibold/);
+  await page.getByRole("button", { name: "Create" }).click();
+
+  await expect.poll(async () => {
+    const collection = await getCreatedCollection(request, collectionLabel);
+    return collection?.terminologies?.length ?? 0;
+  }).toBe(2);
+  const createdCollection = await getCreatedCollection(request, collectionLabel);
+  expect(createdCollection).toMatchObject({
+    label: collectionLabel,
+    description: "Bulk collection description",
+    isPublic: false,
+  });
+  expect(createdCollection.terminologies).toEqual(expect.arrayContaining([
+    { label: "alpha", source: "tib", uri: "https://example.test/alpha", type: "DATABASE" },
+    { label: "gamma", source: "ebi", uri: "https://example.test/gamma", type: "DATABASE" },
+  ]));
 });
 
 test("manual creation supports local search, provider filtering, clear, and outside close", async ({ page }) => {
@@ -41,6 +103,7 @@ test("manual creation supports local search, provider filtering, clear, and outs
   await providerButton.click();
   await expect(page.getByRole("checkbox", { name: "tib" })).toBeVisible();
   await expect(page.getByRole("checkbox", { name: "ebi" })).toBeVisible();
+  await expect(page.getByText("Terminologies spanning science, engineering, architecture, and technology.")).toBeVisible();
   await page.getByRole("checkbox", { name: "tib" }).check();
   await expect(providerButton).toContainText("tib");
   await expect(providerButton).not.toContainText("All providers");
@@ -80,7 +143,7 @@ test("manual creation sends the exact provider source", async ({ page, request }
   await page.getByText("gamma(ebi)", { exact: true }).click();
   await search.press("Escape");
   await page.getByRole("button", { name: "Next", exact: true }).click();
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "75");
   await page.getByLabel("Collection Title").fill(collectionLabel);
   await page.getByLabel("Description").fill("Description for manual test collection");
   await page.getByRole("button", { name: "Next", exact: true }).click();
@@ -122,5 +185,5 @@ test("manual creation allows zero terminologies and Back resets the method", asy
   await expect(page.getByPlaceholder("Search terminologies ...")).toBeVisible();
   await page.getByRole("button", { name: "Back" }).click();
   await expect(page.getByRole("button", { name: "I want to add terminologies myself" })).toBeVisible();
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "20");
 });

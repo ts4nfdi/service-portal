@@ -1,15 +1,14 @@
 
 'use client'
 
-import { CheckBox, TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
-import AutoCompleteTSS from "@/app/ui/widgets/autocomplete";
+import { TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
 import { Loading, TextArea } from "@/app/ui/commons/snippets";
 import { ToggleButton } from "@/app/ui/commons/snippets";
-import { getAllProviders, getOntologyOptions, getSourcesListOfTerminologies } from "@/app/api/actions/providers";
-import { PortalCollection, PortalOntologyOption, PortalTerminology, PortalProvider, PortalSourcesJsonData } from "@/app/concepts";
+import { getOntologyOptions } from "@/app/api/actions/providers";
+import { PortalCollection, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -18,9 +17,12 @@ import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
 import TerminologyMultiSelect from "@/app/ui/collection/terminologyMultiSelect";
+import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
+import BulkTerminologyTable from "@/app/ui/collection/bulkTerminologyTable";
 
 type CreationMethod = "manual" | "bulk";
 type ManualStep = 1 | 2 | 3;
+type BulkStep = 1 | 2 | 3 | 4;
 
 export default function NewCollection({ debugMode = false }: { debugMode?: boolean }) {
   const locale = useLocale();
@@ -33,38 +35,27 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [sources, setSources] = useState<PortalProvider[]>([]);
-  const [preselectedTerminologies, setPreselectedTerminologies] = useState<{
-    "label": string,
-    "iri": string,
-    source: string
-  }[]>([]);
-  const [autocompleteIsLoaded, setAutocompleteIsLoaded] = useState<boolean>(true);
   const [users, setUsers] = useState<string[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const [creationMethod, setCreationMethod] = useState<CreationMethod>();
   const [manualStep, setManualStep] = useState<ManualStep>(1);
+  const [bulkStep, setBulkStep] = useState<BulkStep>(1);
   const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
   const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
   const [ontologyOptionsLoading, setOntologyOptionsLoading] = useState(false);
   const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
   const [selectedManualTerminologies, setSelectedManualTerminologies] = useState<PortalOntologyOption[]>([]);
+  const [selectedBulkProviders, setSelectedBulkProviders] = useState<string[]>([]);
+  const [selectedBulkTerminologies, setSelectedBulkTerminologies] = useState<PortalOntologyOption[]>([]);
   const [collectionTitle, setCollectionTitle] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const bulkRequestGeneration = useRef(0);
-  const sourceRequestGenerations = useRef<Record<string, number>>({});
-  const activeSourceRequests = useRef(new Map<string, number>());
   const ontologyRequestInFlight = useRef(false);
 
 
   async function submit(e: React.FormEvent) {
     try {
       e.preventDefault();
-      if (creationMethod === "bulk" && selectedTermonologies.length === 0) {
-        (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "1px solid #445669";
-        return;
-      }
       let pCollection = new PortalCollection();
       pCollection.description = collectionDescription;
       pCollection.label = collectionTitle;
@@ -96,49 +87,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }
 
-  async function loadTerminologies(e: React.ChangeEvent<HTMLInputElement>) {
-    let source = e.target.id;
-    const requestGeneration = bulkRequestGeneration.current;
-    const sourceRequestGeneration = (sourceRequestGenerations.current[source] ?? 0) + 1;
-    sourceRequestGenerations.current[source] = sourceRequestGeneration;
-    setAutocompleteIsLoaded(false);
-    if (e.target.checked) {
-      activeSourceRequests.current.set(source, sourceRequestGeneration);
-      try {
-        const terminologies = await getSourcesListOfTerminologies(source);
-        if (requestGeneration !== bulkRequestGeneration.current ||
-          sourceRequestGeneration !== sourceRequestGenerations.current[source]) {
-          return;
-        }
-        let preselected = [];
-        for (let terminology of terminologies) {
-          preselected.push({ label: terminology.label, iri: terminology.iri, source: source });
-        }
-        setPreselectedTerminologies((current) => [...current, ...preselected]);
-      } catch {
-        return;
-      } finally {
-        if (activeSourceRequests.current.get(source) === sourceRequestGeneration) {
-          activeSourceRequests.current.delete(source);
-        }
-        if (requestGeneration === bulkRequestGeneration.current && activeSourceRequests.current.size === 0) {
-          setAutocompleteIsLoaded(true);
-        }
-      }
-    } else {
-      activeSourceRequests.current.delete(source);
-      const importedIris = new Set(
-        preselectedTerminologies.filter((item) => item.source === source).map((item) => item.iri),
-      );
-      setPreselectedTerminologies((current) => current.filter((item) => item.source != source));
-      setSelectedTerminologies((current) => current.filter((item) => !importedIris.has(item.iri ?? "")));
-      if (activeSourceRequests.current.size === 0) {
-        setAutocompleteIsLoaded(true);
-      }
-    }
-  }
-
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function onSelect(selectedList: string[], _selectedItem: string) {
     setSelectedCollaborators(selectedList);
@@ -151,6 +99,15 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   function selectManualTerminologies(options: PortalOntologyOption[]) {
     setSelectedManualTerminologies(options);
+    setCollectionTerminologies(options);
+  }
+
+  function selectBulkTerminologies(options: PortalOntologyOption[]) {
+    setSelectedBulkTerminologies(options);
+    setCollectionTerminologies(options);
+  }
+
+  function setCollectionTerminologies(options: PortalOntologyOption[]) {
     setSelectedTerminologies(options.map((option) => ({
       label: option.ontologyId,
       iri: option.uri,
@@ -163,11 +120,30 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setManualStep((manualStep - 1) as ManualStep);
       return;
     }
+    if (creationMethod === "bulk" && bulkStep > 1) {
+      setBulkStep((bulkStep - 1) as BulkStep);
+      return;
+    }
     resetCreationMethod();
   }
 
   function goToManualDetails() {
     setManualStep(2);
+  }
+
+  function goToBulkTerminologies() {
+    const options = ontologyOptions.filter((option) => selectedBulkProviders.includes(option.providerId));
+    selectBulkTerminologies(options);
+    setBulkStep(2);
+  }
+
+  function goToVisibility(event: React.MouseEvent<HTMLButtonElement>) {
+    const form = event.currentTarget.form;
+    const description = form?.elements.namedItem("collection-desc") as HTMLTextAreaElement | null;
+    description?.setCustomValidity(collectionDescription.trim() ? "" : t.descriptionRequired);
+    if (form?.reportValidity()) {
+      creationMethod === "manual" ? setManualStep(3) : setBulkStep(4);
+    }
   }
 
   const loadOntologyOptions = useCallback(async () => {
@@ -194,21 +170,14 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }, []);
 
   function resetCreationMethod() {
-    bulkRequestGeneration.current += 1;
-    activeSourceRequests.current.clear();
     setCreationMethod(undefined);
     setManualStep(1);
-    setPreselectedTerminologies([]);
+    setBulkStep(1);
     setSelectedTerminologies([]);
     setSelectedManualTerminologies([]);
-    setAutocompleteIsLoaded(true);
+    setSelectedBulkProviders([]);
+    setSelectedBulkTerminologies([]);
   }
-
-  useEffect(() => {
-    if (activeSourceRequests.current.size === 0) {
-      setAutocompleteIsLoaded(true);
-    }
-  }, [preselectedTerminologies]);
 
   useEffect(() => {
     if ((!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
@@ -218,13 +187,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }, [debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, session.data?.user.token]);
 
   useEffect(() => {
-    getAllProviders().then((sources: PortalSourcesJsonData[]) => {
-      let providers = [];
-      for (let source of sources) {
-        providers.push(PortalProvider.toObject(source));
-      }
-      setSources(providers);
-    });
     getUserList().then((resp) => {
       if (!resp.status) {
         return;
@@ -242,12 +204,21 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   const progressSteps = creationMethod === "manual"
-    ? [t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
-    : [t.creationMethodStep, t.collectionDetailsStep];
-  const progressStep = creationMethod === "manual" ? manualStep : creationMethod ? 2 : 1;
+    ? [t.creationMethodStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
+    : creationMethod === "bulk"
+      ? [t.creationMethodStep, t.providerSelectionStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
+      : [t.creationMethodStep];
+  const progressStep = creationMethod === "manual" ? manualStep + 1 : creationMethod === "bulk" ? bulkStep + 1 : 1;
+  const progressPercent = creationMethod === "manual"
+    ? [50, 75, 100][manualStep - 1]
+    : creationMethod === "bulk"
+      ? [40, 60, 80, 100][bulkStep - 1]
+      : 20;
   const progressWidth = creationMethod === "manual"
-    ? manualStep === 1 ? "w-1/3" : manualStep === 2 ? "w-2/3" : "w-full"
-    : creationMethod ? "w-full" : "w-1/2";
+    ? manualStep === 1 ? "w-1/2" : manualStep === 2 ? "w-3/4" : "w-full"
+    : creationMethod === "bulk"
+      ? bulkStep === 1 ? "w-2/5" : bulkStep === 2 ? "w-3/5" : bulkStep === 3 ? "w-4/5" : "w-full"
+      : "w-1/5";
 
   return (
     <div className="">
@@ -271,9 +242,9 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
           <div
             className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`}
             role="progressbar"
-            aria-valuemin={1}
-            aria-valuemax={progressSteps.length}
-            aria-valuenow={progressStep}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={progressPercent}
             aria-valuetext={progressSteps[progressStep - 1]}
             aria-label={t.creationProgress}
           />
@@ -314,34 +285,26 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
               }
             }}
           >
-          {(creationMethod === "bulk" || manualStep === 3) &&
+          {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
             <div className="form-input-group">
-              {creationMethod === "manual"
-                ? <div className="flex items-center gap-3">
-                    <span className={`text-sm capitalize ${isPublic ? "text-gray-500 dark:text-gray-400" : "font-semibold text-ts4nfdi-brand-color dark:text-white"}`}>
-                      {t.private}
-                    </span>
-                    <ToggleButton
-                      id={"visibility"}
-                      label={t.public}
-                      checked={isPublic}
-                      onChange={(event) => setIsPublic(event.target.checked)}
-                      brandColor
-                      labelClassName={isPublic
-                        ? "!font-semibold !text-ts4nfdi-brand-color dark:!text-white"
-                        : "!font-normal !text-gray-500 dark:!text-gray-400"}
-                    />
-                  </div>
-                : <ToggleButton
-                    id={"visibility"}
-                    label={t.public}
-                    checked={isPublic}
-                    onChange={(event) => setIsPublic(event.target.checked)}
-                  />
-              }
+              <div className="flex items-center gap-3">
+                <span className={`text-sm capitalize ${isPublic ? "text-gray-500 dark:text-gray-400" : "font-semibold text-ts4nfdi-brand-color dark:text-white"}`}>
+                  {t.private}
+                </span>
+                <ToggleButton
+                  id={"visibility"}
+                  label={t.public}
+                  checked={isPublic}
+                  onChange={(event) => setIsPublic(event.target.checked)}
+                  brandColor
+                  labelClassName={isPublic
+                    ? "!font-semibold !text-ts4nfdi-brand-color dark:!text-white"
+                    : "!font-normal !text-gray-500 dark:!text-gray-400"}
+                />
+              </div>
             </div>
           }
-          {(creationMethod === "bulk" || manualStep === 2) &&
+          {((creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3)) &&
             <div className="form-input-group">
             <TextInput
               id="collection-title"
@@ -356,21 +319,27 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
             />
             </div>
           }
-          {creationMethod === "bulk" &&
+          {creationMethod === "bulk" && bulkStep === 1 &&
             <div className="form-input-group">
-              <p className="" key={"title"}>{t.importHelp}</p>
-              <ul
-                className="flex md:flex-row flex-col flex-wrap  items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                {sources.map((db: PortalProvider) => {
-                  return (
-                    <li className="list-item w-1/5 ml-0 mr-0 list-none p-2 border-b border-gray-200 sm:border-b-0  dark:border-gray-600 dark:bg-gray-700"
-                      key={db.name}>
-                      <CheckBox id={db.name} label={db.name} onChange={loadTerminologies} />
-                    </li>
-                  );
-                })
-                }
-              </ul>
+              <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkProviderSelectionHelp}</p>
+              {ontologyOptionsLoading && <Loading />}
+              {ontologyOptionsFailed &&
+                <div className="text-center" role="alert">
+                  <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
+                  <button type="button" className="btn !p-1 !text-sm" onClick={loadOntologyOptions}>{t.retry}</button>
+                </div>
+              }
+              {ontologyOptionsLoaded &&
+                <BulkProviderSelection
+                  options={ontologyOptions}
+                  selected={selectedBulkProviders}
+                  descriptions={t.providerDescriptions}
+                  label={t.selectProviders}
+                  countLabel={t.providerTerminologyCount}
+                  countSingularLabel={t.providerTerminologyCountSingular}
+                  onChange={setSelectedBulkProviders}
+                />
+              }
             </div>
           }
           {creationMethod === "manual" && manualStep === 1 &&
@@ -388,6 +357,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
                   label={t.terminologies}
                   options={ontologyOptions}
                   selected={selectedManualTerminologies}
+                  providerDescriptions={t.providerDescriptions}
                   searchPlaceholder={t.terminologySearchPlaceholder}
                   providerFilterLabel={t.providerFilter}
                   allProvidersLabel={t.allProviders}
@@ -401,25 +371,28 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
               }
             </div>
           }
-          {creationMethod === "bulk" &&
+          {creationMethod === "bulk" && bulkStep === 2 &&
             <div className="form-input-group" key={"terminology-list"}>
-              {autocompleteIsLoaded &&
-              <AutoCompleteTSS
-                setSelectedTerm={(terms: AutoCompleteSelectedTermType[]) => {
-                  let selected = terms.filter((term) => !preselectedTerminologies.find((preSelectedTerm) => preSelectedTerm.iri === term.iri));
-                  setSelectedTerminologies([...preselectedTerminologies, ...selected]);
-                  (document.getElementsByClassName('autocomplete-in-form')[0]! as HTMLDivElement).style.border = "";
-                }}
-                label={t.terminologies}
-                placeholder={t.terminologyPlaceholder}
-                parameter="type=ontology"
-                required
-                preselected={preselectedTerminologies}
+              <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkTerminologySelectionHelp}</p>
+              <BulkTerminologyTable
+                options={ontologyOptions.filter((option) => selectedBulkProviders.includes(option.providerId))}
+                selected={selectedBulkTerminologies}
+                searchLabel={t.searchTerminologies}
+                searchPlaceholder={t.terminologySearchPlaceholder}
+                selectAllLabel={t.selectAllTerminologies}
+                terminologyIdLabel={t.terminologyId}
+                providerLabel={t.provider}
+                descriptionLabel={t.description}
+                selectedCountLabel={t.selectedTerminologyCount}
+                previousPageLabel={t.previousPage}
+                nextPageLabel={t.nextPage}
+                pageLabel={t.pageOf}
+                noResults={t.noTerminologiesFound}
+                onChange={selectBulkTerminologies}
               />
-              }
             </div>
           }
-          {(creationMethod === "bulk" || manualStep === 2) &&
+          {((creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3)) &&
             <div className="form-input-group" key="description">
             <TextArea
               id="description"
@@ -436,7 +409,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
             />
             </div>
           }
-          {(creationMethod === "bulk" || manualStep === 3) &&
+          {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
             <div className="form-input-group" key={"collaborators-list"}>
             <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               {t.collaboratorsFull}
@@ -466,19 +439,28 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
               <button
                 type="button"
                 className="btn"
-                onClick={(event) => {
-                  const form = event.currentTarget.form;
-                  const description = form?.elements.namedItem("collection-desc") as HTMLTextAreaElement | null;
-                  description?.setCustomValidity(collectionDescription.trim() ? "" : t.descriptionRequired);
-                  if (form?.reportValidity()) {
-                    setManualStep(3);
-                  }
-                }}
+                onClick={goToVisibility}
               >
                 {t.next}
               </button>
             }
-            {(creationMethod === "bulk" || manualStep === 3) &&
+            {creationMethod === "bulk" && bulkStep === 1 &&
+              <button
+                type="button"
+                className="btn disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={selectedBulkProviders.length === 0}
+                onClick={goToBulkTerminologies}
+              >
+                {t.next}
+              </button>
+            }
+            {creationMethod === "bulk" && bulkStep === 2 &&
+              <button type="button" className="btn" onClick={() => setBulkStep(3)}>{t.next}</button>
+            }
+            {creationMethod === "bulk" && bulkStep === 3 &&
+              <button type="button" className="btn" onClick={goToVisibility}>{t.next}</button>
+            }
+            {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
               <button type="submit" className="btn">{t.create}</button>
             }
           </div>

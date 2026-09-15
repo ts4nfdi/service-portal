@@ -7,6 +7,7 @@ type TerminologyMultiSelectProps = {
   label: string;
   options: PortalOntologyOption[];
   selected: PortalOntologyOption[];
+  providerDescriptions: Record<string, string>;
   searchPlaceholder: string;
   providerFilterLabel: string;
   allProvidersLabel: string;
@@ -26,6 +27,7 @@ export default function TerminologyMultiSelect({
   label,
   options,
   selected,
+  providerDescriptions,
   searchPlaceholder,
   providerFilterLabel,
   allProvidersLabel,
@@ -168,14 +170,21 @@ export default function TerminologyMultiSelect({
                 </button>
               }
               {providers.map((provider) =>
-                <label key={provider} className="flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label key={provider} className="flex cursor-pointer items-start gap-2 rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
                   <input
                     type="checkbox"
                     checked={selectedProviders.includes(provider)}
                     onChange={() => toggleProvider(provider)}
-                    className="h-4 w-4 rounded border-gray-300 text-ts4nfdi-brand-color focus:ring-ts4nfdi-brand-color dark:border-gray-500 dark:bg-gray-600"
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-ts4nfdi-brand-color focus:ring-ts4nfdi-brand-color dark:border-gray-500 dark:bg-gray-600"
                   />
-                  <span className="text-sm text-gray-900 dark:text-white">{provider}</span>
+                  <span>
+                    <span className="block text-sm font-medium text-gray-900 dark:text-white">{provider}</span>
+                    {providerDescriptions[provider] &&
+                      <span className="mt-0.5 block text-xs text-gray-600 dark:text-gray-300">
+                        {providerDescriptions[provider]}
+                      </span>
+                    }
+                  </span>
                 </label>
               )}
             </div>
