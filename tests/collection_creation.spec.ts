@@ -76,7 +76,7 @@ test("bulk creation selects providers, filters the terminology table, and submit
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "100");
   await expect(page.getByText("private", { exact: true })).toHaveClass(/font-semibold/);
-  await page.getByRole("button", { name: "Create" }).click();
+  await page.getByRole("button", { name: "Create" }).click({ noWaitAfter: true });
 
   await expect.poll(async () => {
     const collection = await getCreatedCollection(request, collectionLabel);
@@ -153,7 +153,7 @@ test("manual creation sends the exact provider source", async ({ page, request }
   await page.getByLabel("Public").check({ force: true });
   await expect(page.getByText("Public", { exact: true })).toHaveClass(/font-semibold/);
   await expect(page.getByText("private", { exact: true })).not.toHaveClass(/font-semibold/);
-  await page.getByRole("button", { name: "Create" }).click();
+  await page.getByRole("button", { name: "Create" }).click({ noWaitAfter: true });
 
   await expect.poll(() => getCreatedCollection(request, collectionLabel)).toMatchObject({
     label: collectionLabel,
@@ -172,7 +172,7 @@ test("manual creation allows zero terminologies and Back resets the method", asy
   await page.getByLabel("Collection Title").fill(collectionLabel);
   await page.getByLabel("Description").fill("Collection without initial terminologies");
   await page.getByRole("button", { name: "Next", exact: true }).click();
-  await page.getByRole("button", { name: "Create" }).click();
+  await page.getByRole("button", { name: "Create" }).click({ noWaitAfter: true });
   await expect.poll(() => getCreatedCollection(request, collectionLabel)).toMatchObject({
     label: collectionLabel,
     terminologies: [],
