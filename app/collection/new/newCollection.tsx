@@ -1,12 +1,10 @@
 
 'use client'
 
-import { TextInput, MultiSelectDropdown } from "@/app/ui/commons/snippets";
+import { Loading } from "@/app/ui/commons/snippets";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
-import { Loading, TextArea } from "@/app/ui/commons/snippets";
-import { ToggleButton } from "@/app/ui/commons/snippets";
 import { getOntologyOptions } from "@/app/api/actions/providers";
 import { PortalCollection, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
 import { useSession } from "next-auth/react";
@@ -16,9 +14,15 @@ import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
-import TerminologyMultiSelect from "@/app/ui/collection/terminologyMultiSelect";
 import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
 import BulkTerminologyTable from "@/app/ui/collection/bulkTerminologyTable";
+import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
+import {
+  CollaboratorField,
+  CollectionDetailsFields,
+  CollectionVisibilityField,
+  TerminologySelectionField,
+} from "@/app/ui/collection/collectionFormFields";
 
 type CreationMethod = "manual" | "bulk";
 type ManualStep = 1 | 2 | 3;
@@ -32,7 +36,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   const searchParams = useSearchParams();
 
-  const [selectedTermonologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
+  const [selectedTerminologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<string[]>([]);
@@ -52,6 +56,28 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
 
+  const loadOntologyOptions = useCallback(async () => {
+    if (ontologyRequestInFlight.current) {
+      return;
+    }
+    ontologyRequestInFlight.current = true;
+    setOntologyOptionsLoading(true);
+    setOntologyOptionsFailed(false);
+    try {
+      const options = await getOntologyOptions();
+      if (!options) {
+        setOntologyOptionsFailed(true);
+        return;
+      }
+      setOntologyOptions(options);
+      setOntologyOptionsLoaded(true);
+    } catch {
+      setOntologyOptionsFailed(true);
+    } finally {
+      ontologyRequestInFlight.current = false;
+      setOntologyOptionsLoading(false);
+    }
+  }, []);
 
   async function submit(e: React.FormEvent) {
     try {
@@ -63,7 +89,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         return { username: username, role: "ADMIN" };
       });
       pCollection.isPublic = isPublic;
-      pCollection.terminologies = selectedTermonologies.map((terminology: AutoCompleteSelectedTermType) => {
+      pCollection.terminologies = selectedTerminologies.map((terminology: AutoCompleteSelectedTermType) => {
         let t = new PortalTerminology();
         t.label = terminology.label ?? "";
         t.uri = terminology.iri ?? "";
@@ -132,7 +158,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   function goToBulkTerminologies() {
-    const options = ontologyOptions.filter((option) => selectedBulkProviders.includes(option.providerId));
+    const options = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
     selectBulkTerminologies(options);
     setBulkStep(2);
   }
@@ -150,29 +176,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }
 
-  const loadOntologyOptions = useCallback(async () => {
-    if (ontologyRequestInFlight.current) {
-      return;
-    }
-    ontologyRequestInFlight.current = true;
-    setOntologyOptionsLoading(true);
-    setOntologyOptionsFailed(false);
-    try {
-      const options = await getOntologyOptions();
-      if (!options) {
-        setOntologyOptionsFailed(true);
-        return;
-      }
-      setOntologyOptions(options);
-      setOntologyOptionsLoaded(true);
-    } catch {
-      setOntologyOptionsFailed(true);
-    } finally {
-      ontologyRequestInFlight.current = false;
-      setOntologyOptionsLoading(false);
-    }
-  }, []);
-
   function resetCreationMethod() {
     setCreationMethod(undefined);
     setManualStep(1);
@@ -181,6 +184,63 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     setSelectedManualTerminologies([]);
     setSelectedBulkProviders([]);
     setSelectedBulkTerminologies([]);
+  }
+
+  function renderCreationMethodSelection() {
+    return <div className="mt-10">
+      <p className="mb-5 text-gray-700 dark:text-gray-200">{t.creationIntro}</p>
+      <p className="mb-5 text-lg font-medium text-gray-900 dark:text-white">{t.chooseCreationMethod}</p>
+      <div className="grid gap-4 md:grid-cols-2">
+        <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("manual")}>{t.addTerminologiesMyself}</button>
+        <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("bulk")}>{t.bulkImportTerminologies}</button>
+      </div>
+    </div>;
+  }
+
+  function renderBulkProviderStep() {
+    return <div className="form-input-group">
+      <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkProviderSelectionHelp}</p>
+      {ontologyOptionsLoading && <Loading />}
+      {ontologyOptionsFailed && <OntologyLoadError onRetry={loadOntologyOptions} />}
+      {ontologyOptionsLoaded && <BulkProviderSelection options={ontologyOptions} selected={selectedBulkProviders} descriptions={t.providerDescriptions} label={t.selectProviders} countLabel={t.providerTerminologyCount} countSingularLabel={t.providerTerminologyCountSingular} onChange={setSelectedBulkProviders} />}
+    </div>;
+  }
+
+  function renderCurrentStep() {
+    if (creationMethod === "manual" && manualStep === 1) {
+      return <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedManualTerminologies} loaded={ontologyOptionsLoaded} loading={ontologyOptionsLoading} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={selectManualTerminologies} />;
+    }
+    if (creationMethod === "bulk" && bulkStep === 1) {
+      return renderBulkProviderStep();
+    }
+    if (creationMethod === "bulk" && bulkStep === 2) {
+      return <div className="form-input-group">
+        <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkTerminologySelectionHelp}</p>
+        <BulkTerminologyTable options={selectedBulkOptions} selected={selectedBulkTerminologies} searchLabel={t.searchTerminologies} searchPlaceholder={t.terminologySearchPlaceholder} selectAllLabel={t.selectAllTerminologies} terminologyIdLabel={t.terminologyId} providerLabel={t.provider} descriptionLabel={t.description} selectedCountLabel={t.selectedTerminologyCount} previousPageLabel={t.previousPage} nextPageLabel={t.nextPage} pageLabel={t.pageOf} noResults={t.noTerminologiesFound} onChange={selectBulkTerminologies} />
+      </div>;
+    }
+    if (isDetailsStep) {
+      return <CollectionDetailsFields messages={t} title={collectionTitle} description={collectionDescription} onTitleChange={setCollectionTitle} onDescriptionChange={setCollectionDescription} />;
+    }
+    if (isVisibilityStep) {
+      return <><CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} /><CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} /></>;
+    }
+  }
+
+  function renderNextAction() {
+    if (creationMethod === "manual" && manualStep === 1) return <button type="button" className="btn" onClick={goToManualDetails}>{t.next}</button>;
+    if (creationMethod === "manual" && manualStep === 2) return <button type="button" className="btn" onClick={goToVisibility}>{t.next}</button>;
+    if (creationMethod === "bulk" && bulkStep === 1) return <button type="button" className="btn disabled:cursor-not-allowed disabled:opacity-50" disabled={selectedBulkProviders.length === 0} onClick={goToBulkTerminologies}>{t.next}</button>;
+    if (creationMethod === "bulk" && bulkStep === 2) return <button type="button" className="btn" onClick={() => setBulkStep(3)}>{t.next}</button>;
+    if (creationMethod === "bulk" && bulkStep === 3) return <button type="button" className="btn" onClick={goToVisibility}>{t.next}</button>;
+    return <button type="submit" className="btn">{t.create}</button>;
+  }
+
+  function OntologyLoadError({ onRetry }: { onRetry: () => void }) {
+    return <div className="text-center" role="alert">
+      <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
+      <button type="button" className="btn !p-1 !text-sm" onClick={onRetry}>{t.retry}</button>
+    </div>;
   }
 
   useEffect(() => {
@@ -192,20 +252,11 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   useEffect(() => {
     getUserList().then((resp) => {
-      if (!resp.status) {
-        return;
+      if (resp.status) {
+        setUsers(resp.content.map((user: { username: string }) => user.username));
       }
-      let users = resp.content.map((user: { username: string }) => user.username);
-      setUsers(users);
-
     });
   }, []);
-
-  if (!debugMode && !session?.data?.user.token && session.status !== "loading") {
-    return <><LoginFormWrapper /></>;
-  } else if (!debugMode && session.status === "loading") {
-    return <div className="md:col-span-2"><Loading /></div>;
-  }
 
   const progressSteps = creationMethod === "manual"
     ? [t.creationMethodStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
@@ -223,254 +274,32 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     : creationMethod === "bulk"
       ? bulkStep === 1 ? "w-2/5" : bulkStep === 2 ? "w-3/5" : bulkStep === 3 ? "w-4/5" : "w-full"
       : "w-1/5";
+  const isDetailsStep = (creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3);
+  const isVisibilityStep = (creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4);
+  const selectedBulkOptions = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
 
-  return (
-    <div className="">
-      <a
-        className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-        href={localizePath(
-          searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/",
-          locale,
-        )}
-        aria-label={t.cancel}
-        title={t.cancel}
-      >
-        <span aria-hidden="true">×</span>
-      </a>
-      <p className="header-2" key={"heading"}>{t.defineNew}</p>
-      <div className="mt-8" aria-label={t.creationProgress}>
-        <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">
-          {progressSteps.map((step) => <span key={step}>{step}</span>)}
-        </div>
-        <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-          <div
-            className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`}
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={progressPercent}
-            aria-valuetext={progressSteps[progressStep - 1]}
-            aria-label={t.creationProgress}
-          />
-        </div>
-      </div>
-      {loading && <Loading />}
-      {!creationMethod &&
-        <div className="mt-10">
-          <p className="mb-5 text-gray-700 dark:text-gray-200">{t.creationIntro}</p>
-          <p className="mb-5 text-lg font-medium text-gray-900 dark:text-white">{t.chooseCreationMethod}</p>
-          <div className="grid gap-4 md:grid-cols-2">
-            <button
-              type="button"
-              className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color"
-              onClick={() => setCreationMethod("manual")}
-            >
-              {t.addTerminologiesMyself}
-            </button>
-            <button
-              type="button"
-              className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color"
-              onClick={() => setCreationMethod("bulk")}
-            >
-              {t.bulkImportTerminologies}
-            </button>
-          </div>
-        </div>
-      }
-      {creationMethod && !formIsSubmitted &&
-        <>
-          <form
-            key={"collection-form"}
-            className="mt-10"
-            onSubmit={submit}
-            onKeyDown={(e: React.KeyboardEvent<HTMLFormElement>) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-              }
-            }}
-          >
-          {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
-            <div className="form-input-group">
-              <div className="flex items-center gap-3">
-                <span className={`text-sm capitalize ${isPublic ? "text-gray-500 dark:text-gray-400" : "font-semibold text-ts4nfdi-brand-color dark:text-white"}`}>
-                  {t.private}
-                </span>
-                <ToggleButton
-                  id={"visibility"}
-                  label={t.public}
-                  checked={isPublic}
-                  onChange={(event) => setIsPublic(event.target.checked)}
-                  brandColor
-                  labelClassName={isPublic
-                    ? "!font-semibold !text-ts4nfdi-brand-color dark:!text-white"
-                    : "!font-normal !text-gray-500 dark:!text-gray-400"}
-                />
-              </div>
-            </div>
-          }
-          {((creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3)) &&
-            <div className="form-input-group">
-            <TextInput
-              id="collection-title"
-              name="collection-title"
-              type="text"
-              labelText={t.title}
-              placeHolder={t.titlePlaceholder}
-              key={"collection-title"}
-              required
-              defaultValue={collectionTitle}
-              onChange={(event) => setCollectionTitle(event.target.value)}
-            />
-            </div>
-          }
-          {creationMethod === "bulk" && bulkStep === 1 &&
-            <div className="form-input-group">
-              <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkProviderSelectionHelp}</p>
-              {ontologyOptionsLoading && <Loading />}
-              {ontologyOptionsFailed &&
-                <div className="text-center" role="alert">
-                  <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
-                  <button type="button" className="btn !p-1 !text-sm" onClick={loadOntologyOptions}>{t.retry}</button>
-                </div>
-              }
-              {ontologyOptionsLoaded &&
-                <BulkProviderSelection
-                  options={ontologyOptions}
-                  selected={selectedBulkProviders}
-                  descriptions={t.providerDescriptions}
-                  label={t.selectProviders}
-                  countLabel={t.providerTerminologyCount}
-                  countSingularLabel={t.providerTerminologyCountSingular}
-                  onChange={setSelectedBulkProviders}
-                />
-              }
-            </div>
-          }
-          {creationMethod === "manual" && manualStep === 1 &&
-            <div className="form-input-group" key={"manual-terminology-list"}>
-              <p className="mb-4 text-gray-700 dark:text-gray-200">{t.terminologySelectionHelp}</p>
-              {ontologyOptionsLoading && <Loading />}
-              {ontologyOptionsFailed &&
-                <div className="text-center" role="alert">
-                  <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
-                  <button type="button" className="btn !p-1 !text-sm" onClick={loadOntologyOptions}>{t.retry}</button>
-                </div>
-              }
-              {ontologyOptionsLoaded &&
-                <TerminologyMultiSelect
-                  label={t.terminologies}
-                  options={ontologyOptions}
-                  selected={selectedManualTerminologies}
-                  providerDescriptions={t.providerDescriptions}
-                  searchPlaceholder={t.terminologySearchPlaceholder}
-                  providerFilterLabel={t.providerFilter}
-                  allProvidersLabel={t.allProviders}
-                  additionalProvidersLabel={t.additionalProviders}
-                  clearProvidersLabel={t.clearProviders}
-                  noResults={t.noTerminologiesFound}
-                  limitedResults={t.limitedTerminologyResults}
-                  removeLabel={t.removeTerminology}
-                  onChange={selectManualTerminologies}
-                />
-              }
-            </div>
-          }
-          {creationMethod === "bulk" && bulkStep === 2 &&
-            <div className="form-input-group" key={"terminology-list"}>
-              <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkTerminologySelectionHelp}</p>
-              <BulkTerminologyTable
-                options={ontologyOptions.filter((option) => selectedBulkProviders.includes(option.providerId))}
-                selected={selectedBulkTerminologies}
-                searchLabel={t.searchTerminologies}
-                searchPlaceholder={t.terminologySearchPlaceholder}
-                selectAllLabel={t.selectAllTerminologies}
-                terminologyIdLabel={t.terminologyId}
-                providerLabel={t.provider}
-                descriptionLabel={t.description}
-                selectedCountLabel={t.selectedTerminologyCount}
-                previousPageLabel={t.previousPage}
-                nextPageLabel={t.nextPage}
-                pageLabel={t.pageOf}
-                noResults={t.noTerminologiesFound}
-                onChange={selectBulkTerminologies}
-              />
-            </div>
-          }
-          {((creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3)) &&
-            <div className="form-input-group" key="description">
-            <TextArea
-              id="description"
-              required
-              name="collection-desc"
-              placeholder={t.descriptionPlaceholder}
-              labelText={t.description}
-              rows={10}
-              defaultValue={collectionDescription}
-              onChange={(event) => {
-                event.target.setCustomValidity("");
-                setCollectionDescription(event.target.value);
-              }}
-            />
-            </div>
-          }
-          {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
-            <div className="form-input-group" key={"collaborators-list"}>
-            <label htmlFor="collection-collaborators" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              {t.collaboratorsFull}
-            </label>
-            <MultiSelectDropdown
-              id="collection-collaborators"
-              placeholder={t.usersPlaceholder}
-              options={users}
-              selectedValues={selectedCollaborators}
-              onSelect={onSelect}
-              onRemove={onRemove}
-            />
-            </div>
-          }
-          <div className="flex justify-between gap-2" key={"submit-btn"}>
-            <button
-              type="button"
-              className="btn !bg-gray-200 !text-gray-900 hover:!bg-gray-300 dark:!bg-gray-600 dark:!text-white dark:hover:!bg-gray-500"
-              onClick={goBack}
-            >
-              {t.back}
-            </button>
-            {creationMethod === "manual" && manualStep === 1 &&
-              <button type="button" className="btn" onClick={goToManualDetails}>{t.next}</button>
-            }
-            {creationMethod === "manual" && manualStep === 2 &&
-              <button
-                type="button"
-                className="btn"
-                onClick={goToVisibility}
-              >
-                {t.next}
-              </button>
-            }
-            {creationMethod === "bulk" && bulkStep === 1 &&
-              <button
-                type="button"
-                className="btn disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={selectedBulkProviders.length === 0}
-                onClick={goToBulkTerminologies}
-              >
-                {t.next}
-              </button>
-            }
-            {creationMethod === "bulk" && bulkStep === 2 &&
-              <button type="button" className="btn" onClick={() => setBulkStep(3)}>{t.next}</button>
-            }
-            {creationMethod === "bulk" && bulkStep === 3 &&
-              <button type="button" className="btn" onClick={goToVisibility}>{t.next}</button>
-            }
-            {((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4)) &&
-              <button type="submit" className="btn">{t.create}</button>
-            }
-          </div>
-          </form>
-        </>
-      }
+  if (!debugMode && !session?.data?.user.token && session.status !== "loading") {
+    return <><LoginFormWrapper /></>;
+  }
+  if (!debugMode && session.status === "loading") {
+    return <div className="md:col-span-2"><Loading /></div>;
+  }
+
+  return <div>
+    <a className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" href={localizePath(searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/", locale)} aria-label={t.cancel} title={t.cancel}><span aria-hidden="true">×</span></a>
+    <p className="header-2">{t.defineNew}</p>
+    <div className="mt-8" aria-label={t.creationProgress}>
+      <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step) => <span key={step}>{step}</span>)}</div>
+      <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700"><div className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent} aria-valuetext={progressSteps[progressStep - 1]} aria-label={t.creationProgress} /></div>
     </div>
-  );
+    {loading && <Loading />}
+    {!creationMethod && renderCreationMethodSelection()}
+    {creationMethod && !formIsSubmitted && <form className="mt-10" onSubmit={submit} onKeyDown={(event) => event.key === "Enter" && event.preventDefault()}>
+      {renderCurrentStep()}
+      <div className="flex justify-between gap-2">
+        <button type="button" className="btn !bg-gray-200 !text-gray-900 hover:!bg-gray-300 dark:!bg-gray-600 dark:!text-white dark:hover:!bg-gray-500" onClick={goBack}>{t.back}</button>
+        {renderNextAction()}
+      </div>
+    </form>}
+  </div>;
 }

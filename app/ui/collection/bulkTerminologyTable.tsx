@@ -2,6 +2,7 @@
 
 import { PortalOntologyOption } from "@/app/concepts";
 import { useMemo, useState } from "react";
+import { getTerminologyOptionKey } from "@/app/ui/collection/terminologyOptions";
 
 type BulkTerminologyTableProps = {
   options: PortalOntologyOption[];
@@ -18,10 +19,6 @@ type BulkTerminologyTableProps = {
   pageLabel: string;
   noResults: string;
   onChange: (options: PortalOntologyOption[]) => void;
-}
-
-function optionKey(option: PortalOntologyOption) {
-  return `${option.providerId}:${option.ontologyId}:${option.uri}`;
 }
 
 export default function BulkTerminologyTable({
@@ -42,29 +39,29 @@ export default function BulkTerminologyTable({
 }: BulkTerminologyTableProps) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
-  const selectedKeys = useMemo(() => new Set(selected.map(optionKey)), [selected]);
+  const selectedKeys = useMemo(() => new Set(selected.map(getTerminologyOptionKey)), [selected]);
   const filteredOptions = useMemo(() => {
     const query = search.trim().toLowerCase();
     return query
       ? options.filter((option) => `${option.ontologyId} ${option.providerId} ${option.description}`.toLowerCase().includes(query))
       : options;
   }, [options, search]);
-  const allFilteredSelected = filteredOptions.length > 0 && filteredOptions.every((option) => selectedKeys.has(optionKey(option)));
+  const allFilteredSelected = filteredOptions.length > 0 && filteredOptions.every((option) => selectedKeys.has(getTerminologyOptionKey(option)));
   const pageCount = Math.max(1, Math.ceil(filteredOptions.length / 100));
   const visibleOptions = filteredOptions.slice(page * 100, (page + 1) * 100);
 
   function toggle(option: PortalOntologyOption) {
-    const key = optionKey(option);
+    const key = getTerminologyOptionKey(option);
     onChange(selectedKeys.has(key)
-      ? selected.filter((item) => optionKey(item) !== key)
+      ? selected.filter((item) => getTerminologyOptionKey(item) !== key)
       : [...selected, option]);
   }
 
   function toggleFiltered() {
-    const filteredKeys = new Set(filteredOptions.map(optionKey));
+    const filteredKeys = new Set(filteredOptions.map(getTerminologyOptionKey));
     onChange(allFilteredSelected
-      ? selected.filter((option) => !filteredKeys.has(optionKey(option)))
-      : [...selected, ...filteredOptions.filter((option) => !selectedKeys.has(optionKey(option)))]);
+      ? selected.filter((option) => !filteredKeys.has(getTerminologyOptionKey(option)))
+      : [...selected, ...filteredOptions.filter((option) => !selectedKeys.has(getTerminologyOptionKey(option)))]);
   }
 
   return (
@@ -107,11 +104,11 @@ export default function BulkTerminologyTable({
           </thead>
           <tbody>
             {visibleOptions.map((option) =>
-              <tr key={optionKey(option)} className="border-t border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800">
+              <tr key={getTerminologyOptionKey(option)} className="border-t border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-800">
                 <td className="p-3">
                   <input
                     type="checkbox"
-                    checked={selectedKeys.has(optionKey(option))}
+                    checked={selectedKeys.has(getTerminologyOptionKey(option))}
                     onChange={() => toggle(option)}
                     aria-label={`${option.ontologyId} (${option.providerId})`}
                     className="h-4 w-4 rounded border-gray-300 text-ts4nfdi-brand-color focus:ring-ts4nfdi-brand-color dark:border-gray-500 dark:bg-gray-600"

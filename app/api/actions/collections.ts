@@ -64,7 +64,7 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
         let token = await getUserToken();
-        if (!token && (process.env.NODE_ENV === "production" || process.env.debug_mode !== "true")) {
+        if (!token && process.env.DEBUG_MODE !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 

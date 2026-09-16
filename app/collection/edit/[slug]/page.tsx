@@ -5,14 +5,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
-import { Loading, TextArea, TextInput, ToggleButton, MultiSelectDropdown } from "@/app/ui/commons/snippets";
+import { Loading } from "@/app/ui/commons/snippets";
 import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { getOntologyOptions } from "@/app/api/actions/providers";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
-import TerminologyMultiSelect from "@/app/ui/collection/terminologyMultiSelect";
+import {
+  CollaboratorField,
+  CollectionDetailsFields,
+  CollectionVisibilityField,
+  TerminologySelectionField,
+} from "@/app/ui/collection/collectionFormFields";
 
 export default function CollectionEdit() {
   const locale = useLocale();
@@ -36,6 +41,29 @@ export default function CollectionEdit() {
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
   const terminologySelectionInitialized = useRef(false);
+
+  const loadOntologyOptions = useCallback(async () => {
+    if (ontologyRequestInFlight.current) {
+      return;
+    }
+    ontologyRequestInFlight.current = true;
+    setOntologyOptionsLoading(true);
+    setOntologyOptionsFailed(false);
+    try {
+      const options = await getOntologyOptions();
+      if (!options) {
+        setOntologyOptionsFailed(true);
+        return;
+      }
+      setOntologyOptions(options);
+      setOntologyOptionsLoaded(true);
+    } catch {
+      setOntologyOptionsFailed(true);
+    } finally {
+      ontologyRequestInFlight.current = false;
+      setOntologyOptionsLoading(false);
+    }
+  }, []);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
@@ -66,39 +94,6 @@ export default function CollectionEdit() {
       return;
     }
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function onSelect(selectedList: string[], _selectedItem: string) {
-    setSelectedCollaborators(selectedList);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function onRemove(selectedList: string[], _removedItem: string) {
-    setSelectedCollaborators(selectedList);
-  }
-
-  const loadOntologyOptions = useCallback(async () => {
-    if (ontologyRequestInFlight.current) {
-      return;
-    }
-    ontologyRequestInFlight.current = true;
-    setOntologyOptionsLoading(true);
-    setOntologyOptionsFailed(false);
-    try {
-      const options = await getOntologyOptions();
-      if (!options) {
-        setOntologyOptionsFailed(true);
-        return;
-      }
-      setOntologyOptions(options);
-      setOntologyOptionsLoaded(true);
-    } catch {
-      setOntologyOptionsFailed(true);
-    } finally {
-      ontologyRequestInFlight.current = false;
-      setOntologyOptionsLoading(false);
-    }
-  }, []);
 
   useEffect(() => {
     loadOntologyOptions();
@@ -181,85 +176,10 @@ export default function CollectionEdit() {
                 }
               }}
             >
-              <div className="form-input-group">
-                <p className="mb-4 text-gray-700 dark:text-gray-200">{t.terminologySelectionHelp}</p>
-                {ontologyOptionsLoading && <Loading />}
-                {ontologyOptionsFailed &&
-                  <div className="text-center" role="alert">
-                    <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
-                    <button type="button" className="btn !p-1 !text-sm" onClick={loadOntologyOptions}>{t.retry}</button>
-                  </div>
-                }
-                {ontologyOptionsLoaded &&
-                  <TerminologyMultiSelect
-                    label={t.terminologies}
-                    options={ontologyOptions}
-                    selected={selectedTerminologies}
-                    providerDescriptions={t.providerDescriptions}
-                    searchPlaceholder={t.terminologySearchPlaceholder}
-                    providerFilterLabel={t.providerFilter}
-                    allProvidersLabel={t.allProviders}
-                    additionalProvidersLabel={t.additionalProviders}
-                    clearProvidersLabel={t.clearProviders}
-                    noResults={t.noTerminologiesFound}
-                    limitedResults={t.limitedTerminologyResults}
-                    removeLabel={t.removeTerminology}
-                    onChange={setSelectedTerminologies}
-                  />
-                }
-              </div>
-              <div className="form-input-group">
-                <TextInput
-                  id="collection-title"
-                  name="collection-title"
-                  type="text"
-                  labelText={t.title}
-                  placeHolder={t.titlePlaceholder}
-                  defaultValue={collection.label}
-                  required
-                />
-              </div>
-              <div className="form-input-group">
-                <TextArea
-                  id="description"
-                  required
-                  name="collection-desc"
-                  placeholder={t.descriptionPlaceholder}
-                  labelText={t.description}
-                  rows={10}
-                  defaultValue={collection.description}
-                />
-              </div>
-              <div className="form-input-group">
-                <div className="flex items-center gap-3">
-                  <span className={`text-sm capitalize ${isPublic ? "text-gray-500 dark:text-gray-400" : "font-semibold text-ts4nfdi-brand-color dark:text-white"}`}>
-                    {t.private}
-                  </span>
-                  <ToggleButton
-                    id="visibility"
-                    label={t.public}
-                    checked={isPublic}
-                    onChange={(event) => setIsPublic(event.target.checked)}
-                    brandColor
-                    labelClassName={isPublic
-                      ? "!font-semibold !text-ts4nfdi-brand-color dark:!text-white"
-                      : "!font-normal !text-gray-500 dark:!text-gray-400"}
-                  />
-                </div>
-              </div>
-              <div className="form-input-group">
-                <label htmlFor="collection-collaborators" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                  {t.collaboratorsFull}
-                </label>
-                <MultiSelectDropdown
-                  id="collection-collaborators"
-                  placeholder={t.usersPlaceholder}
-                  options={users}
-                  selectedValues={selectedCollaborators}
-                  onSelect={onSelect}
-                  onRemove={onRemove}
-                />
-              </div>
+              <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} loading={ontologyOptionsLoading} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
+              <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
+              <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
+              <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
               <div className="text-end">
                 <button
                   type="submit"

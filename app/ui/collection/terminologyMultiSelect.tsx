@@ -2,6 +2,7 @@
 
 import { PortalOntologyOption } from "@/app/concepts";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { filterTerminologyOptions, getTerminologyOptionKey } from "@/app/ui/collection/terminologyOptions";
 
 type TerminologyMultiSelectProps = {
   label: string;
@@ -17,10 +18,6 @@ type TerminologyMultiSelectProps = {
   limitedResults: string;
   removeLabel: string;
   onChange: (selected: PortalOntologyOption[]) => void;
-}
-
-function optionKey(option: PortalOntologyOption) {
-  return `${option.providerId}:${option.ontologyId}:${option.uri}`;
 }
 
 export default function TerminologyMultiSelect({
@@ -46,20 +43,11 @@ export default function TerminologyMultiSelect({
   const providerButtonRef = useRef<HTMLButtonElement>(null);
   const terminologySearchRef = useRef<HTMLDivElement>(null);
   const terminologyResultsRef = useRef<HTMLUListElement>(null);
-  const selectedKeys = useMemo(() => new Set(selected.map(optionKey)), [selected]);
+  const selectedKeys = useMemo(() => new Set(selected.map(getTerminologyOptionKey)), [selected]);
   const providers = useMemo(() =>
     [...new Set(options.map((option) => option.providerId))].filter(Boolean).sort(),
   [options]);
-  const filteredOptions = useMemo(() => {
-    const query = search.trim().toLowerCase();
-    if (!query) {
-      return [];
-    }
-    return options.filter((option) =>
-      (selectedProviders.length === 0 || selectedProviders.includes(option.providerId)) &&
-      `${option.ontologyId} ${option.providerId} ${option.description}`.toLowerCase().includes(query),
-    );
-  }, [options, search, selectedProviders]);
+  const filteredOptions = useMemo(() => filterTerminologyOptions(options, search, selectedProviders), [options, search, selectedProviders]);
   const visibleOptions = filteredOptions.slice(0, 100);
   const providerSummary = selectedProviders.length === 0
     ? allProvidersLabel
@@ -108,9 +96,9 @@ export default function TerminologyMultiSelect({
   }, [terminologyDropdownOpen]);
 
   function toggle(option: PortalOntologyOption) {
-    const key = optionKey(option);
+    const key = getTerminologyOptionKey(option);
     onChange(selectedKeys.has(key)
-      ? selected.filter((item) => optionKey(item) !== key)
+      ? selected.filter((item) => getTerminologyOptionKey(item) !== key)
       : [...selected, option]);
   }
 
@@ -127,7 +115,7 @@ export default function TerminologyMultiSelect({
           {selected.map((option) =>
             <button
               type="button"
-              key={optionKey(option)}
+              key={getTerminologyOptionKey(option)}
               className="rounded bg-ts4nfdi-brand-color px-2 py-1 text-sm text-white dark:bg-ts4nfdi-brand-color"
               aria-label={`${removeLabel} ${option.ontologyId} (${option.providerId})`}
               onClick={() => toggle(option)}
@@ -228,7 +216,7 @@ export default function TerminologyMultiSelect({
         }
         {filteredOptions.length === 0 && <li className="p-3 text-sm">{noResults}</li>}
         {visibleOptions.map((option) => {
-          const key = optionKey(option);
+          const key = getTerminologyOptionKey(option);
           return (
             <li key={key} className="border-b border-gray-200 last:border-b-0 dark:border-gray-600">
               <label className="flex cursor-pointer gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-600">

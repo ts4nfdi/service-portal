@@ -55,7 +55,8 @@ export default defineConfig({
       ...process.env,
       PORT: testPort,
       ONTOLOGY_OPTIONS_URL: `${MOCK_GATEWAY_BASE_URL}/api-gateway/ols4/api/ontologies`,
-      debug_mode: "true",
+      DEBUG_MODE: "true",
+      NEXT_DEBUG_MODE: "true",
     },
   },
 });
