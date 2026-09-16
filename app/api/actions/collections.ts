@@ -99,7 +99,25 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
             body: JSON.stringify(formData)
         });
         if (!resp.ok) {
-            return {status: false, content: REQUEST_FAILED_MESSAGE}
+            let errorBody: unknown;
+            try {
+                errorBody = await resp.json();
+            } catch {
+                errorBody = {};
+            }
+            const error = typeof errorBody === "object" && errorBody !== null
+                ? errorBody as Record<string, unknown>
+                : {};
+            return {
+                status: false,
+                content: {
+                    status: resp.status,
+                    statusText: resp.statusText,
+                    error: typeof error.error === "string" ? error.error : REQUEST_FAILED_MESSAGE,
+                    message: typeof error.message === "string" ? error.message : undefined,
+                    path: typeof error.path === "string" ? error.path : undefined
+                }
+            }
         }
         let res: Collection = await resp.json();
         return {status: true, content: new PortalCollection(res).toJson()}

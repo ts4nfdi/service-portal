@@ -102,13 +102,22 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setLoading(true);
 
       let res = await createCollection(pCollection.toJson());
+      if (!res.status) {
+        console.error("Collection creation outcome", res);
+        setFormIsSubmited(false);
+        setLoading(false);
+        return;
+      }
+      console.log("Collection creation outcome", res);
       if (searchParams.get('from') === "my-collections") {
         window.location.href = localizePath(`/collection/myCollections?created=${res.status}`, locale);
       } else {
         window.location.href = localizePath(`/collection/?created=${res.status}`, locale);
       }
-
-    } catch {
+    } catch (error) {
+      console.error("Collection creation failed", error);
+      setFormIsSubmited(false);
+      setLoading(false);
       return;
     }
   }
