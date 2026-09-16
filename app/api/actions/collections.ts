@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getUserToken} from "@/app/libs/auth";
+import {getAuthenticatedUser, getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
@@ -63,7 +63,7 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
-        let token = await getUserToken();
+        let {token, username} = await getAuthenticatedUser();
         if (!token && process.env.DEBUG_MODE !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -86,6 +86,7 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
 
         let formData: Collection = {
             label: newCollection.label,
+            creator: username,
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,
