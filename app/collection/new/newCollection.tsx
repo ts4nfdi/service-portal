@@ -55,6 +55,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
+  const submissionInFlight = useRef(false);
 
   const loadOntologyOptions = useCallback(async () => {
     if (ontologyRequestInFlight.current) {
@@ -79,9 +80,12 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }, []);
 
-  async function submit(e: React.FormEvent) {
+  async function submit() {
+    if (submissionInFlight.current) {
+      return;
+    }
+    submissionInFlight.current = true;
     try {
-      e.preventDefault();
       let pCollection = new PortalCollection();
       pCollection.description = collectionDescription;
       pCollection.label = collectionTitle;
@@ -103,6 +107,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
       let res = await createCollection(pCollection.toJson());
       if (!res.status) {
+        submissionInFlight.current = false;
         setFormIsSubmited(false);
         setLoading(false);
         return;
@@ -113,6 +118,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         window.location.href = localizePath(`/collection/?created=${res.status}`, locale);
       }
     } catch {
+      submissionInFlight.current = false;
       setFormIsSubmited(false);
       setLoading(false);
       return;
@@ -240,7 +246,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     if (creationMethod === "bulk" && bulkStep === 1) return <button type="button" className="btn disabled:cursor-not-allowed disabled:opacity-50" disabled={selectedBulkProviders.length === 0} onClick={goToBulkTerminologies}>{t.next}</button>;
     if (creationMethod === "bulk" && bulkStep === 2) return <button type="button" className="btn" onClick={() => setBulkStep(3)}>{t.next}</button>;
     if (creationMethod === "bulk" && bulkStep === 3) return <button type="button" className="btn" onClick={goToVisibility}>{t.next}</button>;
-    return <button type="submit" className="btn">{t.create}</button>;
+    return <button type="button" className="btn disabled:cursor-not-allowed disabled:opacity-50" disabled={loading} onClick={() => void submit()}>{t.create}</button>;
   }
 
   function OntologyLoadError({ onRetry }: { onRetry: () => void }) {
@@ -301,7 +307,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     </div>
     {loading && <Loading />}
     {!creationMethod && renderCreationMethodSelection()}
-    {creationMethod && !formIsSubmitted && <form className="mt-10" onSubmit={submit} onKeyDown={(event) => event.key === "Enter" && event.preventDefault()}>
+    {creationMethod && !formIsSubmitted && <form className="mt-10" onSubmit={(event) => event.preventDefault()} onKeyDown={(event) => event.key === "Enter" && event.preventDefault()}>
       {renderCurrentStep()}
       <div className="flex justify-between gap-2">
         <button type="button" className="btn !bg-gray-200 !text-gray-900 hover:!bg-gray-300 dark:!bg-gray-600 dark:!text-white dark:hover:!bg-gray-500" onClick={goBack}>{t.back}</button>
