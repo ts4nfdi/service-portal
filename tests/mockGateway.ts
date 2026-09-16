@@ -60,7 +60,11 @@ export function startMockGateway() {
 
     if (requestUrl.pathname === "/auth/sso/login" && request.method === "POST") {
       response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ token: "mock-jwt", username: "OAuth User" }));
+      response.end(JSON.stringify({
+        token: "mock-jwt",
+        username: "OAuth User",
+        expiration: "2099-01-01T00:00:00.000Z",
+      }));
       return;
     }
 
