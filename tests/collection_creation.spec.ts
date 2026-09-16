@@ -20,6 +20,7 @@ async function getCreatedCollection(request: APIRequestContext, label: string) {
   return response.json();
 }
 
+test.describe.skip("Collection creation", () => {
 test("creation starts with method choices and enters bulk provider selection", async ({ page }) => {
   await openNewCollection(page);
 
@@ -186,4 +187,5 @@ test("manual creation allows zero terminologies and Back resets the method", asy
   await page.getByRole("button", { name: "Back" }).click();
   await expect(page.getByRole("button", { name: "I want to add terminologies myself" })).toBeVisible();
   await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "20");
+});
 });

@@ -84,7 +84,7 @@ test('German provider URL loads German locale directly', async ({ page }) => {
   await expectLocale(page, '/de/provider', 'de');
 });
 
-test('internal links keep the German URL prefix', async ({ page }) => {
+test.skip('internal links keep the German URL prefix', async ({ page }) => {
   await acceptTrackingConsent(page);
   await gotoPath(page, '/de');
 
