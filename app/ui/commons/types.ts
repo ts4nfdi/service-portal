@@ -69,6 +69,7 @@ export type TextAreaProps = {
     defaultValue?: string,
     rows: number,
     cols?: number,
+    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
 }
 
 export type RadioButtonProps = {
@@ -82,6 +83,10 @@ export type RadioButtonProps = {
 export type ToggleButtonProps = {
     id: string,
     label: string,
+    checked?: boolean,
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    brandColor?: boolean,
+    labelClassName?: string,
 }
 
 export type CheckboxProps = {

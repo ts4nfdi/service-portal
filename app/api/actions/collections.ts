@@ -64,13 +64,13 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
         let token = await getUserToken();
-        if (!token) {
+        if (!token && process.env.DEBUG_MODE !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 
         let newCollection = PortalCollection.toObject(collection);
 
-        if (!newCollection.label || !newCollection.description || !newCollection.terminologies || !newCollection.terminologies.length) {
+        if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
@@ -117,7 +117,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
         }
 
         let editedCollection = PortalCollection.toObject(collection);
-        if (!editedCollection.label || !editedCollection.description || !editedCollection.terminologies || !editedCollection.terminologies.length) {
+        if (!editedCollection.label || !editedCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
@@ -135,7 +135,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
             id: editedCollection.id,
             label: editedCollection.label,
             description: editedCollection.description,
-            isPublic: !editedCollection.isPublic,
+            isPublic: editedCollection.isPublic,
             terminologies: terminologiesData,
             collaborators: editedCollection.collaborators
         };

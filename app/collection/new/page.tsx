@@ -1,13 +1,11 @@
-'use client'
-
 import NewCollection from "@/app/collection/new/newCollection";
 import { Suspense } from "react";
 
 export default function NewCollectionPage() {
   return (
-    <div className="md:col-span-2 content-panel">
+    <div className="relative md:col-span-3 content-panel">
       <Suspense>
-        <NewCollection />
+        <NewCollection debugMode={process.env.NEXT_DEBUG_MODE === "true"} />
       </Suspense>
     </div>
   );

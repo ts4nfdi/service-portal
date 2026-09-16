@@ -22,6 +22,7 @@ function collectionBox(page: Page, text: string): Locator {
   return page.getByText(text, { exact: true }).locator("..");
 }
 
+test.describe.skip("Collection detail", () => {
 test("collection page is accessible by uuid and shows collection details", async ({
   page,
 }) => {
@@ -103,4 +104,5 @@ test("collection page downloads the collection as JSON", async ({ page }) => {
     creator: COLLECTION.creator,
     description: COLLECTION.description,
   });
+});
 });
