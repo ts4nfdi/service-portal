@@ -1,7 +1,7 @@
 {
   "stats": {
-    "In preparation": 8,
-    "Running": 8,
+    "In preparation": 7,
+    "Running": 9,
     "Finished": 15
   },
   "projects": [
@@ -244,10 +244,10 @@
       "title": "AIMS",
       "cycle": "3",
       "status": "Running",
-      "start": "03.2026",
-      "end": "09.2026",
+      "start": "18.03.2026",
+      "end": "15.09.2026",
       "description": "AIMS (Applying Interoperable Metadata Standards) is developing a platform for creating, sharing, and reusing interoperable and machine-readable metadata profiles based on SHACL shapes. The project addresses key challenges in research data management by enabling researchers to model semantic metadata schemas in a modular and hierarchical fashion using elements from established controlled terminologies. AIMS provides a central web-UI for managing profiles, backed by repositories for storing validated metadata sets and integrating with electronic lab notebooks (ELNs) like eLabFTW and openBIS. The project consortium includes ULB Darmstadt, RWTH Aachen IT Center, University of Rostock, Fraunhofer IWM, and University of Freiburg.",
-      "goals": ["Replace current terminology providers with TS4NFDI API Gateway as unified terminology service", "Integrate TS4NFDI Service Suite widgets to AIMS"],
+      "goals": ["Replace current terminology providers with a unified terminology service", "Develop of Vue.js-based components for enhanced terminology browsing and navigation"],
       "consortium": ["NFDI4Ing"],
       "logo": "AIMS-Logo.png",
       "logoW": 200,
@@ -298,7 +298,7 @@
     {
       "title": "MathModDB",
       "cycle": "3",
-      "status": "Running",
+      "status": "Finished",
       "start": "03.2026",
       "end": "10.09.2026",
       "description": "MathModDB is a database of mathematical models, developed by the Mathematical Research Data Initiative (MaRDI) as an ontology and knowledge graph. Its aim is to store information of mathematical models in a structured way, describing a mathematical model as a semantic object. A model consists, for example, of mathematical expressions and quantities, and can be linked with a specific computational task. Moreover, a mathematical model is used to model a specific research problem, embedded in an academic discipline.",
@@ -350,8 +350,8 @@
     {
       "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
       "cycle": "4",
-      "status": "In preparation",
-      "start": "Q3/2026",
+      "status": "running",
+      "start": "09/2026",
       "end": "-",
       "description": "DAPHNE4NFDI represents the Photon and Neutron (PaN) research community in the German National Research Data Infrastructure (NFDI). The community has developed and maintains the PaNET ontology, a domain ontology that systematises experimental techniques used at e.g. photon and neutron research infrastructure. The PaN community requires a sustainable approach for managing and using terminology mappings while preserving the integrity and governance of the PaNET ontology itself.",
       "goals": [],
@@ -390,7 +390,7 @@
       "title": "Terminology Service Suite integration for WissKI authority data enrichment",
       "cycle": "4",
       "status": "Running",
-      "start": "Q3/2026",
+      "start": "09/2026",
       "end": "-",
       "description": "SODa's Semantic Co-Working Space (SCS) provides a cloud environment for deploying WissKI-based research applications. WissKI Barrels are containerised, domain-specific researchenvironments built on WissKI and CIDOC-CRM. Today, each Barrel manages terminology lookups independently – with fragmented provider integrations (GND, Getty, GeoNames, Wikidata) and bespoke UI components. This incubator integrates the TS4NFDI Terminology Service Suite into WissKI's Authority Document module and publishes SODa-maintained controlled vocabularies (e.g. provenance event types, conservation treatment categories) via the API Gateway.",
       "goals": [],
