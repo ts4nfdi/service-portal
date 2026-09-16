@@ -164,6 +164,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   function goToVisibility(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
     const form = event.currentTarget.form;
     const description = form?.elements.namedItem("collection-desc") as HTMLTextAreaElement | null;
     description?.setCustomValidity(collectionDescription.trim() ? "" : t.descriptionRequired);
