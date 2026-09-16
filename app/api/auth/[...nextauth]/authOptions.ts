@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { JWT } from "next-auth/jwt";
 
 type SsoTokens = {
   access_token: string;
@@ -10,6 +11,7 @@ const pendingRegistrations = new Map<
   { tokens: SsoTokens; expiresAt: number }
 >();
 const registrationTtl = 5 * 60 * 1000;
+const authVersion = "gateway-expiration-v1";
 
 export const authOptions = {
   providers: [
@@ -86,19 +88,25 @@ export const authOptions = {
   callbacks: {
     //@ts-ignore
     async jwt({ token, user }) {
-      if (
-        token?.expiration &&
-        new Date(token.expiration).getTime() < Date.now()
-      ) {
-        token.token = "";
-        token.username = "";
-        token.expiration = "";
-        return token;
-      }
       if (user) {
         token.token = user.token;
         token.username = user.username;
         token.email = user.email;
+        token.expiration = user.expiration;
+        token.authVersion = authVersion;
+        token.reauthenticate = false;
+      }
+      if (token.authVersion !== authVersion) {
+        requireReauthentication(token);
+        return token;
+      }
+      if (token.expiration === undefined || token.expiration === "") {
+        requireReauthentication(token);
+        return token;
+      }
+      const expiration = getExpirationTime(token.expiration);
+      if (!Number.isFinite(expiration) || expiration <= Date.now()) {
+        requireReauthentication(token);
       }
 
       return token;
@@ -108,6 +116,7 @@ export const authOptions = {
       if (!token) {
         return { user: undefined };
       }
+      session.reauthenticate = token.reauthenticate === true;
       session.user.token = token.token as string;
       session.user.username = token.username as string;
       session.user.email = token.email as string | undefined;
@@ -121,6 +130,21 @@ export const authOptions = {
   // url: process.env.NEXTAUTH_URL,
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+function requireReauthentication(token: JWT) {
+  token.token = "";
+  token.username = "";
+  token.email = "";
+  token.expiration = "";
+  token.reauthenticate = true;
+}
+
+function getExpirationTime(expiration: string | number) {
+  if (typeof expiration === "number") {
+    return expiration;
+  }
+  return /^\d+$/.test(expiration) ? Number(expiration) : Date.parse(expiration);
+}
 
 function getIdentity(idToken: string): Record<string, string> {
   try {
@@ -155,6 +179,7 @@ async function loginUser(tokens: SsoTokens, response?: Response) {
     token,
     username,
     email: user.email ?? identity.email,
+    expiration: user.expiration,
   };
 }
 
