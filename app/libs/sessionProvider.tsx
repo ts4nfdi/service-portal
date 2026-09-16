@@ -19,7 +19,7 @@ function ReauthenticationHandler() {
       return;
     }
     signingOut.current = true;
-    void signOut({ callbackUrl: "/user/login" });
+    void signOut({ redirect: false });
   }, [data?.reauthenticate, status]);
 
   return null;
