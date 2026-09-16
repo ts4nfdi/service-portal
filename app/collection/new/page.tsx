@@ -5,7 +5,7 @@ export default function NewCollectionPage() {
   return (
     <div className="relative md:col-span-3 content-panel">
       <Suspense>
-        <NewCollection debugMode={process.env.debug_mode === "true"} />
+        <NewCollection debugMode={process.env.NODE_ENV !== "production" && process.env.debug_mode === "true"} />
       </Suspense>
     </div>
   );

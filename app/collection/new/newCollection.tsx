@@ -142,7 +142,11 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     const description = form?.elements.namedItem("collection-desc") as HTMLTextAreaElement | null;
     description?.setCustomValidity(collectionDescription.trim() ? "" : t.descriptionRequired);
     if (form?.reportValidity()) {
-      creationMethod === "manual" ? setManualStep(3) : setBulkStep(4);
+      if (creationMethod === "manual") {
+        setManualStep(3);
+      } else {
+        setBulkStep(4);
+      }
     }
   }
 
