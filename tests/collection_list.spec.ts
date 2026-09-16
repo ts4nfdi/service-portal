@@ -57,7 +57,7 @@ test("collections page is reachable from the navbar and shows the explanation ar
   ).toBeVisible();
   await expect(
     explanationBox.getByRole("link", { name: "Create Collection" }),
-  ).toHaveCount(0);
+  ).toBeVisible();
   await expect(explanationBox).toContainText(
     `${GATEWAY_BASE_URL}/collections/`,
   );

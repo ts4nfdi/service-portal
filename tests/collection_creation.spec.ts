@@ -25,7 +25,7 @@ test("creation starts with method choices and enters bulk provider selection", a
 
   await expect(page.getByText("A terminology collection groups terminologies for a specific purpose or context.")).toBeVisible();
   await page.getByRole("button", { name: "I want to bulk import terminologies from source(s)" }).click();
-  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "20");
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "40");
   await expect(page.getByText("Select providers", { exact: true })).toBeVisible();
   await expect(page.getByText("Select one or more providers to import terminologies from. The count shows how many terminologies each provider offers.", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Next", exact: true })).toBeDisabled();
