@@ -25,16 +25,19 @@ export default async function MyCollections() {
       <p className="header-2 !mt-0 inline-block">{t.myCollections}</p>
       <Link href={localizePath("/collection/new?from=my-collections", locale)} className="btn !p-1 !text-sm ml-2">{t.createCollection}</Link>
       <Suspense fallback={<CollectionListLoading label={t.loadingMyCollections} />}>
-        <CollectionListSection />
+        <CollectionListSection emptyMessage={t.noMyCollections} />
       </Suspense>
     </div>
   );
 }
 
-async function CollectionListSection() {
+async function CollectionListSection({ emptyMessage }: { emptyMessage: string }) {
   const collectionsResp = await getUserCollectionList();
   if (!collectionsResp.status) {
     return "";
+  }
+  if (collectionsResp.content.length === 0) {
+    return <p className="mt-6 text-gray-700 dark:text-gray-200">{emptyMessage}</p>;
   }
 
   return <CollectionList collections={collectionsResp.content} showDownloadButton={true} />;
