@@ -5,8 +5,12 @@
     "formal_date": "2026-12-11",
     "links": [
       {
-        "type" :  "webpage (workshop)",
+        "type" :  "webpage (event)",
         "link" :  "https://www.denbi.de/de-nbi-events/2051-5th-biohackathon-germany"
+      },
+      {
+        "type" :  "description",
+        "link" :  "https://www.denbi.de/de-nbi-events/2146-5th-biohackathon-germany-terminology-support-for-metadata-in-training-and-beyond"
       }
     ]
   },{
