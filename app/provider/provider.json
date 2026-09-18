@@ -121,7 +121,7 @@
   },
   "zbmed-skosmos": {
     "title": "ZB MED Semantic Lookup Service Skosmos",
-    "description": "The SemLookP Terminology Service aims to provide access to key terminologies in the health domain. It is developed and maintained by ZB MED - Information Centre for Life Sciences. It emerged from the BMBF-funded project IDSN.",
+    "description": "The ZB MED Semantic Lookup Service Skosmos aims to provide access to terminologies in SKOS format for Incubators of Base4NFDI.",
     "contactUrl": "semlookp-support@zbmed.de",
     "homepage": "https://semanticlookup.zbmed.de/skosmos/",
     "api": "https://semanticlookup.zbmed.de/skosmos/rest/v1",
