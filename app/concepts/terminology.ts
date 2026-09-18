@@ -8,6 +8,13 @@ export type PortalTerminologyJsonData = {
   uri: string,
 }
 
+export type PortalOntologyOption = {
+  ontologyId: string,
+  providerId: string,
+  description: string,
+  uri: string,
+}
+
 export class PortalTerminology {
   private _label: string;
   private _source: string;
@@ -73,4 +80,3 @@ export class PortalTerminology {
   }
 
 }
-

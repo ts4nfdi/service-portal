@@ -23,6 +23,8 @@ jobs:
 
       - name: Run Tests
         run: npm test
+        env:
+          PLAYWRIGHT_WEB_SERVER_COMMAND: npm run dev -- --turbopack
 
   build:
     runs-on: ubuntu-latest

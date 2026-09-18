@@ -4,7 +4,7 @@
   "homepage": "https://github.com/ts4nfdi/service-portal.git",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

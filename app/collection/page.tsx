@@ -107,7 +107,7 @@ export default async function Collections() {
             <Suspense fallback={<DownloadButtonLoading label={t.loading} />}>
               <DownloadCollectionsButtonSection token={token} />
             </Suspense>
-            {token && (
+            {(token || process.env.NEXT_DEBUG_MODE === "true") && (
               <Link
                 href={localizePath("/collection/new/", locale)}
                 className="btn !p-2 !text-sm text-center"

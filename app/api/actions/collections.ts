@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getUserToken} from "@/app/libs/auth";
+import {getAuthenticatedUser, getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
@@ -63,14 +63,14 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
-        let token = await getUserToken();
-        if (!token) {
+        let {token, username} = await getAuthenticatedUser();
+        if (!token && process.env.DEBUG_MODE !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 
         let newCollection = PortalCollection.toObject(collection);
 
-        if (!newCollection.label || !newCollection.description || !newCollection.terminologies || !newCollection.terminologies.length) {
+        if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
@@ -86,6 +86,7 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
 
         let formData: Collection = {
             label: newCollection.label,
+            creator: username,
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,
@@ -98,7 +99,25 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
             body: JSON.stringify(formData)
         });
         if (!resp.ok) {
-            return {status: false, content: REQUEST_FAILED_MESSAGE}
+            let errorBody: unknown;
+            try {
+                errorBody = await resp.json();
+            } catch {
+                errorBody = {};
+            }
+            const error = typeof errorBody === "object" && errorBody !== null
+                ? errorBody as Record<string, unknown>
+                : {};
+            return {
+                status: false,
+                content: {
+                    status: resp.status,
+                    statusText: resp.statusText,
+                    error: typeof error.error === "string" ? error.error : REQUEST_FAILED_MESSAGE,
+                    message: typeof error.message === "string" ? error.message : undefined,
+                    path: typeof error.path === "string" ? error.path : undefined
+                }
+            }
         }
         let res: Collection = await resp.json();
         return {status: true, content: new PortalCollection(res).toJson()}
@@ -117,7 +136,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
         }
 
         let editedCollection = PortalCollection.toObject(collection);
-        if (!editedCollection.label || !editedCollection.description || !editedCollection.terminologies || !editedCollection.terminologies.length) {
+        if (!editedCollection.label || !editedCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
@@ -135,7 +154,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
             id: editedCollection.id,
             label: editedCollection.label,
             description: editedCollection.description,
-            isPublic: !editedCollection.isPublic,
+            isPublic: editedCollection.isPublic,
             terminologies: terminologiesData,
             collaborators: editedCollection.collaborators
         };
