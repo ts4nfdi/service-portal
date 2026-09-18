@@ -119,6 +119,18 @@
     "logoW": 400,
     "logoH": 400
   },
+  "zbmed-skosmos": {
+    "title": "ZB MED Semantic Lookup Service Skosmos",
+    "description": "The ZB MED Semantic Lookup Service Skosmos aims to provide access to terminologies in SKOS format for Incubators of Base4NFDI.",
+    "contactUrl": "semlookp-support@zbmed.de",
+    "homepage": "https://semanticlookup.zbmed.de/skosmos/",
+    "api": "https://semanticlookup.zbmed.de/skosmos/rest/v1",
+    "type": "skosmos",
+    "logo": "/img/ZBMED_2017_EN.svg",
+    "logo_background_color": "white",
+    "logoW": 400,
+    "logoH": 400
+  },
   "gnd": {
     "title": "GND",
     "description": "GND stands for “Gemeinsame Normdatei”, or Integrated Authority File. Originally, the word “Gemeinsam” (“integrated”, but also “together”, “collaboratively”, etc.) related to the merger of previously separate authority files. Today, GND stands for collaborative working, collectively setting standards and for the communal preservation of the GND. GND therefore represents the vision of promoting the commons of knowledge with the aid of freely usable authority data. The GND originates from the German library community and aims to solve the name ambiguity problem in the library world. Corresponding data is usually expressed in a customized MARC 21 Authority Format (GND MARC Format) which is quite domain specific and is not used beyond the library and publisher world. The GND ontology tries to bridge this gap by providing a format specification for the usage in the semantic web.",
