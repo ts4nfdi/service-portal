@@ -40,27 +40,42 @@ export function TerminologySelectionField({
         </div>
       }
       {loaded && table &&
-        <TerminologyTable
-          editMode
-          options={options}
-          selected={selected}
-          searchPlaceholder={messages.terminologySearchPlaceholder}
-          selectAllLabel={messages.selectAllTerminologies}
-          terminologyIdLabel={messages.terminologyId}
-          providerLabel={messages.provider}
-          descriptionLabel={messages.description}
-          selectedCountLabel={messages.selectedTerminologyCount}
-          previousPageLabel={messages.previousPage}
-          nextPageLabel={messages.nextPage}
-          pageLabel={messages.pageOf}
-          noResults={messages.noTerminologiesFound}
-          providerDescriptions={messages.providerDescriptions}
-          providerFilterLabel={messages.providerFilter}
-          allProvidersLabel={messages.allProviders}
-          additionalProvidersLabel={messages.additionalProviders}
-          clearProvidersLabel={messages.clearProviders}
-          onChange={onChange}
-        />
+        <>
+          <TerminologyMultiSelect
+            label={messages.terminologies}
+            options={options}
+            selected={selected}
+            providerDescriptions={messages.providerDescriptions}
+            searchPlaceholder={messages.terminologySearchPlaceholder}
+            providerFilterLabel={messages.providerFilter}
+            allProvidersLabel={messages.allProviders}
+            additionalProvidersLabel={messages.additionalProviders}
+            clearProvidersLabel={messages.clearProviders}
+            noResults={messages.noTerminologiesFound}
+            limitedResults={messages.limitedTerminologyResults}
+            removeLabel={messages.removeTerminology}
+            showSelected={false}
+            onChange={onChange}
+          />
+          <div className="mt-4">
+            <TerminologyTable
+              editMode
+              options={selected}
+              selected={selected}
+              searchPlaceholder={messages.terminologySearchPlaceholder}
+              selectAllLabel={messages.selectAllTerminologies}
+              terminologyIdLabel={messages.terminologyId}
+              providerLabel={messages.provider}
+              descriptionLabel={messages.description}
+              selectedCountLabel={messages.selectedTerminologyCount}
+              previousPageLabel={messages.previousPage}
+              nextPageLabel={messages.nextPage}
+              pageLabel={messages.pageOf}
+              noResults={messages.noTerminologiesFound}
+              onChange={onChange}
+            />
+          </div>
+        </>
       }
       {loaded && !table &&
         <TerminologyMultiSelect
@@ -68,11 +83,11 @@ export function TerminologySelectionField({
           options={options}
           selected={selected}
           providerDescriptions={messages.providerDescriptions}
-          searchPlaceholder={messages.terminologySearchPlaceholder}
           providerFilterLabel={messages.providerFilter}
           allProvidersLabel={messages.allProviders}
           additionalProvidersLabel={messages.additionalProviders}
           clearProvidersLabel={messages.clearProviders}
+          searchPlaceholder={messages.terminologySearchPlaceholder}
           noResults={messages.noTerminologiesFound}
           limitedResults={messages.limitedTerminologyResults}
           removeLabel={messages.removeTerminology}

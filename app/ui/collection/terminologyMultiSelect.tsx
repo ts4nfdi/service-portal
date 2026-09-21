@@ -17,6 +17,7 @@ type TerminologyMultiSelectProps = {
   noResults: string;
   limitedResults: string;
   removeLabel: string;
+  showSelected?: boolean;
   onChange: (selected: PortalOntologyOption[]) => void;
 }
 
@@ -33,6 +34,7 @@ export default function TerminologyMultiSelect({
   noResults,
   limitedResults,
   removeLabel,
+  showSelected = true,
   onChange,
 }: TerminologyMultiSelectProps) {
   const [search, setSearch] = useState("");
@@ -110,7 +112,7 @@ export default function TerminologyMultiSelect({
 
   return (
     <div>
-      {selected.length > 0 &&
+      {showSelected && selected.length > 0 &&
         <div className="mb-3 flex flex-wrap gap-2">
           {selected.map((option) =>
             <button
