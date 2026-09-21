@@ -23,24 +23,42 @@ export default async function MyCollections() {
     <div className="md:col-span-3" key={"my_collection"}>
       <Suspense> <CollectionListMessages /> </Suspense>
       <p className="header-2 !mt-0 inline-block">{t.myCollections}</p>
-      <Link href={localizePath("/collection/new?from=my-collections", locale)} className="btn !p-1 !text-sm ml-2">{t.createCollection}</Link>
       <Suspense fallback={<CollectionListLoading label={t.loadingMyCollections} />}>
-        <CollectionListSection emptyMessage={t.noMyCollections} />
+        <CollectionListSection
+          emptyMessage={t.noMyCollections}
+          createCollectionHref={localizePath("/collection/new?from=my-collections", locale)}
+          createCollectionLabel={t.createCollection}
+        />
       </Suspense>
     </div>
   );
 }
 
-async function CollectionListSection({ emptyMessage }: { emptyMessage: string }) {
+async function CollectionListSection({
+  emptyMessage,
+  createCollectionHref,
+  createCollectionLabel,
+}: {
+  emptyMessage: string;
+  createCollectionHref: string;
+  createCollectionLabel: string;
+}) {
   const collectionsResp = await getUserCollectionList();
   if (!collectionsResp.status) {
-    return "";
+    return <div className="my-5 flex justify-start">
+      <Link href={createCollectionHref} className="btn !mb-0 !me-0 !p-2 !text-sm">{createCollectionLabel}</Link>
+    </div>;
   }
   if (collectionsResp.content.length === 0) {
-    return <p className="mt-6 text-gray-700 dark:text-gray-200">{emptyMessage}</p>;
+    return <>
+      <div className="my-5 flex justify-start">
+        <Link href={createCollectionHref} className="btn !mb-0 !me-0 !p-2 !text-sm">{createCollectionLabel}</Link>
+      </div>
+      <p className="text-gray-700 dark:text-gray-200">{emptyMessage}</p>
+    </>;
   }
 
-  return <CollectionList collections={collectionsResp.content} showDownloadButton={true} />;
+  return <CollectionList collections={collectionsResp.content} showDownloadButton createCollectionHref={createCollectionHref} createCollectionLabel={createCollectionLabel} />;
 }
 
 function CollectionListLoading({ label }: { label: string }) {

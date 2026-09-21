@@ -151,7 +151,7 @@ export const collectionUiMessages = {
     creationIntro: "Eine Terminologiesammlung bündelt Terminologien für einen bestimmten Zweck oder Kontext.",
     chooseCreationMethod: "Wie möchten Sie Terminologien hinzufügen?",
     addTerminologiesMyself: "Ich möchte Terminologien selbst hinzufügen",
-    bulkImportTerminologies: "Ich möchte Terminologien aus einer oder mehreren Quellen gesammelt importieren",
+    bulkImportTerminologies: "Ich möchte Terminologien aus einer oder mehreren Quellen am Stück importieren",
     bulkProviderSelectionHelp: "Wählen Sie einen oder mehrere Anbieter aus, aus denen Terminologien importiert werden sollen. Die Anzahl zeigt das Angebot jedes Anbieters.",
     selectProviders: "Anbieter auswählen",
     providerTerminologyCount: "{count} Terminologien",

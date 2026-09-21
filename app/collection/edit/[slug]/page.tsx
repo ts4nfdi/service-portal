@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
@@ -12,6 +12,7 @@ import { getOntologyOptions } from "@/app/api/actions/providers";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
+import { getTerminologyOptionKey } from "@/app/ui/collection/terminologyOptions";
 import {
   CollaboratorField,
   CollectionDetailsFields,
@@ -41,6 +42,22 @@ export default function CollectionEdit() {
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
   const terminologySelectionInitialized = useRef(false);
+  const collectionTerminologyOptions = useMemo(() => {
+    const optionsByKey = new Map(ontologyOptions.map((option) => [getTerminologyOptionKey(option), option]));
+    return collection.terminologies.map((terminology) => {
+      const option = {
+        ontologyId: terminology.label,
+        providerId: terminology.source,
+        description: "",
+        uri: terminology.uri,
+      };
+      return optionsByKey.get(getTerminologyOptionKey(option)) ?? option;
+    });
+  }, [collection.terminologies, ontologyOptions]);
+  const editTerminologyOptions = useMemo(() => {
+    const optionKeys = new Set(ontologyOptions.map(getTerminologyOptionKey));
+    return [...ontologyOptions, ...collectionTerminologyOptions.filter((option) => !optionKeys.has(getTerminologyOptionKey(option)))];
+  }, [collectionTerminologyOptions, ontologyOptions]);
 
   const loadOntologyOptions = useCallback(async () => {
     if (ontologyRequestInFlight.current) {
@@ -145,18 +162,10 @@ export default function CollectionEdit() {
     if (!collection.id || loadedCollectionId !== collectionId || !ontologyOptionsLoaded || terminologySelectionInitialized.current) {
       return;
     }
-    const optionsById = new Map(ontologyOptions.map((option) => [`${option.providerId}:${option.ontologyId}`, option]));
-    setSelectedTerminologies(collection.terminologies.map((terminology) =>
-      optionsById.get(`${terminology.source}:${terminology.label}`) ?? {
-        ontologyId: terminology.label,
-        providerId: terminology.source,
-        description: "",
-        uri: terminology.uri,
-      }
-    ));
+    setSelectedTerminologies(collectionTerminologyOptions);
     terminologySelectionInitialized.current = true;
     setTerminologySelectionReady(true);
-  }, [collection, collectionId, loadedCollectionId, ontologyOptions, ontologyOptionsLoaded]);
+  }, [collection.id, collectionId, collectionTerminologyOptions, loadedCollectionId, ontologyOptionsLoaded]);
 
   return (
     <>
@@ -176,10 +185,10 @@ export default function CollectionEdit() {
                 }
               }}
             >
-              <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
+              <TerminologySelectionField table messages={t} options={editTerminologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
