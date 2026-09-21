@@ -35,7 +35,6 @@ export default function CollectionEdit() {
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
   const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
-  const [ontologyOptionsLoading, setOntologyOptionsLoading] = useState(false);
   const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
   const [selectedTerminologies, setSelectedTerminologies] = useState<PortalOntologyOption[]>([]);
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);
@@ -64,7 +63,6 @@ export default function CollectionEdit() {
       return;
     }
     ontologyRequestInFlight.current = true;
-    setOntologyOptionsLoading(true);
     setOntologyOptionsFailed(false);
     try {
       const options = await getOntologyOptions();
@@ -78,7 +76,6 @@ export default function CollectionEdit() {
       setOntologyOptionsFailed(true);
     } finally {
       ontologyRequestInFlight.current = false;
-      setOntologyOptionsLoading(false);
     }
   }, []);
 
