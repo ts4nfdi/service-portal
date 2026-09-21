@@ -15,7 +15,7 @@ import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
 import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
-import BulkTerminologyTable from "@/app/ui/collection/bulkTerminologyTable";
+import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
 import {
   CollaboratorField,
@@ -213,7 +213,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   function renderBulkProviderStep() {
     return <div className="form-input-group">
       <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkProviderSelectionHelp}</p>
-      {ontologyOptionsLoading && <Loading />}
+      {!ontologyOptionsLoaded && !ontologyOptionsFailed && <Loading />}
       {ontologyOptionsFailed && <OntologyLoadError onRetry={loadOntologyOptions} />}
       {ontologyOptionsLoaded && <BulkProviderSelection options={ontologyOptions} selected={selectedBulkProviders} descriptions={t.providerDescriptions} label={t.selectProviders} countLabel={t.providerTerminologyCount} countSingularLabel={t.providerTerminologyCountSingular} onChange={setSelectedBulkProviders} />}
     </div>;
@@ -221,7 +221,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   function renderCurrentStep() {
     if (creationMethod === "manual" && manualStep === 1) {
-      return <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedManualTerminologies} loaded={ontologyOptionsLoaded} loading={ontologyOptionsLoading} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={selectManualTerminologies} />;
+      return <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedManualTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={selectManualTerminologies} />;
     }
     if (creationMethod === "bulk" && bulkStep === 1) {
       return renderBulkProviderStep();
@@ -229,7 +229,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     if (creationMethod === "bulk" && bulkStep === 2) {
       return <div className="form-input-group">
         <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkTerminologySelectionHelp}</p>
-        <BulkTerminologyTable options={selectedBulkOptions} selected={selectedBulkTerminologies} searchLabel={t.searchTerminologies} searchPlaceholder={t.terminologySearchPlaceholder} selectAllLabel={t.selectAllTerminologies} terminologyIdLabel={t.terminologyId} providerLabel={t.provider} descriptionLabel={t.description} selectedCountLabel={t.selectedTerminologyCount} previousPageLabel={t.previousPage} nextPageLabel={t.nextPage} pageLabel={t.pageOf} noResults={t.noTerminologiesFound} onChange={selectBulkTerminologies} />
+        <TerminologyTable editMode options={selectedBulkOptions} selected={selectedBulkTerminologies} searchPlaceholder={t.terminologySearchPlaceholder} selectAllLabel={t.selectAllTerminologies} terminologyIdLabel={t.terminologyId} providerLabel={t.provider} descriptionLabel={t.description} selectedCountLabel={t.selectedTerminologyCount} previousPageLabel={t.previousPage} nextPageLabel={t.nextPage} pageLabel={t.pageOf} noResults={t.noTerminologiesFound} onChange={selectBulkTerminologies} />
       </div>;
     }
     if (isDetailsStep) {

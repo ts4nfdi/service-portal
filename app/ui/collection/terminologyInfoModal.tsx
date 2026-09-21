@@ -34,7 +34,8 @@ const DATABASES: Record<string, {type: string, url: string}> = {
 
 type CmpProps = {
     terminology: PortalTerminology,
-    collectionId?: string
+    collectionId?: string,
+    showSource?: boolean
 }
 
 function modalSafeId(value: string) {
@@ -67,7 +68,7 @@ export default function TerminologyInfoModal(props: CmpProps) {
                 title={`${t.showOntologyInfo} ${props.terminology.label}`}
                 type="button"
             >
-                {props.terminology.label} ({props.terminology.source})
+                {props.terminology.label}{props.showSource !== false && ` (${props.terminology.source})`}
             </button>
             <Modal
                 id={modalId}

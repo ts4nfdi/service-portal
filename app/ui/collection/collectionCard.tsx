@@ -41,17 +41,13 @@ export default function CollectionCard(props: CmpProps) {
     }
 
     function renderTerminologies(terminologies: PortalTerminology[]) {
-        let result = [];
-        for (let terminology of terminologies) {
-            result.push(
+        return terminologies.slice(0, 3).map((terminology) =>
                 <TerminologyInfoModal
                     collectionId={props.collection.id}
                     key={`${props.collection.id}-${terminology.source}-${terminology.label}`}
                     terminology={terminology}
                 />
-            );
-        }
-        return result;
+        );
     }
 
     return (
@@ -114,7 +110,17 @@ export default function CollectionCard(props: CmpProps) {
             <p key={"creator"} className="text-sm">{t.createdBy}{props.collection.creator}</p>
             <p key={"collection-desc"}>{props.collection.description}</p>
             <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
-                <b>{t.terminologies}</b> {renderTerminologies(props.collection.terminologies)}</div>
+                <b>{t.terminologies}</b>
+                {renderTerminologies(props.collection.terminologies)}
+                {props.collection.terminologies.length > 3 &&
+                  <Link
+                    className="badge terminology-badge"
+                    href={localizePath(`/collection/${props.collection.id}`, locale)}
+                  >
+                    {t.moreTerminologies.replace("{count}", (props.collection.terminologies.length - 3).toString())}
+                  </Link>
+                }
+            </div>
         </div>
     );
 }

@@ -176,7 +176,7 @@ export default function CollectionEdit() {
                 }
               }}
             >
-              <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} loading={ontologyOptionsLoading} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
+              <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
