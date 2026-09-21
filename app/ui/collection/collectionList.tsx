@@ -8,13 +8,16 @@ import {Pagination} from "@/app/clientExports";
 import {DownloadIcon} from "@/app/ui/commons/icons";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "./messages";
+import Link from "next/link";
 
 
 const COLLECTION_LIST_PAGE_SIZE = 5;
 
 export default function CollectionListCmp(props: {
     collections: PortalCollectionJsonData[],
-    showDownloadButton?: boolean
+    showDownloadButton?: boolean,
+    createCollectionHref?: string,
+    createCollectionLabel?: string
 }) {
     const t = collectionUiMessages[useLocale()];
     const collections = props.collections.map((data: PortalCollectionJsonData) => PortalCollection.toObject(data));
@@ -110,8 +113,9 @@ export default function CollectionListCmp(props: {
                 </div>
 
             </div>
-            {props.showDownloadButton &&
-              <div className="mb-2 flex justify-start">
+            {(props.showDownloadButton || props.createCollectionHref) &&
+              <div className="mb-2 flex items-center justify-start gap-2">
+                {props.showDownloadButton &&
                 <button
                   aria-label={t.downloadMyPublicJson}
                   className="btn !mb-0 !me-0 !p-2 !text-sm flex items-center gap-2"
@@ -122,6 +126,12 @@ export default function CollectionListCmp(props: {
                   <DownloadIcon/>
                   {t.downloadMyPublic}
                 </button>
+                }
+                {props.createCollectionHref && props.createCollectionLabel &&
+                  <Link href={props.createCollectionHref} className="btn !mb-0 !me-0 !p-2 !text-sm">
+                    {props.createCollectionLabel}
+                  </Link>
+                }
               </div>
             }
             {collectionsList.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((col: PortalCollection) => {

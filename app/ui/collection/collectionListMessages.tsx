@@ -19,13 +19,20 @@ export function CollectionListMessages() {
   const [collectionEdited, setCollectionEdited] = useState<string | null>(searchParams.get('edited'));
 
   useEffect(() => {
-    setTimeout(() => {
+    const statusParams = ['created', 'deleted', 'edited'];
+    if (!statusParams.some((param) => searchParams.has(param))) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
       setCollectionCreated("");
       setCollectionDeleted("");
       setCollectionEdited("");
-      deleteParamsFromUrl(router, ['created', 'deleted', 'edited']);
+      deleteParamsFromUrl(router, statusParams);
     }, 3000);
-  }, []);
+
+    return () => clearTimeout(timeout);
+  }, [router, searchParams]);
 
   return (
     <>

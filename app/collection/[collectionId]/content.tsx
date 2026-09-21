@@ -7,6 +7,7 @@ import { deleteCollection } from "@/app/api/actions/collections";
 import { CopyToClipboard } from "@/app/clientExports";
 import {
   PortalCollection,
+  PortalOntologyOption,
   PortalTerminology,
   PortalCollectionJsonData,
 } from "@/app/concepts";
@@ -15,6 +16,7 @@ import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
+import TerminologyTable from "@/app/ui/collection/terminologyTable";
 
 export default function CollectionContentCmp(props: {
   collection: PortalCollectionJsonData;
@@ -24,18 +26,20 @@ export default function CollectionContentCmp(props: {
   const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
 
-  function renderTerminologies(terminologies: PortalTerminology[]) {
-    let result = [];
-    for (let terminology of terminologies) {
-      result.push(
-        <TerminologyInfoModal
-          collectionId={props.collection.id}
-          key={`${props.collection.id}-${terminology.source}-${terminology.label}`}
-          terminology={terminology}
-        />,
-      );
-    }
-    return result;
+  const terminologyOptions: PortalOntologyOption[] = collection.terminologies.map((terminology) => ({
+    ontologyId: terminology.label,
+    providerId: terminology.source,
+    description: "",
+    uri: terminology.uri,
+  }));
+
+  function renderTerminology(option: PortalOntologyOption) {
+    const terminology = new PortalTerminology();
+    terminology.label = option.ontologyId;
+    terminology.source = option.providerId;
+    terminology.uri = option.uri;
+    terminology.type = "DATABASE";
+    return <TerminologyInfoModal collectionId={props.collection.id} terminology={terminology} showSource={false} />;
   }
 
   function downloadCollectionJsonData() {
@@ -133,12 +137,20 @@ export default function CollectionContentCmp(props: {
               {props.collection.description}
             </p>
           )}
-          <div
-            className="flex flex-row flex-wrap gap-2"
-            key={"collection-terminologies"}
-          >
-            <b>{t.terminologies}</b>{" "}
-            {renderTerminologies(collection.terminologies)}
+          <div key={"collection-terminologies"}>
+            <p className="mb-3 font-bold">{t.terminologies}</p>
+            <TerminologyTable
+              options={terminologyOptions}
+              searchPlaceholder={t.terminologySearchPlaceholder}
+              terminologyIdLabel={t.terminologyId}
+              providerLabel={t.provider}
+              descriptionLabel={t.description}
+              previousPageLabel={t.previousPage}
+              nextPageLabel={t.nextPage}
+              pageLabel={t.pageOf}
+              noResults={t.noTerminologiesFound}
+              renderTerminology={renderTerminology}
+            />
           </div>
         </div>
         <div

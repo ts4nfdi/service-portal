@@ -41,30 +41,26 @@ export default function CollectionCard(props: CmpProps) {
     }
 
     function renderTerminologies(terminologies: PortalTerminology[]) {
-        let result = [];
-        for (let terminology of terminologies) {
-            result.push(
+        return terminologies.slice(0, 3).map((terminology) =>
                 <TerminologyInfoModal
                     collectionId={props.collection.id}
                     key={`${props.collection.id}-${terminology.source}-${terminology.label}`}
                     terminology={terminology}
                 />
-            );
-        }
-        return result;
+        );
     }
 
     return (
         <div className="collection-card" key={props.collection.id}>
-            <div className="grid grid-cols-10" key={"collection-card-header"}>
-                <Link href={localizePath("/collection/" + props.collection.id, locale)} className="col-span-9">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2" key={"collection-card-header"}>
+                <Link href={localizePath("/collection/" + props.collection.id, locale)} className="min-w-0">
                     <p className="header-4 inline-block" key={"collection-title"}>{props.collection.label}</p>
                     {!props.collection.isPublic &&
                       <p
                         className="badge inline-block ml-2 bg-black !text-white !font-bold px-1 py-1 dark:!bg-white dark:!text-black">{t.private}</p>
                     }
                 </Link>
-                <div className="col-span-1 flex flex-col items-end gap-2 p-0" key={"collection-actions"}>
+                <div className="flex items-center justify-end gap-2 p-0" key={"collection-actions"}>
                     {isOwner &&
                       <>
                         <ModalButton label={<TrashIcon/>}
@@ -114,7 +110,17 @@ export default function CollectionCard(props: CmpProps) {
             <p key={"creator"} className="text-sm">{t.createdBy}{props.collection.creator}</p>
             <p key={"collection-desc"}>{props.collection.description}</p>
             <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
-                <b>{t.terminologies}</b> {renderTerminologies(props.collection.terminologies)}</div>
+                <b>{t.terminologies}</b>
+                {renderTerminologies(props.collection.terminologies)}
+                {props.collection.terminologies.length > 3 &&
+                  <Link
+                    className="badge terminology-badge"
+                    href={localizePath(`/collection/${props.collection.id}`, locale)}
+                  >
+                    {t.moreTerminologies.replace("{count}", (props.collection.terminologies.length - 3).toString())}
+                  </Link>
+                }
+            </div>
         </div>
     );
 }
