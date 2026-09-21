@@ -15,6 +15,7 @@ type TerminologyTableProps = {
   pageLabel: string;
   noResults: string;
   editMode?: boolean;
+  showSearch?: boolean;
   selected?: PortalOntologyOption[];
   selectAllLabel?: string;
   selectedCountLabel?: string;
@@ -41,6 +42,7 @@ export default function TerminologyTable({
   pageLabel,
   noResults,
   editMode = false,
+  showSearch = true,
   onChange,
   renderTerminology,
   providerDescriptions,
@@ -126,7 +128,7 @@ export default function TerminologyTable({
 
   return (
     <div>
-      <div className={showProviderFilter ? "grid gap-3 md:grid-cols-[minmax(12rem,1fr)_3fr]" : ""}>
+      {showSearch && <div className={showProviderFilter ? "grid gap-3 md:grid-cols-[minmax(12rem,1fr)_3fr]" : ""}>
         {showProviderFilter &&
           <div className="relative" ref={providerDropdownRef}>
             <span id="provider-filter-label" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -179,7 +181,7 @@ export default function TerminologyTable({
             }}
           />
         </div>
-      </div>
+      </div>}
       {selectable && selectedCountLabel &&
         <p className="my-3 text-sm text-gray-600 dark:text-gray-300">
           {selectedCountLabel

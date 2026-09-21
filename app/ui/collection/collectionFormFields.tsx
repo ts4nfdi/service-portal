@@ -60,6 +60,7 @@ export function TerminologySelectionField({
           <div className="mt-4">
             <TerminologyTable
               editMode
+              showSearch={false}
               options={selected}
               selected={selected}
               searchPlaceholder={messages.terminologySearchPlaceholder}
