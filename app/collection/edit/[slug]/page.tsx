@@ -53,10 +53,6 @@ export default function CollectionEdit() {
       return optionsByKey.get(getTerminologyOptionKey(option)) ?? option;
     });
   }, [collection.terminologies, ontologyOptions]);
-  const editTerminologyOptions = useMemo(() => {
-    const optionKeys = new Set(ontologyOptions.map(getTerminologyOptionKey));
-    return [...ontologyOptions, ...collectionTerminologyOptions.filter((option) => !optionKeys.has(getTerminologyOptionKey(option)))];
-  }, [collectionTerminologyOptions, ontologyOptions]);
 
   const loadOntologyOptions = useCallback(async () => {
     if (ontologyRequestInFlight.current) {
@@ -185,7 +181,7 @@ export default function CollectionEdit() {
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
-              <TerminologySelectionField table messages={t} options={editTerminologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
+              <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
