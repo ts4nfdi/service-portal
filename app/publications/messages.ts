@@ -9,6 +9,7 @@ export const publicationMessages = {
     doi: "DOI: ",
     further: "Further publications integrated from Zenodo",
     objectName: "Publications",
+    loadError: "Publications from Zenodo could not be loaded.",
   },
   de: {
     title: "Publikationen",
@@ -20,5 +21,6 @@ export const publicationMessages = {
     doi: "DOI: ",
     further: "Weitere aus Zenodo integrierte Publikationen",
     objectName: "Publikationen",
+    loadError: "Publikationen von Zenodo konnten nicht geladen werden.",
   },
 } as const;

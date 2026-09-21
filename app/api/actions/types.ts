@@ -76,5 +76,6 @@ export type ZenodoPublication = {
 
 export type PublicationActionResp ={
   publications?: PortalPublicationJsonData[],
-  total?: number
+  total?: number,
+  failed?: boolean
 }
