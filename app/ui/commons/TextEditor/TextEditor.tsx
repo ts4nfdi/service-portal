@@ -21,10 +21,11 @@ import {
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import { TextEditorProps } from "../types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./styles.css";
 
 const TextEditor = (props: TextEditorProps) => {
+  const editorWrapperRef = useRef<HTMLDivElement>(null);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty(),
   );
@@ -42,11 +43,10 @@ const TextEditor = (props: TextEditorProps) => {
   }
 
   function onTextEditorChange(newState: EditorState) {
-    (
-      document.getElementsByClassName("rdw-editor-wrapper")[0] as HTMLElement
-    ).style.borderColor = "";
-    let hiddenInput = document.getElementById(
-      "hidden-input",
+    const wrapper = editorWrapperRef.current?.querySelector(".rdw-editor-wrapper") as HTMLElement | null;
+    if (wrapper) wrapper.style.borderColor = "";
+    let hiddenInput = editorWrapperRef.current?.querySelector(
+      "input[type='hidden']",
     )! as HTMLInputElement;
     hiddenInput.value = createHtmlFromEditorState(newState);
     setEditorState(newState);
@@ -71,10 +71,25 @@ const TextEditor = (props: TextEditorProps) => {
     loadHtmlToState();
   }, [props.content]);
 
+  useEffect(() => {
+    const setRequiredState = () => {
+      const editable = editorWrapperRef.current?.querySelector("[contenteditable='true']");
+      if (!editable) return false;
+      editable.setAttribute("aria-required", String(props.required));
+      return true;
+    };
+    if (setRequiredState() || !editorWrapperRef.current) return;
+    const observer = new MutationObserver(() => {
+      if (setRequiredState()) observer.disconnect();
+    });
+    observer.observe(editorWrapperRef.current, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [props.required]);
+
   return (
-    <>
+    <div ref={editorWrapperRef}>
       <label
-        htmlFor={""}
+        id={`${props.wrapperId}-label`}
         className={"block " + (props.required ? "required-label" : "")}
       >
         {props.labelText}
@@ -88,6 +103,7 @@ const TextEditor = (props: TextEditorProps) => {
           }
           editorClassName={props.editorClassName ?? "" + " text-editor"}
           placeholder={props.placeholder}
+          ariaLabel={props.labelText}
           localization={{
             translations: props.textEditorTranslations,
           }}
@@ -116,7 +132,7 @@ const TextEditor = (props: TextEditorProps) => {
         />
         <input type="hidden" name={props.name} id="hidden-input" />
       </div>
-    </>
+    </div>
   );
 };
 

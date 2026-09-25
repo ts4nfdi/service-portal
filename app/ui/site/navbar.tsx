@@ -17,7 +17,8 @@ function getNavItems(t: ReturnType<typeof useTranslations>): NavbarItem[] {
     {
         href: "", text: t("tools"), children: [
             {href: "https://coli-conc.gbv.de/cocoda/ts4nfdi/", text: t("mappingService")},
-            {href: "https://terminology.services.base4nfdi.de/tss/comp/latest/", text: t("terminologyServiceSuite")}
+            {href: "https://terminology.services.base4nfdi.de/tss/comp/latest/", text: t("terminologyServiceSuite")},
+            {href: "/terminology-suggestion", text: t("terminologySuggestion")}
         ]
     },
     {href: "/lookup-service", text: t("lookupService")},
