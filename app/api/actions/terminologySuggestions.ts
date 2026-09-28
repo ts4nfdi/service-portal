@@ -103,9 +103,9 @@ function validTerminologyResponse(response: Awaited<ReturnType<typeof safeGet>>)
     "text/plain",
     "application/json",
   ];
-  const ontologyFile = /\.(owl|ttl|rdf|nt|nq|jsonld|trig)(?:$|["'])/i.test(
-    `${new URL(response.url).pathname} ${response.contentDisposition}`,
-  );
+  const extension = /\.(owl|ttl|rdf|nt|nq|jsonld|trig)$/i;
+  const ontologyFile = extension.test(new URL(response.url).pathname) ||
+    /\.(owl|ttl|rdf|nt|nq|jsonld|trig)(?:$|["'])/i.test(response.contentDisposition);
   return rdfTypes.includes(contentType) || (genericTypes.includes(contentType) && ontologyFile);
 }
 
