@@ -4,10 +4,9 @@ import { FormEvent, useState } from "react";
 import { PortalCollectionJsonData } from "@/app/concepts";
 import {
   checkTerminologySuggestionExists,
-  runTerminologyShapeTest,
   submitTerminologySuggestion,
   TerminologyShapeResult,
-  validateTerminologyPurl,
+  validateTerminologySuggestion,
 } from "@/app/api/actions/terminologySuggestions";
 import TextEditor, { highlightEditorIsEmpty, isTextEditorEmpty } from "@/app/ui/commons/TextEditor/TextEditor";
 import { ErrorAlert, Loading, MultiSelectDropdown, SuccessAlert, TextInput } from "@/app/ui/commons/snippets";
@@ -66,12 +65,6 @@ export default function TerminologySuggestion({ collections }: { collections: Po
   }
 
   async function validateTerminology() {
-    const purlResponse = await validateTerminologyPurl(form.purl);
-    if (!purlResponse.status || !purlResponse.content?.valid) {
-      setPurlError(purlResponse.content?.reason || t.validationUnavailable);
-      return false;
-    }
-
     const matchingCollections = collections.filter((collection) =>
       collection.terminologies.some((terminology) => terminology.uri === form.purl),
     );
@@ -100,12 +93,13 @@ export default function TerminologySuggestion({ collections }: { collections: Po
       return false;
     }
 
-    const shapeResponse = await runTerminologyShapeTest(form.purl);
-    if (shapeResponse.status) {
-      setShapeResult(shapeResponse.content);
-    } else {
-      setShapeTestFailed(true);
+    const validationResponse = await validateTerminologySuggestion(form.purl);
+    if (!validationResponse.status || !validationResponse.content?.valid) {
+      setPurlError(validationResponse.content?.reason || t.validationUnavailable);
+      return false;
     }
+    setShapeResult(validationResponse.content.shapeResult ?? null);
+    setShapeTestFailed(!!validationResponse.content.shapeTestFailed);
     return true;
   }
 

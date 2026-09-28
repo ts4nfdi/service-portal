@@ -4,7 +4,7 @@ import { ActionResponse } from "./types";
 import { getUserToken } from "@/app/libs/auth";
 import { ACTION_NOT_ALLOWED_MESSAGE } from "@/app/libs/responseStrings";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
-import { safeGet, safeHead } from "@/app/libs/safeHttp";
+import { safeGet } from "@/app/libs/safeHttp";
 
 export type TerminologySuggestionForm = {
   name: string;
@@ -84,46 +84,114 @@ function suggestionUrl(path: string, purl: string) {
   return `${process.env.GATEWAY_BASE_URL}/ontologysuggestion/${path}?purl=${encodeURIComponent(purl)}`;
 }
 
-export async function validateTerminologyPurl(purl: string): Promise<ActionResponse> {
+function validTerminologyResponse(response: Awaited<ReturnType<typeof safeGet>>) {
+  const contentType = response.contentType.split(";", 1)[0].trim().toLowerCase();
+  const rdfTypes = [
+    "text/turtle",
+    "application/x-turtle",
+    "application/rdf+xml",
+    "application/owl+xml",
+    "application/n-triples",
+    "application/n-quads",
+    "application/ld+json",
+    "application/trig",
+  ];
+  const genericTypes = [
+    "application/octet-stream",
+    "application/xml",
+    "text/xml",
+    "text/plain",
+    "application/json",
+  ];
+  const ontologyFile = /\.(owl|ttl|rdf|nt|nq|jsonld|trig)(?:$|["'])/i.test(
+    `${new URL(response.url).pathname} ${response.contentDisposition}`,
+  );
+  return rdfTypes.includes(contentType) || (genericTypes.includes(contentType) && ontologyFile);
+}
+
+async function runShapeTest(
+  terminology: Awaited<ReturnType<typeof safeGet>>,
+  deadline: number,
+) {
+  const remaining = deadline - Date.now();
+  if (remaining <= 0) throw new Error("Request timed out");
+  const shapeResponse = await fetch(process.env.ONTOLOGY_SHAPE_TEST_URL ?? DEFAULT_SHAPE_URL, {
+    signal: AbortSignal.timeout(remaining),
+  });
+  if (!shapeResponse.ok) throw new Error("Shape could not be fetched");
+  const shape = await readLimited(shapeResponse);
+  const validatorTimeout = deadline - Date.now();
+  if (validatorTimeout <= 0) throw new Error("Request timed out");
+  const response = await fetch(SHACL_VALIDATOR_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contentToValidate: terminology.content,
+      contentSyntax: terminologySyntax(terminology),
+      embeddingMethod: "STRING",
+      validationType: "extended",
+      reportSyntax: "application/ld+json",
+      externalRules: [{
+        ruleSet: shape,
+        embeddingMethod: "STRING",
+        ruleSyntax: "text/turtle",
+      }],
+      addInputToReport: false,
+      addShapesToReport: false,
+      addRdfReportToReport: false,
+      rdfReportSyntax: "string",
+      wrapReportDataInCDATA: false,
+    }),
+    signal: AbortSignal.timeout(validatorTimeout),
+  });
+  if (!response.ok) throw new Error("Shape validation failed");
+  const report = JSON.parse(await readLimited(response));
+  if (!Array.isArray(report["@graph"])) throw new Error("Invalid shape report");
+
+  const result: TerminologyShapeResult = { error: [], info: [] };
+  for (const item of report["@graph"]) {
+    const severity = item["sh:resultSeverity"]?.["@id"];
+    const message = item["sh:resultMessage"]?.["@value"];
+    if (typeof message !== "string") continue;
+    if (severity === "sh:Warning") {
+      const text = message.split("Need help?")[0];
+      result.error.push({ text, about: errorTarget(text) });
+    } else if (severity === "sh:Info") {
+      result.info.push(message);
+    }
+  }
+  return result;
+}
+
+export async function validateTerminologySuggestion(purl: string): Promise<ActionResponse> {
   if (!await authenticatedHeaders()) {
     return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE };
   }
+  let terminology: Awaited<ReturnType<typeof safeGet>>;
   try {
-    const response = await safeHead(purl);
-    const contentType = response.contentType.split(";", 1)[0].trim().toLowerCase();
-    const rdfTypes = [
-      "text/turtle",
-      "application/x-turtle",
-      "application/rdf+xml",
-      "application/owl+xml",
-      "application/n-triples",
-      "application/n-quads",
-      "application/ld+json",
-      "application/trig",
-    ];
-    const genericTypes = [
-      "application/octet-stream",
-      "application/xml",
-      "text/xml",
-      "text/plain",
-      "application/json",
-    ];
-    const ontologyFile = /\.(owl|ttl|rdf|nt|nq|jsonld|trig)(?:$|["'])/i.test(
-      `${new URL(response.url).pathname} ${response.contentDisposition}`,
-    );
-    const valid = rdfTypes.includes(contentType) ||
-      (genericTypes.includes(contentType) && ontologyFile);
-    return {
-      status: true,
-      content: valid
-        ? { valid: true }
-        : { valid: false, reason: "PURL is not returning a terminology file" },
-    };
+    terminology = await safeGet(purl);
   } catch {
     return {
       status: true,
       content: { valid: false, reason: "PURL is not a resolvable public HTTPS URL" },
     };
+  }
+  if (!validTerminologyResponse(terminology)) {
+    return {
+      status: true,
+      content: { valid: false, reason: "PURL is not returning a terminology file" },
+    };
+  }
+  if (terminology.truncated) {
+    return { status: true, content: { valid: true, shapeTestFailed: true } };
+  }
+  try {
+    return {
+      status: true,
+      content: { valid: true, shapeResult: await runShapeTest(terminology, Date.now() + 30_000) },
+    };
+  } catch {
+    return { status: true, content: { valid: true, shapeTestFailed: true } };
   }
 }
 
@@ -142,64 +210,6 @@ export async function checkTerminologySuggestionExists(purl: string): Promise<Ac
     return { status: true, content: !!(data._result?.exist ?? data.exist) };
   } catch {
     return { status: false, content: false };
-  }
-}
-
-export async function runTerminologyShapeTest(purl: string): Promise<ActionResponse> {
-  try {
-    if (!await authenticatedHeaders()) {
-      return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE };
-    }
-    const deadline = Date.now() + 30_000;
-    const [terminology, shape] = await Promise.all([
-      safeGet(purl, deadline),
-      safeGet(process.env.ONTOLOGY_SHAPE_TEST_URL ?? DEFAULT_SHAPE_URL, deadline),
-    ]);
-    const remaining = deadline - Date.now();
-    if (remaining <= 0) return { status: false, content: null };
-    const response = await fetch(SHACL_VALIDATOR_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contentToValidate: terminology.content,
-        contentSyntax: terminologySyntax(terminology),
-        embeddingMethod: "STRING",
-        validationType: "extended",
-        reportSyntax: "application/ld+json",
-        externalRules: [{
-          ruleSet: shape.content,
-          embeddingMethod: "STRING",
-          ruleSyntax: "text/turtle",
-        }],
-        addInputToReport: false,
-        addShapesToReport: false,
-        addRdfReportToReport: false,
-        rdfReportSyntax: "string",
-        wrapReportDataInCDATA: false,
-      }),
-      signal: AbortSignal.timeout(remaining),
-    });
-    if (!response.ok) return { status: false, content: null };
-    const report = JSON.parse(await readLimited(response));
-    if (!Array.isArray(report["@graph"])) return { status: false, content: null };
-    const result: TerminologyShapeResult = { error: [], info: [] };
-    for (const item of report["@graph"]) {
-      const severity = item["sh:resultSeverity"]?.["@id"];
-      const message = item["sh:resultMessage"]?.["@value"];
-      if (typeof message !== "string") continue;
-      if (severity === "sh:Warning") {
-        const text = message.split("Need help?")[0];
-        result.error.push({ text, about: errorTarget(text) });
-      } else if (severity === "sh:Info") {
-        result.info.push(message);
-      }
-    }
-    return {
-      status: true,
-      content: result,
-    };
-  } catch {
-    return { status: false, content: null };
   }
 }
 
