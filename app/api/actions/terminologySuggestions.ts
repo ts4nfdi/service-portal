@@ -5,6 +5,7 @@ import { getUserToken } from "@/app/libs/auth";
 import { ACTION_NOT_ALLOWED_MESSAGE } from "@/app/libs/responseStrings";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 import { safeGet } from "@/app/libs/safeHttp";
+import { PortalOntologyOption } from "@/app/concepts";
 
 export type TerminologySuggestionForm = {
   name: string;
@@ -14,6 +15,14 @@ export type TerminologySuggestionForm = {
   email: string;
   reason: string;
   metadata: Record<string, string>;
+};
+
+export type ExistingTerminologiesRequestForm = {
+  terminologies: PortalOntologyOption[];
+  collectionIds: string[];
+  username: string;
+  email: string;
+  description: string;
 };
 
 export type TerminologyShapeIssue = { about: string; text: string };
@@ -215,6 +224,15 @@ export async function checkTerminologySuggestionExists(purl: string): Promise<Ac
 
 export async function submitTerminologySuggestion(
   _suggestion: TerminologySuggestionForm,
+): Promise<ActionResponse> {
+  if (!await getUserToken() && process.env.DEBUG_MODE !== "true") {
+    return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE };
+  }
+  return { status: true, content: "ok" };
+}
+
+export async function submitExistingTerminologiesRequest(
+  _request: ExistingTerminologiesRequestForm,
 ): Promise<ActionResponse> {
   if (!await getUserToken() && process.env.DEBUG_MODE !== "true") {
     return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE };
