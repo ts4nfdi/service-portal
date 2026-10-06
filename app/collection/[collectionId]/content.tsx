@@ -25,6 +25,7 @@ export default function CollectionContentCmp(props: {
   const t = collectionUiMessages[locale];
   const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
+  const canManage = collection.canManage(session?.data?.user?.username);
 
   const terminologyOptions: PortalOntologyOption[] = collection.terminologies.map((terminology) => ({
     ontologyId: terminology.label,
@@ -157,7 +158,7 @@ export default function CollectionContentCmp(props: {
           className="col-span-1 flex flex-col flex-wrap items-end gap-2"
           key={"collection-actions"}
         >
-          {session?.data?.user?.username === props.collection.creator && (
+          {canManage && (
             <>
               <ModalButton
                 label={<TrashIcon />}
@@ -175,7 +176,7 @@ export default function CollectionContentCmp(props: {
           )}
         </div>
       </div>
-      {session?.data?.user?.username === props.collection.creator && (
+      {canManage && (
         <Modal
           id={"delete-collection-conf-" + props.collection.id}
           title={t.deleteCollection + props.collection.label}

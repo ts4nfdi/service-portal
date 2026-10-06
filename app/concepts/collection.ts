@@ -65,6 +65,10 @@ export class PortalCollection {
         return this._terminologies;
     }
 
+    canManage(username?: string) {
+        return !!username && (this.creator === username || this.collaborators.some((user) => user.username === username));
+    }
+
     set id(value: string) {
         this._id = value;
     }
