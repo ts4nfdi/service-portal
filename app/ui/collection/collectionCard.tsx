@@ -24,7 +24,7 @@ export default function CollectionCard(props: CmpProps) {
     const t = collectionUiMessages[locale];
 
     const session = useSession();
-    const isOwner = props.collection.creator === session?.data?.user?.username;
+    const canManage = props.collection.canManage(session?.data?.user?.username);
 
     function downloadCollectionJsonData() {
         const json = JSON.stringify(props.collection.toJson(), null, 2);
@@ -61,7 +61,7 @@ export default function CollectionCard(props: CmpProps) {
                     }
                 </Link>
                 <div className="flex items-center justify-end gap-2 p-0" key={"collection-actions"}>
-                    {isOwner &&
+                    {canManage &&
                       <>
                         <ModalButton label={<TrashIcon/>}
                                      targetModalId={"delete-collection-conf-" + props.collection.id}
