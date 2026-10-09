@@ -1,11 +1,13 @@
 import {Collection} from "../api/actions/types";
 import {PortalTerminology, PortalTerminologyJsonData} from "./terminology";
+import { isOrcidId } from "./orcid";
 
 
 export type PortalCollectionJsonData = {
     id: string,
     permaLink?: string,
     creator: string,
+    manageable?: boolean,
     description: string,
     label: string,
     isPublic: boolean,
@@ -17,6 +19,7 @@ export type PortalCollectionJsonData = {
 export class PortalCollection {
     private _id: string;
     private _creator: string;
+    private _manageable: boolean;
     private _description: string;
     private _label: string;
     private _isPublic: boolean;
@@ -27,6 +30,7 @@ export class PortalCollection {
         this._description = collection.description ?? "";
         this._id = collection.id ?? "";
         this._creator = collection.creator ?? "";
+        this._manageable = false;
         this._label = collection.label ?? "";
         this._isPublic = collection.isPublic ?? false;
         this._collaborators = collection.collaborators ?? [];
@@ -43,6 +47,14 @@ export class PortalCollection {
 
     get creator() {
         return this._creator;
+    }
+
+    get manageable() {
+        return this._manageable;
+    }
+
+    creatorOrcid(username?: string, orcid?: string) {
+        return isOrcidId(this.creator) ? this.creator : (this.creator === username ? orcid : "");
     }
 
     get description() {
@@ -65,8 +77,8 @@ export class PortalCollection {
         return this._terminologies;
     }
 
-    canManage(username?: string) {
-        return !!username && (this.creator === username || this.collaborators.some((user) => user.username === username));
+    canManage(username?: string, orcid?: string) {
+        return this.manageable || (!!(username || orcid) && ([username, orcid].includes(this.creator) || this.collaborators.some((user) => [username, orcid].includes(user.username))));
     }
 
     set id(value: string) {
@@ -76,6 +88,11 @@ export class PortalCollection {
     set creator(value: string) {
         this._creator = value;
     }
+
+    set manageable(value: boolean) {
+        this._manageable = value;
+    }
+
 
     set description(value: string) {
         this._description = value;
@@ -106,6 +123,7 @@ export class PortalCollection {
             id: this.id,
             permaLink: this.permaLink,
             creator: this.creator,
+            manageable: this.manageable,
             description: this.description,
             label: this.label,
             isPublic: this.isPublic,
@@ -119,6 +137,7 @@ export class PortalCollection {
         let pcol = new PortalCollection();
         pcol.id = data.id;
         pcol.creator = data.creator;
+        pcol.manageable = data.manageable ?? false;
         pcol.description = data.description;
         pcol.label = data.label;
         pcol.isPublic = data.isPublic;

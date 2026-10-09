@@ -30,11 +30,11 @@ const getCollectionsData = cache(
     }
 
     return [
-      ...(publicCollectionsListResp.status
-        ? publicCollectionsListResp.content
-        : []),
       ...(userCollectionsListResp.status
         ? userCollectionsListResp.content
+        : []),
+      ...(publicCollectionsListResp.status
+        ? publicCollectionsListResp.content.filter((collection: PortalCollectionJsonData) => !userCollectionsListResp.content.some((userCollection: PortalCollectionJsonData) => userCollection.id === collection.id))
         : []),
     ];
   },

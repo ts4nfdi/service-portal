@@ -26,7 +26,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
   if (!publicCollectionsListResp.status && !userCollectionsListResp.status) {
     return renderNotFoundPage();
   }
-  let collectionList = [...publicCollectionsListResp.content, ...userCollectionsListResp.content];
+  let collectionList = [...userCollectionsListResp.content, ...publicCollectionsListResp.content];
 
   const collection = collectionList.find((data: PortalCollectionJsonData) => data.id === collectionId);
 

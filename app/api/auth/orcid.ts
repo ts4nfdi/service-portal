@@ -1,9 +1,9 @@
 "use server";
 
-import { OrcidIdentity, toOrcidIdentity } from "@/app/concepts/orcid";
+import { isOrcidId, OrcidIdentity, toOrcidIdentity } from "@/app/concepts/orcid";
 
 export async function getOrcidIdentity(orcid: string): Promise<OrcidIdentity | null> {
-  if (!/^\d{4}-\d{4}-\d{4}-[\dX]{4}$/.test(orcid)) {
+  if (!isOrcidId(orcid)) {
     return null;
   }
 
