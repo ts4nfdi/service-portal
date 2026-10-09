@@ -6,12 +6,14 @@ declare module 'next-auth' {
 		user: {
 			token?: string,
 			username?: string
+			orcid?: string
 		} & DefaultSession['user'];
 	}
 
 	interface User extends DefaultUser {
 		token?: string,
 		username?: string,
+		orcid?: string,
 		email?: string,
 		expiration?: string | number
 	}
@@ -21,6 +23,7 @@ declare module 'next-auth/jwt' {
 	interface JWT {
 		token?: string,
 		username?: string,
+		orcid?: string,
 		email?: string,
 		expiration?: string | number,
 		authVersion?: string,

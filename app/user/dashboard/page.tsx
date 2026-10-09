@@ -4,6 +4,7 @@ import { UserPrivacySection } from "@/app/clientExports";
 import LoginFormWrapper from "../login/page";
 import { getRequestLocale } from "@/app/libs/locale";
 import { userPageMessages } from "../messages";
+import OrcidProfile from "@/app/ui/user/orcidProfile";
 
 
 export default async function UserDashboard() {
@@ -21,6 +22,9 @@ export default async function UserDashboard() {
       <p>
         {t.dashboardIntro}
       </p>
+      {session.user.orcid ? (
+        <p>{t.orcid}: <a href={`https://orcid.org/${session.user.orcid}`} target="_blank" rel="noopener noreferrer">{session.user.orcid}</a></p>
+      ) : <OrcidProfile />}
       <hr />
       <br />
       <UserPrivacySection />

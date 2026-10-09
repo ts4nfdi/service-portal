@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { getCodeUrl } from "@/app/libs/authUrl";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";
+import OrcidField from "./orcidField";
 
 type LoginStatus = "loading" | "needsRegistration" | "error";
 
@@ -14,7 +15,9 @@ export default function OAuthCallback() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<LoginStatus>("loading");
   const [username, setUsername] = useState("");
+  const [orcid, setOrcid] = useState("");
   const [registrationId, setRegistrationId] = useState("");
+  const [registrationExpired, setRegistrationExpired] = useState(false);
   const code = searchParams.get("code");
 
   useEffect(() => {
@@ -33,6 +36,7 @@ export default function OAuthCallback() {
           setStatus("needsRegistration");
           return;
         }
+        setRegistrationExpired(result?.error === "RegistrationExpired");
         setStatus("error");
       })
       .catch(() => setStatus("error"));
@@ -44,13 +48,17 @@ export default function OAuthCallback() {
 
   const registerUser = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!orcid) {
+      return;
+    }
     setStatus("loading");
-    signIn("credentials", { registrationId, username, redirect: false })
+    signIn("credentials", { registrationId, username, orcid, redirect: false })
       .then((result) => {
         if (result?.ok) {
           finishLogin();
           return;
         }
+        setRegistrationExpired(result?.error === "RegistrationExpired");
         setStatus("error");
       })
       .catch(() => setStatus("error"));
@@ -78,13 +86,14 @@ export default function OAuthCallback() {
               required
             />
           </div>
+          <OrcidField onConfirm={setOrcid} />
           <button className="btn" type="submit">
             {t.signup}
           </button>
         </form>
       ) : status === "error" ? (
         <>
-          <p>{t.loginFailed}</p>
+          <p>{registrationExpired ? t.registrationExpired : t.loginFailed}</p>
           <a className="btn" href={getCodeUrl()}>
             {t.tryAgain}
           </a>
