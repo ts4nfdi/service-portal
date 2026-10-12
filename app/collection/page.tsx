@@ -29,7 +29,7 @@ const getCollectionsData = cache(
       userCollectionsListResp = await getUserCollectionList();
     }
 
-    return [
+    const collections: PortalCollectionJsonData[] = [
       ...(publicCollectionsListResp.status
         ? publicCollectionsListResp.content
         : []),
@@ -37,6 +37,7 @@ const getCollectionsData = cache(
         ? userCollectionsListResp.content
         : []),
     ];
+    return [...new Map(collections.map((collection) => [collection.id, collection])).values()];
   },
 );
 
