@@ -15,6 +15,7 @@ type TerminologySelectionFieldProps = {
   loaded: boolean;
   failed: boolean;
   table?: boolean;
+  showHelp?: boolean;
   onRetry: () => void;
   onChange: (options: PortalOntologyOption[]) => void;
 }
@@ -26,12 +27,13 @@ export function TerminologySelectionField({
   loaded,
   failed,
   table = false,
+  showHelp = true,
   onRetry,
   onChange,
 }: TerminologySelectionFieldProps) {
   return (
     <div className="form-input-group">
-      <p className="mb-4 text-gray-700 dark:text-gray-200">{messages.terminologySelectionHelp}</p>
+      {showHelp && <p className="mb-4 text-gray-700 dark:text-gray-200">{messages.terminologySelectionHelp}</p>}
       {!loaded && !failed && <Loading />}
       {failed &&
         <div className="text-center" role="alert">

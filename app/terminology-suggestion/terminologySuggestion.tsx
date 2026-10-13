@@ -239,10 +239,10 @@ export default function TerminologySuggestion({ collections }: { collections: Po
   const contactStep = workflow === "existing" ? 2 : 4;
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <h1 className="header-main-1 !mt-0">{t.title}</h1>
-      <div className="mb-8 h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-        <div className="h-full bg-[var(--siteMainColor)] transition-all dark:bg-blue-500" style={{ width: `${progress}%` }} />
+    <div>
+      <h1 className="header-2">{t.title}</h1>
+      <div className="mt-8 h-2.5 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+        <div className="h-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color" style={{ width: `${progress}%` }} />
       </div>
 
       {submitted === true && <SuccessAlert message={workflow === "existing" ? t.existingSuccess : t.success} />}
@@ -250,7 +250,7 @@ export default function TerminologySuggestion({ collections }: { collections: Po
       {terminalMessage && <div className="mb-4 rounded-lg bg-blue-50 p-4 text-center font-bold text-blue-800 dark:bg-gray-800 dark:text-blue-300" role="status">{terminalMessage}</div>}
 
       {submitted === null && !terminalMessage && (
-        <form onSubmit={submit} className="form rounded-lg shadow-sm">
+        <form onSubmit={submit} className="mt-10">
           {requiredError && <ErrorAlert message={requiredError} />}
           {purlError && <ErrorAlert message={`${t.invalidPurl}: ${purlError}`} />}
 
@@ -292,6 +292,7 @@ export default function TerminologySuggestion({ collections }: { collections: Po
                 selected={selectedTerminologies}
                 loaded={ontologyOptionsLoaded}
                 failed={ontologyOptionsFailed}
+                showHelp={false}
                 onRetry={() => void loadOntologyOptions()}
                 onChange={(options) => { setSelectedTerminologies(options); setRequiredError(""); }}
               />
