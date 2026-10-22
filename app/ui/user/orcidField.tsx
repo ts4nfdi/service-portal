@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getOrcidIdentity } from "@/app/api/auth/orcid";
 import type { OrcidIdentity } from "@/app/concepts/orcid";
 import { useLocale } from "@/app/i18n";
@@ -13,23 +13,27 @@ export default function OrcidField({ onConfirm }: { onConfirm: (orcid: string) =
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
-  const currentOrcid = useRef("");
+  useEffect(() => {
+    if (!orcid.trim()) return;
+    let cancelled = false;
+    const timeout = setTimeout(async () => {
+      try {
+        const result = await getOrcidIdentity(orcid);
+        if (cancelled) return;
+        setIdentity(result);
+        setError(!result);
+      } catch {
+        if (!cancelled) setError(true);
+      } finally {
+        if (!cancelled) setChecking(false);
+      }
+    }, 500);
 
-  async function verify() {
-    setChecking(true);
-    setError(false);
-    setConfirmed(false);
-    onConfirm("");
-    const checkedOrcid = orcid.trim();
-    const result = await getOrcidIdentity(checkedOrcid);
-    if (currentOrcid.current !== orcid) {
-      setChecking(false);
-      return;
-    }
-    setIdentity(result);
-    setError(!result);
-    setChecking(false);
-  }
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [orcid]);
 
   return (
     <div>
@@ -38,23 +42,21 @@ export default function OrcidField({ onConfirm }: { onConfirm: (orcid: string) =
         <input id="orcid-id" type="text" value={orcid} required
           placeholder="0000-0000-0000-0000"
           onChange={(event) => {
-            currentOrcid.current = event.target.value;
             setOrcid(event.target.value);
+            setChecking(!!event.target.value.trim());
             setIdentity(null);
             setError(false);
             setConfirmed(false);
             onConfirm("");
           }} />
-        <button className="btn" type="button" disabled={checking || !orcid.trim()} onClick={verify}>
-          {checking ? t.orcidChecking : t.orcidVerify}
-        </button>
       </div>
+      {checking && <p role="status">{t.orcidChecking}</p>}
       {error && <p role="alert" className="text-red-700 dark:text-red-300">{t.orcidInvalid}</p>}
       {identity && (
         <label className="mt-2 flex items-start gap-2">
           <input type="checkbox" className="mt-1" checked={confirmed} onChange={(event) => {
             setConfirmed(event.target.checked);
-            onConfirm(event.target.checked ? orcid.trim() : "");
+            onConfirm(event.target.checked ? identity.id : "");
           }} />
           <span>{t.orcidConfirm} <strong>{identity.name}</strong> ({identity.id})</span>
         </label>

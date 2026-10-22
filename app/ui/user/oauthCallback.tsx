@@ -19,12 +19,13 @@ export default function OAuthCallback() {
   const [registrationId, setRegistrationId] = useState("");
   const [registrationExpired, setRegistrationExpired] = useState(false);
   const code = searchParams.get("code");
+  const state = searchParams.get("state");
 
   useEffect(() => {
     if (!code) {
       return;
     }
-    signIn("credentials", { code, redirect: false })
+    signIn("credentials", { code, ...(state ? { state } : {}), redirect: false })
       .then((result) => {
         if (result?.ok) {
           finishLogin();
@@ -40,7 +41,7 @@ export default function OAuthCallback() {
         setStatus("error");
       })
       .catch(() => setStatus("error"));
-  }, [code]);
+  }, [code, state]);
 
   if (!code) {
     return null;
@@ -87,7 +88,7 @@ export default function OAuthCallback() {
             />
           </div>
           <OrcidField onConfirm={setOrcid} />
-          <button className="btn" type="submit">
+          <button className="btn disabled:cursor-not-allowed disabled:opacity-50 dark:disabled:opacity-50" type="submit" disabled={!orcid}>
             {t.signup}
           </button>
         </form>

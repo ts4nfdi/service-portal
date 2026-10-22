@@ -1,4 +1,7 @@
 export function getCodeUrl() {
+  if (process.env.NEXT_PUBLIC_SSO_PKCE_ENABLED === "true") {
+    return "/api/sso/login";
+  }
   const redirectUri =
     process.env.NEXT_IAM_REDIRECT_URL ??
     "https://terminology.services.base4nfdi.de/";

@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { JWT } from "next-auth/jwt";
-import { getOrcidIdentity } from "../orcid";
+import { getOrcidIdentity, getUserOrcid } from "../orcid";
+import { consumeSsoPkce } from "@/app/libs/ssoPkce";
 
 type SsoTokens = {
   access_token: string;
@@ -20,6 +21,7 @@ export const authOptions = {
       name: "OAuth callback",
       credentials: {
         code: { label: "Code", type: "text" },
+        state: { label: "State", type: "text" },
         username: { label: "Username", type: "text" },
         orcid: { label: "ORCID iD", type: "text" },
         registrationId: { label: "Registration ID", type: "text" },
@@ -59,6 +61,9 @@ export const authOptions = {
         const redirectUri =
           process.env.NEXT_IAM_REDIRECT_URL ??
           "https://terminology.services.base4nfdi.de/";
+        const pkce = process.env.NEXT_PUBLIC_SSO_PKCE_ENABLED === "true"
+          ? await consumeSsoPkce(credentials.state)
+          : {};
         const tokenResponse = await fetch(
           process.env.GATEWAY_BASE_URL! + "/auth/sso/token",
           {
@@ -67,6 +72,7 @@ export const authOptions = {
             body: JSON.stringify({
               code: credentials.code,
               redirect_uri: redirectUri,
+              ...pkce,
             }),
           },
         );
@@ -93,7 +99,7 @@ export const authOptions = {
   ],
   callbacks: {
     //@ts-ignore
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger = "" }) {
       if (user) {
         token.token = user.token;
         token.username = user.username;
@@ -107,8 +113,8 @@ export const authOptions = {
         requireReauthentication(token);
         return token;
       }
-      if (!token.orcid && token.token) {
-        token.orcid = getIdentity(token.token).orcid;
+      if ((!token.orcid || trigger === "update") && token.token) {
+        token.orcid = await getUserOrcid(token.token) ?? token.orcid ?? getIdentity(token.token).orcid;
       }
       if (token.expiration === undefined || token.expiration === "") {
         requireReauthentication(token);
@@ -191,7 +197,7 @@ async function loginUser(tokens: SsoTokens, response?: Response) {
     token,
     username,
     email: user.email ?? identity.email,
-    orcid: user.orcid ?? getIdentity(token).orcid,
+    orcid: user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid,
     expiration: user.expiration,
   };
 }
