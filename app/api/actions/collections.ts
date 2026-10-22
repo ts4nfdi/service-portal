@@ -10,6 +10,8 @@ import {
     MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
 import {PortalCollection, PortalCollectionJsonData} from "@/app/concepts";
+import { getOrcidIdentity } from "@/app/api/auth/orcid";
+import { isOrcidId } from "@/app/concepts/orcid";
 
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
@@ -28,6 +30,7 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
         let portalCols: PortalCollectionJsonData[] = [];
         for (let col of res) {
             let pCollection = new PortalCollection(col);
+            pCollection.manageable = true;
             portalCols.push(pCollection.toJson());
         }
         return {status: true, content: portalCols}
@@ -61,9 +64,9 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
+export async function createCollection(collection: PortalCollectionJsonData, enteredOrcid?: string): Promise<ActionResponse> {
     try {
-        let {token, username} = await getAuthenticatedUser();
+        let {token, username, orcid} = await getAuthenticatedUser();
         if (!token && process.env.DEBUG_MODE !== "true") {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -71,6 +74,12 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
         let newCollection = PortalCollection.toObject(collection);
 
         if (!newCollection.label || !newCollection.description) {
+            return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
+        }
+        if (!orcid && enteredOrcid && !await getOrcidIdentity(enteredOrcid)) {
+            return {status: false, content: REQUEST_FAILED_MESSAGE};
+        }
+        if ((!orcid && !enteredOrcid && process.env.DEBUG_MODE !== "true") || newCollection.collaborators.some((user) => !isOrcidId(user.username))) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
@@ -86,7 +95,7 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
 
         let formData: Collection = {
             label: newCollection.label,
-            creator: username,
+            creator: orcid || enteredOrcid || (process.env.DEBUG_MODE === "true" ? username : ""),
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,
@@ -137,6 +146,9 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
 
         let editedCollection = PortalCollection.toObject(collection);
         if (!editedCollection.label || !editedCollection.description) {
+            return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
+        }
+        if (editedCollection.collaborators.some((user) => !isOrcidId(user.username))) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 

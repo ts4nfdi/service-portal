@@ -4,15 +4,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 
-export async function getAuthenticatedUser(): Promise<{ token: string, username: string }> {
+export async function getAuthenticatedUser(): Promise<{ token: string, username: string, orcid: string }> {
   try {
     let session = await getServerSession(authOptions);
     return {
       token: session?.user?.token ?? "",
-      username: session?.user?.username ?? ""
+      username: session?.user?.username ?? "",
+      orcid: session?.user?.orcid ?? ""
     };
   } catch {
-    return { token: "", username: "" };
+    return { token: "", username: "", orcid: "" };
   }
 }
 

@@ -6,7 +6,7 @@ import { getUserCollectionList, updateCollection } from "@/app/api/actions/colle
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
+import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { getOntologyOptions } from "@/app/api/actions/providers";
 import { useLocale } from "@/app/i18n";
@@ -40,6 +40,7 @@ export default function CollectionEdit() {
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
+  const userOrcids = useRef(new Map<string, string>());
   const terminologySelectionInitialized = useRef(false);
   const collectionTerminologyOptions = useMemo(() => {
     const optionsByKey = new Map(ontologyOptions.map((option) => [getTerminologyOptionKey(option), option]));
@@ -78,7 +79,7 @@ export default function CollectionEdit() {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
-      if (!terminologySelectionReady) {
+      if (!terminologySelectionReady || selectedCollaborators.some((value) => !isOrcidId(value))) {
         return;
       }
       const formData = new FormData(event.currentTarget);
@@ -109,7 +110,10 @@ export default function CollectionEdit() {
     loadOntologyOptions();
     getUserList().then((response) => {
       if (response.status) {
-        setUsers(response.content.map((user: { username: string }) => user.username));
+        const people = response.content as PortalUser[];
+        userOrcids.current = new Map(people.filter((user) => user.orcid).map((user) => [user.username, user.orcid]));
+        setUsers(people.map((user) => user.orcid).filter(Boolean));
+        setSelectedCollaborators((selected) => selected.map((value) => userOrcids.current.get(value) ?? value));
       }
     });
   }, [loadOntologyOptions]);
@@ -139,7 +143,7 @@ export default function CollectionEdit() {
       const portalCollection = PortalCollection.toObject(targetCollection);
       setCollection(portalCollection);
       setLoadedCollectionId(collectionId);
-      setSelectedCollaborators(portalCollection.collaborators.map((user) => user.username));
+      setSelectedCollaborators(portalCollection.collaborators.map((user) => userOrcids.current.get(user.username) ?? user.username));
       setIsPublic(portalCollection.isPublic);
     }).finally(() => {
       if (active) {
@@ -181,12 +185,13 @@ export default function CollectionEdit() {
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
+              {selectedCollaborators.some((value) => !isOrcidId(value)) && <p role="alert" className="text-red-700 dark:text-red-300">{t.collaboratorOrcidRequired}</p>}
               <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
                   className="btn disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={!terminologySelectionReady}
+                  disabled={!terminologySelectionReady || selectedCollaborators.some((value) => !isOrcidId(value))}
                 >
                   {t.save}
                 </button>

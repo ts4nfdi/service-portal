@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
 import { getOntologyOptions } from "@/app/api/actions/providers";
-import { PortalCollection, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
+import { PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -17,6 +17,8 @@ import { localizePath } from "@/app/libs/localePath";
 import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
+import OrcidField from "@/app/ui/user/orcidField";
+import { updateUserOrcid } from "@/app/api/auth/orcid";
 import {
   CollaboratorField,
   CollectionDetailsFields,
@@ -54,6 +56,10 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [collectionTitle, setCollectionTitle] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [orcid, setOrcid] = useState("");
+  const [primaryOrcid, setPrimaryOrcid] = useState<boolean>();
+  const [orcidUpdateFailed, setOrcidUpdateFailed] = useState(false);
+  const [updatingOrcid, setUpdatingOrcid] = useState(false);
   const ontologyRequestInFlight = useRef(false);
   const submissionInFlight = useRef(false);
 
@@ -89,8 +95,8 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       let pCollection = new PortalCollection();
       pCollection.description = collectionDescription;
       pCollection.label = collectionTitle;
-      pCollection.collaborators = selectedCollaborators.map((username: string) => {
-        return { username: username, role: "ADMIN" };
+      pCollection.collaborators = selectedCollaborators.map((orcid: string) => {
+        return { username: orcid, role: "ADMIN" };
       });
       pCollection.isPublic = isPublic;
       pCollection.terminologies = selectedTerminologies.map((terminology: AutoCompleteSelectedTermType) => {
@@ -105,7 +111,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setFormIsSubmited(true);
       setLoading(true);
 
-      let res = await createCollection(pCollection.toJson());
+      let res = await createCollection(pCollection.toJson(), orcid || undefined);
       if (!res.status) {
         submissionInFlight.current = false;
         setFormIsSubmited(false);
@@ -123,6 +129,19 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setLoading(false);
       return;
     }
+  }
+
+  async function choosePrimaryOrcid(primary: boolean) {
+    if (primary) {
+      setUpdatingOrcid(true);
+      try {
+        setOrcidUpdateFailed(!await updateUserOrcid(orcid));
+      } catch {
+        setOrcidUpdateFailed(true);
+      }
+      setUpdatingOrcid(false);
+    }
+    setPrimaryOrcid(primary);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -266,7 +285,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   useEffect(() => {
     getUserList().then((resp) => {
       if (resp.status) {
-        setUsers(resp.content.map((user: { username: string }) => user.username));
+        setUsers(resp.content.map((user: PortalUser) => user.orcid).filter(Boolean));
       }
     });
   }, []);
@@ -298,9 +317,25 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     return <div className="md:col-span-2"><Loading /></div>;
   }
 
+  if (!debugMode && !session.data?.user.orcid && (!orcid || primaryOrcid === undefined)) {
+    return <div>
+      <p className="header-2">{t.defineNew}</p>
+      <p>{t.orcidNeeded}</p>
+      <OrcidField onConfirm={(value) => { setOrcid(value); setPrimaryOrcid(undefined); setOrcidUpdateFailed(false); }} />
+      {orcid && <div className="mt-4">
+        <p>{t.primaryOrcidQuestion}</p>
+        <div className="flex gap-2">
+          <button type="button" className="btn" disabled={updatingOrcid} onClick={() => void choosePrimaryOrcid(true)}>{t.yes}</button>
+          <button type="button" className="btn" disabled={updatingOrcid} onClick={() => void choosePrimaryOrcid(false)}>{t.no}</button>
+        </div>
+      </div>}
+    </div>;
+  }
+
   return <div>
     <a className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" href={localizePath(searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/", locale)} aria-label={t.cancel} title={t.cancel}><span aria-hidden="true">×</span></a>
     <p className="header-2">{t.defineNew}</p>
+    {orcidUpdateFailed && <p role="alert" className="text-red-700 dark:text-red-300">{t.orcidUpdateUnavailable}</p>}
     <div className="mt-8" aria-label={t.creationProgress}>
       <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step) => <span key={step}>{step}</span>)}</div>
       <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700"><div className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent} aria-valuetext={progressSteps[progressStep - 1]} aria-label={t.creationProgress} /></div>

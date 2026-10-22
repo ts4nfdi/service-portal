@@ -1,11 +1,11 @@
 "use server";
 
-import { LinkedOrcid, OrcidIdentity, toLinkedOrcids, toOrcidIdentity } from "@/app/concepts/orcid";
+import { isOrcidId, LinkedOrcid, OrcidIdentity, toLinkedOrcids, toOrcidIdentity } from "@/app/concepts/orcid";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 
 export async function getOrcidIdentity(orcid: string): Promise<OrcidIdentity | null> {
   orcid = orcid.trim().replace(/^https?:\/\/orcid\.org\//i, "").toUpperCase();
-  if (!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid)) {
+  if (!isOrcidId(orcid)) {
     return null;
   }
 

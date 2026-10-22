@@ -27,8 +27,12 @@ export function toLinkedOrcids(user: {
   return [...new Set([user.primaryOrcid, ...(user.externalPersistentIdentifiers ?? [])]
     .filter((id): id is string => typeof id === "string")
     .map(normalize)
-    .filter(id => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id)))]
+    .filter(isOrcidId))]
     .map(id => ({ id, isPrimary: id === primary }));
+}
+
+export function isOrcidId(id: string): boolean {
+  return /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id);
 }
 
 export function toOrcidIdentity(id: string, record: OrcidRecord): OrcidIdentity | null {
