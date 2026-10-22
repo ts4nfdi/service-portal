@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
 import { getOntologyOptions } from "@/app/api/actions/providers";
-import { PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { LinkedOrcid, PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -18,7 +18,7 @@ import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
 import OrcidField from "@/app/ui/user/orcidField";
-import { updateUserOrcid } from "@/app/api/auth/orcid";
+import { getCurrentUserOrcids, updateUserOrcid } from "@/app/api/auth/orcid";
 import {
   CollaboratorField,
   CollectionDetailsFields,
@@ -57,7 +57,12 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [orcid, setOrcid] = useState("");
-  const [primaryOrcid, setPrimaryOrcid] = useState<boolean>();
+  const [accountOrcids, setAccountOrcids] = useState<LinkedOrcid[] | null>(null);
+  const [creatorOrcid, setCreatorOrcid] = useState("");
+  const [orcidStepComplete, setOrcidStepComplete] = useState(false);
+  const [hasOrcidStep, setHasOrcidStep] = useState(true);
+  const [orcidLoadFailed, setOrcidLoadFailed] = useState(false);
+  const [orcidLoadAttempt, setOrcidLoadAttempt] = useState(0);
   const [orcidUpdateFailed, setOrcidUpdateFailed] = useState(false);
   const [updatingOrcid, setUpdatingOrcid] = useState(false);
   const ontologyRequestInFlight = useRef(false);
@@ -87,7 +92,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }, []);
 
   async function submit() {
-    if (submissionInFlight.current) {
+    if (submissionInFlight.current || !orcidStepComplete || !accountOrcids?.some(({ id }) => id === creatorOrcid)) {
       return;
     }
     submissionInFlight.current = true;
@@ -111,7 +116,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setFormIsSubmited(true);
       setLoading(true);
 
-      let res = await createCollection(pCollection.toJson(), orcid || undefined);
+      let res = await createCollection(pCollection.toJson(), creatorOrcid);
       if (!res.status) {
         submissionInFlight.current = false;
         setFormIsSubmited(false);
@@ -131,17 +136,23 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }
 
-  async function choosePrimaryOrcid(primary: boolean) {
-    if (primary) {
-      setUpdatingOrcid(true);
-      try {
-        setOrcidUpdateFailed(!await updateUserOrcid(orcid));
-      } catch {
+  async function saveOrcid() {
+    if (!orcid || updatingOrcid) return;
+    setUpdatingOrcid(true);
+    setOrcidUpdateFailed(false);
+    try {
+      if (!await updateUserOrcid(orcid)) {
         setOrcidUpdateFailed(true);
+        return;
       }
+      setAccountOrcids([{ id: orcid, isPrimary: false }]);
+      setCreatorOrcid(orcid);
+      setOrcidStepComplete(true);
+    } catch {
+      setOrcidUpdateFailed(true);
+    } finally {
       setUpdatingOrcid(false);
     }
-    setPrimaryOrcid(primary);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -226,6 +237,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("manual")}>{t.addTerminologiesMyself}</button>
         <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("bulk")}>{t.bulkImportTerminologies}</button>
       </div>
+      {hasOrcidStep && <button type="button" className="btn mt-4" onClick={() => setOrcidStepComplete(false)}>{t.back}</button>}
     </div>;
   }
 
@@ -276,73 +288,110 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   useEffect(() => {
-    if ((!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
+    if (!orcidStepComplete || !creationMethod || (!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
       return;
     }
     loadOntologyOptions();
-  }, [debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, session.data?.user.token]);
+  }, [creationMethod, debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, orcidStepComplete, session.data?.user.token]);
 
   useEffect(() => {
+    if (!orcidStepComplete || !((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4))) return;
     getUserList().then((resp) => {
       if (resp.status) {
-        setUsers(resp.content.map((user: PortalUser) => user.orcid).filter(Boolean));
+        setUsers(resp.content.map((user: PortalUser) => user.orcid || user.username).filter(Boolean));
       }
     });
-  }, []);
+  }, [bulkStep, creationMethod, manualStep, orcidStepComplete]);
 
-  const progressSteps = creationMethod === "manual"
-    ? [t.creationMethodStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
-    : creationMethod === "bulk"
-      ? [t.creationMethodStep, t.providerSelectionStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
-      : [t.creationMethodStep];
-  const progressStep = creationMethod === "manual" ? manualStep + 1 : creationMethod === "bulk" ? bulkStep + 1 : 1;
-  const progressPercent = creationMethod === "manual"
-    ? [50, 75, 100][manualStep - 1]
-    : creationMethod === "bulk"
-      ? [40, 60, 80, 100][bulkStep - 1]
-      : 20;
-  const progressWidth = creationMethod === "manual"
-    ? manualStep === 1 ? "w-1/2" : manualStep === 2 ? "w-3/4" : "w-full"
-    : creationMethod === "bulk"
-      ? bulkStep === 1 ? "w-2/5" : bulkStep === 2 ? "w-3/5" : bulkStep === 3 ? "w-4/5" : "w-full"
-      : "w-1/5";
+  useEffect(() => {
+    if (!session.data?.user.token) return;
+    let cancelled = false;
+    setAccountOrcids(null);
+    setOrcid("");
+    setOrcidUpdateFailed(false);
+    setCreatorOrcid("");
+    setOrcidStepComplete(false);
+    setOrcidLoadFailed(false);
+    getCurrentUserOrcids().then((ids) => {
+      if (cancelled) return;
+      if (!ids) {
+        setOrcidLoadFailed(true);
+        return;
+      }
+      setAccountOrcids(ids);
+      setHasOrcidStep(ids.length !== 1);
+      if (ids.length === 1) {
+        setCreatorOrcid(ids[0].id);
+        setOrcidStepComplete(true);
+      }
+    }).catch(() => { if (!cancelled) setOrcidLoadFailed(true); });
+    return () => { cancelled = true; };
+  }, [session.data?.user.token, orcidLoadAttempt]);
+
+  const progressSteps = [
+    ...(hasOrcidStep ? [t.creatorOrcidStep] : []),
+    t.creationMethodStep,
+    ...(creationMethod === "bulk" ? [t.providerSelectionStep] : []),
+    t.terminologySelectionStep,
+    t.nameDescriptionStep,
+    t.visibilityCollaboratorsStep,
+  ];
+  const progressStep = !orcidStepComplete ? 1 : (hasOrcidStep ? 1 : 0) + (creationMethod === "manual" ? manualStep + 1 : creationMethod === "bulk" ? bulkStep + 1 : 1);
+  const progressPercent = Math.round(progressStep / progressSteps.length * 100);
+  const progressWidth = (progressSteps.length === 6
+    ? ["w-1/6", "w-1/3", "w-1/2", "w-2/3", "w-5/6", "w-full"]
+    : progressSteps.length === 5
+      ? ["w-1/5", "w-2/5", "w-3/5", "w-4/5", "w-full"]
+      : ["w-1/4", "w-1/2", "w-3/4", "w-full"])[progressStep - 1];
   const isDetailsStep = (creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3);
   const isVisibilityStep = (creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4);
   const selectedBulkOptions = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
 
-  if (!debugMode && !session?.data?.user.token && session.status !== "loading") {
+  if (!session?.data?.user.token && session.status !== "loading") {
     return <><LoginFormWrapper /></>;
   }
-  if (!debugMode && session.status === "loading") {
-    return <div className="md:col-span-2"><Loading /></div>;
-  }
 
-  if (!debugMode && !session.data?.user.orcid && (!orcid || primaryOrcid === undefined)) {
+  function renderOrcidStep() {
+    if (session.status === "loading" || (!accountOrcids && !orcidLoadFailed)) {
+      return <div role="status"><Loading /><p>{t.loadingCreatorOrcids}</p></div>;
+    }
+    if (orcidLoadFailed) return <div role="alert">
+      <p className="text-red-700 dark:text-red-300">{t.orcidLoadError}</p>
+      <button type="button" className="btn" onClick={() => setOrcidLoadAttempt(orcidLoadAttempt + 1)}>{t.retry}</button>
+    </div>;
+
     return <div>
-      <p className="header-2">{t.defineNew}</p>
-      <p>{t.orcidNeeded}</p>
-      <OrcidField onConfirm={(value) => { setOrcid(value); setPrimaryOrcid(undefined); setOrcidUpdateFailed(false); }} />
-      {orcid && <div className="mt-4">
-        <p>{t.primaryOrcidQuestion}</p>
-        <div className="flex gap-2">
-          <button type="button" className="btn" disabled={updatingOrcid} onClick={() => void choosePrimaryOrcid(true)}>{t.yes}</button>
-          <button type="button" className="btn" disabled={updatingOrcid} onClick={() => void choosePrimaryOrcid(false)}>{t.no}</button>
-        </div>
-      </div>}
+      <h2 className="header-4">{t.creatorOrcidStep}</h2>
+      {accountOrcids?.length ? <>
+        <p>{t.chooseCreatorOrcid}</p>
+        <label htmlFor="creator-orcid" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{t.creatorOrcidStep}</label>
+        <select id="creator-orcid" value={creatorOrcid} onChange={(event) => setCreatorOrcid(event.target.value)}>
+          <option value="">{t.chooseCreatorOrcidPlaceholder}</option>
+          {accountOrcids.map(({ id }) => <option key={id} value={id}>{id}</option>)}
+        </select>
+        <button type="button" className="btn mt-4 disabled:cursor-not-allowed disabled:opacity-50" disabled={!creatorOrcid} onClick={() => setOrcidStepComplete(true)}>{t.next}</button>
+      </> : <>
+        <p>{t.orcidNeeded}</p>
+        <fieldset disabled={updatingOrcid}>
+          <OrcidField onConfirm={(value) => { setOrcid(value); setOrcidUpdateFailed(false); }} />
+        </fieldset>
+        <button type="button" className="btn mt-4 disabled:cursor-not-allowed disabled:opacity-50" disabled={!orcid || updatingOrcid} onClick={() => void saveOrcid()}>{t.saveOrcidAndContinue}</button>
+        {orcidUpdateFailed && <p role="alert" className="text-red-700 dark:text-red-300">{t.orcidUpdateUnavailable}</p>}
+      </>}
     </div>;
   }
 
   return <div>
     <a className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" href={localizePath(searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/", locale)} aria-label={t.cancel} title={t.cancel}><span aria-hidden="true">×</span></a>
     <p className="header-2">{t.defineNew}</p>
-    {orcidUpdateFailed && <p role="alert" className="text-red-700 dark:text-red-300">{t.orcidUpdateUnavailable}</p>}
     <div className="mt-8" aria-label={t.creationProgress}>
-      <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step) => <span key={step}>{step}</span>)}</div>
+      <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step, index) => <span key={step} aria-current={index === progressStep - 1 ? "step" : undefined} className={index === progressStep - 1 ? "font-bold" : undefined}>{step}</span>)}</div>
       <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700"><div className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent} aria-valuetext={progressSteps[progressStep - 1]} aria-label={t.creationProgress} /></div>
     </div>
+    {!orcidStepComplete && <div className="form-input-group mt-10">{renderOrcidStep()}</div>}
     {loading && <Loading />}
-    {!creationMethod && renderCreationMethodSelection()}
-    {creationMethod && !formIsSubmitted && <form className="mt-10" onSubmit={(event) => event.preventDefault()} onKeyDown={(event) => event.key === "Enter" && event.preventDefault()}>
+    {orcidStepComplete && !creationMethod && renderCreationMethodSelection()}
+    {orcidStepComplete && creationMethod && !formIsSubmitted && <form className="mt-10" onSubmit={(event) => event.preventDefault()} onKeyDown={(event) => event.key === "Enter" && event.preventDefault()}>
       {renderCurrentStep()}
       <div className="flex justify-between gap-2">
         <button type="button" className="btn !bg-gray-200 !text-gray-900 hover:!bg-gray-300 dark:!bg-gray-600 dark:!text-white dark:hover:!bg-gray-500" onClick={goBack}>{t.back}</button>

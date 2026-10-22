@@ -28,15 +28,25 @@ export async function getUserOrcid(token: string): Promise<string | undefined> {
 }
 
 export async function getUserOrcids(token: string): Promise<LinkedOrcid[]> {
+  return await loadUserOrcids(token) ?? [];
+}
+
+export async function getCurrentUserOrcids(): Promise<LinkedOrcid[] | null> {
+  const { getUserToken } = await import("@/app/libs/auth");
+  const token = await getUserToken();
+  return token ? loadUserOrcids(token) : null;
+}
+
+async function loadUserOrcids(token: string): Promise<LinkedOrcid[] | null> {
   try {
     const response = await fetch(process.env.GATEWAY_BASE_URL! + "/auth/me", {
       headers: await getHttpHeaderForGateway(token),
       cache: "no-store",
     });
-    if (!response.ok) return [];
+    if (!response.ok) return null;
     return toLinkedOrcids(await response.json());
   } catch {
-    return [];
+    return null;
   }
 }
 

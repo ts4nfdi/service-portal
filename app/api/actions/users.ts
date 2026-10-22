@@ -14,12 +14,13 @@ export async function getUserList(): Promise<ActionResponse> {
       return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE }
     }
     let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/", {
-      headers: await getHttpHeaderForGateway(token)
+      headers: await getHttpHeaderForGateway(token),
+      cache: "no-store",
     });
     if (!resp.ok) {
       return { status: false, content: REQUEST_FAILED_MESSAGE }
     }
-    let res: { username?: string; orcid?: string }[] = await resp.json();
+    let res: Parameters<typeof toPortalUser>[0][] = await resp.json();
     return { status: true, content: res.map(toPortalUser) }
 
   } catch {

@@ -6,7 +6,7 @@ import { getUserCollectionList, updateCollection } from "@/app/api/actions/colle
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { getOntologyOptions } from "@/app/api/actions/providers";
 import { useLocale } from "@/app/i18n";
@@ -79,7 +79,7 @@ export default function CollectionEdit() {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
-      if (!terminologySelectionReady || selectedCollaborators.some((value) => !isOrcidId(value))) {
+      if (!terminologySelectionReady) {
         return;
       }
       const formData = new FormData(event.currentTarget);
@@ -112,7 +112,7 @@ export default function CollectionEdit() {
       if (response.status) {
         const people = response.content as PortalUser[];
         userOrcids.current = new Map(people.filter((user) => user.orcid).map((user) => [user.username, user.orcid]));
-        setUsers(people.map((user) => user.orcid).filter(Boolean));
+        setUsers(people.map((user) => user.orcid || user.username).filter(Boolean));
         setSelectedCollaborators((selected) => selected.map((value) => userOrcids.current.get(value) ?? value));
       }
     });
@@ -185,13 +185,12 @@ export default function CollectionEdit() {
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
-              {selectedCollaborators.some((value) => !isOrcidId(value)) && <p role="alert" className="text-red-700 dark:text-red-300">{t.collaboratorOrcidRequired}</p>}
               <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
                   className="btn disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={!terminologySelectionReady || selectedCollaborators.some((value) => !isOrcidId(value))}
+                  disabled={!terminologySelectionReady}
                 >
                   {t.save}
                 </button>

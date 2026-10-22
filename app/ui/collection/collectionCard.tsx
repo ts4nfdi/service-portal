@@ -25,6 +25,7 @@ export default function CollectionCard(props: CmpProps) {
 
     const session = useSession();
     const canManage = props.collection.canManage(session?.data?.user?.username, session?.data?.user?.orcid);
+    const creatorOrcid = props.collection.creatorOrcid(session.data?.user?.username, session.data?.user?.orcid);
 
     function downloadCollectionJsonData() {
         const json = JSON.stringify(props.collection.toJson(), null, 2);
@@ -107,7 +108,11 @@ export default function CollectionCard(props: CmpProps) {
                 <CopyToClipboard textToCopy={props.collection.permaLink}
                                  key={"copy"}/>
             </div>
-            <p key={"creator"} className="text-sm">{t.createdBy}{props.collection.creatorOrcid(session.data?.user?.username, session.data?.user?.orcid) || `${props.collection.creator}(${t.noOrcidId})`}</p>
+            <p key={"creator"} className="text-sm">
+                {t.createdBy}{creatorOrcid ? (
+                    <a href={`https://orcid.org/${creatorOrcid}`} target="_blank" rel="noopener noreferrer">{creatorOrcid}</a>
+                ) : `${props.collection.creator}(${t.noOrcidId})`}
+            </p>
             <p key={"collection-desc"}>{props.collection.description}</p>
             <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
                 <b>{t.terminologies}</b>

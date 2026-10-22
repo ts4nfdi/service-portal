@@ -26,6 +26,7 @@ export default function CollectionContentCmp(props: {
   const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
   const canManage = collection.canManage(session?.data?.user?.username, session?.data?.user?.orcid);
+  const creatorOrcid = collection.creatorOrcid(session.data?.user?.username, session.data?.user?.orcid);
 
   const terminologyOptions: PortalOntologyOption[] = collection.terminologies.map((terminology) => ({
     ontologyId: terminology.label,
@@ -120,7 +121,9 @@ export default function CollectionContentCmp(props: {
           </div>
 
           <p key={"collection-creator"} className="text-sm">
-            {t.createdBy}{collection.creatorOrcid(session?.data?.user?.username, session?.data?.user?.orcid) || `${collection.creator}(${t.noOrcidId})`}
+            {t.createdBy}{creatorOrcid ? (
+              <a href={`https://orcid.org/${creatorOrcid}`} target="_blank" rel="noopener noreferrer">{creatorOrcid}</a>
+            ) : `${collection.creator}(${t.noOrcidId})`}
           </p>
           <p key={"collection-collaborators"} className="text-sm">
             {t.collaborators}

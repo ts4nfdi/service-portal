@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getAuthenticatedUser, getUserToken} from "@/app/libs/auth";
+import {getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
@@ -10,8 +10,7 @@ import {
     MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
 import {PortalCollection, PortalCollectionJsonData} from "@/app/concepts";
-import { getOrcidIdentity } from "@/app/api/auth/orcid";
-import { isOrcidId } from "@/app/concepts/orcid";
+import { getUserOrcids } from "@/app/api/auth/orcid";
 
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
@@ -64,10 +63,10 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function createCollection(collection: PortalCollectionJsonData, enteredOrcid?: string): Promise<ActionResponse> {
+export async function createCollection(collection: PortalCollectionJsonData, selectedOrcid?: string): Promise<ActionResponse> {
     try {
-        let {token, username, orcid} = await getAuthenticatedUser();
-        if (!token && process.env.DEBUG_MODE !== "true") {
+        const token = await getUserToken();
+        if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 
@@ -76,11 +75,10 @@ export async function createCollection(collection: PortalCollectionJsonData, ent
         if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
-        if (!orcid && enteredOrcid && !await getOrcidIdentity(enteredOrcid)) {
-            return {status: false, content: REQUEST_FAILED_MESSAGE};
-        }
-        if ((!orcid && !enteredOrcid && process.env.DEBUG_MODE !== "true") || newCollection.collaborators.some((user) => !isOrcidId(user.username))) {
-            return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
+        const orcids = await getUserOrcids(token);
+        const creator = selectedOrcid || (orcids.length === 1 ? orcids[0].id : "");
+        if (!orcids.some(({ id }) => id === creator)) {
+            return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE};
         }
 
         let terminologiesData: Terminology[] = [];
@@ -95,7 +93,7 @@ export async function createCollection(collection: PortalCollectionJsonData, ent
 
         let formData: Collection = {
             label: newCollection.label,
-            creator: orcid || enteredOrcid || (process.env.DEBUG_MODE === "true" ? username : ""),
+            creator,
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,
@@ -146,9 +144,6 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
 
         let editedCollection = PortalCollection.toObject(collection);
         if (!editedCollection.label || !editedCollection.description) {
-            return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
-        }
-        if (editedCollection.collaborators.some((user) => !isOrcidId(user.username))) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
         }
 
