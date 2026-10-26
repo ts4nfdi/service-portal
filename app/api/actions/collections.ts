@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getUserToken} from "@/app/libs/auth";
+import {getAuthenticatedUser, getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
@@ -10,7 +10,6 @@ import {
     MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
 import {PortalCollection, PortalCollectionJsonData} from "@/app/concepts";
-import { getUserOrcids } from "@/app/api/auth/orcid";
 
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
@@ -65,9 +64,9 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function createCollection(collection: PortalCollectionJsonData, selectedOrcid?: string): Promise<ActionResponse> {
+export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
-        const token = await getUserToken();
+        const { token, username } = await getAuthenticatedUser();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -76,11 +75,6 @@ export async function createCollection(collection: PortalCollectionJsonData, sel
 
         if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
-        }
-        const orcids = await getUserOrcids(token);
-        const creator = selectedOrcid || (orcids.length === 1 ? orcids[0].id : "");
-        if (!orcids.some(({ id }) => id === creator)) {
-            return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE};
         }
 
         let terminologiesData: Terminology[] = [];
@@ -95,7 +89,7 @@ export async function createCollection(collection: PortalCollectionJsonData, sel
 
         let formData: Collection = {
             label: newCollection.label,
-            creator,
+            creator: username,
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,

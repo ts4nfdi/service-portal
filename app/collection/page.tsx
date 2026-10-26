@@ -34,7 +34,7 @@ const getCollectionsData = cache(
         ? userCollectionsListResp.content
         : []),
       ...(publicCollectionsListResp.status
-        ? publicCollectionsListResp.content.filter((collection: PortalCollectionJsonData) => !userCollectionsListResp.content.some((userCollection: PortalCollectionJsonData) => userCollection.id === collection.id))
+        ? publicCollectionsListResp.content.filter((collection: PortalCollectionJsonData) => !userCollectionsListResp.status || !userCollectionsListResp.content.some((userCollection: PortalCollectionJsonData) => userCollection.id === collection.id))
         : []),
     ];
   },

@@ -8,7 +8,7 @@ import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
 import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
-import { getOntologyOptions } from "@/app/api/actions/providers";
+import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
@@ -63,7 +63,7 @@ export default function CollectionEdit() {
     ontologyRequestInFlight.current = true;
     setOntologyOptionsFailed(false);
     try {
-      const options = await getOntologyOptions();
+      const options = await getCachedOntologyOptions();
       if (!options) {
         setOntologyOptionsFailed(true);
         return;
