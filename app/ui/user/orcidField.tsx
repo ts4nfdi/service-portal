@@ -40,7 +40,7 @@ export default function OrcidField({ onConfirm }: { onConfirm: (orcid: string) =
       <label htmlFor="orcid-id" className="block">{t.orcid}</label>
       <div className="flex gap-2">
         <input id="orcid-id" type="text" value={orcid} required
-          placeholder="0000-0000-0000-0000"
+          placeholder={t.orcidPlaceholder}
           onChange={(event) => {
             setOrcid(event.target.value);
             setChecking(!!event.target.value.trim());

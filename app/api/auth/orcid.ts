@@ -54,11 +54,13 @@ export async function updateUserOrcid(orcid: string): Promise<boolean> {
   try {
     const { getUserToken } = await import("@/app/libs/auth");
     const token = await getUserToken();
-    if (!token || !await getOrcidIdentity(orcid)) return false;
+    if (!token) return false;
+    const identity = await getOrcidIdentity(orcid);
+    if (!identity) return false;
     const response = await fetch(process.env.GATEWAY_BASE_URL! + "/users/me/externalIdentifiers", {
       method: "POST",
       headers: { "Content-Type": "text/plain", Authorization: `Bearer ${token}` },
-      body: orcid,
+      body: identity.id,
     });
     return response.ok;
   } catch {

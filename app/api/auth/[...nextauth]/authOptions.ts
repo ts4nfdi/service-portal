@@ -28,7 +28,8 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (credentials?.registrationId && credentials.username && credentials.orcid) {
-          if (!await getOrcidIdentity(credentials.orcid)) {
+          const identity = await getOrcidIdentity(credentials.orcid);
+          if (!identity) {
             return null;
           }
           const registration = pendingRegistrations.get(credentials.registrationId);
@@ -43,7 +44,7 @@ export const authOptions = {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 username: credentials.username,
-                orcid: credentials.orcid,
+                orcid: identity.id,
                 id_token: registration.tokens.id_token,
               }),
             },
