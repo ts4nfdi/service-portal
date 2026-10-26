@@ -58,7 +58,7 @@ export async function getOntologyOptions(): Promise<PortalOntologyOption[] | nul
         const resp = await fetch(
             process.env.ONTOLOGY_OPTIONS_URL ??
             "https://terminology.services.base4nfdi.de/api-gateway/ols4/api/ontologies",
-            {next: {revalidate: 3600}}
+            {cache: "no-store"}
         );
         if (!resp.ok) {
             return null;

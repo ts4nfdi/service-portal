@@ -5,8 +5,8 @@ import { Loading } from "@/app/ui/commons/snippets";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection } from "@/app/api/actions/collections";
-import { getOntologyOptions } from "@/app/api/actions/providers";
-import { PortalCollection, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
+import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
+import { PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -39,7 +39,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [selectedTerminologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const [creationMethod, setCreationMethod] = useState<CreationMethod>();
   const [manualStep, setManualStep] = useState<ManualStep>(1);
@@ -65,7 +65,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     setOntologyOptionsLoading(true);
     setOntologyOptionsFailed(false);
     try {
-      const options = await getOntologyOptions();
+      const options = await getCachedOntologyOptions();
       if (!options) {
         setOntologyOptionsFailed(true);
         return;
@@ -89,8 +89,10 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       let pCollection = new PortalCollection();
       pCollection.description = collectionDescription;
       pCollection.label = collectionTitle;
-      pCollection.collaborators = selectedCollaborators.map((username: string) => {
-        return { username: username, role: "ADMIN" };
+      pCollection.collaborators = selectedCollaborators.map((orcid: string) => {
+        const user = users.find((user) => user.orcid === orcid);
+        if (!user) throw new Error("Collaborator not found");
+        return { username: user.username, orcid, role: "ADMIN" };
       });
       pCollection.isPublic = isPublic;
       pCollection.terminologies = selectedTerminologies.map((terminology: AutoCompleteSelectedTermType) => {
@@ -257,52 +259,47 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   useEffect(() => {
-    if ((!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
+    if (!creationMethod || (!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
       return;
     }
     loadOntologyOptions();
-  }, [debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, session.data?.user.token]);
+  }, [creationMethod, debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, session.data?.user.token]);
 
   useEffect(() => {
+    if (!((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4))) return;
     getUserList().then((resp) => {
       if (resp.status) {
-        setUsers(resp.content.map((user: { username: string }) => user.username));
+        setUsers(resp.content);
       }
     });
-  }, []);
+  }, [bulkStep, creationMethod, manualStep]);
 
-  const progressSteps = creationMethod === "manual"
-    ? [t.creationMethodStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
-    : creationMethod === "bulk"
-      ? [t.creationMethodStep, t.providerSelectionStep, t.terminologySelectionStep, t.nameDescriptionStep, t.visibilityCollaboratorsStep]
-      : [t.creationMethodStep];
+  const progressSteps = [
+    t.creationMethodStep,
+    ...(creationMethod === "bulk" ? [t.providerSelectionStep] : []),
+    t.terminologySelectionStep,
+    t.nameDescriptionStep,
+    t.visibilityCollaboratorsStep,
+  ];
   const progressStep = creationMethod === "manual" ? manualStep + 1 : creationMethod === "bulk" ? bulkStep + 1 : 1;
-  const progressPercent = creationMethod === "manual"
-    ? [50, 75, 100][manualStep - 1]
-    : creationMethod === "bulk"
-      ? [40, 60, 80, 100][bulkStep - 1]
-      : 20;
-  const progressWidth = creationMethod === "manual"
-    ? manualStep === 1 ? "w-1/2" : manualStep === 2 ? "w-3/4" : "w-full"
-    : creationMethod === "bulk"
-      ? bulkStep === 1 ? "w-2/5" : bulkStep === 2 ? "w-3/5" : bulkStep === 3 ? "w-4/5" : "w-full"
-      : "w-1/5";
+  const progressPercent = Math.round(progressStep / progressSteps.length * 100);
+  const progressWidth = (progressSteps.length === 5
+    ? ["w-1/5", "w-2/5", "w-3/5", "w-4/5", "w-full"]
+    : ["w-1/4", "w-1/2", "w-3/4", "w-full"])[progressStep - 1];
   const isDetailsStep = (creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3);
   const isVisibilityStep = (creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4);
   const selectedBulkOptions = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
 
-  if (!debugMode && !session?.data?.user.token && session.status !== "loading") {
+  if (session.status === "loading") return <Loading />;
+  if (!session.data?.user.token) {
     return <><LoginFormWrapper /></>;
-  }
-  if (!debugMode && session.status === "loading") {
-    return <div className="md:col-span-2"><Loading /></div>;
   }
 
   return <div>
     <a className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" href={localizePath(searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/", locale)} aria-label={t.cancel} title={t.cancel}><span aria-hidden="true">×</span></a>
     <p className="header-2">{t.defineNew}</p>
     <div className="mt-8" aria-label={t.creationProgress}>
-      <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step) => <span key={step}>{step}</span>)}</div>
+      <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step, index) => <span key={step} aria-current={index === progressStep - 1 ? "step" : undefined} className={index === progressStep - 1 ? "font-bold" : undefined}>{step}</span>)}</div>
       <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700"><div className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent} aria-valuetext={progressSteps[progressStep - 1]} aria-label={t.creationProgress} /></div>
     </div>
     {loading && <Loading />}

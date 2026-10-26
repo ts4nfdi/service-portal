@@ -2,8 +2,13 @@
 
 import { SessionProvider, signOut, useSession } from "next-auth/react";
 import { useEffect, useRef } from "react";
+import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
 
 export function SessionProviderWrapper({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    void getCachedOntologyOptions();
+  }, []);
+
   return <SessionProvider>
     <ReauthenticationHandler />
     {children}

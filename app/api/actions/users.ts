@@ -4,6 +4,7 @@ import { ActionResponse } from "./types";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 import { REQUEST_FAILED_MESSAGE, SERVER_ERROR_MESSAGE, ACTION_NOT_ALLOWED_MESSAGE } from "@/app/libs/responseStrings";
 import { getUserToken } from "@/app/libs/auth";
+import { toPortalUser } from "@/app/concepts/user";
 
 
 export async function getUserList(): Promise<ActionResponse> {
@@ -13,13 +14,14 @@ export async function getUserList(): Promise<ActionResponse> {
       return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE }
     }
     let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/", {
-      headers: await getHttpHeaderForGateway(token)
+      headers: await getHttpHeaderForGateway(token),
+      cache: "no-store",
     });
     if (!resp.ok) {
       return { status: false, content: REQUEST_FAILED_MESSAGE }
     }
-    let res: { username: string }[] = await resp.json();
-    return { status: true, content: res }
+    let res: Parameters<typeof toPortalUser>[0][] = await resp.json();
+    return { status: true, content: res.map(toPortalUser) }
 
   } catch {
     return { status: false, content: SERVER_ERROR_MESSAGE }

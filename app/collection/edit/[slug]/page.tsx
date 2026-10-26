@@ -6,9 +6,9 @@ import { getUserCollectionList, updateCollection } from "@/app/api/actions/colle
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology } from "@/app/concepts";
+import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
-import { getOntologyOptions } from "@/app/api/actions/providers";
+import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
@@ -31,8 +31,9 @@ export default function CollectionEdit() {
   const [collection, setCollection] = useState(new PortalCollection());
   const [loadedCollectionId, setLoadedCollectionId] = useState<string>();
   const [formIsSubmitted, setFormIsSubmited] = useState(false);
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
+  const collaboratorsHaveOrcids = selectedCollaborators.every((orcid) => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid));
   const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
   const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
   const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
@@ -40,6 +41,7 @@ export default function CollectionEdit() {
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const ontologyRequestInFlight = useRef(false);
+  const userOrcids = useRef(new Map<string, string>());
   const terminologySelectionInitialized = useRef(false);
   const collectionTerminologyOptions = useMemo(() => {
     const optionsByKey = new Map(ontologyOptions.map((option) => [getTerminologyOptionKey(option), option]));
@@ -61,7 +63,7 @@ export default function CollectionEdit() {
     ontologyRequestInFlight.current = true;
     setOntologyOptionsFailed(false);
     try {
-      const options = await getOntologyOptions();
+      const options = await getCachedOntologyOptions();
       if (!options) {
         setOntologyOptionsFailed(true);
         return;
@@ -78,7 +80,7 @@ export default function CollectionEdit() {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
-      if (!terminologySelectionReady) {
+      if (!terminologySelectionReady || !collaboratorsHaveOrcids) {
         return;
       }
       const formData = new FormData(event.currentTarget);
@@ -86,7 +88,12 @@ export default function CollectionEdit() {
       editedCollection.id = collection.id;
       editedCollection.description = formData.get("collection-desc") as string;
       editedCollection.label = formData.get("collection-title") as string;
-      editedCollection.collaborators = selectedCollaborators.map((username) => ({ username, role: "ADMIN" }));
+      editedCollection.collaborators = selectedCollaborators.map((orcid) => {
+        const user = users.find((user) => user.orcid === orcid)
+          ?? collection.collaborators.find((user) => (user.orcid || userOrcids.current.get(user.username)) === orcid);
+        if (!user) throw new Error("Collaborator not found");
+        return { username: user.username, orcid, role: "ADMIN" };
+      });
       editedCollection.isPublic = isPublic;
       editedCollection.terminologies = selectedTerminologies.map((option) => {
         const terminology = new PortalTerminology();
@@ -109,7 +116,10 @@ export default function CollectionEdit() {
     loadOntologyOptions();
     getUserList().then((response) => {
       if (response.status) {
-        setUsers(response.content.map((user: { username: string }) => user.username));
+        const people = response.content as PortalUser[];
+        userOrcids.current = new Map(people.filter((user) => user.orcid).map((user) => [user.username, user.orcid]));
+        setUsers(people);
+        setSelectedCollaborators((selected) => selected.map((value) => userOrcids.current.get(value) ?? value));
       }
     });
   }, [loadOntologyOptions]);
@@ -139,7 +149,7 @@ export default function CollectionEdit() {
       const portalCollection = PortalCollection.toObject(targetCollection);
       setCollection(portalCollection);
       setLoadedCollectionId(collectionId);
-      setSelectedCollaborators(portalCollection.collaborators.map((user) => user.username));
+      setSelectedCollaborators(portalCollection.collaborators.map((user) => user.orcid || userOrcids.current.get(user.username) || user.username));
       setIsPublic(portalCollection.isPublic);
     }).finally(() => {
       if (active) {
@@ -181,12 +191,13 @@ export default function CollectionEdit() {
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
+              {!collaboratorsHaveOrcids && <p role="alert" className="text-red-700 dark:text-red-400">{t.collaboratorOrcidRequired}</p>}
               <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
                   className="btn disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={!terminologySelectionReady}
+                  disabled={!terminologySelectionReady || !collaboratorsHaveOrcids}
                 >
                   {t.save}
                 </button>

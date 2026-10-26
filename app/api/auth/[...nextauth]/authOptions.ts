@@ -1,5 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { JWT } from "next-auth/jwt";
+import { getOrcidIdentity, getUserOrcid } from "../orcid";
+import { consumeSsoPkce } from "@/app/libs/ssoPkce";
 
 type SsoTokens = {
   access_token: string;
@@ -10,7 +12,7 @@ const pendingRegistrations = new Map<
   string,
   { tokens: SsoTokens; expiresAt: number }
 >();
-const registrationTtl = 5 * 60 * 1000;
+const registrationTtl = 30 * 60 * 1000;
 const authVersion = "gateway-expiration-v1";
 
 export const authOptions = {
@@ -19,15 +21,21 @@ export const authOptions = {
       name: "OAuth callback",
       credentials: {
         code: { label: "Code", type: "text" },
+        state: { label: "State", type: "text" },
         username: { label: "Username", type: "text" },
+        orcid: { label: "ORCID iD", type: "text" },
         registrationId: { label: "Registration ID", type: "text" },
       },
       async authorize(credentials) {
-        if (credentials?.registrationId && credentials.username) {
+        if (credentials?.registrationId && credentials.username && credentials.orcid) {
+          const identity = await getOrcidIdentity(credentials.orcid);
+          if (!identity) {
+            return null;
+          }
           const registration = pendingRegistrations.get(credentials.registrationId);
           pendingRegistrations.delete(credentials.registrationId);
           if (!registration || registration.expiresAt < Date.now()) {
-            return null;
+            throw new Error("RegistrationExpired");
           }
           const registerResponse = await fetch(
             process.env.GATEWAY_BASE_URL! + "/auth/register",
@@ -36,6 +44,7 @@ export const authOptions = {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 username: credentials.username,
+                orcid: identity.id,
                 id_token: registration.tokens.id_token,
               }),
             },
@@ -53,6 +62,9 @@ export const authOptions = {
         const redirectUri =
           process.env.NEXT_IAM_REDIRECT_URL ??
           "https://terminology.services.base4nfdi.de/";
+        const pkce = process.env.NEXT_PUBLIC_SSO_PKCE_ENABLED === "true"
+          ? await consumeSsoPkce(credentials.state)
+          : {};
         const tokenResponse = await fetch(
           process.env.GATEWAY_BASE_URL! + "/auth/sso/token",
           {
@@ -61,6 +73,7 @@ export const authOptions = {
             body: JSON.stringify({
               code: credentials.code,
               redirect_uri: redirectUri,
+              ...pkce,
             }),
           },
         );
@@ -87,11 +100,12 @@ export const authOptions = {
   ],
   callbacks: {
     //@ts-ignore
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger = "" }) {
       if (user) {
         token.token = user.token;
         token.username = user.username;
         token.email = user.email;
+        token.orcid = user.orcid;
         token.expiration = user.expiration;
         token.authVersion = authVersion;
         token.reauthenticate = false;
@@ -99,6 +113,9 @@ export const authOptions = {
       if (token.authVersion !== authVersion) {
         requireReauthentication(token);
         return token;
+      }
+      if ((!token.orcid || trigger === "update") && token.token) {
+        token.orcid = await getUserOrcid(token.token) ?? token.orcid ?? getIdentity(token.token).orcid;
       }
       if (token.expiration === undefined || token.expiration === "") {
         requireReauthentication(token);
@@ -120,6 +137,7 @@ export const authOptions = {
       session.user.token = token.token as string;
       session.user.username = token.username as string;
       session.user.email = token.email as string | undefined;
+      session.user.orcid = token.orcid as string | undefined;
       return session;
     },
   },
@@ -135,6 +153,7 @@ function requireReauthentication(token: JWT) {
   token.token = "";
   token.username = "";
   token.email = "";
+  token.orcid = "";
   token.expiration = "";
   token.reauthenticate = true;
 }
@@ -179,6 +198,7 @@ async function loginUser(tokens: SsoTokens, response?: Response) {
     token,
     username,
     email: user.email ?? identity.email,
+    orcid: user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid,
     expiration: user.expiration,
   };
 }

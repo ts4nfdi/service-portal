@@ -19,7 +19,8 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/", {
-            headers: await getHttpHeaderForGateway(token)
+            headers: await getHttpHeaderForGateway(token),
+            cache: "no-store",
         });
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}
@@ -28,6 +29,7 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
         let portalCols: PortalCollectionJsonData[] = [];
         for (let col of res) {
             let pCollection = new PortalCollection(col);
+            pCollection.manageable = true;
             portalCols.push(pCollection.toJson());
         }
         return {status: true, content: portalCols}
@@ -42,7 +44,8 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
     try {
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/collections/", {
-            headers: await getHttpHeaderForGateway()
+            headers: await getHttpHeaderForGateway(),
+            cache: "no-store",
         });
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}
@@ -63,8 +66,8 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 
 export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
-        let {token, username} = await getAuthenticatedUser();
-        if (!token && process.env.DEBUG_MODE !== "true") {
+        const { token, username } = await getAuthenticatedUser();
+        if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
 

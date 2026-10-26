@@ -26,7 +26,7 @@ export type Collection = {
   description?: string,
   label?: string,
   terminologies?: Terminology[],
-  collaborators?: { username: string, role: string }[],
+  collaborators?: { username: string, orcid?: string | null, role: string }[],
   isPublic?: boolean,
 }
 

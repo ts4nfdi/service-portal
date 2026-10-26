@@ -3,6 +3,7 @@
 import { ModalButtonProps, ModalProps } from "./types";
 import { useLocale } from "@/app/i18n";
 import { commonMessages } from "./messages";
+import { useEffect } from "react";
 
 export function ModalButton(props: ModalButtonProps) {
   return (
@@ -28,6 +29,16 @@ export function ModalButton(props: ModalButtonProps) {
 
 export function Modal(props: ModalProps) {
   const t = commonMessages[useLocale()];
+
+  useEffect(() => {
+    if (props.isOpen === undefined) return;
+    const modal = document.getElementById(props.id)!;
+    modal.classList.toggle("hidden", !props.isOpen);
+    (modal.previousSibling as HTMLDivElement).classList.toggle("hidden", !props.isOpen);
+    if (!props.isOpen) return;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [props.id, props.isOpen]);
 
   function closeModal() {
     let modal = (document.getElementById(props.id)! as HTMLDivElement);

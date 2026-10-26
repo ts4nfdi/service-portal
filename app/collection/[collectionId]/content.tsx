@@ -25,7 +25,8 @@ export default function CollectionContentCmp(props: {
   const t = collectionUiMessages[locale];
   const session = useSession();
   const collection = PortalCollection.toObject(props.collection);
-  const canManage = collection.canManage(session?.data?.user?.username);
+  const canManage = collection.canManage(session?.data?.user?.username, session?.data?.user?.orcid);
+  const creatorOrcid = collection.creatorOrcid(session.data?.user?.username, session.data?.user?.orcid);
 
   const terminologyOptions: PortalOntologyOption[] = collection.terminologies.map((terminology) => ({
     ontologyId: terminology.label,
@@ -120,14 +121,21 @@ export default function CollectionContentCmp(props: {
           </div>
 
           <p key={"collection-creator"} className="text-sm">
-            {t.createdBy}{props.collection.creator}
+            {t.createdBy}{creatorOrcid ? (
+              <a href={`https://orcid.org/${creatorOrcid}`} target="_blank" rel="noopener noreferrer">{creatorOrcid}</a>
+            ) : t.noOrcidId}
           </p>
           <p key={"collection-collaborators"} className="text-sm">
             {t.collaborators}
-            {props.collection.collaborators.length
-              ? props.collection.collaborators
-                  .map((user: any) => user.username)
-                  .join(", ")
+            {collection.collaborators.length
+              ? collection.collaborators.map((user, index) => (
+                  <span key={user.username}>
+                    {index > 0 && ", "}
+                    {user.username} ({user.orcid ? (
+                      <a href={`https://orcid.org/${user.orcid}`} target="_blank" rel="noopener noreferrer">{user.orcid}</a>
+                    ) : t.noOrcidId})
+                  </span>
+                ))
               : t.none}
           </p>
           {props.collection.description && (
