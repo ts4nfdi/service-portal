@@ -41,7 +41,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [selectedTerminologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const [creationMethod, setCreationMethod] = useState<CreationMethod>();
   const [manualStep, setManualStep] = useState<ManualStep>(1);
@@ -101,7 +101,9 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       pCollection.description = collectionDescription;
       pCollection.label = collectionTitle;
       pCollection.collaborators = selectedCollaborators.map((orcid: string) => {
-        return { username: orcid, role: "ADMIN" };
+        const user = users.find((user) => user.orcid === orcid);
+        if (!user) throw new Error("Collaborator not found");
+        return { username: user.username, orcid, role: "ADMIN" };
       });
       pCollection.isPublic = isPublic;
       pCollection.terminologies = selectedTerminologies.map((terminology: AutoCompleteSelectedTermType) => {
@@ -298,7 +300,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     if (!orcidStepComplete || !((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4))) return;
     getUserList().then((resp) => {
       if (resp.status) {
-        setUsers(resp.content.map((user: PortalUser) => user.orcid || user.username).filter(Boolean));
+        setUsers(resp.content);
       }
     });
   }, [bulkStep, creationMethod, manualStep, orcidStepComplete]);

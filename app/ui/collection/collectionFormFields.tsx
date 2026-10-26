@@ -1,10 +1,12 @@
 'use client'
 
-import { Loading, MultiSelectDropdown, TextArea, TextInput, ToggleButton } from "@/app/ui/commons/snippets";
+import { Loading, TextArea, TextInput, ToggleButton } from "@/app/ui/commons/snippets";
+import Multiselect from "multiselect-react-dropdown";
+import { useSession } from "next-auth/react";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import TerminologyMultiSelect from "@/app/ui/collection/terminologyMultiSelect";
-import { PortalOntologyOption } from "@/app/concepts";
+import { PortalOntologyOption, PortalUser } from "@/app/concepts";
 
 type Messages = typeof collectionUiMessages[keyof typeof collectionUiMessages];
 
@@ -177,24 +179,35 @@ export function CollectionVisibilityField({ messages, isPublic, onChange }: Coll
 
 type CollaboratorFieldProps = {
   messages: Messages;
-  users: string[];
+  users: PortalUser[];
   selected: string[];
   onChange: (users: string[]) => void;
 }
 
 export function CollaboratorField({ messages, users, selected, onChange }: CollaboratorFieldProps) {
+  const { data: session } = useSession();
+  const options = users.filter((user) => user.orcid
+    && user.username !== session?.user.username
+    && user.orcid !== session?.user.orcid).map((user) => ({
+    orcid: user.orcid,
+    name: `${user.username} (${user.orcid})`,
+  }));
+  const updateSelected = (users: { orcid: string }[]) => onChange(users.map((user) => user.orcid));
   return (
     <div className="form-input-group">
-      <label htmlFor="collection-collaborators" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+      <label htmlFor="collection-collaborators_input" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
         {messages.collaboratorsFull}
       </label>
-      <MultiSelectDropdown
+      <Multiselect
         id="collection-collaborators"
         placeholder={messages.usersPlaceholder}
-        options={users}
-        selectedValues={selected}
-        onSelect={onChange}
-        onRemove={onChange}
+        options={options}
+        selectedValues={selected.map((orcid) => options.find((user) => user.orcid === orcid) ?? { orcid, name: orcid })}
+        onSelect={updateSelected}
+        onRemove={updateSelected}
+        displayValue="name"
+        className="multiselect-dropdown"
+        avoidHighlightFirstOption
       />
     </div>
   );

@@ -11,7 +11,7 @@ export type PortalCollectionJsonData = {
     description: string,
     label: string,
     isPublic: boolean,
-    collaborators: { username: string, role: string }[],
+    collaborators: { username: string, orcid?: string | null, role: string }[],
     terminologies: PortalTerminologyJsonData[]
 }
 
@@ -23,7 +23,7 @@ export class PortalCollection {
     private _description: string;
     private _label: string;
     private _isPublic: boolean;
-    private _collaborators: { username: string, role: string }[];
+    private _collaborators: { username: string, orcid?: string | null, role: string }[];
     private _terminologies: PortalTerminology[];
 
     constructor(collection: Collection = {}) {
@@ -78,7 +78,7 @@ export class PortalCollection {
     }
 
     canManage(username?: string, orcid?: string) {
-        return this.manageable || (!!(username || orcid) && ([username, orcid].includes(this.creator) || this.collaborators.some((user) => [username, orcid].includes(user.username))));
+        return this.manageable || (!!(username || orcid) && ([username, orcid].includes(this.creator) || this.collaborators.some((user) => [username, orcid].includes(user.username) || (!!orcid && user.orcid === orcid))));
     }
 
     set id(value: string) {
@@ -106,7 +106,7 @@ export class PortalCollection {
         this._isPublic = value;
     }
 
-    set collaborators(value: { username: string, role: string }[]) {
+    set collaborators(value: { username: string, orcid?: string | null, role: string }[]) {
         this._collaborators = value;
     }
 

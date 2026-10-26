@@ -20,7 +20,8 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/", {
-            headers: await getHttpHeaderForGateway(token)
+            headers: await getHttpHeaderForGateway(token),
+            cache: "no-store",
         });
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}
@@ -44,7 +45,8 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
     try {
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/collections/", {
-            headers: await getHttpHeaderForGateway()
+            headers: await getHttpHeaderForGateway(),
+            cache: "no-store",
         });
         if (!resp.ok) {
             return {status: false, content: REQUEST_FAILED_MESSAGE}

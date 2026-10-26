@@ -123,14 +123,19 @@ export default function CollectionContentCmp(props: {
           <p key={"collection-creator"} className="text-sm">
             {t.createdBy}{creatorOrcid ? (
               <a href={`https://orcid.org/${creatorOrcid}`} target="_blank" rel="noopener noreferrer">{creatorOrcid}</a>
-            ) : `${collection.creator}(${t.noOrcidId})`}
+            ) : t.noOrcidId}
           </p>
           <p key={"collection-collaborators"} className="text-sm">
             {t.collaborators}
-            {props.collection.collaborators.length
-              ? props.collection.collaborators
-                  .map((user: any) => user.username)
-                  .join(", ")
+            {collection.collaborators.length
+              ? collection.collaborators.map((user, index) => (
+                  <span key={user.username}>
+                    {index > 0 && ", "}
+                    {user.username} ({user.orcid ? (
+                      <a href={`https://orcid.org/${user.orcid}`} target="_blank" rel="noopener noreferrer">{user.orcid}</a>
+                    ) : t.noOrcidId})
+                  </span>
+                ))
               : t.none}
           </p>
           {props.collection.description && (

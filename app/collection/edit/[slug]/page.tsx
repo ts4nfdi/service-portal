@@ -31,8 +31,9 @@ export default function CollectionEdit() {
   const [collection, setCollection] = useState(new PortalCollection());
   const [loadedCollectionId, setLoadedCollectionId] = useState<string>();
   const [formIsSubmitted, setFormIsSubmited] = useState(false);
-  const [users, setUsers] = useState<string[]>([]);
+  const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
+  const collaboratorsHaveOrcids = selectedCollaborators.every((orcid) => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid));
   const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
   const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
   const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
@@ -79,7 +80,7 @@ export default function CollectionEdit() {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
-      if (!terminologySelectionReady) {
+      if (!terminologySelectionReady || !collaboratorsHaveOrcids) {
         return;
       }
       const formData = new FormData(event.currentTarget);
@@ -87,7 +88,12 @@ export default function CollectionEdit() {
       editedCollection.id = collection.id;
       editedCollection.description = formData.get("collection-desc") as string;
       editedCollection.label = formData.get("collection-title") as string;
-      editedCollection.collaborators = selectedCollaborators.map((username) => ({ username, role: "ADMIN" }));
+      editedCollection.collaborators = selectedCollaborators.map((orcid) => {
+        const user = users.find((user) => user.orcid === orcid)
+          ?? collection.collaborators.find((user) => (user.orcid || userOrcids.current.get(user.username)) === orcid);
+        if (!user) throw new Error("Collaborator not found");
+        return { username: user.username, orcid, role: "ADMIN" };
+      });
       editedCollection.isPublic = isPublic;
       editedCollection.terminologies = selectedTerminologies.map((option) => {
         const terminology = new PortalTerminology();
@@ -112,7 +118,7 @@ export default function CollectionEdit() {
       if (response.status) {
         const people = response.content as PortalUser[];
         userOrcids.current = new Map(people.filter((user) => user.orcid).map((user) => [user.username, user.orcid]));
-        setUsers(people.map((user) => user.orcid || user.username).filter(Boolean));
+        setUsers(people);
         setSelectedCollaborators((selected) => selected.map((value) => userOrcids.current.get(value) ?? value));
       }
     });
@@ -143,7 +149,7 @@ export default function CollectionEdit() {
       const portalCollection = PortalCollection.toObject(targetCollection);
       setCollection(portalCollection);
       setLoadedCollectionId(collectionId);
-      setSelectedCollaborators(portalCollection.collaborators.map((user) => userOrcids.current.get(user.username) ?? user.username));
+      setSelectedCollaborators(portalCollection.collaborators.map((user) => user.orcid || userOrcids.current.get(user.username) || user.username));
       setIsPublic(portalCollection.isPublic);
     }).finally(() => {
       if (active) {
@@ -185,12 +191,13 @@ export default function CollectionEdit() {
               <CollectionDetailsFields messages={t} title={collection.label} description={collection.description} />
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
+              {!collaboratorsHaveOrcids && <p role="alert" className="text-red-700 dark:text-red-400">{t.collaboratorOrcidRequired}</p>}
               <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"
                   className="btn disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={!terminologySelectionReady}
+                  disabled={!terminologySelectionReady || !collaboratorsHaveOrcids}
                 >
                   {t.save}
                 </button>
