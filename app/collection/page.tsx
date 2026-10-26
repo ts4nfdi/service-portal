@@ -29,14 +29,15 @@ const getCollectionsData = cache(
       userCollectionsListResp = await getUserCollectionList();
     }
 
-    return [
+    const collections: PortalCollectionJsonData[] = [
+      ...(publicCollectionsListResp.status
+        ? publicCollectionsListResp.content
+        : []),
       ...(userCollectionsListResp.status
         ? userCollectionsListResp.content
         : []),
-      ...(publicCollectionsListResp.status
-        ? publicCollectionsListResp.content.filter((collection: PortalCollectionJsonData) => !userCollectionsListResp.status || !userCollectionsListResp.content.some((userCollection: PortalCollectionJsonData) => userCollection.id === collection.id))
-        : []),
     ];
+    return [...new Map(collections.map((collection) => [collection.id, collection])).values()];
   },
 );
 
