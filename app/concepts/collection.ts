@@ -1,6 +1,19 @@
 import {Collection} from "../api/actions/types";
 import {PortalTerminology, PortalTerminologyJsonData} from "./terminology";
-import { isOrcidId } from "./orcid";
+import { isOrcidId, toLinkedOrcids } from "./orcid";
+import { normalizeRorId, toLinkedRors } from "./ror";
+
+export type CollectionCreatorIdentity = {
+    id: string;
+    isPrimary: boolean;
+};
+
+export function toCollectionCreatorIdentities(user: Parameters<typeof toLinkedOrcids>[0]): CollectionCreatorIdentity[] {
+    return [
+        ...toLinkedOrcids(user),
+        ...toLinkedRors(user).map(id => ({ id, isPrimary: false })),
+    ];
+}
 
 
 export type PortalCollectionJsonData = {
@@ -53,8 +66,11 @@ export class PortalCollection {
         return this._manageable;
     }
 
-    creatorOrcid(username?: string, orcid?: string) {
-        return isOrcidId(this.creator) ? this.creator : (this.creator === username ? orcid : "");
+    creatorIdentity() {
+        return {
+            id: this.creator,
+            url: isOrcidId(this.creator) ? `https://orcid.org/${this.creator}` : normalizeRorId(this.creator),
+        };
     }
 
     get description() {

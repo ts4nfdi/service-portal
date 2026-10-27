@@ -4,9 +4,9 @@
 import { Loading } from "@/app/ui/commons/snippets";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
-import { createCollection } from "@/app/api/actions/collections";
+import { createCollection, getCollectionCreatorIdentities } from "@/app/api/actions/collections";
 import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
-import { PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { CollectionCreatorIdentity, PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -17,6 +17,8 @@ import { localizePath } from "@/app/libs/localePath";
 import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
+import { updateUserOrcid } from "@/app/api/auth/orcid";
+import OrcidField from "@/app/ui/user/orcidField";
 import {
   CollaboratorField,
   CollectionDetailsFields,
@@ -54,8 +56,43 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [collectionTitle, setCollectionTitle] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [confirmedOrcid, setConfirmedOrcid] = useState("");
+  const [accountIdentities, setAccountIdentities] = useState<CollectionCreatorIdentity[] | null>(null);
+  const [creatorIdentity, setCreatorIdentity] = useState("");
+  const [orcidStepComplete, setOrcidStepComplete] = useState(false);
+  const [orcidLoadFailed, setOrcidLoadFailed] = useState(false);
+  const [orcidLoadAttempt, setOrcidLoadAttempt] = useState(0);
+  const [savingOrcid, setSavingOrcid] = useState(false);
+  const [orcidSaveFailed, setOrcidSaveFailed] = useState(false);
+  const needsOrcid = !orcidStepComplete;
   const ontologyRequestInFlight = useRef(false);
   const submissionInFlight = useRef(false);
+
+  async function saveOrcid(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!confirmedOrcid || savingOrcid) return;
+    setSavingOrcid(true);
+    setOrcidSaveFailed(false);
+    try {
+      if (!await updateUserOrcid(confirmedOrcid)) {
+        setOrcidSaveFailed(true);
+        return;
+      }
+      await session.update();
+      const identities = await getCollectionCreatorIdentities();
+      if (!identities?.some(({ id }) => id === confirmedOrcid)) {
+        setOrcidSaveFailed(true);
+        return;
+      }
+      setAccountIdentities(identities);
+      setCreatorIdentity(confirmedOrcid);
+      setOrcidStepComplete(true);
+    } catch {
+      setOrcidSaveFailed(true);
+    } finally {
+      setSavingOrcid(false);
+    }
+  }
 
   const loadOntologyOptions = useCallback(async () => {
     if (ontologyRequestInFlight.current) {
@@ -81,7 +118,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }, []);
 
   async function submit() {
-    if (submissionInFlight.current) {
+    if (needsOrcid || !accountIdentities?.some(({ id }) => id === creatorIdentity) || submissionInFlight.current) {
       return;
     }
     submissionInFlight.current = true;
@@ -107,7 +144,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
       setFormIsSubmited(true);
       setLoading(true);
 
-      let res = await createCollection(pCollection.toJson());
+      let res = await createCollection(pCollection.toJson(), creatorIdentity);
       if (!res.status) {
         submissionInFlight.current = false;
         setFormIsSubmited(false);
@@ -209,6 +246,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("manual")}>{t.addTerminologiesMyself}</button>
         <button type="button" className="min-h-32 rounded-lg border-2 border-gray-300 bg-white p-6 text-left text-lg font-semibold text-gray-900 transition-colors hover:border-ts4nfdi-brand-color hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-ts4nfdi-brand-color/30 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-ts4nfdi-brand-color dark:hover:bg-gray-700 dark:focus:ring-ts4nfdi-brand-color" onClick={() => setCreationMethod("bulk")}>{t.bulkImportTerminologies}</button>
       </div>
+      {!(accountIdentities?.length === 1 && accountIdentities[0].isPrimary) && <button type="button" className="btn mt-4" onClick={() => setOrcidStepComplete(false)}>{t.back}</button>}
     </div>;
   }
 
@@ -259,6 +297,30 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   useEffect(() => {
+    if (!session.data?.user.token) return;
+    let cancelled = false;
+    setAccountIdentities(null);
+    setCreatorIdentity("");
+    setConfirmedOrcid("");
+    setOrcidStepComplete(false);
+    setOrcidLoadFailed(false);
+    setOrcidSaveFailed(false);
+    getCollectionCreatorIdentities().then((identities) => {
+      if (cancelled) return;
+      if (identities === null) {
+        setOrcidLoadFailed(true);
+        return;
+      }
+      setAccountIdentities(identities);
+      if (identities.length === 1 && identities[0].isPrimary) {
+        setCreatorIdentity(identities[0].id);
+        setOrcidStepComplete(true);
+      }
+    }).catch(() => { if (!cancelled) setOrcidLoadFailed(true); });
+    return () => { cancelled = true; };
+  }, [session.data?.user.token, orcidLoadAttempt]);
+
+  useEffect(() => {
     if (!creationMethod || (!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
       return;
     }
@@ -298,6 +360,29 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   return <div>
     <a className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded text-2xl font-normal text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-ts4nfdi-brand-color dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white" href={localizePath(searchParams.get('from') === "my-collections" ? "/collection/myCollections/" : "/collection/", locale)} aria-label={t.cancel} title={t.cancel}><span aria-hidden="true">×</span></a>
     <p className="header-2">{t.defineNew}</p>
+    {needsOrcid && <div className="form-input-group mt-10 space-y-4">
+      <h2 className="header-4">{t.creatorOrcidStep}</h2>
+      {orcidLoadFailed ? <div role="alert">
+        <p className="text-red-700 dark:text-red-300">{t.orcidLoadError}</p>
+        <button type="button" className="btn" onClick={() => setOrcidLoadAttempt((attempt) => attempt + 1)}>{t.retry}</button>
+      </div> : accountIdentities === null ? <p role="status">{t.loadingCreatorOrcids}</p> : accountIdentities.length ? <>
+        <p>{t.chooseCreatorOrcid}</p>
+        <label htmlFor="creator-identity" className="block text-gray-900 dark:text-white">{t.creatorOrcidStep}</label>
+        <select id="creator-identity" value={creatorIdentity} onChange={(event) => setCreatorIdentity(event.target.value)}>
+          <option value="">{t.chooseCreatorOrcidPlaceholder}</option>
+          {accountIdentities.map(({ id }) => <option key={id} value={id}>{id}</option>)}
+        </select>
+        <button type="button" className="btn disabled:cursor-not-allowed disabled:opacity-50 dark:disabled:opacity-50" disabled={!creatorIdentity} onClick={() => setOrcidStepComplete(true)}>{t.next}</button>
+      </> : <form onSubmit={saveOrcid} className="space-y-4">
+      <p>{t.orcidNeeded}</p>
+      <fieldset disabled={savingOrcid}>
+        <OrcidField onConfirm={(value) => { setConfirmedOrcid(value); setOrcidSaveFailed(false); }} />
+      </fieldset>
+      {orcidSaveFailed && <p role="alert" className="text-red-700 dark:text-red-300">{t.orcidUpdateUnavailable}</p>}
+      <button type="submit" className="btn disabled:cursor-not-allowed disabled:opacity-50 dark:disabled:opacity-50" disabled={!confirmedOrcid || savingOrcid}>{t.saveOrcidAndContinue}</button>
+      </form>}
+    </div>}
+    {!needsOrcid && <>
     <div className="mt-8" aria-label={t.creationProgress}>
       <div className="mb-2 flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 md:flex-row md:justify-between">{progressSteps.map((step, index) => <span key={step} aria-current={index === progressStep - 1 ? "step" : undefined} className={index === progressStep - 1 ? "font-bold" : undefined}>{step}</span>)}</div>
       <div className="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700"><div className={`${progressWidth} h-2.5 rounded-full bg-ts4nfdi-brand-color transition-all dark:bg-ts4nfdi-brand-color`} role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent} aria-valuetext={progressSteps[progressStep - 1]} aria-label={t.creationProgress} /></div>
@@ -311,5 +396,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         {renderNextAction()}
       </div>
     </form>}
+    </>}
   </div>;
 }

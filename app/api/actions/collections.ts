@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getAuthenticatedUser, getUserToken} from "@/app/libs/auth";
+import {getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
@@ -9,7 +9,24 @@ import {
     SERVER_ERROR_MESSAGE,
     MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
-import {PortalCollection, PortalCollectionJsonData} from "@/app/concepts";
+import {CollectionCreatorIdentity, PortalCollection, PortalCollectionJsonData, toCollectionCreatorIdentities} from "@/app/concepts";
+
+export async function getCollectionCreatorIdentities(): Promise<CollectionCreatorIdentity[] | null> {
+    const token = await getUserToken();
+    return token ? loadCollectionCreatorIdentities(token) : null;
+}
+
+async function loadCollectionCreatorIdentities(token: string): Promise<CollectionCreatorIdentity[] | null> {
+    try {
+        const response = await fetch(process.env.GATEWAY_BASE_URL! + "/auth/me", {
+            headers: await getHttpHeaderForGateway(token),
+            cache: "no-store",
+        });
+        return response.ok ? toCollectionCreatorIdentities(await response.json()) : null;
+    } catch {
+        return null;
+    }
+}
 
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
@@ -64,9 +81,9 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function createCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
+export async function createCollection(collection: PortalCollectionJsonData, creatorIdentity: string): Promise<ActionResponse> {
     try {
-        const { token, username } = await getAuthenticatedUser();
+        const token = await getUserToken();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -75,6 +92,10 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
 
         if (!newCollection.label || !newCollection.description) {
             return {status: false, content: MANDATORY_FIELDS_MISSING_MESSAGE};
+        }
+        const identities = await loadCollectionCreatorIdentities(token);
+        if (!identities?.some(({ id }) => id === creatorIdentity)) {
+            return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE};
         }
 
         let terminologiesData: Terminology[] = [];
@@ -89,7 +110,7 @@ export async function createCollection(collection: PortalCollectionJsonData): Pr
 
         let formData: Collection = {
             label: newCollection.label,
-            creator: username,
+            creator: creatorIdentity,
             description: newCollection.description,
             isPublic: newCollection.isPublic,
             terminologies: terminologiesData,
