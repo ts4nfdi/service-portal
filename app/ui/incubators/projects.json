@@ -33,7 +33,7 @@
       "cycle": 1,
       "status": "Finished",
       "start": "26.02.2025",
-      "end": "10.2025",
+      "end": "30.10.2025",
       "description": "The WDCC has the mission to archive, disseminate and publish Earth System model data and related data products to support the international climate research community. The WDCC is a discipline specific repository providing active preservation for research only. Therefore WDCC is using common metadata standards and is recommending the usage of community data standards like the Climate Forecast (CF) Conventions. The WDCC is certified by Core Trust Seal (CTS) and an accredited regular member of the World Data System. WDCC is following the FAIR principles - all metadata is openly accessible, the access to the data is free of charge. The WDCC is hosted by the German Climate Computing Center (Deutsches Klimarechenzentrum - DKRZ) in Hamburg.",
       "goals": [
         "Integration of the NERC Vocabulary Service to the API Gateway"
@@ -385,7 +385,7 @@
     {
       "title": "FAIRagro Terminology Service",
       "cycle": "3",
-      "status": "finished",
+      "status": "Finished",
       "start": "13.03.2026",
       "end": "19.10.2026",
       "description": "The main purpose of the incubator project is a strong integration of TS4NFDI services with FAIRagro products and services. This includes the following concrete project objectives: 1)Automatic instantiation and updating of a FAIRagro Terminology Service Instance based on the FAIRagro Standards Inventory, 2) Implementation of mappings (preferably using the SciWin workflow engine developed in FAIRagro) for terminologies that are not yet available in a form directly usable for consumption by the TS4NFDI infrastructure, by map terminology distribution files in different formats to e.g. SKOS thesauri that can be used in a backend Skosmos service and 3) Demonstration of use of the TS4NFDI instance in selected FAIRagro products.",
@@ -430,7 +430,7 @@
     {
       "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
       "cycle": "4",
-      "status": "running",
+      "status": "Running",
       "start": "16.09.2026",
       "end": "-",
       "description": "DAPHNE4NFDI represents the Photon and Neutron (PaN) research community in the German National Research Data Infrastructure (NFDI). The community has developed and maintains the PaNET ontology, a domain ontology that systematises experimental techniques used at e.g. photon and neutron research infrastructure. The PaN community requires a sustainable approach for managing and using terminology mappings while preserving the integrity and governance of the PaNET ontology itself.",
@@ -445,7 +445,7 @@
     {
       "title": "Improving Interoperability for Climate and Energy Policy Ontologies",
       "cycle": "4",
-      "status": "running",
+      "status": "Running",
       "start": "29.09.2026",
       "end": "-",
       "description": "The Climate and Energy Policy Ontology (CEPO) is an ontology built within NFDI4Energy which provides explicit definitions, classifications, and relationships among climate policy instruments. It was developed by practitioners at the FAU in close collaboration with climate data providers (Climate Policy Radar, Climate Policy Database, and the Organization for Economic Cooperation and Development) and aims for interoperability with them in order to harmonize the climate policy data space. The ontology was also co-designed with experts from the OEO and is certified by the Energy-related reference ontologies Foundry (ENERO).",
