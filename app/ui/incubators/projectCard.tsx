@@ -14,6 +14,7 @@ export default function ProjectCard(props: { incubator: Project }) {
   return (
     <>
       <div
+        id={project.incubatorID}
         className={
           "incubator-project-card incubator-project-card-reveal " +
           (isImageLoaded ? "incubator-project-card-loaded" : "")

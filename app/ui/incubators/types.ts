@@ -4,6 +4,7 @@ export type Person = {
 }
 
 export type Project = {
+    incubatorID: string;
     title: string,
     cycle: number,
     status: ProjectStatus,

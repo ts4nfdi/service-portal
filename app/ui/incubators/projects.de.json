@@ -1,11 +1,12 @@
 {
   "stats": {
-    "In preparation": 9,
-    "Running": 10,
-    "Finished": 12
+    "In preparation": 5,
+    "Running": 7,
+    "Finished": 19
   },
   "projects": [
     {
+      "incubatorID": "incubator-1",
       "title": "RADAR",
       "cycle": 1,
       "status": "Finished",
@@ -33,6 +34,7 @@
       "activityPage": "https://dx.doi.org/10.22000/35t5h4hmfjx1ugbu"
     },
     {
+      "incubatorID": "incubator-2",
       "title": "WDCC - World Data Center for Climate",
       "cycle": 1,
       "status": "Finished",
@@ -51,6 +53,7 @@
       "activityPage": "provider"
     },
     {
+      "incubatorID": "incubator-3",
       "title": "nmrXiv",
       "cycle": 0,
       "status": "Running",
@@ -68,6 +71,7 @@
       "logoH": 200
     },
     {
+      "incubatorID": "incubator-4",
       "title": "ChEBI - Chemical Entities of Biological Interest",
       "cycle": 1,
       "status": "Finished",
@@ -89,6 +93,7 @@
     },
     {
       "title": "Coconut",
+      "incubatorID": "incubator-5",
       "cycle": 0,
       "status": "Running",
       "start": "~",
@@ -105,6 +110,7 @@
       "logoH": 400
     },
     {
+      "incubatorID": "incubator-6",
       "title": "NFDI4Cat Central Data Repository (Repo4Cat)",
       "cycle": 1,
       "status": "Finished",
@@ -128,6 +134,7 @@
       "activityPage": "https://semanticlookup.zbmed.de/skosmos/voc4cat/en/"
     },
     {
+      "incubatorID": "incubator-7",
       "title": "BERD Terminology Service",
       "cycle": 0,
       "status": "Finished",
@@ -150,6 +157,7 @@
       ]
     },
     {
+      "incubatorID": "incubator-8",
       "title": "Terminology service for Plasma-MDS",
       "cycle": 0,
       "status": "Finished",
@@ -171,6 +179,7 @@
       ]
     },
     {
+      "incubatorID": "incubator-9",
       "title": "preVIEW",
       "cycle": 0,
       "status": "Finished",
@@ -191,6 +200,7 @@
       "activityPage": "https://preview.zbmed.de/"
     },
     {
+      "incubatorID": "incubator-10",
       "title": "Metadata Annotation Workbench",
       "cycle": 0,
       "status": "Finished",
@@ -216,6 +226,7 @@
       "activityPage": "https://mda.nfdi4health.de/"
     },
     {
+      "incubatorID": "incubator-11",
       "title": "Discuss Data",
       "cycle": 1,
       "status": "Finished",
@@ -236,6 +247,7 @@
       "logoH": 400
     },
     {
+      "incubatorID": "incubator-12",
       "title": "Open Energy Platform",
       "cycle": 2,
       "status": "Finished",
@@ -255,6 +267,7 @@
       "activityPage": "https://openenergyplatform.org/viewer/oeo/"
     },
     {
+      "incubatorID": "incubator-13",
       "title": "ICONCLASS",
       "cycle": "2",
       "status": "Finished",
@@ -276,6 +289,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-14",
       "title": "Ontology of the historical German-language nomenclature",
       "cycle": "2",
       "status": "Finished",
@@ -296,6 +310,7 @@
       "activityPage": "https://terminology.tib.eu/ts/ontologies/ohdab"
     },
     {
+      "incubatorID": "incubator-15",
       "title": "Health Study Hub",
       "cycle": "2",
       "status": "Running",
@@ -315,6 +330,7 @@
       "activityPage": "https://health-study-hub.de/resource/nfdi4health-108"
     },
     {
+      "incubatorID": "incubator-16",
       "title": "DALIA Search Portal",
       "cycle": "2",
       "status": "Running",
@@ -332,6 +348,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-17",
       "title": "AIMS",
       "cycle": "3",
       "status": "Running",
@@ -350,6 +367,7 @@
       "logoH": 200
     },
     {
+      "incubatorID": "incubator-18",
       "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
       "cycle": "3",
       "status": "Running",
@@ -367,6 +385,7 @@
       "logoH": 200
     },
     {
+      "incubatorID": "incubator-19",
       "title": "Enabling Semantic Interoperability via DataCite Terminologies",
       "cycle": "3",
       "status": "Running",
@@ -385,6 +404,7 @@
       "logoH": 200
     },
     {
+      "incubatorID": "incubator-20",
       "title": "Metabase",
       "cycle": "3",
       "status": "Running",
@@ -403,6 +423,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-21",
       "title": "MathModDB",
       "cycle": "3",
       "status": "Running",
@@ -421,6 +442,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-22",
       "title": "FAIRagro Terminology Service",
       "cycle": "3",
       "status": "Running",
@@ -441,6 +463,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-23",
       "title": "TS4NDSI integration in Galaxy",
       "cycle": "4",
       "status": "In preparation",
@@ -454,6 +477,7 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-24",
       "title": "TeSS - Training eSupport System",
       "cycle": "4",
       "status": "In preparation",
@@ -470,6 +494,7 @@
       "logoH": 250
     },
     {
+      "incubatorID": "incubator-25",
       "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
       "cycle": "4",
       "status": "In preparation",
@@ -485,21 +510,7 @@
       "logoH": 300
     },
     {
-      "title": "SensorCV",
-      "cycle": "4",
-      "status": "In preparation",
-      "start": "Q3/2026",
-      "end": "-",
-      "description": "Das Sensor Management System (SMS) dient als zentrale Infrastruktur zur Sammlung und Verwaltung von Sensormetadaten für wissenschaftliche Projekte in vier Helmholtz-Zentren (GFZ, UFZ, FZJ und KIT). Um die Konsistenz der Metadaten über verschiedene SMS-Instanzen hinweg sicherzustellen, stellt ein unabhängiger, aber zentraler Controlled Vocabulary (CV)-Dienst kuratierte Begriffe für Attribute wie Gerätetypen, Einheiten und gemessene Mengen bereit. Das Projekt zielt darauf ab, die SMS-CV-Architektur zu modernisieren, indem sie von einer SMS-spezifischen Lösung in eine integrierte Komponente innerhalb des NFDI-Ökosystems umgewandelt wird, was insbesondere innerhalb der Erdsystemwissenschaftsgemeinschaft (NFDI4Earth) und darüber hinaus nützlich ist.",
-      "goals": [],
-      "consortium": [
-        "NFDI4Earth"
-      ],
-      "logo": "sms.png",
-      "logoW": 400,
-      "logoH": 400
-    },
-    {
+      "incubatorID": "incubator-26",
       "title": "Improving Interoperability for Climate and Energy Policy Ontologies",
       "cycle": "4",
       "status": "In preparation",
@@ -515,6 +526,7 @@
       "logoH": 250
     },
     {
+      "incubatorID": "incubator-27",
       "title": "Terminology Service Suite integration for WissKI authority data enrichment",
       "cycle": "4",
       "status": "In preparation",
@@ -532,6 +544,7 @@
       "logoH": 200
     },
     {
+      "incubatorID": "incubator-28",
       "title": "OstData & 4MMS",
       "cycle": "4",
       "status": "In preparation",
@@ -547,6 +560,23 @@
       "logoH": 300
     },
     {
+      "incubatorID": "incubator-29",
+      "title": "SensorCV",
+      "cycle": "4",
+      "status": "In preparation",
+      "start": "Q3/2026",
+      "end": "-",
+      "description": "Das Sensor Management System (SMS) dient als zentrale Infrastruktur zur Sammlung und Verwaltung von Sensormetadaten für wissenschaftliche Projekte in vier Helmholtz-Zentren (GFZ, UFZ, FZJ und KIT). Um die Konsistenz der Metadaten über verschiedene SMS-Instanzen hinweg sicherzustellen, stellt ein unabhängiger, aber zentraler Controlled Vocabulary (CV)-Dienst kuratierte Begriffe für Attribute wie Gerätetypen, Einheiten und gemessene Mengen bereit. Das Projekt zielt darauf ab, die SMS-CV-Architektur zu modernisieren, indem sie von einer SMS-spezifischen Lösung in eine integrierte Komponente innerhalb des NFDI-Ökosystems umgewandelt wird, was insbesondere innerhalb der Erdsystemwissenschaftsgemeinschaft (NFDI4Earth) und darüber hinaus nützlich ist.",
+      "goals": [],
+      "consortium": [
+        "NFDI4Earth"
+      ],
+      "logo": "sms.png",
+      "logoW": 400,
+      "logoH": 400
+    },
+    {
+      "incubatorID": "incubator-30",
       "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
       "cycle": "5",
       "status": "In preparation",
@@ -560,6 +590,7 @@
       "logoH": 400
     },
     {
+      "incubatorID": "incubator-31",
       "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
       "cycle": "5",
       "status": "In preparation",
