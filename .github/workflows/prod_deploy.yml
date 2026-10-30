@@ -14,7 +14,6 @@ on:
 
 env:
   KUBECONFIG: .kube/config
-  KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_PROD }}
 
 jobs:
   deploy_main:
@@ -22,101 +21,82 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Kubernetes config
+        env:
+          KUBECONFIG_FILE: ${{ secrets.KUBECONFIG_PROD }}
         run: |
+          set +x
+          umask 077
           mkdir -p .kube
-          echo "${{ env.KUBECONFIG_FILE }}" > $KUBECONFIG
+          printf '%s' "$KUBECONFIG_FILE" > "$KUBECONFIG"
 
       - name: Create K8s secret for SMTP_API_KEY
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-api-key \
-            --from-literal=SMTP_API_KEY=${{ secrets.SMTP_API_KEY }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.SMTP_API_KEY }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-api-key SMTP_API_KEY
 
       - name: Create K8s secret for SMTP_USERNAME
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-username \
-            --from-literal=SMTP_USERNAME=${{ secrets.SMTP_USERNAME }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.SMTP_USERNAME }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-username SMTP_USERNAME
 
       - name: Create K8s secret for SMTP_PASSWORD
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-password \
-            --from-literal=SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.SMTP_PASSWORD }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-password SMTP_PASSWORD
 
       - name: Create K8s secret for SMTP_PORT
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-port \
-            --from-literal=SMTP_PORT=${{ vars.SMTP_PORT }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.SMTP_PORT }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-port SMTP_PORT
 
       - name: Create K8s secret for CAPTCHA_VALIDATION_URL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-captcha-validation-url \
-            --from-literal=CAPTCHA_VALIDATION_URL=${{ secrets.CAPTCHA_VALIDATION_URL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.CAPTCHA_VALIDATION_URL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-captcha-validation-url CAPTCHA_VALIDATION_URL
 
       - name: Create K8s secret for CAPTCHA_API_KEY
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-captcha-api-key \
-            --from-literal=CAPTCHA_API_KEY=${{ secrets.CAPTCHA_API_KEY }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.CAPTCHA_API_KEY }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-captcha-api-key CAPTCHA_API_KEY
 
       - name: Create K8s secret for AUTH_SECRET
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-auth-secret \
-            --from-literal=AUTH_SECRET=${{ secrets.AUTH_SECRET }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ secrets.AUTH_SECRET }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-auth-secret AUTH_SECRET
 
       - name: Create K8s secret for CONTACT_RECV_EMAIL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-contact-recv-email \
-            --from-literal=CONTACT_RECV_EMAIL=${{ vars.CONTACT_RECV_EMAIL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.CONTACT_RECV_EMAIL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-contact-recv-email CONTACT_RECV_EMAIL
 
       - name: Create K8s secret for SMTP_HOST_NAME
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-host-name \
-            --from-literal=SMTP_HOST_NAME=${{ vars.SMTP_HOST_NAME }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.SMTP_HOST_NAME }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-host-name SMTP_HOST_NAME
 
       - name: Create K8s secret for SERVICE_EMAIL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-smtp-service-email \
-            --from-literal=SERVICE_EMAIL=${{ vars.SERVICE_EMAIL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.SERVICE_EMAIL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-smtp-service-email SERVICE_EMAIL
 
       - name: Create K8s secret for GATEWAY_BASE_URL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-gateway-base-url \
-            --from-literal=GATEWAY_BASE_URL=${{ vars.GATEWAY_BASE_URL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.GATEWAY_BASE_URL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-gateway-base-url GATEWAY_BASE_URL
 
       - name: Create K8s secret for NEXTAUTH_URL
-        run: |
-          kubectl create secret generic ts4nfdi-service-portal-nextauth-url \
-            --from-literal=NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }} \
-            --namespace='ts4nfdi' \
-            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          SECRET_VALUE: ${{ vars.NEXTAUTH_URL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-nextauth-url NEXTAUTH_URL
 
       - name: Deploy to Kubernetes
         uses: stefanprodan/kube-tools@v1
         with:
           helmv3: 3.12.0
           command: |
+            set -e
             helmv3 repo add service-portal-deployment https://ts4nfdi.github.io/service-portal-deployment/
             helmv3 repo update
             helmv3 upgrade ts4nfdi-service-portal  \
@@ -129,3 +109,6 @@ jobs:
             --set-json='ingress.enableSSL="true"'  \
             --set-json='ingress.certIssuer="letsencrypt-prod"'  \
             service-portal-deployment/service-portal-ui
+            kubectl patch deployment/ts4nfdi-service-portal-ui --namespace=ts4nfdi --type=strategic --patch-file=.github/k8s/nextauth-env-patch.yaml
+            kubectl rollout restart deployment/ts4nfdi-service-portal-ui --namespace='ts4nfdi'
+            kubectl rollout status deployment/ts4nfdi-service-portal-ui --namespace='ts4nfdi' --timeout=180s

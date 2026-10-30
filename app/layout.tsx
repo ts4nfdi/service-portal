@@ -9,6 +9,7 @@ import OAuthCallback from "./ui/user/oauthCallback";
 import { Suspense } from "react";
 import { headers } from "next/headers";
 import { LocaleProvider, type Locale } from "./i18n";
+import { GatewayProvider } from "./ui/commons/gatewayProvider";
 
 export const metadata: Metadata = {
   title: "TS4NFDI Service Portal",
@@ -28,22 +29,24 @@ export default async function RootLayout({
       <body
         className={`antialiased`}
       >
-        <Suspense>
-          <OAuthCallback />
-        </Suspense>
-        <MatomoTracker />
-        <div className="grid min-h-screen" id="app-layout">
-          <LocaleProvider locale={locale}>
-            <SessionProviderWrapper>
-              <Header />
-              <main className="site-content" key={"site-content"}>
-                <TrackingConsentForm />
-                {children}
-              </main>
-              <Footer />
-            </SessionProviderWrapper>
-          </LocaleProvider>
-        </div>
+        <GatewayProvider value={process.env.GATEWAY_BASE_URL}>
+          <Suspense>
+            <OAuthCallback />
+          </Suspense>
+          <MatomoTracker />
+          <div className="grid min-h-screen" id="app-layout">
+            <LocaleProvider locale={locale}>
+              <SessionProviderWrapper>
+                <Header />
+                <main className="site-content" key={"site-content"}>
+                  <TrackingConsentForm />
+                  {children}
+                </main>
+                <Footer />
+              </SessionProviderWrapper>
+            </LocaleProvider>
+          </div>
+        </GatewayProvider>
       </body>
     </html>
   );

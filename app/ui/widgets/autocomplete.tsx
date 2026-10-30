@@ -12,6 +12,7 @@ import { AutoCompleteSelectedTermType } from './types';
 import './styles.css';
 import { useLocale } from '@/app/i18n';
 import { widgetUiMessages } from './messages';
+import { useGatewayUrl } from '@/app/ui/commons/gatewayProvider';
 
 
 type CmpType = {
@@ -28,6 +29,7 @@ type CmpType = {
 }
 
 export default function AutoCompleteTSS(props: CmpType) {
+  const gatewayUrl = useGatewayUrl();
   const t = widgetUiMessages[useLocale()];
   const queryClient = new QueryClient();
 
@@ -58,13 +60,13 @@ export default function AutoCompleteTSS(props: CmpType) {
                 target='_blank'
               >{t.autocompleteStorybook}</a>
             </p>
-            <p><b>API:</b> {process.env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT}</p>
+            <p><b>API:</b> {props.api ?? gatewayUrl}</p>
           </>
         }
         <div className='w-full autocomplete-in-form' key={"autocomplete-box"}>
           {props.label && <label htmlFor='' className={"block " + (props.required ? "required-label" : "")}>{props.label}</label>}
           <AutocompleteWidget
-            api={props.api ?? process.env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT as string}
+            api={props.api ?? gatewayUrl as string}
             hasShortSelectedLabel={true}
             parameter={props.parameter ?? process.env.NEXT_PUBLIC_API_GATEWAY_DEFAULT_PARAMETERS as string}
             placeholder={props.placeholder ?? t.searchPlaceholder}
