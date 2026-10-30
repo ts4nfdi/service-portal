@@ -1,4 +1,4 @@
-export function getCodeUrl() {
+export function getCodeUrl(gatewayUrl?: string) {
   if (process.env.NEXT_PUBLIC_SSO_PKCE_ENABLED === "true") {
     return "/api/sso/login";
   }
@@ -7,8 +7,7 @@ export function getCodeUrl() {
     "https://terminology.services.base4nfdi.de/";
   const authorizeUrl = new URL(
     "/api-gateway/auth/sso/authorize",
-    process.env.GATEWAY_BASE_URL ??
-      process.env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT,
+    gatewayUrl ?? process.env.GATEWAY_BASE_URL,
   );
   authorizeUrl.searchParams.set("redirect_uri", redirectUri);
   return authorizeUrl.toString();

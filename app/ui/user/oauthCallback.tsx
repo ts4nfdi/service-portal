@@ -7,10 +7,12 @@ import { getCodeUrl } from "@/app/libs/authUrl";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";
 import OrcidField from "./orcidField";
+import { useGatewayUrl } from "@/app/ui/commons/gatewayProvider";
 
 type LoginStatus = "loading" | "needsRegistration" | "error";
 
 export default function OAuthCallback() {
+  const gatewayUrl = useGatewayUrl();
   const t = userPageMessages[useLocale()];
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<LoginStatus>("loading");
@@ -95,7 +97,7 @@ export default function OAuthCallback() {
       ) : status === "error" ? (
         <>
           <p>{registrationExpired ? t.registrationExpired : t.loginFailed}</p>
-          <a className="btn" href={getCodeUrl()}>
+          <a className="btn" href={getCodeUrl(gatewayUrl)}>
             {t.tryAgain}
           </a>
         </>
