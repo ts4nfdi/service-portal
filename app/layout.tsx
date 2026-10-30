@@ -33,7 +33,7 @@ export default async function RootLayout({
           <Suspense>
             <OAuthCallback />
           </Suspense>
-          <MatomoTracker />
+          <MatomoTracker siteId={process.env.MATOMO_TRACKER_ID} />
           <div className="grid min-h-screen" id="app-layout">
             <LocaleProvider locale={locale}>
               <SessionProviderWrapper>

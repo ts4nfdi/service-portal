@@ -7,7 +7,7 @@ import {generateRandomNumber, generateRandomString} from "@/app/libs/toolkit";
 const MATOMO_USER_ID_FIELD = "matomoUserId";
 export const MATOMO_IS_ENABLED_FIELD = "matomoIsEnabled";
 
-export default function MatomoTrackerComponent() {
+export default function MatomoTrackerComponent({ siteId }: { siteId?: string }) {
     let pathName = usePathname();
     let matomoUserId = localStorage.getItem(MATOMO_USER_ID_FIELD);
     let matomoIsEnabled = localStorage.getItem(MATOMO_IS_ENABLED_FIELD) === "true";
@@ -18,14 +18,14 @@ export default function MatomoTrackerComponent() {
     }
 
     function sendMatomoQuery() {
-        if (!matomoIsEnabled) {
+        if (!matomoIsEnabled || !siteId) {
             return;
         }
         const now = new Date();
         const currentUrl = document.location.href;
         const params = new URLSearchParams({
             action_name: pathName,
-            idsite: process.env.NEXT_PUBLIC_MATOMO_TRACKER_ID as string,
+            idsite: siteId,
             rec: '1',
             r: generateRandomNumber(true) as string,
             h: now.getHours().toString(),
@@ -57,7 +57,7 @@ export default function MatomoTrackerComponent() {
 
     useEffect(() => {
         sendMatomoQuery();
-    }, [pathName]);
+    }, [pathName, siteId]);
     return "";
 }
 

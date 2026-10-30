@@ -16,8 +16,6 @@ ENV NEXT_PUBLIC_AUTOCOMPLETE_DOCUMENTATION_URL=https://terminology.services.base
 ENV NEXT_PUBLIC_API_GATEWAY_DEFAULT_PARAMETERS="ontology=mesh,efo&type=class&collection=nfdi4health&fieldList=description,label,iri,ontology_name,type,short_form"
 ENV NEXT_PUBLIC_CAPTCHA_SITE_KEY=FCMNGJO6FSOIB5ER
 ENV NEXT_PUBLIC_MATOMO_TRACKER_URL="https://piwik.cebitec.uni-bielefeld.de/matomo.php?"
-ENV NEXT_PUBLIC_MATOMO_TRACKER_ID=36
-ENV NEXT_IAM_REDIRECT_URL="https://terminology.services.base4nfdi.de/"
 
 
 RUN npm run build
