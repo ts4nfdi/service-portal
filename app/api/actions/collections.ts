@@ -3,6 +3,7 @@
 import {ActionResponse, Collection, Terminology} from "./types";
 import {getUserToken} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
+import {scheduleCollectionStatistics} from "@/app/libs/collectionStatistics";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
     REQUEST_FAILED_MESSAGE,
@@ -144,6 +145,7 @@ export async function createCollection(collection: PortalCollectionJsonData, cre
             }
         }
         let res: Collection = await resp.json();
+        scheduleCollectionStatistics(res.id);
         return {status: true, content: new PortalCollection(res).toJson()}
 
     } catch {
@@ -195,6 +197,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
             return {status: false, content: REQUEST_FAILED_MESSAGE}
         }
         let res: Collection = await resp.json();
+        scheduleCollectionStatistics(res.id);
         return {status: true, content: new PortalCollection(res).toJson()}
 
     } catch {
