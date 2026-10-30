@@ -14,3 +14,8 @@ spec:
                 secretKeyRef:
                   name: ts4nfdi-service-portal-iam-redirect-url
                   key: NEXT_IAM_REDIRECT_URL
+            - name: MATOMO_TRACKER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ts4nfdi-service-portal-matomo-tracker-id
+                  key: MATOMO_TRACKER_ID
