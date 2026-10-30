@@ -141,6 +141,11 @@ jobs:
           SECRET_VALUE: ${{ vars.NEXTAUTH_URL }}
         run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-nextauth-url NEXTAUTH_URL
 
+      - name: Create K8s secret for NEXT_IAM_REDIRECT_URL
+        env:
+          SECRET_VALUE: ${{ vars.NEXT_IAM_REDIRECT_URL || vars.NEXTAUTH_URL }}
+        run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-iam-redirect-url NEXT_IAM_REDIRECT_URL
+
       - name: Deploy to Kubernetes
         uses: stefanprodan/kube-tools@v1
         with:

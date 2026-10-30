@@ -9,3 +9,8 @@ spec:
                 secretKeyRef:
                   name: ts4nfdi-service-portal-nextauth-url
                   key: NEXTAUTH_URL
+            - name: NEXT_IAM_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ts4nfdi-service-portal-iam-redirect-url
+                  key: NEXT_IAM_REDIRECT_URL
