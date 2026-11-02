@@ -2,10 +2,12 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import type { PortalSourcesJsonData } from "@/app/concepts";
 import { CardSkeleton, DefaultSkeleton } from "@/app/ui/commons/skeletons";
 import { useLocale } from "./i18n";
+import {ExternalLink} from "@/app/ui/commons/icons";
 
 const providerMessages = {
   en: {
@@ -148,6 +150,16 @@ export function ProviderList({
         })}
       </div>
     </>
+  );
+}
+
+export function ExternalLinkIcon({href}) {
+  return (
+      <Link href={href} target="_blank"
+            className={`inline-flex items-center justify-center hover:opacity-70 transition-opacity`}
+      >
+        <ExternalLink width={20} height={20}/>
+      </Link>
   );
 }
 

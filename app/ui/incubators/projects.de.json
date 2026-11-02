@@ -4,6 +4,10 @@
     "Running": 7,
     "Finished": 19
   },
+  "license": {
+    "link": "https://creativecommons.org/licenses/by/4.0/deed.de",
+    "description": "Die Daten des Inkubator-Dashboards unterliegen der Lizenz: CC BY 4.0."
+  },
   "projects": [
     {
       "incubatorID": "incubator-1",

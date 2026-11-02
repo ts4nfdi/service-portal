@@ -9,7 +9,8 @@ import projectsJson from '../ui/incubators/projects.json';
 import projectsJsonDe from '../ui/incubators/projects.de.json';
 import { useLocale } from "../i18n";
 import { incubatorPageMessages } from "./messages";
-import {CopyToClipboard} from "@/app/clientExports";
+import {ExternalLinkIcon, CopyToClipboard} from "@/app/clientExports";
+import Link from "next/link";
 
 
 export default function Incubators() {
@@ -28,20 +29,6 @@ export default function Incubators() {
                         <p className='text-justify'>
                             {t.descriptionStart}<b>{t.incubators}</b>{t.descriptionEnd}
                         </p>
-                        <br/>
-                        <div className="flex flex-row flex-wrap justify-start px-1 mt-2">
-                            <div>
-                                <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
-                                    {t.apiEndpoint}
-                                </p>
-                                {(process.env.GATEWAY_BASE_URL! as string) + "/incubators/"}
-                            </div>
-                            <CopyToClipboard
-                                textToCopy={
-                                    (process.env.GATEWAY_BASE_URL! as string) + "/incubators/"
-                                }
-                            />
-                        </div>
                     </div>
                 </div>
                 <p className="header-2" key={'IncubatorProjectsHeader'}>{t.projects}</p>
@@ -63,6 +50,34 @@ export default function Incubators() {
                     setSelectedStatus={setSelectedStatus}
                 >
                 </IncubatorProjects>
+                <div className='grid'>
+                    <p className="header-2" key={'IncubatorProjectsHeader'}>{t.apiEndpoint}</p>
+                    <div className="card-background md:col-span-5">
+                        <p className='text-justify'>
+                            {t.apiText}
+                            <Link
+                                href={t.licenseLink}
+                                target="_blank">{t.licenseLabel}
+                            </Link>
+                        </p>
+                        <div className="flex flex-row flex-wrap justify-start px-1 mt-2">
+                            <div>
+                                <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
+                                    {t.apiEndpoint}
+                                </p>
+                                {"https://terminology.services.base4nfdi.de/api-gateway/incubators/"}
+                            </div>
+                            <CopyToClipboard
+                                textToCopy={
+                                    "https://terminology.services.base4nfdi.de/api-gateway/incubators/"
+                                }
+                            />
+                            <ExternalLinkIcon
+                                href={"https://terminology.services.base4nfdi.de/api-gateway/incubators/"}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
