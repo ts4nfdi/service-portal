@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import type { JWT } from "next-auth/jwt";
 import { getOrcidIdentity, getUserOrcid } from "../orcid";
 import { consumeSsoPkce } from "@/app/libs/ssoPkce";
+import { getSsoRedirectUri } from "@/app/libs/authUrl";
 
 type SsoTokens = {
   access_token: string;
@@ -59,9 +60,7 @@ export const authOptions = {
           return null;
         }
 
-        const redirectUri =
-          process.env.NEXT_IAM_REDIRECT_URL ??
-          "https://terminology.services.base4nfdi.de/";
+        const redirectUri = getSsoRedirectUri();
         const pkce = process.env.NEXT_PUBLIC_SSO_PKCE_ENABLED === "true"
           ? await consumeSsoPkce(credentials.state)
           : {};

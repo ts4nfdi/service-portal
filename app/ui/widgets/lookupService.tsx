@@ -10,6 +10,7 @@ import { useLocale } from "@/app/i18n";
 import { widgetMessages } from "@/app/widgets/messages";
 import MetadataWidgetTSS from "./MetadataWidget";
 import { AutoCompleteSelectedTermType } from "./types";
+import { useGatewayUrl } from "@/app/ui/commons/gatewayProvider";
 import "./styles.css";
 
 type SearchResult = {
@@ -31,15 +32,15 @@ const SearchResultsListWidget = dynamic<SearchResultsListWidgetProps>(
 
 const fallbackApi = "https://api.terminology.tib.eu/api/";
 
-function configuredApi(): string | undefined {
-  const endpoint = process.env.NEXT_PUBLIC_API_GATEWAY_ENDPOINT;
+function configuredApi(endpoint?: string): string | undefined {
   return endpoint ? `${endpoint.replace(/\/$/, "")}/ols4/api/` : undefined;
 }
 
 export default function LookupServiceWidget() {
+  const gatewayUrl = useGatewayUrl();
   const t = widgetMessages[useLocale()];
   const [api, setApi] = useState<string | undefined>(
-    configuredApi() ? undefined : fallbackApi,
+    configuredApi(gatewayUrl) ? undefined : fallbackApi,
   );
   const [usingFallback, setUsingFallback] = useState(false);
   const [selectedTerm, setSelectedTerm] =
@@ -48,7 +49,7 @@ export default function LookupServiceWidget() {
   const [isEntitySetFormVisible, setIsEntitySetFormVisible] = useState(false);
 
   useEffect(() => {
-    const primaryApi = configuredApi();
+    const primaryApi = configuredApi(gatewayUrl);
     if (!primaryApi) {
       setUsingFallback(true);
       return;
@@ -80,7 +81,7 @@ export default function LookupServiceWidget() {
       isCurrent = false;
       controller.abort();
     };
-  }, []);
+  }, [gatewayUrl]);
 
   const [queryClient] = useState(() => new QueryClient());
 

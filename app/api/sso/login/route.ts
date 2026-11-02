@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSsoPkce } from "@/app/libs/ssoPkce";
+import { getSsoRedirectUri } from "@/app/libs/authUrl";
 
 export async function GET(request: NextRequest) {
-  const redirectUri =
-    process.env.NEXT_IAM_REDIRECT_URL ??
-    request.nextUrl.origin ??
-    "https://terminology.services.base4nfdi.de/";
+  const redirectUri = getSsoRedirectUri();
   const authorizeUrl = new URL(
     "/api-gateway/auth/sso/authorize",
     process.env.GATEWAY_BASE_URL,

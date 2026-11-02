@@ -1,0 +1,21 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: ts4nfdi-service-portal-ui
+          env:
+            - name: NEXTAUTH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ts4nfdi-service-portal-nextauth-url
+                  key: NEXTAUTH_URL
+            - name: NEXT_IAM_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ts4nfdi-service-portal-iam-redirect-url
+                  key: NEXT_IAM_REDIRECT_URL
+            - name: MATOMO_TRACKER_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ts4nfdi-service-portal-matomo-tracker-id
+                  key: MATOMO_TRACKER_ID
