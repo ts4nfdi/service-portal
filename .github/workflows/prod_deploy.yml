@@ -86,6 +86,11 @@ jobs:
           SECRET_VALUE: ${{ vars.GATEWAY_BASE_URL }}
         run: bash .github/scripts/apply-k8s-secret.sh ts4nfdi-service-portal-gateway-base-url GATEWAY_BASE_URL
 
+      - name: Create K8s secret for STATISTICS_SERVICE_PORTAL_KEY
+        env:
+          SECRET_VALUE: ${{ secrets.STATISTICS_SERVICE_PORTAL_KEY }}
+        run: bash .github/scripts/apply-k8s-secret.sh statistics-service-portal-key STATISTICS_SERVICE_PORTAL_KEY
+
       - name: Create K8s secret for NEXTAUTH_URL
         env:
           SECRET_VALUE: ${{ vars.NEXTAUTH_URL }}

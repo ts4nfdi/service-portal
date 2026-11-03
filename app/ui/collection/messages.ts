@@ -1,5 +1,12 @@
 export const collectionUiMessages = {
   en: {
+    statistics: "Statistics",
+    statisticsCreated: "Calculated on",
+    statisticsUnavailable: "Statistics are not available yet.",
+    properties: "Properties",
+    classes: "Classes",
+    namedIndividuals: "Named individuals",
+    concepts: "Concepts",
     private: "private",
     public: "Public",
     publicLower: "public",
@@ -121,6 +128,13 @@ export const collectionUiMessages = {
     deletedError: "Something went wrong with your collection deletion. Please try later.",
   },
   de: {
+    statistics: "Statistik",
+    statisticsCreated: "Berechnet am",
+    statisticsUnavailable: "Statistiken sind noch nicht verfügbar.",
+    properties: "Eigenschaften",
+    classes: "Klassen",
+    namedIndividuals: "Benannte Individuen",
+    concepts: "Konzepte",
     private: "privat",
     public: "öffentlich",
     publicLower: "öffentlich",

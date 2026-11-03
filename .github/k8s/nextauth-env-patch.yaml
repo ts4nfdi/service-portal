@@ -4,6 +4,13 @@ spec:
       containers:
         - name: ts4nfdi-service-portal-ui
           env:
+            - name: STATISTICS_SERVICE_BASE_URL
+              value: http://ts4nfdi-api-gateway-collection-statistics:8000
+            - name: STATISTICS_SERVICE_PORTAL_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: statistics-service-portal-key
+                  key: STATISTICS_SERVICE_PORTAL_KEY
             - name: NEXTAUTH_URL
               valueFrom:
                 secretKeyRef:

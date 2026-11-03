@@ -2,6 +2,18 @@
     @apply bg-white rounded border-ts4nfdi-brand-color p-4  dark:bg-gray-800;
 }
 
+.collection-statistics {
+    @apply min-w-0 rounded border border-gray-300 bg-gray-100 p-3 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white;
+}
+
+.collection-card-statistics {
+    @apply min-w-0 rounded bg-gray-50 p-3 text-gray-900 dark:bg-gray-700/30 dark:text-white;
+}
+
+.collection-card-statistics dl > div {
+    @apply border-b border-gray-300 pb-2 dark:border-gray-600;
+}
+
 .terminology-badge-button {
     @apply border-0 cursor-pointer;
 }

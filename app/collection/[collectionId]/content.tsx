@@ -17,6 +17,7 @@ import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
+import CollectionStatistics from "@/app/ui/collection/collectionStatistics";
 
 export default function CollectionContentCmp(props: {
   collection: PortalCollectionJsonData;
@@ -85,11 +86,10 @@ export default function CollectionContentCmp(props: {
       </div>
       <div className="grid grid-cols-10" key={"collection-card-header"}>
         <div className="col-span-9 flex flex-col flex-wrap gap-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-1">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="flex min-w-0 flex-col gap-4 break-words rounded border border-gray-300 bg-gray-100 p-3 dark:border-gray-600 dark:bg-gray-700">
               <div
                 key={"label-and-copy"}
-                className="border rounded bg-gray-100 px-1   dark:bg-gray-700"
                 id="collection-id"
               >
                 <p className="font-bold">uuid</p>
@@ -101,15 +101,12 @@ export default function CollectionContentCmp(props: {
                   key={"copy"}
                 />
               </div>
-            </div>
-            <div className="col-span-1">
               <div
-                key={"label-and-copy"}
-                className="border rounded bg-gray-100 px-1 dark:bg-gray-700"
-                id="collection-id"
+                key={"permalink-and-copy"}
+                id="collection-permalink"
               >
                 <p className="font-bold">PermaLink</p>
-                <p key={"collection-id"} className="inline-block  text-sm">
+                <p key={"collection-permalink"} className="inline-block  text-sm">
                   {collection.permaLink}
                 </p>
                 <CopyToClipboard
@@ -117,27 +114,32 @@ export default function CollectionContentCmp(props: {
                   key={"copy"}
                 />
               </div>
+              <div key={"collection-creator"}>
+                <p className="font-bold">{t.createdBy}</p>
+                <p className="text-sm">
+                  {creatorIdentity.url ? (
+                    <a href={creatorIdentity.url} target="_blank" rel="noopener noreferrer">{creatorIdentity.id}</a>
+                  ) : creatorIdentity.id}
+                </p>
+              </div>
+              <div key={"collection-collaborators"}>
+                <p className="font-bold">{t.collaborators}</p>
+                <p className="text-sm">
+                  {collection.collaborators.length
+                    ? collection.collaborators.map((user, index) => (
+                        <span key={user.username}>
+                          {index > 0 && ", "}
+                          {user.username} ({user.orcid ? (
+                            <a href={`https://orcid.org/${user.orcid}`} target="_blank" rel="noopener noreferrer">{user.orcid}</a>
+                          ) : t.noOrcidId})
+                        </span>
+                      ))
+                    : t.none}
+                </p>
+              </div>
             </div>
+            <CollectionStatistics statistics={collection.statistics} />
           </div>
-
-          <p key={"collection-creator"} className="text-sm">
-            {t.createdBy}{creatorIdentity.url ? (
-              <a href={creatorIdentity.url} target="_blank" rel="noopener noreferrer">{creatorIdentity.id}</a>
-            ) : creatorIdentity.id}
-          </p>
-          <p key={"collection-collaborators"} className="text-sm">
-            {t.collaborators}
-            {collection.collaborators.length
-              ? collection.collaborators.map((user, index) => (
-                  <span key={user.username}>
-                    {index > 0 && ", "}
-                    {user.username} ({user.orcid ? (
-                      <a href={`https://orcid.org/${user.orcid}`} target="_blank" rel="noopener noreferrer">{user.orcid}</a>
-                    ) : t.noOrcidId})
-                  </span>
-                ))
-              : t.none}
-          </p>
           {props.collection.description && (
             <p
               key={"collection-desc"}

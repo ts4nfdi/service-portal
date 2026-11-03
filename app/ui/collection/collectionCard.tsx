@@ -13,6 +13,7 @@ import TerminologyInfoModal from "@/app/ui/collection/terminologyInfoModal";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "./messages";
 import { localizePath } from "@/app/libs/localePath";
+import CollectionStatistics from "./collectionStatistics";
 
 
 type CmpProps = {
@@ -96,35 +97,40 @@ export default function CollectionCard(props: CmpProps) {
                     }
                 </div>
             </div>
-            <div key={"label-and-copy"} className="!text-sm">
-                <p className="font-bold inline mr-2">uuid:</p>
-                <p key={"collection-id"} className="inline-block">{props.collection.id}</p>
-                <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
-            </div>
-            <div key={"permalink-and-copy"} className="!text-sm">
-                <p className="font-bold inline mr-2">PermaLink:</p>
-                <p key={"collection-permalink"}
-                   className="inline-block">{props.collection.permaLink}</p>
-                <CopyToClipboard textToCopy={props.collection.permaLink}
-                                 key={"copy"}/>
-            </div>
-            <p key={"creator"} className="text-sm">
-                {t.createdBy}{creatorIdentity.url ? (
-                    <a href={creatorIdentity.url} target="_blank" rel="noopener noreferrer">{creatorIdentity.id}</a>
-                ) : creatorIdentity.id}
-            </p>
-            <p key={"collection-desc"}>{props.collection.description}</p>
-            <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
-                <b>{t.terminologies}</b>
-                {renderTerminologies(props.collection.terminologies)}
-                {props.collection.terminologies.length > 3 &&
-                  <Link
-                    className="badge terminology-badge"
-                    href={localizePath(`/collection/${props.collection.id}`, locale)}
-                  >
-                    {t.moreTerminologies.replace("{count}", (props.collection.terminologies.length - 3).toString())}
-                  </Link>
-                }
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
+                <div className="min-w-0 break-words">
+                    <div key={"label-and-copy"} className="!text-sm">
+                        <p className="font-bold inline mr-2">uuid:</p>
+                        <p key={"collection-id"} className="inline-block">{props.collection.id}</p>
+                        <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
+                    </div>
+                    <div key={"permalink-and-copy"} className="!text-sm">
+                        <p className="font-bold inline mr-2">PermaLink:</p>
+                        <p key={"collection-permalink"}
+                           className="inline-block">{props.collection.permaLink}</p>
+                        <CopyToClipboard textToCopy={props.collection.permaLink}
+                                         key={"copy"}/>
+                    </div>
+                    <p key={"creator"} className="text-sm">
+                        {t.createdBy}{creatorIdentity.url ? (
+                            <a href={creatorIdentity.url} target="_blank" rel="noopener noreferrer">{creatorIdentity.id}</a>
+                        ) : creatorIdentity.id}
+                    </p>
+                    <p key={"collection-desc"}>{props.collection.description}</p>
+                    <div className="flex flex-row flex-wrap gap-2" key={"collection-terminologies"}>
+                        <b>{t.terminologies}</b>
+                        {renderTerminologies(props.collection.terminologies)}
+                        {props.collection.terminologies.length > 3 &&
+                          <Link
+                            className="badge terminology-badge"
+                            href={localizePath(`/collection/${props.collection.id}`, locale)}
+                          >
+                            {t.moreTerminologies.replace("{count}", (props.collection.terminologies.length - 3).toString())}
+                          </Link>
+                        }
+                    </div>
+                </div>
+                <CollectionStatistics statistics={props.collection.statistics} variant="card"/>
             </div>
         </div>
     );
