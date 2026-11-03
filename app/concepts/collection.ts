@@ -16,6 +16,14 @@ export function toCollectionCreatorIdentities(user: Parameters<typeof toLinkedOr
 }
 
 
+export type PortalCollectionStatistics = {
+    created: string;
+    properties?: number;
+    classes?: number;
+    namedIndividuals?: number;
+    concepts?: number;
+};
+
 export type PortalCollectionJsonData = {
     id: string,
     permaLink?: string,
@@ -25,7 +33,8 @@ export type PortalCollectionJsonData = {
     label: string,
     isPublic: boolean,
     collaborators: { username: string, orcid?: string | null, role: string }[],
-    terminologies: PortalTerminologyJsonData[]
+    terminologies: PortalTerminologyJsonData[],
+    statistics?: PortalCollectionStatistics,
 }
 
 
@@ -38,6 +47,7 @@ export class PortalCollection {
     private _isPublic: boolean;
     private _collaborators: { username: string, orcid?: string | null, role: string }[];
     private _terminologies: PortalTerminology[];
+    private _statistics?: PortalCollectionStatistics;
 
     constructor(collection: Collection = {}) {
         this._description = collection.description ?? "";
@@ -48,6 +58,16 @@ export class PortalCollection {
         this._isPublic = collection.isPublic ?? false;
         this._collaborators = collection.collaborators ?? [];
         this._terminologies = this._buildTerminologies(collection);
+        const latest = collection.statistics?.slice().sort((a, b) => b.created.localeCompare(a.created))[0];
+        if (latest) {
+            this._statistics = {
+                created: latest.created,
+                properties: latest.count["http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"],
+                classes: latest.count["http://www.w3.org/2002/07/owl#Class"],
+                namedIndividuals: latest.count["http://www.w3.org/2002/07/owl#NamedIndividual"],
+                concepts: latest.count["http://www.w3.org/2004/02/skos/core#Concept"],
+            };
+        }
     }
 
     get id() {
@@ -91,6 +111,10 @@ export class PortalCollection {
 
     get terminologies() {
         return this._terminologies;
+    }
+
+    get statistics() {
+        return this._statistics;
     }
 
     canManage(username?: string, orcid?: string) {
@@ -144,7 +168,8 @@ export class PortalCollection {
             label: this.label,
             isPublic: this.isPublic,
             collaborators: this.collaborators,
-            terminologies: jsonTerminologies
+            terminologies: jsonTerminologies,
+            statistics: this.statistics,
         };
     }
 
@@ -156,6 +181,7 @@ export class PortalCollection {
         pcol.manageable = data.manageable ?? false;
         pcol.description = data.description;
         pcol.label = data.label;
+        pcol._statistics = data.statistics;
         pcol.isPublic = data.isPublic;
         pcol.collaborators = data.collaborators;
         pcol.terminologies = [];

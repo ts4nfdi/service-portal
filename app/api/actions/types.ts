@@ -28,6 +28,7 @@ export type Collection = {
   terminologies?: Terminology[],
   collaborators?: { username: string, orcid?: string | null, role: string }[],
   isPublic?: boolean,
+  statistics?: { created: string, count: Record<string, number> }[],
 }
 
 export type Terminology = {
