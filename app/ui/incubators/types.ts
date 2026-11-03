@@ -4,6 +4,7 @@ export type Person = {
 }
 
 export type Project = {
+    incubatorID: string;
     title: string,
     cycle: number,
     status: ProjectStatus,
@@ -25,7 +26,7 @@ export type ProjectStatus = "In preparation" | "Running" | "Requested" | "Finish
 export type IncubatorProjectList = {
     projects: Project[],
     stats: {
-        [key in ProjectStatus]: number
+        [key in ProjectStatus]?: number
     }
 }
 
