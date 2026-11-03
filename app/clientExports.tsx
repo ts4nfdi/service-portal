@@ -153,7 +153,7 @@ export function ProviderList({
   );
 }
 
-export function ExternalLinkIcon({href}) {
+export function ExternalLinkIcon({href}: {href: string}) {
   return (
       <Link href={href} target="_blank"
             className={`inline-flex items-center justify-center hover:opacity-70 transition-opacity`}

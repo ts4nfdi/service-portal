@@ -26,7 +26,7 @@ export type ProjectStatus = "In preparation" | "Running" | "Requested" | "Finish
 export type IncubatorProjectList = {
     projects: Project[],
     stats: {
-        [key in ProjectStatus]: number
+        [key in ProjectStatus]?: number
     }
 }
 
