@@ -45,6 +45,28 @@
   }
 }
 
+.incubator-project-card:target {
+  @apply scroll-mt-5 ring-4 ring-ts4nfdi-brand-color ring-offset-4 ring-offset-[var(--background)] dark:ring-blue-500;
+}
+
+.incubator-project-card-loaded:target {
+  animation:
+    incubator-project-card-enter 600ms ease-out both,
+    incubator-project-card-target-highlight 1600ms ease-out 600ms;
+}
+
+@keyframes incubator-project-card-target-highlight {
+  from {
+    outline: 8px solid rgb(69 84 107 / 0.5);
+    outline-offset: 8px;
+  }
+
+  to {
+    outline: 16px solid rgb(69 84 107 / 0);
+    outline-offset: 8px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .incubator-project-card-reveal {
     opacity: 1;
@@ -52,6 +74,10 @@
   }
 
   .incubator-project-card-loaded {
+    animation: none;
+  }
+
+  .incubator-project-card-loaded:target {
     animation: none;
   }
 }
