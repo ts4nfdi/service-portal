@@ -31,65 +31,174 @@ jobs:
           mkdir -p .kube
           printf '%s' "$KUBECONFIG_FILE" > "$KUBECONFIG"
 
-      - name: Create K8s secrets
+      - name: Create K8s secret for SMTP_API_KEY
         env:
-          SMTP_API_KEY: ${{ secrets.SMTP_API_KEY }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_PORT: ${{ vars.SMTP_PORT }}
-          CAPTCHA_VALIDATION_URL: ${{ secrets.CAPTCHA_VALIDATION_URL }}
-          CAPTCHA_API_KEY: ${{ secrets.CAPTCHA_API_KEY }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          CONTACT_RECV_EMAIL: ${{ vars.CONTACT_RECV_EMAIL }}
-          SMTP_HOST_NAME: ${{ vars.SMTP_HOST_NAME }}
-          SERVICE_EMAIL: ${{ vars.SERVICE_EMAIL }}
-          GATEWAY_BASE_URL: ${{ vars.GATEWAY_BASE_URL }}
-          STATISTICS_SERVICE_PORTAL_KEY: ${{ secrets.STATISTICS_SERVICE_PORTAL_KEY }}
-          NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
-          NEXT_IAM_REDIRECT_URL: ${{ vars.NEXT_IAM_REDIRECT_URL || vars.NEXTAUTH_URL }}
-          MATOMO_TRACKER_ID: ${{ vars.NEXT_PUBLIC_MATOMO_TRACKER_ID || secrets.NEXT_PUBLIC_MATOMO_TRACKER_ID }}
+          SECRET_VALUE: ${{ secrets.SMTP_API_KEY }}
         run: |
           set +x
           set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-api-key \
+            --from-literal="SMTP_API_KEY=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
 
-          mask() {
-            local value="$1"
-            value="${value//%/%25}"
-            value="${value//$'\r'/%0D}"
-            value="${value//$'\n'/%0A}"
-            printf '::add-mask::%s\n' "$value"
-          }
+      - name: Create K8s secret for SMTP_USERNAME
+        env:
+          SECRET_VALUE: ${{ secrets.SMTP_USERNAME }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-username \
+            --from-literal="SMTP_USERNAME=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
 
-          apply_secret() {
-            mask "$3"
-            mask "$(printf '%s' "$3" | base64 -w 0)"
+      - name: Create K8s secret for SMTP_PASSWORD
+        env:
+          SECRET_VALUE: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-password \
+            --from-literal="SMTP_PASSWORD=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
 
-            if ! kubectl create secret generic "$1" \
-              --from-literal="$2=$3" \
-              --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
-              kubectl apply -f - >/dev/null 2>&1; then
-              printf '::error::Failed to apply Kubernetes Secret %s\n' "$1" >&2
-              exit 1
-            fi
-          }
+      - name: Create K8s secret for SMTP_PORT
+        env:
+          SECRET_VALUE: ${{ vars.SMTP_PORT }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-port \
+            --from-literal="SMTP_PORT=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
 
-          apply_secret ts4nfdi-service-portal-smtp-api-key SMTP_API_KEY "$SMTP_API_KEY"
-          apply_secret ts4nfdi-service-portal-smtp-username SMTP_USERNAME "$SMTP_USERNAME"
-          apply_secret ts4nfdi-service-portal-smtp-password SMTP_PASSWORD "$SMTP_PASSWORD"
-          apply_secret ts4nfdi-service-portal-smtp-port SMTP_PORT "$SMTP_PORT"
-          apply_secret ts4nfdi-service-portal-captcha-validation-url CAPTCHA_VALIDATION_URL "$CAPTCHA_VALIDATION_URL"
-          apply_secret ts4nfdi-service-portal-captcha-api-key CAPTCHA_API_KEY "$CAPTCHA_API_KEY"
-          apply_secret ts4nfdi-service-portal-auth-secret AUTH_SECRET "$AUTH_SECRET"
-          apply_secret ts4nfdi-service-portal-contact-recv-email CONTACT_RECV_EMAIL "$CONTACT_RECV_EMAIL"
-          apply_secret ts4nfdi-service-portal-smtp-host-name SMTP_HOST_NAME "$SMTP_HOST_NAME"
-          apply_secret ts4nfdi-service-portal-smtp-service-email SERVICE_EMAIL "$SERVICE_EMAIL"
-          apply_secret ts4nfdi-service-portal-gateway-base-url GATEWAY_BASE_URL "$GATEWAY_BASE_URL"
-          apply_secret statistics-service-portal-key STATISTICS_SERVICE_PORTAL_KEY "$STATISTICS_SERVICE_PORTAL_KEY"
-          apply_secret ts4nfdi-service-portal-nextauth-url NEXTAUTH_URL "$NEXTAUTH_URL"
-          apply_secret ts4nfdi-service-portal-iam-redirect-url NEXT_IAM_REDIRECT_URL "$NEXT_IAM_REDIRECT_URL"
-          apply_secret ts4nfdi-service-portal-matomo-tracker-id MATOMO_TRACKER_ID "$MATOMO_TRACKER_ID"
+      - name: Create K8s secret for CAPTCHA_VALIDATION_URL
+        env:
+          SECRET_VALUE: ${{ secrets.CAPTCHA_VALIDATION_URL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-captcha-validation-url \
+            --from-literal="CAPTCHA_VALIDATION_URL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for CAPTCHA_API_KEY
+        env:
+          SECRET_VALUE: ${{ secrets.CAPTCHA_API_KEY }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-captcha-api-key \
+            --from-literal="CAPTCHA_API_KEY=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for AUTH_SECRET
+        env:
+          SECRET_VALUE: ${{ secrets.AUTH_SECRET }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-auth-secret \
+            --from-literal="AUTH_SECRET=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for CONTACT_RECV_EMAIL
+        env:
+          SECRET_VALUE: ${{ vars.CONTACT_RECV_EMAIL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-contact-recv-email \
+            --from-literal="CONTACT_RECV_EMAIL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for SMTP_HOST_NAME
+        env:
+          SECRET_VALUE: ${{ vars.SMTP_HOST_NAME }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-host-name \
+            --from-literal="SMTP_HOST_NAME=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for SERVICE_EMAIL
+        env:
+          SECRET_VALUE: ${{ vars.SERVICE_EMAIL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-smtp-service-email \
+            --from-literal="SERVICE_EMAIL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for GATEWAY_BASE_URL
+        env:
+          SECRET_VALUE: ${{ vars.GATEWAY_BASE_URL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-gateway-base-url \
+            --from-literal="GATEWAY_BASE_URL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for STATISTICS_SERVICE_PORTAL_KEY
+        env:
+          SECRET_VALUE: ${{ secrets.STATISTICS_SERVICE_PORTAL_KEY }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic statistics-service-portal-key \
+            --from-literal="STATISTICS_SERVICE_PORTAL_KEY=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for NEXTAUTH_URL
+        env:
+          SECRET_VALUE: ${{ vars.NEXTAUTH_URL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-nextauth-url \
+            --from-literal="NEXTAUTH_URL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for NEXT_IAM_REDIRECT_URL
+        env:
+          SECRET_VALUE: ${{ vars.NEXT_IAM_REDIRECT_URL || vars.NEXTAUTH_URL }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-iam-redirect-url \
+            --from-literal="NEXT_IAM_REDIRECT_URL=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
+
+      - name: Create K8s secret for MATOMO_TRACKER_ID
+        env:
+          SECRET_VALUE: ${{ vars.NEXT_PUBLIC_MATOMO_TRACKER_ID || secrets.NEXT_PUBLIC_MATOMO_TRACKER_ID }}
+        run: |
+          set +x
+          set -euo pipefail
+          kubectl create secret generic ts4nfdi-service-portal-matomo-tracker-id \
+            --from-literal="MATOMO_TRACKER_ID=$SECRET_VALUE" \
+            --namespace=ts4nfdi --dry-run=client -o yaml 2>/dev/null |
+            kubectl apply -f - >/dev/null 2>&1
 
       - name: Deploy to Kubernetes
+        env:
+          STATISTICS_SERVICE_BASE_URL: ${{ vars.STATISTICS_SERVICE_BASE_URL || 'http://ts4nfdi-api-gateway-collection-statistics:8000' }}
         uses: stefanprodan/kube-tools@v1
         with:
           helmv3: 3.12.0
@@ -107,35 +216,10 @@ jobs:
             --set-json='ingress.enableSSL="true"'  \
             --set-json='ingress.certIssuer="letsencrypt-prod"'  \
             service-portal-deployment/service-portal-ui
-            kubectl patch deployment/ts4nfdi-service-portal-ui --namespace=ts4nfdi --type=strategic --patch-file=/dev/stdin <<'PATCH'
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: ts4nfdi-service-portal-ui
-                      env:
-                        - name: STATISTICS_SERVICE_BASE_URL
-                          value: http://ts4nfdi-api-gateway-collection-statistics:8000
-                        - name: STATISTICS_SERVICE_PORTAL_KEY
-                          valueFrom:
-                            secretKeyRef:
-                              name: statistics-service-portal-key
-                              key: STATISTICS_SERVICE_PORTAL_KEY
-                        - name: NEXTAUTH_URL
-                          valueFrom:
-                            secretKeyRef:
-                              name: ts4nfdi-service-portal-nextauth-url
-                              key: NEXTAUTH_URL
-                        - name: NEXT_IAM_REDIRECT_URL
-                          valueFrom:
-                            secretKeyRef:
-                              name: ts4nfdi-service-portal-iam-redirect-url
-                              key: NEXT_IAM_REDIRECT_URL
-                        - name: MATOMO_TRACKER_ID
-                          valueFrom:
-                            secretKeyRef:
-                              name: ts4nfdi-service-portal-matomo-tracker-id
-                              key: MATOMO_TRACKER_ID
-            PATCH
+            kubectl set env deployment/ts4nfdi-service-portal-ui --containers=ts4nfdi-service-portal-ui --namespace=ts4nfdi --from=secret/statistics-service-portal-key
+            kubectl set env deployment/ts4nfdi-service-portal-ui --containers=ts4nfdi-service-portal-ui --namespace=ts4nfdi --from=secret/ts4nfdi-service-portal-nextauth-url
+            kubectl set env deployment/ts4nfdi-service-portal-ui --containers=ts4nfdi-service-portal-ui --namespace=ts4nfdi --from=secret/ts4nfdi-service-portal-iam-redirect-url
+            kubectl set env deployment/ts4nfdi-service-portal-ui --containers=ts4nfdi-service-portal-ui --namespace=ts4nfdi --from=secret/ts4nfdi-service-portal-matomo-tracker-id
+            kubectl set env deployment/ts4nfdi-service-portal-ui --containers=ts4nfdi-service-portal-ui --namespace=ts4nfdi STATISTICS_SERVICE_BASE_URL="$STATISTICS_SERVICE_BASE_URL"
             kubectl rollout restart deployment/ts4nfdi-service-portal-ui --namespace='ts4nfdi'
             kubectl rollout status deployment/ts4nfdi-service-portal-ui --namespace='ts4nfdi' --timeout=180s
