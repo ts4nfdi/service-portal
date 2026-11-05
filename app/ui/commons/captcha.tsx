@@ -10,7 +10,9 @@ export function Captcha() {
 
     useEffect(() => {
         import('@friendlycaptcha/sdk').then((mod) => {
-            setSdk(new mod.FriendlyCaptchaSDK())
+            setSdk(new mod.FriendlyCaptchaSDK({
+                disableEvalPatching: process.env.NODE_ENV === 'development'
+            }))
         });
     }, []);
 
