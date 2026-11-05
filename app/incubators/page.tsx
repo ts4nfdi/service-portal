@@ -11,6 +11,8 @@ import { useLocale } from "../i18n";
 import { incubatorPageMessages } from "./messages";
 import {ExternalLinkIcon, CopyToClipboard} from "@/app/clientExports";
 import Link from "next/link";
+import { incubatorMessages } from "../ui/incubators/messages";
+import { localizePath } from "../libs/localePath";
 
 
 export default function Incubators() {
@@ -29,6 +31,12 @@ export default function Incubators() {
                         <p className='text-justify'>
                             {t.descriptionStart}<b>{t.incubators}</b>{t.descriptionEnd}
                         </p>
+                        <div className="flex flex-wrap items-center gap-3 mt-4">
+                            <strong>{incubatorMessages[locale].requestTitle}</strong>
+                            <Link className="btn !mb-0" href={localizePath("/incubators/new", locale)}>
+                                {incubatorMessages[locale].applyNow}
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <IncubatorsStatus

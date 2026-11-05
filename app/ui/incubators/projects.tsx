@@ -4,7 +4,6 @@ import {Project, IncubatorsStatusCmpProps, ProjectStatus} from "./types";
 import {SelectionInput} from "../commons/snippets";
 import React, {useState, useEffect} from "react";
 import ProjectCard from "./projectCard";
-import IncubatorRequestCard from "./requestCard";
 import { useLocale } from "@/app/i18n";
 import { incubatorMessages, statusLabels } from "./messages";
 
@@ -110,7 +109,6 @@ export default function IncubatorProjects(props: IncubatorsStatusCmpProps) {
                 />
             </div>
             <div className="grid md:grid-cols-3 grid-rows-1 gap-8" key={"incubators-grid"}>
-                <IncubatorRequestCard/>
                 {
                     projectsList.map((project: Project) => {
                         if (!statusToSkip.includes(project.status)) {
