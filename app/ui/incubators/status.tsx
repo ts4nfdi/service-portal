@@ -1,7 +1,6 @@
 'use client'
 
 import {IncubatorsStatusCmpProps, ProjectStatus} from "./types";
-import {useEffect} from "react";
 import { useLocale } from "@/app/i18n";
 import { statusLabels } from "./messages";
 
@@ -10,16 +9,6 @@ export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
     const locale = useLocale();
     const stats = props.projectsJson?.stats ?? {};
     const statusToSkip = ['Requested', 'First contact', 'Postponed'];
-
-    useEffect(() => {
-        if (props.selectedStatus === "") {
-            const currentSelected = document.getElementsByClassName("clicked-status-card");
-            for (let element of currentSelected) {
-                element.classList.remove("clicked-status-card");
-                element.classList.add("status-card");
-            }
-        }
-    }, [props.selectedStatus]);
 
     return (
         <>
@@ -33,18 +22,12 @@ export default function IncubatorsStatus(props: IncubatorsStatusCmpProps) {
                         }
                         return (
                             <div
-                                className="status-card"
+                                className={props.selectedStatus === status ? "clicked-status-card" : "status-card"}
                                 key={status}
                                 onClick={(event: React.MouseEvent<HTMLDivElement>) => {
                                     if (props.onClickStatus) {
                                         props.onClickStatus(event);
-                                        const currentSelected = document.getElementsByClassName("clicked-status-card");
-                                        for (let element of currentSelected) {
-                                            element.classList.remove("clicked-status-card");
-                                            element.classList.add("status-card");
-                                        }
-                                        event.currentTarget.classList.remove('status-card');
-                                        event.currentTarget.classList.add('clicked-status-card');
+
                                     }
                                 }}
                                 data-value={status}>
