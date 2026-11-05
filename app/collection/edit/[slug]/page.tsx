@@ -6,7 +6,7 @@ import { getUserCollectionList, updateCollection } from "@/app/api/actions/colle
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
 import { useLocale } from "@/app/i18n";
@@ -33,7 +33,7 @@ export default function CollectionEdit() {
   const [formIsSubmitted, setFormIsSubmited] = useState(false);
   const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
-  const collaboratorsHaveOrcids = selectedCollaborators.every((orcid) => /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid));
+  const collaboratorsHaveOrcids = selectedCollaborators.every(isOrcidId);
   const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
   const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
   const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);

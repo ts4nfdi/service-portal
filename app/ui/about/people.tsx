@@ -7,6 +7,7 @@ import { CSSProperties } from "react";
 import peopleJson from "./people.json";
 import peopleJsonDe from "./people.de.json";
 import { useLocale } from "@/app/i18n";
+import { normalizeOrcidId } from "@/app/concepts/orcid";
 
 export default function AboutPeople() {
   const people = useLocale() === "de" ? peopleJsonDe : peopleJson;
@@ -32,6 +33,7 @@ export default function AboutPeople() {
               key={section.title}
             >
               {section.persons.map((person: PersonData) => {
+                const orcid = normalizeOrcidId(person.orcid);
                 return (
                   <div
                     className={
@@ -73,7 +75,7 @@ export default function AboutPeople() {
                         {person.affiliation}
                       </p>
                       <a
-                        href={person.orcid}
+                        href={orcid ? `https://orcid.org/${orcid}` : person.orcid}
                         className="orcid-id-btn"
                         target="_blank"
                         key={"orcid"}

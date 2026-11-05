@@ -18,27 +18,32 @@ export type LinkedOrcid = {
   isPrimary: boolean;
 };
 
+export function normalizeOrcidId(value: string): string | null {
+  const id = value.trim().replace(/^https?:\/\/orcid\.org\//i, "").replace(/\/$/, "").toUpperCase();
+  return /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id) ? id : null;
+}
+
 export function toLinkedOrcids(user: {
   primaryOrcid?: string | null;
   externalPersistentIdentifiers?: string[];
 }): LinkedOrcid[] {
-  const normalize = (id: string) => id.trim().replace(/^https?:\/\/orcid\.org\//i, "").toUpperCase();
-  const primary = typeof user.primaryOrcid === "string" ? normalize(user.primaryOrcid) : null;
+  const primary = typeof user.primaryOrcid === "string" ? normalizeOrcidId(user.primaryOrcid) : null;
   return [...new Set([user.primaryOrcid, ...(user.externalPersistentIdentifiers ?? [])]
     .filter((id): id is string => typeof id === "string")
-    .map(normalize)
-    .filter(isOrcidId))]
+    .map(normalizeOrcidId)
+    .filter((id): id is string => id !== null))]
     .map(id => ({ id, isPrimary: id === primary }));
 }
 
 export function isOrcidId(id: string): boolean {
-  return /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(id);
+  return normalizeOrcidId(id) !== null;
 }
 
 export function toOrcidIdentity(id: string, record: OrcidRecord): OrcidIdentity | null {
+  const normalizedId = normalizeOrcidId(id);
   const name = record.person?.name;
   const displayName = name?.["credit-name"]?.value ||
     [name?.["given-names"]?.value, name?.["family-name"]?.value]
       .filter(Boolean).join(" ");
-  return displayName ? { id, name: displayName } : null;
+  return normalizedId && displayName ? { id: normalizedId, name: displayName } : null;
 }

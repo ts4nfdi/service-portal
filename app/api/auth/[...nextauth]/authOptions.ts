@@ -3,6 +3,7 @@ import type { JWT } from "next-auth/jwt";
 import { getOrcidIdentity, getUserOrcid } from "../orcid";
 import { consumeSsoPkce } from "@/app/libs/ssoPkce";
 import { getSsoRedirectUri } from "@/app/libs/authUrl";
+import { normalizeOrcidId } from "@/app/concepts/orcid";
 
 type SsoTokens = {
   access_token: string;
@@ -116,6 +117,7 @@ export const authOptions = {
       if ((!token.orcid || trigger === "update") && token.token) {
         token.orcid = await getUserOrcid(token.token) ?? token.orcid ?? getIdentity(token.token).orcid;
       }
+      token.orcid = normalizeOrcidId(token.orcid ?? "") ?? "";
       if (token.expiration === undefined || token.expiration === "") {
         requireReauthentication(token);
         return token;
@@ -136,7 +138,7 @@ export const authOptions = {
       session.user.token = token.token as string;
       session.user.username = token.username as string;
       session.user.email = token.email as string | undefined;
-      session.user.orcid = token.orcid as string | undefined;
+      session.user.orcid = normalizeOrcidId((token.orcid as string | undefined) ?? "") ?? undefined;
       return session;
     },
   },
@@ -197,7 +199,7 @@ async function loginUser(tokens: SsoTokens, response?: Response) {
     token,
     username,
     email: user.email ?? identity.email,
-    orcid: user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid,
+    orcid: normalizeOrcidId(user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid ?? "") ?? undefined,
     expiration: user.expiration,
   };
 }
