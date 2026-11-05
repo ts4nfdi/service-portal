@@ -1,6 +1,6 @@
 import {Collection} from "../api/actions/types";
 import {PortalTerminology, PortalTerminologyJsonData} from "./terminology";
-import { isOrcidId, toLinkedOrcids } from "./orcid";
+import { isOrcidId, normalizeOrcidId, toLinkedOrcids } from "./orcid";
 import { normalizeRorId, toLinkedRors } from "./ror";
 
 export type CollectionCreatorIdentity = {
@@ -40,23 +40,23 @@ export type PortalCollectionJsonData = {
 
 export class PortalCollection {
     private _id: string;
-    private _creator: string;
+    private _creator: string = "";
     private _manageable: boolean;
     private _description: string;
     private _label: string;
     private _isPublic: boolean;
-    private _collaborators: { username: string, orcid?: string | null, role: string }[];
+    private _collaborators: { username: string, orcid?: string | null, role: string }[] = [];
     private _terminologies: PortalTerminology[];
     private _statistics?: PortalCollectionStatistics;
 
     constructor(collection: Collection = {}) {
         this._description = collection.description ?? "";
         this._id = collection.id ?? "";
-        this._creator = collection.creator ?? "";
+        this.creator = collection.creator ?? "";
         this._manageable = false;
         this._label = collection.label ?? "";
         this._isPublic = collection.isPublic ?? false;
-        this._collaborators = collection.collaborators ?? [];
+        this.collaborators = collection.collaborators ?? [];
         this._terminologies = this._buildTerminologies(collection);
         const latest = collection.statistics?.slice().sort((a, b) => b.created.localeCompare(a.created))[0];
         if (latest) {
@@ -118,6 +118,7 @@ export class PortalCollection {
     }
 
     canManage(username?: string, orcid?: string) {
+        orcid = normalizeOrcidId(orcid ?? "") ?? orcid;
         return this.manageable || (!!(username || orcid) && ([username, orcid].includes(this.creator) || this.collaborators.some((user) => [username, orcid].includes(user.username) || (!!orcid && user.orcid === orcid))));
     }
 
@@ -126,7 +127,7 @@ export class PortalCollection {
     }
 
     set creator(value: string) {
-        this._creator = value;
+        this._creator = normalizeOrcidId(value) ?? value;
     }
 
     set manageable(value: boolean) {
@@ -147,7 +148,10 @@ export class PortalCollection {
     }
 
     set collaborators(value: { username: string, orcid?: string | null, role: string }[]) {
-        this._collaborators = value;
+        this._collaborators = value.map(user => ({
+            ...user,
+            orcid: user.orcid ? normalizeOrcidId(user.orcid) ?? user.orcid : user.orcid,
+        }));
     }
 
     set terminologies(value: PortalTerminology[]) {
