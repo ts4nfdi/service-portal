@@ -24,15 +24,13 @@ export default function Incubators() {
         <div className="md:col-span-3 w-full">
             <div className="gird grid-rows-1">
                 <p className="header-1" key={'Incubatorsdashboardheader'}>{t.incubators}</p>
-                <div className='grid'>
+                <div className='grid mb-8'>
                     <div className="card-background md:col-span-5">
                         <p className='text-justify'>
                             {t.descriptionStart}<b>{t.incubators}</b>{t.descriptionEnd}
                         </p>
                     </div>
                 </div>
-                <p className="header-2" key={'IncubatorProjectsHeader'}>{t.projects}</p>
-                <p className="font-bold" key={'Incubatorsstatusheader'}>{t.overview}</p>
                 <IncubatorsStatus
                     key={'Incubatorsstatus'}
                     onClickStatus={(event) => setSelectedStatus((event.currentTarget.dataset.value ?? "") as ProjectStatus)}
