@@ -2,12 +2,7 @@
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-
-export type AuthenticatedUser = {
-  token: string;
-  username: string;
-  orcid: string;
-};
+import type { AuthenticatedUser } from "../api/auth/types";
 
 export async function getAuthenticatedUser(): Promise<AuthenticatedUser> {
   try {

@@ -1,19 +1,12 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { JWT } from "next-auth/jwt";
+import type { PendingRegistration, SsoTokens } from "../types";
 import { getOrcidIdentity, getUserOrcid } from "../orcid";
 import { consumeSsoPkce } from "@/app/libs/ssoPkce";
 import { getSsoRedirectUri } from "@/app/libs/authUrl";
 import { normalizeOrcidId } from "@/app/concepts/orcid";
 
-type SsoTokens = {
-  access_token: string;
-  id_token: string;
-};
-
-const pendingRegistrations = new Map<
-  string,
-  { tokens: SsoTokens; expiresAt: number }
->();
+const pendingRegistrations = new Map<string, PendingRegistration>();
 const registrationTtl = 30 * 60 * 1000;
 const authVersion = "gateway-expiration-v1";
 
