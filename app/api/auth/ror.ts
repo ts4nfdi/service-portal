@@ -1,7 +1,7 @@
 "use server";
 
 import { normalizeRorId, toLinkedRors, toRorIdentity, type RorIdentity } from "@/app/concepts/ror";
-import { getUserToken } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/libs/auth";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 
 export async function getRorIdentity(value: string): Promise<RorIdentity | null> {
@@ -34,7 +34,7 @@ export async function getUserRors(token: string): Promise<string[]> {
 
 export async function updateUserRor(value: string): Promise<boolean> {
   try {
-    const token = await getUserToken();
+    const { token } = await getAuthenticatedUser();
     if (!token) return false;
     const identity = await getRorIdentity(value);
     if (!identity) return false;

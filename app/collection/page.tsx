@@ -5,7 +5,7 @@ import {
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { cache, Suspense } from "react";
 import { CollectionList } from "@/app/clientExports";
-import { getUserToken } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/libs/auth";
 import Link from "next/link";
 import { ActionResponse } from "@/app/api/actions/types";
 import Image from "next/image";
@@ -82,7 +82,7 @@ function CollectionListLoading() {
 }
 
 export default async function Collections() {
-  let token = await getUserToken();
+  const { token } = await getAuthenticatedUser();
   const locale = await getRequestLocale();
   const t = collectionMessages[locale];
 

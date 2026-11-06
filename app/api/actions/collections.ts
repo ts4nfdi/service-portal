@@ -1,7 +1,7 @@
 'use server'
 
 import {ActionResponse, Collection, Terminology} from "./types";
-import {getUserToken} from "@/app/libs/auth";
+import {getAuthenticatedUser} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {scheduleCollectionStatistics} from "@/app/libs/collectionStatistics";
 import {
@@ -14,7 +14,7 @@ import {CollectionCreatorIdentity, PortalCollection, PortalCollectionJsonData, t
 import { normalizeOrcidId } from "@/app/concepts/orcid";
 
 export async function getCollectionCreatorIdentities(): Promise<CollectionCreatorIdentity[] | null> {
-    const token = await getUserToken();
+    const { token } = await getAuthenticatedUser();
     return token ? loadCollectionCreatorIdentities(token) : null;
 }
 
@@ -33,7 +33,7 @@ async function loadCollectionCreatorIdentities(token: string): Promise<Collectio
 
 export async function getUserCollectionList(): Promise<ActionResponse> {
     try {
-        let token = await getUserToken();
+        const { token } = await getAuthenticatedUser();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -86,7 +86,7 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 export async function createCollection(collection: PortalCollectionJsonData, creatorIdentity: string): Promise<ActionResponse> {
     creatorIdentity = normalizeOrcidId(creatorIdentity) ?? creatorIdentity;
     try {
-        const token = await getUserToken();
+        const { token } = await getAuthenticatedUser();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -158,7 +158,7 @@ export async function createCollection(collection: PortalCollectionJsonData, cre
 
 export async function updateCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
     try {
-        let token = await getUserToken();
+        const { token } = await getAuthenticatedUser();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
@@ -210,7 +210,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
 
 export async function deleteCollection(collectionId: string): Promise<ActionResponse> {
     try {
-        let token = await getUserToken();
+        const { token } = await getAuthenticatedUser();
         if (!token) {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }

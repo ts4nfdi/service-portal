@@ -17,7 +17,7 @@ import { localizePath } from "@/app/libs/localePath";
 import BulkProviderSelection from "@/app/ui/collection/bulkProviderSelection";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import { filterOptionsByProviders } from "@/app/ui/collection/terminologyOptions";
-import { updateUserOrcid } from "@/app/api/auth/orcid";
+import { updateUserOrcid } from "@/app/api/auth/orcidActions";
 import OrcidField from "@/app/ui/user/orcidField";
 import {
   CollaboratorField,

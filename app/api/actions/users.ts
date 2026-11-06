@@ -3,13 +3,13 @@
 import { ActionResponse } from "./types";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 import { REQUEST_FAILED_MESSAGE, SERVER_ERROR_MESSAGE, ACTION_NOT_ALLOWED_MESSAGE } from "@/app/libs/responseStrings";
-import { getUserToken } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/libs/auth";
 import { toPortalUser } from "@/app/concepts/user";
 
 
 export async function getUserList(): Promise<ActionResponse> {
   try {
-    let token = await getUserToken();
+    const { token } = await getAuthenticatedUser();
     if (!token) {
       return { status: false, content: ACTION_NOT_ALLOWED_MESSAGE }
     }

@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { updateUserOrcid } from "@/app/api/auth/orcid";
+import { updateUserOrcid } from "@/app/api/auth/orcidActions";
 import { updateUserRor } from "@/app/api/auth/ror";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";

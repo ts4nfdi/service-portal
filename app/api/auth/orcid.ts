@@ -31,13 +31,7 @@ export async function getUserOrcids(token: string): Promise<LinkedOrcid[]> {
   return await loadUserOrcids(token) ?? [];
 }
 
-export async function getCurrentUserOrcids(): Promise<LinkedOrcid[] | null> {
-  const { getUserToken } = await import("@/app/libs/auth");
-  const token = await getUserToken();
-  return token ? loadUserOrcids(token) : null;
-}
-
-async function loadUserOrcids(token: string): Promise<LinkedOrcid[] | null> {
+export async function loadUserOrcids(token: string): Promise<LinkedOrcid[] | null> {
   try {
     const response = await fetch(process.env.GATEWAY_BASE_URL! + "/auth/me", {
       headers: await getHttpHeaderForGateway(token),
@@ -47,23 +41,5 @@ async function loadUserOrcids(token: string): Promise<LinkedOrcid[] | null> {
     return toLinkedOrcids(await response.json());
   } catch {
     return null;
-  }
-}
-
-export async function updateUserOrcid(orcid: string): Promise<boolean> {
-  try {
-    const { getUserToken } = await import("@/app/libs/auth");
-    const token = await getUserToken();
-    if (!token) return false;
-    const identity = await getOrcidIdentity(orcid);
-    if (!identity) return false;
-    const response = await fetch(process.env.GATEWAY_BASE_URL! + "/users/me/externalIdentifiers", {
-      method: "POST",
-      headers: { "Content-Type": "text/plain", Authorization: `Bearer ${token}` },
-      body: identity.id,
-    });
-    return response.ok;
-  } catch {
-    return false;
   }
 }

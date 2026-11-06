@@ -1,7 +1,7 @@
 import { getUserCollectionList } from "@/app/api/actions/collections";
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { Suspense } from "react";
-import { getUserToken } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/libs/auth";
 import { CollectionList } from "@/app/clientExports";
 import LoginFormWrapper from "@/app/user/login/page";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import { localizePath } from "@/app/libs/localePath";
 export default async function MyCollections() {
   const locale = await getRequestLocale();
   const t = collectionUiMessages[locale];
-  let token = await getUserToken();
+  const { token } = await getAuthenticatedUser();
   if (!token) {
     return <LoginFormWrapper />;
   }

@@ -3,7 +3,7 @@ import { ErrorAlert } from "@/app/ui/commons/snippets";
 import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
 import { PortalCollectionJsonData } from "@/app/concepts";
-import { getUserToken } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/libs/auth";
 import { ActionResponse } from "@/app/api/actions/types";
 import "../../ui/collection/styles.css";
 import { getRequestLocale } from "@/app/libs/locale";
@@ -16,7 +16,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
   const t = collectionUiMessages[locale];
   const { collectionId } = await params;
 
-  let token = await getUserToken();
+  const { token } = await getAuthenticatedUser();
   let publicCollectionsListResp: ActionResponse = { status: false, content: [] };
   let userCollectionsListResp: ActionResponse = { status: false, content: [] };
   publicCollectionsListResp = await getPublicCollectionList();
