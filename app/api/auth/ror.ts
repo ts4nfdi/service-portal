@@ -1,7 +1,7 @@
 "use server";
 
 import { PortalRor, type PortalRorJsonData } from "@/app/concepts/ror";
-import { getAuthenticatedUser } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/api/auth/actions";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 
 export async function getRorIdentity(value: string): Promise<PortalRorJsonData | null> {

@@ -2,7 +2,7 @@ import { getPublicCollectionList, getUserCollectionList } from "@/app/api/action
 import { ErrorAlert } from "@/app/ui/commons/snippets";
 import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
-import { getAuthenticatedUser } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/api/auth/actions";
 import "../../ui/collection/styles.css";
 import { getRequestLocale } from "@/app/libs/locale";
 import { collectionUiMessages } from "@/app/ui/collection/messages";

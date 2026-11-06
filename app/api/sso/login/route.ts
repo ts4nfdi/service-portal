@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSsoPkce } from "@/app/libs/ssoPkce";
-import { getSsoRedirectUri } from "@/app/libs/authUrl";
+import { getSsoRedirectUri } from "@/app/libs/auth";
 
 export async function GET(request: NextRequest) {
   const redirectUri = getSsoRedirectUri();

@@ -1,9 +1,9 @@
 'use server'
 
 import type {CollectionActionResponse, CollectionCreationError, Collection, Terminology} from "./types";
-import {getAuthenticatedUser} from "@/app/libs/auth";
+import {getAuthenticatedUser} from "@/app/api/auth/actions";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
-import {scheduleCollectionStatistics} from "@/app/libs/collectionStatistics";
+import {scheduleCollectionStatistics} from "./collectionStatistics";
 import {
     ACTION_NOT_ALLOWED_MESSAGE,
     REQUEST_FAILED_MESSAGE,

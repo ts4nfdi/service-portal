@@ -1,9 +1,24 @@
 'use server'
 
-import { SignUpFormProps } from "./types";
+import type { AuthenticatedUser, SignUpFormProps } from "./types";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./[...nextauth]/authOptions";
 import { ActionResponse } from "../actions/types";
 import { captchaIsValid } from "@/app/libs/captcha";
 
+
+export async function getAuthenticatedUser(): Promise<AuthenticatedUser> {
+  try {
+    let session = await getServerSession(authOptions);
+    return {
+      token: session?.user?.token ?? "",
+      username: session?.user?.username ?? "",
+      orcid: session?.user?.orcid ?? ""
+    };
+  } catch {
+    return { token: "", username: "", orcid: "" };
+  }
+}
 
 export async function signUpUser(formData: SignUpFormProps): Promise<ActionResponse> {
   try {

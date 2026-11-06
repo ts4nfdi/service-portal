@@ -3,7 +3,7 @@ import type { JWT } from "next-auth/jwt";
 import type { PendingRegistration, SsoTokens } from "../types";
 import { getOrcidIdentity, getUserOrcid } from "../orcid";
 import { consumeSsoPkce } from "@/app/libs/ssoPkce";
-import { getSsoRedirectUri } from "@/app/libs/authUrl";
+import { getSsoRedirectUri } from "@/app/libs/auth";
 import { PortalOrcid } from "@/app/concepts/orcid";
 
 const pendingRegistrations = new Map<string, PendingRegistration>();

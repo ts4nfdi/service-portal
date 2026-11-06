@@ -5,7 +5,7 @@ import {
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { cache, Suspense } from "react";
 import { CollectionList } from "@/app/clientExports";
-import { getAuthenticatedUser } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/api/auth/actions";
 import Link from "next/link";
 import Image from "next/image";
 import DownloadCollectionsButton from "@/app/ui/collection/downloadCollectionsButton";

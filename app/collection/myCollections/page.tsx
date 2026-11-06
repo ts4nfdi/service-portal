@@ -1,7 +1,7 @@
 import { getUserCollectionList } from "@/app/api/actions/collections";
 import { CollectionListMessages } from "@/app/ui/collection/collectionListMessages";
 import { Suspense } from "react";
-import { getAuthenticatedUser } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/api/auth/actions";
 import { CollectionList } from "@/app/clientExports";
 import LoginFormWrapper from "@/app/user/login/page";
 import Link from "next/link";

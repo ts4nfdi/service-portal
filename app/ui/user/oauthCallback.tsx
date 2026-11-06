@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { getCodeUrl } from "@/app/libs/authUrl";
+import { getCodeUrl } from "@/app/libs/auth";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";
 import OrcidField from "./orcidField";

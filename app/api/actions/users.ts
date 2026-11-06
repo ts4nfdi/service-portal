@@ -3,7 +3,7 @@
 import { ActionResponse } from "./types";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 import { REQUEST_FAILED_MESSAGE, SERVER_ERROR_MESSAGE, ACTION_NOT_ALLOWED_MESSAGE } from "@/app/libs/responseStrings";
-import { getAuthenticatedUser } from "@/app/libs/auth";
+import { getAuthenticatedUser } from "@/app/api/auth/actions";
 import { toPortalUser } from "@/app/concepts/user";
 
 

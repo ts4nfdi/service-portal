@@ -1,18 +1,11 @@
-'use server'
+export function getCodeUrl() {
+  return "/api/sso/login";
+}
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import type { AuthenticatedUser } from "../api/auth/types";
-
-export async function getAuthenticatedUser(): Promise<AuthenticatedUser> {
-  try {
-    let session = await getServerSession(authOptions);
-    return {
-      token: session?.user?.token ?? "",
-      username: session?.user?.username ?? "",
-      orcid: session?.user?.orcid ?? ""
-    };
-  } catch {
-    return { token: "", username: "", orcid: "" };
+export function getSsoRedirectUri() {
+  const redirectUri = process.env.NEXT_IAM_REDIRECT_URL ?? process.env.NEXTAUTH_URL;
+  if (!redirectUri) {
+    throw new Error("NEXT_IAM_REDIRECT_URL or NEXTAUTH_URL must be configured");
   }
+  return redirectUri;
 }
