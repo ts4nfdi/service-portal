@@ -11,9 +11,6 @@ export async function signUpUser(formData: SignUpFormProps): Promise<ActionRespo
     let password = formData.passoword;
     let captcha = formData.captcha;
 
-    //if (password.length < 8) {
-    //  return { status: false, content: "password is too short" };
-    //}
     if (!username || !await captchaIsValid(captcha)) {
       return { status: false, content: "form is not valid" };
     }
