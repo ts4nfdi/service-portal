@@ -65,15 +65,15 @@ export default function Incubators() {
                                 <p className="bg-ts4nfdi-brand-color text-white inline font-bold p-1 mr-1 rounded">
                                     {t.apiEndpoint}
                                 </p>
-                                {"https://terminology.services.base4nfdi.de/api-gateway/incubators/"}
+                                {"https://terminology.services.base4nfdi.de/api/incubators/"}
                             </div>
                             <CopyToClipboard
                                 textToCopy={
-                                    "https://terminology.services.base4nfdi.de/api-gateway/incubators/"
+                                    "https://terminology.services.base4nfdi.de/api/incubators/"
                                 }
                             />
                             <ExternalLinkIcon
-                                href={"https://terminology.services.base4nfdi.de/api-gateway/incubators/"}
+                                href="/api/incubators/"
                             />
                         </div>
                     </div>

@@ -1,5 +1,7 @@
 'use server'
 
+import { promises as fs } from "fs";
+import path from "path";
 import { NewIncubatorForm } from "./types";
 import { sendEmail } from "@/app/libs/email";
 import { ActionResponse } from "./types";
@@ -10,6 +12,11 @@ import {
 	FILE_TYPE_NOT_ALLOWED_MESSAGE
 } from "@/app/libs/responseStrings";
 
+export async function getIncubators() {
+	const filePath = path.join(process.cwd(), "app/ui/incubators/", "projects.json");
+	const text = await fs.readFile(filePath, "utf8");
+	return JSON.parse(text);
+}
 
 
 export async function sendIncubatorRequest(formData: NewIncubatorForm): Promise<ActionResponse> {
