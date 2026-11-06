@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { isOrcidId, PortalCollection, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { PortalOrcid, PortalCollection, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
 import { useTerminologyOptions } from "@/app/ui/collection/useTerminologyOptions";
 import { useLocale } from "@/app/i18n";
@@ -32,7 +32,7 @@ export default function CollectionEdit() {
   const [formIsSubmitted, setFormIsSubmited] = useState(false);
   const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
-  const collaboratorsHaveOrcids = selectedCollaborators.every(isOrcidId);
+  const collaboratorsHaveOrcids = selectedCollaborators.every(PortalOrcid.isValid);
   const { terminologyOptions, terminologyOptionsLoaded, terminologyOptionsFailed, loadTerminologyOptions } = useTerminologyOptions();
   const [selectedTerminologies, setSelectedTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);

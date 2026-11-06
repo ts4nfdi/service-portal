@@ -3,4 +3,5 @@ export * from "./collection";
 export * from "./provider";
 export * from "./publication";
 export * from "./orcid";
+export * from "./ror";
 export * from "./user";

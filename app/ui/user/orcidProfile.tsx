@@ -10,9 +10,9 @@ import { userPageMessages } from "@/app/user/messages";
 import OrcidField from "./orcidField";
 import RorField from "./rorField";
 import { Modal } from "@/app/ui/commons/modal";
-import type { LinkedOrcid } from "@/app/concepts/orcid";
+import type { LinkedOrcidJsonData } from "@/app/concepts/orcid";
 
-export default function OrcidProfile({ orcids, rors }: { orcids: LinkedOrcid[]; rors: string[] }) {
+export default function OrcidProfile({ orcids, rors }: { orcids: LinkedOrcidJsonData[]; rors: string[] }) {
   const t = userPageMessages[useLocale()];
   const [identityType, setIdentityType] = useState<"orcid" | "ror">();
   const [identity, setIdentity] = useState("");

@@ -1,10 +1,10 @@
 "use server";
 
-import type { LinkedOrcid } from "@/app/concepts/orcid";
+import type { LinkedOrcidJsonData } from "@/app/concepts/orcid";
 import { getAuthenticatedUser } from "@/app/libs/auth";
 import { getOrcidIdentity, loadUserOrcids } from "./orcid";
 
-export async function getCurrentUserOrcids(): Promise<LinkedOrcid[] | null> {
+export async function getCurrentUserOrcids(): Promise<LinkedOrcidJsonData[] | null> {
   const { token } = await getAuthenticatedUser();
   return token ? loadUserOrcids(token) : null;
 }

@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { getOrcidIdentity } from "@/app/api/auth/orcid";
-import type { OrcidIdentity } from "@/app/concepts/orcid";
+import type { PortalOrcidJsonData } from "@/app/concepts/orcid";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";
 
 export default function OrcidField({ onConfirm }: { onConfirm: (orcid: string) => void }) {
   const t = userPageMessages[useLocale()];
   const [orcid, setOrcid] = useState("");
-  const [identity, setIdentity] = useState<OrcidIdentity | null>(null);
+  const [identity, setIdentity] = useState<PortalOrcidJsonData | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [confirmed, setConfirmed] = useState(false);

@@ -11,7 +11,7 @@ import {
     MANDATORY_FIELDS_MISSING_MESSAGE
 } from "@/app/libs/responseStrings";
 import {CollectionCreatorIdentity, PortalCollection, PortalCollectionJsonData, toCollectionCreatorIdentities} from "@/app/concepts";
-import { normalizeOrcidId } from "@/app/concepts/orcid";
+import { PortalOrcid } from "@/app/concepts/orcid";
 
 export async function getCollectionCreatorIdentities(): Promise<CollectionCreatorIdentity[] | null> {
     const { token } = await getAuthenticatedUser();
@@ -84,7 +84,7 @@ export async function getPublicCollectionList(): Promise<CollectionActionRespons
 
 
 export async function createCollection(collection: PortalCollectionJsonData, creatorIdentity: string): Promise<CollectionActionResponse<PortalCollectionJsonData, string | CollectionCreationError>> {
-    creatorIdentity = normalizeOrcidId(creatorIdentity) ?? creatorIdentity;
+    creatorIdentity = PortalOrcid.normalizeId(creatorIdentity) ?? creatorIdentity;
     try {
         const { token } = await getAuthenticatedUser();
         if (!token) {

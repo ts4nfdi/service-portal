@@ -4,7 +4,7 @@ import type { PendingRegistration, SsoTokens } from "../types";
 import { getOrcidIdentity, getUserOrcid } from "../orcid";
 import { consumeSsoPkce } from "@/app/libs/ssoPkce";
 import { getSsoRedirectUri } from "@/app/libs/authUrl";
-import { normalizeOrcidId } from "@/app/concepts/orcid";
+import { PortalOrcid } from "@/app/concepts/orcid";
 
 const pendingRegistrations = new Map<string, PendingRegistration>();
 const registrationTtl = 30 * 60 * 1000;
@@ -110,7 +110,7 @@ export const authOptions = {
       if ((!token.orcid || trigger === "update") && token.token) {
         token.orcid = await getUserOrcid(token.token) ?? token.orcid ?? getIdentity(token.token).orcid;
       }
-      token.orcid = normalizeOrcidId(token.orcid ?? "") ?? "";
+      token.orcid = PortalOrcid.normalizeId(token.orcid ?? "") ?? "";
       if (token.expiration === undefined || token.expiration === "") {
         requireReauthentication(token);
         return token;
@@ -131,7 +131,7 @@ export const authOptions = {
       session.user.token = token.token as string;
       session.user.username = token.username as string;
       session.user.email = token.email as string | undefined;
-      session.user.orcid = normalizeOrcidId((token.orcid as string | undefined) ?? "") ?? undefined;
+      session.user.orcid = PortalOrcid.normalizeId((token.orcid as string | undefined) ?? "") ?? undefined;
       return session;
     },
   },
@@ -192,7 +192,7 @@ async function loginUser(tokens: SsoTokens, response?: Response) {
     token,
     username,
     email: user.email ?? identity.email,
-    orcid: normalizeOrcidId(user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid ?? "") ?? undefined,
+    orcid: PortalOrcid.normalizeId(user.orcid ?? await getUserOrcid(token) ?? getIdentity(token).orcid ?? "") ?? undefined,
     expiration: user.expiration,
   };
 }

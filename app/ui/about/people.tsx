@@ -7,7 +7,7 @@ import { CSSProperties } from "react";
 import peopleJson from "./people.json";
 import peopleJsonDe from "./people.de.json";
 import { useLocale } from "@/app/i18n";
-import { normalizeOrcidId } from "@/app/concepts/orcid";
+import { PortalOrcid } from "@/app/concepts/orcid";
 
 export default function AboutPeople() {
   const people = useLocale() === "de" ? peopleJsonDe : peopleJson;
@@ -33,7 +33,7 @@ export default function AboutPeople() {
               key={section.title}
             >
               {section.persons.map((person: PersonData) => {
-                const orcid = normalizeOrcidId(person.orcid);
+                const orcid = PortalOrcid.normalizeId(person.orcid);
                 return (
                   <div
                     className={

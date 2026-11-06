@@ -1,17 +1,17 @@
 import {Collection} from "../api/actions/types";
 import {PortalTerminology, PortalTerminologyJsonData} from "./terminology";
-import { isOrcidId, normalizeOrcidId, toLinkedOrcids } from "./orcid";
-import { normalizeRorId, toLinkedRors } from "./ror";
+import { PortalOrcid } from "./orcid";
+import { PortalRor } from "./ror";
 
 export type CollectionCreatorIdentity = {
     id: string;
     isPrimary: boolean;
 };
 
-export function toCollectionCreatorIdentities(user: Parameters<typeof toLinkedOrcids>[0]): CollectionCreatorIdentity[] {
+export function toCollectionCreatorIdentities(user: Parameters<typeof PortalOrcid.fromUser>[0]): CollectionCreatorIdentity[] {
     return [
-        ...toLinkedOrcids(user),
-        ...toLinkedRors(user).map(id => ({ id, isPrimary: false })),
+        ...PortalOrcid.fromUser(user).map(orcid => orcid.toLinkedJson()),
+        ...PortalRor.fromUser(user).map(ror => ({ id: ror.id, isPrimary: false })),
     ];
 }
 
@@ -89,7 +89,7 @@ export class PortalCollection {
     creatorIdentity() {
         return {
             id: this.creator,
-            url: isOrcidId(this.creator) ? `https://orcid.org/${this.creator}` : normalizeRorId(this.creator),
+            url: PortalOrcid.isValid(this.creator) ? `https://orcid.org/${this.creator}` : PortalRor.normalizeId(this.creator),
         };
     }
 
@@ -118,7 +118,7 @@ export class PortalCollection {
     }
 
     canManage(username?: string, orcid?: string) {
-        orcid = normalizeOrcidId(orcid ?? "") ?? orcid;
+        orcid = PortalOrcid.normalizeId(orcid ?? "") ?? orcid;
         return this.manageable || (!!(username || orcid) && ([username, orcid].includes(this.creator) || this.collaborators.some((user) => [username, orcid].includes(user.username) || (!!orcid && user.orcid === orcid))));
     }
 
@@ -127,7 +127,7 @@ export class PortalCollection {
     }
 
     set creator(value: string) {
-        this._creator = normalizeOrcidId(value) ?? value;
+        this._creator = PortalOrcid.normalizeId(value) ?? value;
     }
 
     set manageable(value: boolean) {
@@ -150,7 +150,7 @@ export class PortalCollection {
     set collaborators(value: { username: string, orcid?: string | null, role: string }[]) {
         this._collaborators = value.map(user => ({
             ...user,
-            orcid: user.orcid ? normalizeOrcidId(user.orcid) ?? user.orcid : user.orcid,
+            orcid: user.orcid ? PortalOrcid.normalizeId(user.orcid) ?? user.orcid : user.orcid,
         }));
     }
 

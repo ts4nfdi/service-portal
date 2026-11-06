@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { getRorIdentity } from "@/app/api/auth/ror";
-import type { RorIdentity } from "@/app/concepts/ror";
+import type { PortalRorJsonData } from "@/app/concepts/ror";
 import { useLocale } from "@/app/i18n";
 import { userPageMessages } from "@/app/user/messages";
 
 export default function RorField({ onConfirm }: { onConfirm: (ror: string) => void }) {
   const t = userPageMessages[useLocale()];
   const [ror, setRor] = useState("");
-  const [identity, setIdentity] = useState<RorIdentity | null>(null);
+  const [identity, setIdentity] = useState<PortalRorJsonData | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [confirmed, setConfirmed] = useState(false);

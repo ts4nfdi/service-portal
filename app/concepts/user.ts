@@ -1,4 +1,4 @@
-import { normalizeOrcidId } from "./orcid";
+import { PortalOrcid } from "./orcid";
 
 export type PortalUser = {
   username: string;
@@ -6,5 +6,5 @@ export type PortalUser = {
 };
 
 export function toPortalUser(user: { username?: string; orcid?: string }): PortalUser {
-  return { username: user.username ?? "", orcid: normalizeOrcidId(user.orcid ?? "") ?? user.orcid ?? "" };
+  return { username: user.username ?? "", orcid: PortalOrcid.normalizeId(user.orcid ?? "") ?? user.orcid ?? "" };
 }

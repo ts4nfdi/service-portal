@@ -1,11 +1,11 @@
 "use server";
 
-import { normalizeRorId, toLinkedRors, toRorIdentity, type RorIdentity } from "@/app/concepts/ror";
+import { PortalRor, type PortalRorJsonData } from "@/app/concepts/ror";
 import { getAuthenticatedUser } from "@/app/libs/auth";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 
-export async function getRorIdentity(value: string): Promise<RorIdentity | null> {
-  const id = normalizeRorId(value);
+export async function getRorIdentity(value: string): Promise<PortalRorJsonData | null> {
+  const id = PortalRor.normalizeId(value);
   if (!id) return null;
   try {
     const response = await fetch(`https://api.ror.org/v2/organizations/${id.split("/").pop()}`, {
@@ -13,8 +13,8 @@ export async function getRorIdentity(value: string): Promise<RorIdentity | null>
       cache: "no-store",
     });
     if (!response.ok) return null;
-    const identity = toRorIdentity(await response.json());
-    return identity?.id === id ? identity : null;
+    const identity = PortalRor.fromRecord(await response.json());
+    return identity?.id === id ? identity.toJson() : null;
   } catch {
     return null;
   }
@@ -26,7 +26,7 @@ export async function getUserRors(token: string): Promise<string[]> {
       headers: await getHttpHeaderForGateway(token),
       cache: "no-store",
     });
-    return response.ok ? toLinkedRors(await response.json()) : [];
+    return response.ok ? PortalRor.fromUser(await response.json()).map(ror => ror.id) : [];
   } catch {
     return [];
   }

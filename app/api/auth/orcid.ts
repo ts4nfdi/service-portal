@@ -1,10 +1,10 @@
 "use server";
 
-import { normalizeOrcidId, LinkedOrcid, OrcidIdentity, toLinkedOrcids, toOrcidIdentity } from "@/app/concepts/orcid";
+import { PortalOrcid, type LinkedOrcidJsonData, type PortalOrcidJsonData } from "@/app/concepts/orcid";
 import { getHttpHeaderForGateway } from "@/app/libs/server_utils";
 
-export async function getOrcidIdentity(orcid: string): Promise<OrcidIdentity | null> {
-  const id = normalizeOrcidId(orcid);
+export async function getOrcidIdentity(orcid: string): Promise<PortalOrcidJsonData | null> {
+  const id = PortalOrcid.normalizeId(orcid);
   if (!id) {
     return null;
   }
@@ -17,7 +17,7 @@ export async function getOrcidIdentity(orcid: string): Promise<OrcidIdentity | n
     if (!response.ok) {
       return null;
     }
-    return toOrcidIdentity(id, await response.json());
+    return PortalOrcid.fromRecord(id, await response.json())?.toJson() ?? null;
   } catch {
     return null;
   }
@@ -27,18 +27,18 @@ export async function getUserOrcid(token: string): Promise<string | undefined> {
   return (await getUserOrcids(token))[0]?.id;
 }
 
-export async function getUserOrcids(token: string): Promise<LinkedOrcid[]> {
+export async function getUserOrcids(token: string): Promise<LinkedOrcidJsonData[]> {
   return await loadUserOrcids(token) ?? [];
 }
 
-export async function loadUserOrcids(token: string): Promise<LinkedOrcid[] | null> {
+export async function loadUserOrcids(token: string): Promise<LinkedOrcidJsonData[] | null> {
   try {
     const response = await fetch(process.env.GATEWAY_BASE_URL! + "/auth/me", {
       headers: await getHttpHeaderForGateway(token),
       cache: "no-store",
     });
     if (!response.ok) return null;
-    return toLinkedOrcids(await response.json());
+    return PortalOrcid.fromUser(await response.json()).map(orcid => orcid.toLinkedJson());
   } catch {
     return null;
   }
