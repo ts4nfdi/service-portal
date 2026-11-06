@@ -1,5 +1,6 @@
 "use client";
 
+import { downloadJson } from "@/app/ui/commons/downloadJson";
 import { Modal, ModalButton } from "@/app/ui/commons/modal";
 import { DownloadIcon, EditIcon, TrashIcon } from "@/app/ui/commons/icons";
 import { WarningAlert } from "@/app/ui/commons/snippets";
@@ -46,19 +47,8 @@ export default function CollectionContentCmp(props: {
   }
 
   function downloadCollectionJsonData() {
-    const json = JSON.stringify(collection.toJson(), null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    const filenameBase =
-      props.collection.label || props.collection.id || "collection";
-
-    link.href = url;
-    link.download = `${filenameBase.replace(/[^a-z0-9-_]+/gi, "-")}.json`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
+    const filenameBase = props.collection.label || props.collection.id || "collection";
+    downloadJson(collection.toJson(), `${filenameBase.replace(/[^a-z0-9-_]+/gi, "-")}.json`);
   }
 
   return (

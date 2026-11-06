@@ -1,6 +1,6 @@
 'use server'
 
-import {ActionResponse, Collection, Terminology} from "./types";
+import type {CollectionActionResponse, CollectionCreationError, Collection, Terminology} from "./types";
 import {getAuthenticatedUser} from "@/app/libs/auth";
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {scheduleCollectionStatistics} from "@/app/libs/collectionStatistics";
@@ -31,7 +31,7 @@ async function loadCollectionCreatorIdentities(token: string): Promise<Collectio
 }
 
 
-export async function getUserCollectionList(): Promise<ActionResponse> {
+export async function getUserCollectionList(): Promise<CollectionActionResponse<PortalCollectionJsonData[]>> {
     try {
         const { token } = await getAuthenticatedUser();
         if (!token) {
@@ -59,7 +59,7 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function getPublicCollectionList(): Promise<ActionResponse> {
+export async function getPublicCollectionList(): Promise<CollectionActionResponse<PortalCollectionJsonData[]>> {
     try {
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/collections/", {
@@ -83,7 +83,7 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
 }
 
 
-export async function createCollection(collection: PortalCollectionJsonData, creatorIdentity: string): Promise<ActionResponse> {
+export async function createCollection(collection: PortalCollectionJsonData, creatorIdentity: string): Promise<CollectionActionResponse<PortalCollectionJsonData, string | CollectionCreationError>> {
     creatorIdentity = normalizeOrcidId(creatorIdentity) ?? creatorIdentity;
     try {
         const { token } = await getAuthenticatedUser();
@@ -156,7 +156,7 @@ export async function createCollection(collection: PortalCollectionJsonData, cre
 }
 
 
-export async function updateCollection(collection: PortalCollectionJsonData): Promise<ActionResponse> {
+export async function updateCollection(collection: PortalCollectionJsonData): Promise<CollectionActionResponse<PortalCollectionJsonData>> {
     try {
         const { token } = await getAuthenticatedUser();
         if (!token) {
@@ -208,7 +208,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
 }
 
 
-export async function deleteCollection(collectionId: string): Promise<ActionResponse> {
+export async function deleteCollection(collectionId: string): Promise<CollectionActionResponse<string>> {
     try {
         const { token } = await getAuthenticatedUser();
         if (!token) {

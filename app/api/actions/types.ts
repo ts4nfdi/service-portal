@@ -1,4 +1,16 @@
-import {PortalPublicationJsonData} from "@/app/concepts";
+import type {PortalPublicationJsonData} from "@/app/concepts";
+
+export type CollectionActionResponse<Content, Failure = string> =
+  | { status: true; content: Content }
+  | { status: false; content: Failure };
+
+export type CollectionCreationError = {
+  status: number;
+  statusText: string;
+  error: string;
+  message?: string;
+  path?: string;
+};
 
 export type ActionResponse = {
   status: boolean,

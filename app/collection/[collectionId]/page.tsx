@@ -2,9 +2,7 @@ import { getPublicCollectionList, getUserCollectionList } from "@/app/api/action
 import { ErrorAlert } from "@/app/ui/commons/snippets";
 import Link from "next/link";
 import { CollectionPageContent } from "@/app/clientExports";
-import { PortalCollectionJsonData } from "@/app/concepts";
 import { getAuthenticatedUser } from "@/app/libs/auth";
-import { ActionResponse } from "@/app/api/actions/types";
 import "../../ui/collection/styles.css";
 import { getRequestLocale } from "@/app/libs/locale";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
@@ -17,18 +15,17 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
   const { collectionId } = await params;
 
   const { token } = await getAuthenticatedUser();
-  let publicCollectionsListResp: ActionResponse = { status: false, content: [] };
-  let userCollectionsListResp: ActionResponse = { status: false, content: [] };
-  publicCollectionsListResp = await getPublicCollectionList();
-  if (token) {
-    userCollectionsListResp = await getUserCollectionList();
-  }
-  if (!publicCollectionsListResp.status && !userCollectionsListResp.status) {
+  const publicCollectionsListResp = await getPublicCollectionList();
+  const userCollectionsListResp = token ? await getUserCollectionList() : null;
+  if (!publicCollectionsListResp.status && !userCollectionsListResp?.status) {
     return renderNotFoundPage();
   }
-  let collectionList = [...userCollectionsListResp.content, ...publicCollectionsListResp.content];
+  const collectionList = [
+    ...(userCollectionsListResp?.status ? userCollectionsListResp.content : []),
+    ...(publicCollectionsListResp.status ? publicCollectionsListResp.content : []),
+  ];
 
-  const collection = collectionList.find((data: PortalCollectionJsonData) => data.id === collectionId);
+  const collection = collectionList.find((data) => data.id === collectionId);
 
   if (!collection) {
     return renderNotFoundPage();

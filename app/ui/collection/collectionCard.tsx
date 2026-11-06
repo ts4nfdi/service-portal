@@ -1,5 +1,6 @@
 'use client'
 
+import { downloadJson } from "@/app/ui/commons/downloadJson";
 import {ModalButton, Modal} from "../commons/modal";
 import {WarningAlert} from "../commons/snippets";
 import {deleteCollection} from "@/app/api/actions/collections";
@@ -29,17 +30,7 @@ export default function CollectionCard(props: CmpProps) {
     const creatorIdentity = props.collection.creatorIdentity();
 
     function downloadCollectionJsonData() {
-        const json = JSON.stringify(props.collection.toJson(), null, 2);
-        const blob = new Blob([json], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = `collection-${props.collection.id}.json`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
+        downloadJson(props.collection.toJson(), `collection-${props.collection.id}.json`);
     }
 
     function renderTerminologies(terminologies: PortalTerminology[]) {

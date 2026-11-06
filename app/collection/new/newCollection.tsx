@@ -2,10 +2,9 @@
 'use client'
 
 import { Loading } from "@/app/ui/commons/snippets";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
+import { useEffect, useRef, useState } from "react";
 import { createCollection, getCollectionCreatorIdentities } from "@/app/api/actions/collections";
-import { getCachedTerminologyOptions } from "@/app/ui/collection/terminologyOptionsCache";
+import { useTerminologyOptions } from "@/app/ui/collection/useTerminologyOptions";
 import { CollectionCreatorIdentity, PortalCollection, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
@@ -38,7 +37,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   const searchParams = useSearchParams();
 
-  const [selectedTerminologies, setSelectedTerminologies] = useState<AutoCompleteSelectedTermType[]>([]);
   const [formIsSubmitted, setFormIsSubmited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<PortalUser[]>([]);
@@ -46,10 +44,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [creationMethod, setCreationMethod] = useState<CreationMethod>();
   const [manualStep, setManualStep] = useState<ManualStep>(1);
   const [bulkStep, setBulkStep] = useState<BulkStep>(1);
-  const [terminologyOptions, setTerminologyOptions] = useState<PortalTerminologyOption[]>([]);
-  const [terminologyOptionsLoaded, setTerminologyOptionsLoaded] = useState(false);
-  const [terminologyOptionsLoading, setTerminologyOptionsLoading] = useState(false);
-  const [terminologyOptionsFailed, setTerminologyOptionsFailed] = useState(false);
+  const { terminologyOptions, terminologyOptionsLoaded, terminologyOptionsLoading, terminologyOptionsFailed, loadTerminologyOptions } = useTerminologyOptions();
   const [selectedManualTerminologies, setSelectedManualTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [selectedBulkProviders, setSelectedBulkProviders] = useState<string[]>([]);
   const [selectedBulkTerminologies, setSelectedBulkTerminologies] = useState<PortalTerminologyOption[]>([]);
@@ -65,7 +60,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [savingOrcid, setSavingOrcid] = useState(false);
   const [orcidSaveFailed, setOrcidSaveFailed] = useState(false);
   const needsOrcid = !orcidStepComplete;
-  const terminologyRequestInFlight = useRef(false);
   const submissionInFlight = useRef(false);
 
   async function saveOrcid(event: React.FormEvent<HTMLFormElement>) {
@@ -94,29 +88,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }
 
-  const loadTerminologyOptions = useCallback(async () => {
-    if (terminologyRequestInFlight.current) {
-      return;
-    }
-    terminologyRequestInFlight.current = true;
-    setTerminologyOptionsLoading(true);
-    setTerminologyOptionsFailed(false);
-    try {
-      const options = await getCachedTerminologyOptions();
-      if (!options) {
-        setTerminologyOptionsFailed(true);
-        return;
-      }
-      setTerminologyOptions(options);
-      setTerminologyOptionsLoaded(true);
-    } catch {
-      setTerminologyOptionsFailed(true);
-    } finally {
-      terminologyRequestInFlight.current = false;
-      setTerminologyOptionsLoading(false);
-    }
-  }, []);
-
   async function submit() {
     if (needsOrcid || !accountIdentities?.some(({ id }) => id === creatorIdentity) || submissionInFlight.current) {
       return;
@@ -132,11 +103,11 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
         return { username: user.username, orcid, role: "ADMIN" };
       });
       pCollection.isPublic = isPublic;
-      pCollection.terminologies = selectedTerminologies.map((terminology: AutoCompleteSelectedTermType) => {
+      pCollection.terminologies = (creationMethod === "manual" ? selectedManualTerminologies : selectedBulkTerminologies).map((option) => {
         let t = new PortalTerminology();
-        t.label = terminology.label ?? "";
-        t.uri = terminology.iri ?? "";
-        t.source = terminology.source ?? "";
+        t.label = option.terminologyId;
+        t.uri = option.uri;
+        t.source = option.providerId;
         t.type = "DATABASE";
         return t;
       });
@@ -174,24 +145,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     setSelectedCollaborators(selectedList);
   }
 
-  function selectManualTerminologies(options: PortalTerminologyOption[]) {
-    setSelectedManualTerminologies(options);
-    setCollectionTerminologies(options);
-  }
-
-  function selectBulkTerminologies(options: PortalTerminologyOption[]) {
-    setSelectedBulkTerminologies(options);
-    setCollectionTerminologies(options);
-  }
-
-  function setCollectionTerminologies(options: PortalTerminologyOption[]) {
-    setSelectedTerminologies(options.map((option) => ({
-      label: option.terminologyId,
-      iri: option.uri,
-      source: option.providerId,
-    })));
-  }
-
   function goBack() {
     if (creationMethod === "manual" && manualStep > 1) {
       setManualStep((manualStep - 1) as ManualStep);
@@ -210,7 +163,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   function goToBulkTerminologies() {
     const options = filterOptionsByProviders(terminologyOptions, selectedBulkProviders);
-    selectBulkTerminologies(options);
+    setSelectedBulkTerminologies(options);
     setBulkStep(2);
   }
 
@@ -232,7 +185,6 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     setCreationMethod(undefined);
     setManualStep(1);
     setBulkStep(1);
-    setSelectedTerminologies([]);
     setSelectedManualTerminologies([]);
     setSelectedBulkProviders([]);
     setSelectedBulkTerminologies([]);
@@ -261,7 +213,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
 
   function renderCurrentStep() {
     if (creationMethod === "manual" && manualStep === 1) {
-      return <TerminologySelectionField messages={t} options={terminologyOptions} selected={selectedManualTerminologies} loaded={terminologyOptionsLoaded} failed={terminologyOptionsFailed} onRetry={loadTerminologyOptions} onChange={selectManualTerminologies} />;
+      return <TerminologySelectionField messages={t} options={terminologyOptions} selected={selectedManualTerminologies} loaded={terminologyOptionsLoaded} failed={terminologyOptionsFailed} onRetry={loadTerminologyOptions} onChange={setSelectedManualTerminologies} />;
     }
     if (creationMethod === "bulk" && bulkStep === 1) {
       return renderBulkProviderStep();
@@ -269,7 +221,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     if (creationMethod === "bulk" && bulkStep === 2) {
       return <div className="form-input-group">
         <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkTerminologySelectionHelp}</p>
-        <TerminologyTable editMode options={selectedBulkOptions} selected={selectedBulkTerminologies} searchPlaceholder={t.terminologySearchPlaceholder} selectAllLabel={t.selectAllTerminologies} terminologyIdLabel={t.terminologyId} providerLabel={t.provider} descriptionLabel={t.description} selectedCountLabel={t.selectedTerminologyCount} previousPageLabel={t.previousPage} nextPageLabel={t.nextPage} pageLabel={t.pageOf} noResults={t.noTerminologiesFound} onChange={selectBulkTerminologies} />
+        <TerminologyTable editMode options={selectedBulkOptions} selected={selectedBulkTerminologies} searchPlaceholder={t.terminologySearchPlaceholder} selectAllLabel={t.selectAllTerminologies} terminologyIdLabel={t.terminologyId} providerLabel={t.provider} descriptionLabel={t.description} selectedCountLabel={t.selectedTerminologyCount} previousPageLabel={t.previousPage} nextPageLabel={t.nextPage} pageLabel={t.pageOf} noResults={t.noTerminologiesFound} onChange={setSelectedBulkTerminologies} />
       </div>;
     }
     if (isDetailsStep) {

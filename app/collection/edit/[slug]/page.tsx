@@ -1,14 +1,13 @@
 'use client'
 
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getUserCollectionList, updateCollection } from "@/app/api/actions/collections";
-import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { isOrcidId, PortalCollection, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
-import { getCachedTerminologyOptions } from "@/app/ui/collection/terminologyOptionsCache";
+import { useTerminologyOptions } from "@/app/ui/collection/useTerminologyOptions";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
@@ -34,13 +33,10 @@ export default function CollectionEdit() {
   const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const collaboratorsHaveOrcids = selectedCollaborators.every(isOrcidId);
-  const [terminologyOptions, setTerminologyOptions] = useState<PortalTerminologyOption[]>([]);
-  const [terminologyOptionsLoaded, setTerminologyOptionsLoaded] = useState(false);
-  const [terminologyOptionsFailed, setTerminologyOptionsFailed] = useState(false);
+  const { terminologyOptions, terminologyOptionsLoaded, terminologyOptionsFailed, loadTerminologyOptions } = useTerminologyOptions();
   const [selectedTerminologies, setSelectedTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
-  const terminologyRequestInFlight = useRef(false);
   const userOrcids = useRef(new Map<string, string>());
   const terminologySelectionInitialized = useRef(false);
   const collectionTerminologyOptions = useMemo(() => {
@@ -55,27 +51,6 @@ export default function CollectionEdit() {
       return optionsByKey.get(getTerminologyOptionKey(option)) ?? option;
     });
   }, [collection.terminologies, terminologyOptions]);
-
-  const loadTerminologyOptions = useCallback(async () => {
-    if (terminologyRequestInFlight.current) {
-      return;
-    }
-    terminologyRequestInFlight.current = true;
-    setTerminologyOptionsFailed(false);
-    try {
-      const options = await getCachedTerminologyOptions();
-      if (!options) {
-        setTerminologyOptionsFailed(true);
-        return;
-      }
-      setTerminologyOptions(options);
-      setTerminologyOptionsLoaded(true);
-    } catch {
-      setTerminologyOptionsFailed(true);
-    } finally {
-      terminologyRequestInFlight.current = false;
-    }
-  }, []);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     try {
@@ -133,7 +108,7 @@ export default function CollectionEdit() {
     setLoadedCollectionId(undefined);
     setError("");
     setLoading(true);
-    getUserCollectionList().then((response: ActionResponse) => {
+    getUserCollectionList().then((response) => {
       if (!active) {
         return;
       }
@@ -141,7 +116,7 @@ export default function CollectionEdit() {
         setError(response.content);
         return;
       }
-      const targetCollection = response.content.find((item: PortalCollectionJsonData) => item.id === collectionId);
+      const targetCollection = response.content.find((item) => item.id === collectionId);
       if (!targetCollection) {
         setError("not allowed");
         return;

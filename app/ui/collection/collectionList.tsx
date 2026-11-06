@@ -1,5 +1,6 @@
 'use client'
 
+import { downloadJson } from "@/app/ui/commons/downloadJson";
 import CollectionCard from "@/app/ui/collection/collectionCard";
 import {TextInput} from "@/app/ui/commons/snippets";
 import {useEffect, useState} from "react";
@@ -26,19 +27,9 @@ export default function CollectionListCmp(props: {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(COLLECTION_LIST_PAGE_SIZE);
 
-  function downloadCollectionsJsonData() {
-    const publicCollections = props.collections.filter((collection) => collection.isPublic);
-    const json = JSON.stringify(publicCollections, null, 2);
-        const blob = new Blob([json], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = "my-collections.json";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
+    function downloadCollectionsJsonData() {
+        const publicCollections = props.collections.filter((collection) => collection.isPublic);
+        downloadJson(publicCollections, "my-collections.json");
     }
 
     function filterList(query: string) {

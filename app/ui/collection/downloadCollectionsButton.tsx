@@ -1,5 +1,6 @@
 'use client'
 
+import { downloadJson } from "@/app/ui/commons/downloadJson";
 import {PortalCollectionJsonData} from "@/app/concepts";
 import {DownloadIcon} from "@/app/ui/commons/icons";
 import { useLocale } from "@/app/i18n";
@@ -9,17 +10,7 @@ export default function DownloadCollectionsButton(props: { collections: PortalCo
     const t = collectionUiMessages[useLocale()];
     function downloadAllCollectionsJsonData() {
         const publicCollections = props.collections.filter((collection) => collection.isPublic);
-        const json = JSON.stringify(publicCollections, null, 2);
-        const blob = new Blob([json], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = "collections.json";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
+        downloadJson(publicCollections, "collections.json");
     }
 
     return (

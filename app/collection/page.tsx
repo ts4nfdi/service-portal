@@ -7,7 +7,6 @@ import { cache, Suspense } from "react";
 import { CollectionList } from "@/app/clientExports";
 import { getAuthenticatedUser } from "@/app/libs/auth";
 import Link from "next/link";
-import { ActionResponse } from "@/app/api/actions/types";
 import Image from "next/image";
 import DownloadCollectionsButton from "@/app/ui/collection/downloadCollectionsButton";
 import { PortalCollectionJsonData } from "@/app/concepts";
@@ -18,22 +17,14 @@ import { localizePath } from "../libs/localePath";
 
 const getCollectionsData = cache(
   async (token: string | null): Promise<PortalCollectionJsonData[] | null> => {
-    let publicCollectionsListResp: ActionResponse =
-      await getPublicCollectionList();
-    let userCollectionsListResp: ActionResponse = {
-      status: false,
-      content: [],
-    };
-
-    if (token) {
-      userCollectionsListResp = await getUserCollectionList();
-    }
+    const publicCollectionsListResp = await getPublicCollectionList();
+    const userCollectionsListResp = token ? await getUserCollectionList() : null;
 
     const collections: PortalCollectionJsonData[] = [
       ...(publicCollectionsListResp.status
         ? publicCollectionsListResp.content
         : []),
-      ...(userCollectionsListResp.status
+      ...(userCollectionsListResp?.status
         ? userCollectionsListResp.content
         : []),
     ];
