@@ -18,6 +18,6 @@
     @apply border-0 cursor-pointer;
 }
 
-.ontology-info-widget .euiCard {
+.terminology-info-widget .euiCard {
     @apply shadow-none;
 }

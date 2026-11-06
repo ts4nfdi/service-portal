@@ -89,7 +89,7 @@ export default function LookupServiceWidget() {
     setSelectedTerm({
       iri: result.iri,
       label: result.label,
-      ontology_name: result.ontology_name,
+      terminologyName: result.ontology_name,
       short_form: result.short_form,
       type: result.type,
     });
@@ -127,7 +127,7 @@ export default function LookupServiceWidget() {
       )}
       <Modal
         id="lookup-term-modal"
-        title={`${selectedTerm?.ontology_name ?? ""}:${selectedTerm?.label ?? ""}`}
+        title={`${selectedTerm?.terminologyName ?? ""}:${selectedTerm?.label ?? ""}`}
         classNames="max-w-6xl"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

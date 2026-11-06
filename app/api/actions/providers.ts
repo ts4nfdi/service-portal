@@ -2,7 +2,7 @@
 
 import {getHttpHeaderForGateway} from "@/app/libs/server_utils";
 import {Source, SourcesJson} from "@/app/api/actions/types";
-import {PortalOntologyOption, PortalProvider, PortalSourcesJsonData} from "@/app/concepts";
+import {PortalTerminologyOption, PortalProvider, PortalSourcesJsonData} from "@/app/concepts";
 import SourcesJsonMetadata from "../../provider/provider.json";
 import SourcesJsonMetadataDe from "../../provider/provider.de.json";
 
@@ -53,10 +53,10 @@ export async function getSourcesListOfTerminologies(dbName: string): Promise<{ l
     }
 }
 
-export async function getOntologyOptions(): Promise<PortalOntologyOption[] | null> {
+export async function getTerminologyOptions(): Promise<PortalTerminologyOption[] | null> {
     try {
         const resp = await fetch(
-            process.env.ONTOLOGY_OPTIONS_URL ??
+            process.env.TERMINOLOGY_OPTIONS_URL ??
             `${process.env.GATEWAY_BASE_URL?.replace(/\/$/, "")}/ols4/api/ontologies`,
             {cache: "no-store"}
         );
@@ -64,20 +64,20 @@ export async function getOntologyOptions(): Promise<PortalOntologyOption[] | nul
             return null;
         }
         const data = await resp.json();
-        return (data._embedded?.ontologies ?? []).map((ontology: {
+        return (data._embedded?.ontologies ?? []).map((terminology: {
             ontologyId?: string,
             provider?: { provider_name?: string },
             description?: string | string[] | null,
             id?: string,
             URI?: string,
         }) => ({
-            ontologyId: ontology.ontologyId ?? "",
-            providerId: ontology.provider?.provider_name ?? "",
-            description: Array.isArray(ontology.description)
-                ? ontology.description.join(" ")
-                : ontology.description ?? "",
-            uri: ontology.URI ?? ontology.id ?? "",
-        })).filter((ontology: PortalOntologyOption) => ontology.ontologyId && ontology.providerId && ontology.uri);
+            terminologyId: terminology.ontologyId ?? "",
+            providerId: terminology.provider?.provider_name ?? "",
+            description: Array.isArray(terminology.description)
+                ? terminology.description.join(" ")
+                : terminology.description ?? "",
+            uri: terminology.URI ?? terminology.id ?? "",
+        })).filter((terminology: PortalTerminologyOption) => terminology.terminologyId && terminology.providerId && terminology.uri);
     } catch {
         return null;
     }

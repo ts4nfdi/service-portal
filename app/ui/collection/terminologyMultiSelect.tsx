@@ -1,13 +1,13 @@
 'use client'
 
-import { PortalOntologyOption } from "@/app/concepts";
+import { PortalTerminologyOption } from "@/app/concepts";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { filterTerminologyOptions, getTerminologyOptionKey } from "@/app/ui/collection/terminologyOptions";
 
 type TerminologyMultiSelectProps = {
   label: string;
-  options: PortalOntologyOption[];
-  selected: PortalOntologyOption[];
+  options: PortalTerminologyOption[];
+  selected: PortalTerminologyOption[];
   providerDescriptions: Record<string, string>;
   searchPlaceholder: string;
   providerFilterLabel: string;
@@ -18,7 +18,7 @@ type TerminologyMultiSelectProps = {
   limitedResults: string;
   removeLabel: string;
   showSelected?: boolean;
-  onChange: (selected: PortalOntologyOption[]) => void;
+  onChange: (selected: PortalTerminologyOption[]) => void;
 }
 
 export default function TerminologyMultiSelect({
@@ -97,7 +97,7 @@ export default function TerminologyMultiSelect({
     return () => document.removeEventListener("pointerdown", closeDropdown);
   }, [terminologyDropdownOpen]);
 
-  function toggle(option: PortalOntologyOption) {
+  function toggle(option: PortalTerminologyOption) {
     const key = getTerminologyOptionKey(option);
     onChange(selectedKeys.has(key)
       ? selected.filter((item) => getTerminologyOptionKey(item) !== key)
@@ -119,10 +119,10 @@ export default function TerminologyMultiSelect({
               type="button"
               key={getTerminologyOptionKey(option)}
               className="rounded bg-ts4nfdi-brand-color px-2 py-1 text-sm text-white dark:bg-ts4nfdi-brand-color"
-              aria-label={`${removeLabel} ${option.ontologyId} (${option.providerId})`}
+              aria-label={`${removeLabel} ${option.terminologyId} (${option.providerId})`}
               onClick={() => toggle(option)}
             >
-              {option.ontologyId}({option.providerId}) ×
+              {option.terminologyId}({option.providerId}) ×
             </button>
           )}
         </div>
@@ -229,7 +229,7 @@ export default function TerminologyMultiSelect({
                   className="mt-1 h-4 w-4 rounded border-gray-300 text-ts4nfdi-brand-color focus:ring-ts4nfdi-brand-color dark:border-gray-500 dark:bg-gray-600"
                 />
                 <span>
-                  <span className="block font-medium">{option.ontologyId}({option.providerId})</span>
+                  <span className="block font-medium">{option.terminologyId}({option.providerId})</span>
                   {option.description && <span className="mt-1 block text-sm text-gray-600 dark:text-gray-300">{option.description}</span>}
                 </span>
               </label>

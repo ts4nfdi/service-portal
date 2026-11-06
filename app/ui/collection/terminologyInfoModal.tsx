@@ -3,15 +3,15 @@
 import dynamic from "next/dynamic";
 import {useState} from "react";
 import {QueryClient, QueryClientProvider} from "react-query";
-import {OntologyInfoWidgetProps} from "@ts4nfdi/terminology-service-suite";
+import {OntologyInfoWidgetProps as TerminologyInfoWidgetProps} from "@ts4nfdi/terminology-service-suite";
 import {Modal} from "@/app/ui/commons/modal";
 import {PortalTerminology} from "@/app/concepts";
 import {useLocale} from "@/app/i18n";
 import {collectionUiMessages} from "@/app/ui/collection/messages";
 
-const OntologyInfoWidget = dynamic<OntologyInfoWidgetProps>(() =>
+const TerminologyInfoWidget = dynamic<TerminologyInfoWidgetProps>(() =>
     import("@ts4nfdi/terminology-service-suite").then((mod) => mod.OntologyInfoWidget)
-, {ssr: false}) as React.ComponentType<OntologyInfoWidgetProps>;
+, {ssr: false}) as React.ComponentType<TerminologyInfoWidgetProps>;
 
 const DEFAULT_API = "https://api.terminology.tib.eu/api";
 
@@ -48,7 +48,7 @@ export default function TerminologyInfoModal(props: CmpProps) {
     const [isOpen, setIsOpen] = useState(false);
     const database = DATABASES[props.terminology.source.toLowerCase()];
     const api = database?.url ?? DEFAULT_API;
-    const ontologyId = props.terminology.label.trim().toLowerCase();
+    const terminologyId = props.terminology.label.trim().toLowerCase();
     const modalId = modalSafeId(`terminology-info-${props.collectionId ?? "collection"}-${props.terminology.source}-${props.terminology.label}`);
 
     function openModal() {
@@ -62,10 +62,10 @@ export default function TerminologyInfoModal(props: CmpProps) {
     return (
         <>
             <button
-                aria-label={`${t.showOntologyInfo} ${props.terminology.label}`}
+                aria-label={`${t.showTerminologyInfo} ${props.terminology.label}`}
                 className="badge terminology-badge terminology-badge-button"
                 onClick={openModal}
-                title={`${t.showOntologyInfo} ${props.terminology.label}`}
+                title={`${t.showTerminologyInfo} ${props.terminology.label}`}
                 type="button"
             >
                 {props.terminology.label}{props.showSource !== false && ` (${props.terminology.source})`}
@@ -76,14 +76,14 @@ export default function TerminologyInfoModal(props: CmpProps) {
                 content={
                     isOpen &&
                     <QueryClientProvider client={queryClient}>
-                        <OntologyInfoWidget
+                        <TerminologyInfoWidget
                             api={api}
-                            ontologyId={ontologyId}
+                            ontologyId={terminologyId}
                             parameter=""
                             useLegacy={database?.type === "ols2"}
                             hasTitle={false}
                             showBadges
-                            className="ontology-info-widget"
+                            className="terminology-info-widget"
                         />
                     </QueryClientProvider>
                 }

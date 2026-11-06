@@ -1,11 +1,11 @@
 'use client'
 
-import { PortalOntologyOption } from "@/app/concepts";
+import { PortalTerminologyOption } from "@/app/concepts";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { getTerminologyOptionKey } from "@/app/ui/collection/terminologyOptions";
 
 type TerminologyTableProps = {
-  options: PortalOntologyOption[];
+  options: PortalTerminologyOption[];
   searchPlaceholder: string;
   terminologyIdLabel: string;
   providerLabel: string;
@@ -16,7 +16,7 @@ type TerminologyTableProps = {
   noResults: string;
   editMode?: boolean;
   showSearch?: boolean;
-  selected?: PortalOntologyOption[];
+  selected?: PortalTerminologyOption[];
   selectAllLabel?: string;
   selectedCountLabel?: string;
   providerDescriptions?: Record<string, string>;
@@ -24,8 +24,8 @@ type TerminologyTableProps = {
   allProvidersLabel?: string;
   additionalProvidersLabel?: string;
   clearProvidersLabel?: string;
-  onChange?: (options: PortalOntologyOption[]) => void;
-  renderTerminology?: (option: PortalOntologyOption) => ReactNode;
+  onChange?: (options: PortalTerminologyOption[]) => void;
+  renderTerminology?: (option: PortalTerminologyOption) => ReactNode;
 }
 
 export default function TerminologyTable({
@@ -66,7 +66,7 @@ export default function TerminologyTable({
     const query = search.trim().toLowerCase();
     return options.filter((option) =>
       (selectedProviders.length === 0 || selectedProviders.includes(option.providerId)) &&
-      (!query || `${option.ontologyId} ${option.providerId} ${option.description}`.toLowerCase().includes(query)),
+      (!query || `${option.terminologyId} ${option.providerId} ${option.description}`.toLowerCase().includes(query)),
     );
   }, [options, search, selectedProviders]);
   const allFilteredSelected = filteredOptions.length > 0 && filteredOptions.every((option) => selectedKeys.has(getTerminologyOptionKey(option)));
@@ -105,7 +105,7 @@ export default function TerminologyTable({
     };
   }, [providerDropdownOpen]);
 
-  function toggle(option: PortalOntologyOption) {
+  function toggle(option: PortalTerminologyOption) {
     const key = getTerminologyOptionKey(option);
     onChange?.(selectedKeys.has(key)
       ? selected.filter((item) => getTerminologyOptionKey(item) !== key)
@@ -218,13 +218,13 @@ export default function TerminologyTable({
                       type="checkbox"
                       checked={selectedKeys.has(getTerminologyOptionKey(option))}
                       onChange={() => toggle(option)}
-                      aria-label={`${option.ontologyId} (${option.providerId})`}
+                      aria-label={`${option.terminologyId} (${option.providerId})`}
                       className="h-4 w-4 rounded border-gray-300 text-ts4nfdi-brand-color focus:ring-ts4nfdi-brand-color dark:border-gray-500 dark:bg-gray-600"
                     />
                   </td>
                 }
                 <th scope="row" className="p-3 font-medium text-gray-900 dark:text-white">
-                  {renderTerminology?.(option) ?? option.ontologyId}
+                  {renderTerminology?.(option) ?? option.terminologyId}
                 </th>
                 <td className="p-3">{option.providerId}</td>
                 <td className="p-3">{option.description || "—"}</td>

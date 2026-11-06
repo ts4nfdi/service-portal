@@ -33,8 +33,8 @@ export default function AutoCompleteTSS(props: CmpType) {
   const t = widgetUiMessages[useLocale()];
   const queryClient = new QueryClient();
 
-  function handleSelection(terms: AutoCompleteSelectedTermType[]) {
-    props.setSelectedTerm(terms);
+  function handleSelection(terms: (Omit<AutoCompleteSelectedTermType, "terminologyName"> & { ontology_name?: string })[]) {
+    props.setSelectedTerm(terms.map(({ ontology_name, ...term }) => ({ ...term, terminologyName: ontology_name })));
   }
 
   return (

@@ -59,10 +59,9 @@ test("site footer is loaded", async ({page}) => {
      */
     await acceptTrackingConsent(page);
     await page.goto(BASE_URL);
-    const isBaseLogoLoaded = await isImageLoaded(page, 'img[alt="Base4nfdi Logo"]');
-    expect(isBaseLogoLoaded).toBe(true);
-    const isDfgLogoLoaded = await isImageLoaded(page, 'img[alt="DFG Logo"]');
-    expect(isDfgLogoLoaded).toBe(true);
+    await page.locator('img[alt="Base4nfdi Logo"]').scrollIntoViewIfNeeded();
+    await expect.poll(() => isImageLoaded(page, 'img[alt="Base4nfdi Logo"]')).toBe(true);
+    await expect.poll(() => isImageLoaded(page, 'img[alt="DFG Logo"]')).toBe(true);
     await expect(page.locator("footer a[href='/termsofuse']")).toHaveText("Terms of use");
 });
 

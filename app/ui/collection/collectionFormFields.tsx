@@ -6,19 +6,19 @@ import { useSession } from "next-auth/react";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import TerminologyTable from "@/app/ui/collection/terminologyTable";
 import TerminologyMultiSelect from "@/app/ui/collection/terminologyMultiSelect";
-import { PortalOntologyOption, PortalUser } from "@/app/concepts";
+import { PortalTerminologyOption, PortalUser } from "@/app/concepts";
 
 type Messages = typeof collectionUiMessages[keyof typeof collectionUiMessages];
 
 type TerminologySelectionFieldProps = {
   messages: Messages;
-  options: PortalOntologyOption[];
-  selected: PortalOntologyOption[];
+  options: PortalTerminologyOption[];
+  selected: PortalTerminologyOption[];
   loaded: boolean;
   failed: boolean;
   table?: boolean;
   onRetry: () => void;
-  onChange: (options: PortalOntologyOption[]) => void;
+  onChange: (options: PortalTerminologyOption[]) => void;
 }
 
 export function TerminologySelectionField({

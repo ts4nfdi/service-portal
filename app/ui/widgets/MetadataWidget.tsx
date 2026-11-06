@@ -61,8 +61,7 @@ export default function MetadataWidgetTSS(props: CmpProp) {
             iri={selectedTerm.iri ?? ""}
             // onNavigateToDisambiguate={}
             // onNavigateToEntity={}
-            // onNavigateToOntology={}
-            ontologyId={props.selectedTerm.ontology_name}
+            ontologyId={props.selectedTerm.terminologyName}
             parameter=""
             termLink=""
             terminologyInfoTab

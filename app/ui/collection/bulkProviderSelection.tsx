@@ -1,10 +1,10 @@
 'use client'
 
-import { PortalOntologyOption } from "@/app/concepts";
+import { PortalTerminologyOption } from "@/app/concepts";
 import { useMemo } from "react";
 
 type BulkProviderSelectionProps = {
-  options: PortalOntologyOption[];
+  options: PortalTerminologyOption[];
   selected: string[];
   descriptions: Record<string, string>;
   label: string;

@@ -54,7 +54,7 @@ export default defineConfig({
     env: {
       ...process.env,
       PORT: testPort,
-      ONTOLOGY_OPTIONS_URL: `${MOCK_GATEWAY_BASE_URL}/api-gateway/ols4/api/ontologies`,
+      TERMINOLOGY_OPTIONS_URL: `${MOCK_GATEWAY_BASE_URL}/api-gateway/ols4/api/ontologies`,
       DEBUG_MODE: "true",
       NEXT_DEBUG_MODE: "true",
     },

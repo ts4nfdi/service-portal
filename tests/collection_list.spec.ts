@@ -146,7 +146,7 @@ test("collection cards show details, copy actions and terminology tags", async (
   await expect(card).toContainText(collection.description!);
   await expect(
     card.getByRole("button", {
-      name: `Show ontology information for ${collection.terminologies![0].label}`,
+      name: `Show terminology information for ${collection.terminologies![0].label}`,
     }),
   ).toBeVisible();
 

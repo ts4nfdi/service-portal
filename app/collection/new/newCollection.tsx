@@ -5,8 +5,8 @@ import { Loading } from "@/app/ui/commons/snippets";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AutoCompleteSelectedTermType } from "@/app/ui/widgets/types";
 import { createCollection, getCollectionCreatorIdentities } from "@/app/api/actions/collections";
-import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
-import { CollectionCreatorIdentity, PortalCollection, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { getCachedTerminologyOptions } from "@/app/ui/collection/terminologyOptionsCache";
+import { CollectionCreatorIdentity, PortalCollection, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { useSession } from "next-auth/react";
 import LoginFormWrapper from "@/app/user/login/page";
 import { getUserList } from "@/app/api/actions/users";
@@ -46,13 +46,13 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [creationMethod, setCreationMethod] = useState<CreationMethod>();
   const [manualStep, setManualStep] = useState<ManualStep>(1);
   const [bulkStep, setBulkStep] = useState<BulkStep>(1);
-  const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
-  const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
-  const [ontologyOptionsLoading, setOntologyOptionsLoading] = useState(false);
-  const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
-  const [selectedManualTerminologies, setSelectedManualTerminologies] = useState<PortalOntologyOption[]>([]);
+  const [terminologyOptions, setTerminologyOptions] = useState<PortalTerminologyOption[]>([]);
+  const [terminologyOptionsLoaded, setTerminologyOptionsLoaded] = useState(false);
+  const [terminologyOptionsLoading, setTerminologyOptionsLoading] = useState(false);
+  const [terminologyOptionsFailed, setTerminologyOptionsFailed] = useState(false);
+  const [selectedManualTerminologies, setSelectedManualTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [selectedBulkProviders, setSelectedBulkProviders] = useState<string[]>([]);
-  const [selectedBulkTerminologies, setSelectedBulkTerminologies] = useState<PortalOntologyOption[]>([]);
+  const [selectedBulkTerminologies, setSelectedBulkTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [collectionTitle, setCollectionTitle] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
@@ -65,7 +65,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   const [savingOrcid, setSavingOrcid] = useState(false);
   const [orcidSaveFailed, setOrcidSaveFailed] = useState(false);
   const needsOrcid = !orcidStepComplete;
-  const ontologyRequestInFlight = useRef(false);
+  const terminologyRequestInFlight = useRef(false);
   const submissionInFlight = useRef(false);
 
   async function saveOrcid(event: React.FormEvent<HTMLFormElement>) {
@@ -94,26 +94,26 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     }
   }
 
-  const loadOntologyOptions = useCallback(async () => {
-    if (ontologyRequestInFlight.current) {
+  const loadTerminologyOptions = useCallback(async () => {
+    if (terminologyRequestInFlight.current) {
       return;
     }
-    ontologyRequestInFlight.current = true;
-    setOntologyOptionsLoading(true);
-    setOntologyOptionsFailed(false);
+    terminologyRequestInFlight.current = true;
+    setTerminologyOptionsLoading(true);
+    setTerminologyOptionsFailed(false);
     try {
-      const options = await getCachedOntologyOptions();
+      const options = await getCachedTerminologyOptions();
       if (!options) {
-        setOntologyOptionsFailed(true);
+        setTerminologyOptionsFailed(true);
         return;
       }
-      setOntologyOptions(options);
-      setOntologyOptionsLoaded(true);
+      setTerminologyOptions(options);
+      setTerminologyOptionsLoaded(true);
     } catch {
-      setOntologyOptionsFailed(true);
+      setTerminologyOptionsFailed(true);
     } finally {
-      ontologyRequestInFlight.current = false;
-      setOntologyOptionsLoading(false);
+      terminologyRequestInFlight.current = false;
+      setTerminologyOptionsLoading(false);
     }
   }, []);
 
@@ -174,19 +174,19 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     setSelectedCollaborators(selectedList);
   }
 
-  function selectManualTerminologies(options: PortalOntologyOption[]) {
+  function selectManualTerminologies(options: PortalTerminologyOption[]) {
     setSelectedManualTerminologies(options);
     setCollectionTerminologies(options);
   }
 
-  function selectBulkTerminologies(options: PortalOntologyOption[]) {
+  function selectBulkTerminologies(options: PortalTerminologyOption[]) {
     setSelectedBulkTerminologies(options);
     setCollectionTerminologies(options);
   }
 
-  function setCollectionTerminologies(options: PortalOntologyOption[]) {
+  function setCollectionTerminologies(options: PortalTerminologyOption[]) {
     setSelectedTerminologies(options.map((option) => ({
-      label: option.ontologyId,
+      label: option.terminologyId,
       iri: option.uri,
       source: option.providerId,
     })));
@@ -209,7 +209,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }
 
   function goToBulkTerminologies() {
-    const options = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
+    const options = filterOptionsByProviders(terminologyOptions, selectedBulkProviders);
     selectBulkTerminologies(options);
     setBulkStep(2);
   }
@@ -253,15 +253,15 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   function renderBulkProviderStep() {
     return <div className="form-input-group">
       <p className="mb-4 text-gray-700 dark:text-gray-200">{t.bulkProviderSelectionHelp}</p>
-      {!ontologyOptionsLoaded && !ontologyOptionsFailed && <Loading />}
-      {ontologyOptionsFailed && <OntologyLoadError onRetry={loadOntologyOptions} />}
-      {ontologyOptionsLoaded && <BulkProviderSelection options={ontologyOptions} selected={selectedBulkProviders} descriptions={t.providerDescriptions} label={t.selectProviders} countLabel={t.providerTerminologyCount} countSingularLabel={t.providerTerminologyCountSingular} onChange={setSelectedBulkProviders} />}
+      {!terminologyOptionsLoaded && !terminologyOptionsFailed && <Loading />}
+      {terminologyOptionsFailed && <TerminologyLoadError onRetry={loadTerminologyOptions} />}
+      {terminologyOptionsLoaded && <BulkProviderSelection options={terminologyOptions} selected={selectedBulkProviders} descriptions={t.providerDescriptions} label={t.selectProviders} countLabel={t.providerTerminologyCount} countSingularLabel={t.providerTerminologyCountSingular} onChange={setSelectedBulkProviders} />}
     </div>;
   }
 
   function renderCurrentStep() {
     if (creationMethod === "manual" && manualStep === 1) {
-      return <TerminologySelectionField messages={t} options={ontologyOptions} selected={selectedManualTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={selectManualTerminologies} />;
+      return <TerminologySelectionField messages={t} options={terminologyOptions} selected={selectedManualTerminologies} loaded={terminologyOptionsLoaded} failed={terminologyOptionsFailed} onRetry={loadTerminologyOptions} onChange={selectManualTerminologies} />;
     }
     if (creationMethod === "bulk" && bulkStep === 1) {
       return renderBulkProviderStep();
@@ -289,7 +289,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     return <button type="button" className="btn disabled:cursor-not-allowed disabled:opacity-50" disabled={loading} onClick={() => void submit()}>{t.create}</button>;
   }
 
-  function OntologyLoadError({ onRetry }: { onRetry: () => void }) {
+  function TerminologyLoadError({ onRetry }: { onRetry: () => void }) {
     return <div className="text-center" role="alert">
       <p className="text-red-700 dark:text-red-400">{t.terminologyLoadError}</p>
       <button type="button" className="btn !p-1 !text-sm" onClick={onRetry}>{t.retry}</button>
@@ -321,11 +321,11 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
   }, [session.data?.user.token, orcidLoadAttempt]);
 
   useEffect(() => {
-    if (!creationMethod || (!debugMode && !session.data?.user.token) || ontologyOptionsLoaded || ontologyOptionsLoading || ontologyOptionsFailed) {
+    if (!creationMethod || (!debugMode && !session.data?.user.token) || terminologyOptionsLoaded || terminologyOptionsLoading || terminologyOptionsFailed) {
       return;
     }
-    loadOntologyOptions();
-  }, [creationMethod, debugMode, loadOntologyOptions, ontologyOptionsFailed, ontologyOptionsLoaded, ontologyOptionsLoading, session.data?.user.token]);
+    loadTerminologyOptions();
+  }, [creationMethod, debugMode, loadTerminologyOptions, terminologyOptionsFailed, terminologyOptionsLoaded, terminologyOptionsLoading, session.data?.user.token]);
 
   useEffect(() => {
     if (!((creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4))) return;
@@ -350,7 +350,7 @@ export default function NewCollection({ debugMode = false }: { debugMode?: boole
     : ["w-1/4", "w-1/2", "w-3/4", "w-full"])[progressStep - 1];
   const isDetailsStep = (creationMethod === "manual" && manualStep === 2) || (creationMethod === "bulk" && bulkStep === 3);
   const isVisibilityStep = (creationMethod === "manual" && manualStep === 3) || (creationMethod === "bulk" && bulkStep === 4);
-  const selectedBulkOptions = filterOptionsByProviders(ontologyOptions, selectedBulkProviders);
+  const selectedBulkOptions = filterOptionsByProviders(terminologyOptions, selectedBulkProviders);
 
   if (session.status === "loading") return <Loading />;
   if (!session.data?.user.token) {

@@ -5,7 +5,7 @@ import { MOCK_COLLECTIONS } from "./fixtures/collections";
 export const MOCK_GATEWAY_PORT = 32123;
 export const MOCK_GATEWAY_BASE_URL = `http://127.0.0.1:${MOCK_GATEWAY_PORT}`;
 
-export const MOCK_ONTOLOGIES = [
+export const MOCK_TERMINOLOGIES = [
   {
     ontologyId: "alpha",
     provider: { provider_name: "tib" },
@@ -68,6 +68,18 @@ export function startMockGateway() {
       return;
     }
 
+    if (requestUrl.pathname === "/auth/me") {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ primaryOrcid: "0000-0002-1825-0097" }));
+      return;
+    }
+
+    if (requestUrl.pathname === "/users/" && request.method === "GET") {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end("[]");
+      return;
+    }
+
     if (
       request.method === "GET" &&
       (request.url === "/collections/" ||
@@ -87,7 +99,7 @@ export function startMockGateway() {
     if (requestUrl.pathname === "/api-gateway/ols4/api/ontologies") {
       response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify({
-        _embedded: { ontologies: MOCK_ONTOLOGIES },
+        _embedded: { ontologies: MOCK_TERMINOLOGIES },
       }));
       return;
     }

@@ -8,8 +8,8 @@ export type PortalTerminologyJsonData = {
   uri: string,
 }
 
-export type PortalOntologyOption = {
-  ontologyId: string,
+export type PortalTerminologyOption = {
+  terminologyId: string,
   providerId: string,
   description: string,
   uri: string,

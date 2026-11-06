@@ -48,7 +48,7 @@ test("collection page is accessible by uuid and shows collection details", async
   for (const terminology of COLLECTION.terminologies!) {
     await expect(
       page.getByRole("button", {
-        name: `Show ontology information for ${terminology.label}`,
+        name: `Show terminology information for ${terminology.label}`,
       }),
     ).toBeVisible();
   }

@@ -1,7 +1,7 @@
 {
   "agroportal": {
     "title": "AgroPortal",
-    "description": "Use AgroPortal to access and share ontologies. You can create ontology-based annotations for your own text , link your own project that uses ontologies to the description of those ontologies , find and create relations between terms in different ontologies, review and comment on ontologies and their components as you browse them. Sign in to AgroPortal to submit a new ontology or ontology-based project, provide comments on ontologies or add ontology mappings.",
+    "description": "Use AgroPortal to access and share terminologies. You can create terminology-based annotations for your own text , link your own project that uses terminologies to the description of those terminologies , find and create relations between terms in different terminologies, review and comment on terminologies and their components as you browse them. Sign in to AgroPortal to submit a new terminology or terminology-based project, provide comments on terminologies or add terminology mappings.",
     "contactUrl": "https://agroportal.lirmm.fr/feedback",
     "homepage": "https://agroportal.lirmm.fr/",
     "api": "https://data.agroportal.lirmm.fr",
@@ -25,7 +25,7 @@
   },
   "biodivportal": {
     "title": "BiodivPortal",
-    "description": "BiodivPortal offers access to a wide range of biodiversity-related ontologies, including vocabularies, taxonomies, and thesauri.",
+    "description": "BiodivPortal offers access to a wide range of biodiversity-related terminologies, including vocabularies, taxonomies, and thesauri.",
     "contactUrl": "https://biodivportal.gfbio.org/feedback",
     "homepage": "https://biodivportal.gfbio.org/",
     "api": "https://data.biodivportal.gfbio.org",
@@ -37,7 +37,7 @@
   },
   "ecoportal": {
     "title": "EcoPortal",
-    "description": "EcoPortal is an initiative of LifeWatch ERIC , the e-Science and Technology European Infrastructure for Biodiversity and Ecosystem Research. In the last decade, ecological research groups and infrastructures have contributed to the definition and the production of core and domain ontologies as well as of vocabularies and domain-relevant reference lists. In order to support the scientific community in the management and integration of these different approaches, LifeWatch ERIC has created EcoPortal, an online spe designed to collect semantic resources and provide the necessary services for enabling discovery and interoperability.",
+    "description": "EcoPortal is an initiative of LifeWatch ERIC , the e-Science and Technology European Infrastructure for Biodiversity and Ecosystem Research. In the last decade, ecological research groups and infrastructures have contributed to the definition and the production of core and domain terminologies as well as of vocabularies and domain-relevant reference lists. In order to support the scientific community in the management and integration of these different approaches, LifeWatch ERIC has created EcoPortal, an online spe designed to collect semantic resources and provide the necessary services for enabling discovery and interoperability.",
     "contactUrl": "https://ecoportal.lifewatch.eu/feedback",
     "homepage": "https://ecoportal.lifewatch.eu/",
     "api": "https://data.ecoportal.lifewatch.eu",
@@ -49,7 +49,7 @@
   },
   "lovportal": {
     "title": "LovPortal",
-    "description": "The home of ontologies and semantic artefacts in agri-food and related domains. ",
+    "description": "The home of terminologies and semantic artefacts in agri-food and related domains. ",
     "contactUrl": "https://lovportal.lirmm.fr/feedback",
     "homepage": "https://lovportal.lirmm.fr/",
     "api": "https://data.lovportal.lirmm.fr",
@@ -61,7 +61,7 @@
   },
   "ebi": {
     "title": "EBI Ontology Lookup Service",
-    "description": "The Ontology Lookup Service (OLS) is a repository for biomedical ontologies that aims to provide a single point of access to the latest ontology versions. You can browse the ontologies through the website as well as programmatically via the OLS API. OLS is developed and maintained by the Samples, Phenotypes and Ontologies Team at EMBL-EBI.",
+    "description": "The Ontology Lookup Service (OLS) is a repository for biomedical terminologies that aims to provide a single point of access to the latest terminology versions. You can browse the terminologies through the website as well as programmatically via the OLS API. OLS is developed and maintained by the Samples, Phenotypes and Ontologies Team at EMBL-EBI.",
     "contactUrl": "https://github.com/EBISPOT/ols4/issues",
     "homepage": "https://www.ebi.ac.uk/ols4/",
     "api": "https://www.ebi.ac.uk/ols4/api/v2",
@@ -73,7 +73,7 @@
   },
   "tib": {
     "title": "TIB Terminology Service",
-    "description": "The TIB Terminology Service provides a single point of access to terminology from domains such as architecture, chemistry, computer science, mathematics and physics. The Terminology Service is a repository for terminological resources based on semantic W3C standards like the Web Ontology Language (OWL 2). You can browse ontologies through the website or use its API to retrieve terminological information and use it in your technical services. In addition, you can register ontologies at the service.",
+    "description": "The TIB Terminology Service provides a single point of access to terminology from domains such as architecture, chemistry, computer science, mathematics and physics. The Terminology Service is a repository for terminological resources based on semantic W3C standards like the Web Ontology Language (OWL 2). You can browse terminologies through the website or use its API to retrieve terminological information and use it in your technical services. In addition, you can register terminologies at the service.",
     "contactUrl": "https://terminology.tib.eu/ts/contact",
     "homepage": "https://terminology.tib.eu/ts/",
     "api": "https://api.terminology.tib.eu/api/v2",
@@ -133,7 +133,7 @@
   },
   "gnd": {
     "title": "GND",
-    "description": "GND stands for “Gemeinsame Normdatei”, or Integrated Authority File. Originally, the word “Gemeinsam” (“integrated”, but also “together”, “collaboratively”, etc.) related to the merger of previously separate authority files. Today, GND stands for collaborative working, collectively setting standards and for the communal preservation of the GND. GND therefore represents the vision of promoting the commons of knowledge with the aid of freely usable authority data. The GND originates from the German library community and aims to solve the name ambiguity problem in the library world. Corresponding data is usually expressed in a customized MARC 21 Authority Format (GND MARC Format) which is quite domain specific and is not used beyond the library and publisher world. The GND ontology tries to bridge this gap by providing a format specification for the usage in the semantic web.",
+    "description": "GND stands for “Gemeinsame Normdatei”, or Integrated Authority File. Originally, the word “Gemeinsam” (“integrated”, but also “together”, “collaboratively”, etc.) related to the merger of previously separate authority files. Today, GND stands for collaborative working, collectively setting standards and for the communal preservation of the GND. GND therefore represents the vision of promoting the commons of knowledge with the aid of freely usable authority data. The GND originates from the German library community and aims to solve the name ambiguity problem in the library world. Corresponding data is usually expressed in a customized MARC 21 Authority Format (GND MARC Format) which is quite domain specific and is not used beyond the library and publisher world. The GND terminology tries to bridge this gap by providing a format specification for the usage in the semantic web.",
     "contactUrl": "https://github.com/hbz/lobid-organisations/issues",
     "homepage": "https://lobid.org/index-en",
     "api": "https://lobid.org/gnd/api",

@@ -7,7 +7,7 @@ import { deleteCollection } from "@/app/api/actions/collections";
 import { CopyToClipboard } from "@/app/clientExports";
 import {
   PortalCollection,
-  PortalOntologyOption,
+  PortalTerminologyOption,
   PortalTerminology,
   PortalCollectionJsonData,
 } from "@/app/concepts";
@@ -29,16 +29,16 @@ export default function CollectionContentCmp(props: {
   const canManage = collection.canManage(session?.data?.user?.username, session?.data?.user?.orcid);
   const creatorIdentity = collection.creatorIdentity();
 
-  const terminologyOptions: PortalOntologyOption[] = collection.terminologies.map((terminology) => ({
-    ontologyId: terminology.label,
+  const terminologyOptions: PortalTerminologyOption[] = collection.terminologies.map((terminology) => ({
+    terminologyId: terminology.label,
     providerId: terminology.source,
     description: "",
     uri: terminology.uri,
   }));
 
-  function renderTerminology(option: PortalOntologyOption) {
+  function renderTerminology(option: PortalTerminologyOption) {
     const terminology = new PortalTerminology();
-    terminology.label = option.ontologyId;
+    terminology.label = option.terminologyId;
     terminology.source = option.providerId;
     terminology.uri = option.uri;
     terminology.type = "DATABASE";

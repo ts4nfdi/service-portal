@@ -6,9 +6,9 @@ import { getUserCollectionList, updateCollection } from "@/app/api/actions/colle
 import { ActionResponse } from "@/app/api/actions/types";
 import { LeftArrowIcon } from "@/app/ui/commons/icons";
 import { Loading } from "@/app/ui/commons/snippets";
-import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalOntologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
+import { isOrcidId, PortalCollection, PortalCollectionJsonData, PortalTerminologyOption, PortalTerminology, PortalUser } from "@/app/concepts";
 import { getUserList } from "@/app/api/actions/users";
-import { getCachedOntologyOptions } from "@/app/ui/collection/ontologyOptionsCache";
+import { getCachedTerminologyOptions } from "@/app/ui/collection/terminologyOptionsCache";
 import { useLocale } from "@/app/i18n";
 import { collectionUiMessages } from "@/app/ui/collection/messages";
 import { localizePath } from "@/app/libs/localePath";
@@ -34,46 +34,46 @@ export default function CollectionEdit() {
   const [users, setUsers] = useState<PortalUser[]>([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>([]);
   const collaboratorsHaveOrcids = selectedCollaborators.every(isOrcidId);
-  const [ontologyOptions, setOntologyOptions] = useState<PortalOntologyOption[]>([]);
-  const [ontologyOptionsLoaded, setOntologyOptionsLoaded] = useState(false);
-  const [ontologyOptionsFailed, setOntologyOptionsFailed] = useState(false);
-  const [selectedTerminologies, setSelectedTerminologies] = useState<PortalOntologyOption[]>([]);
+  const [terminologyOptions, setTerminologyOptions] = useState<PortalTerminologyOption[]>([]);
+  const [terminologyOptionsLoaded, setTerminologyOptionsLoaded] = useState(false);
+  const [terminologyOptionsFailed, setTerminologyOptionsFailed] = useState(false);
+  const [selectedTerminologies, setSelectedTerminologies] = useState<PortalTerminologyOption[]>([]);
   const [terminologySelectionReady, setTerminologySelectionReady] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
-  const ontologyRequestInFlight = useRef(false);
+  const terminologyRequestInFlight = useRef(false);
   const userOrcids = useRef(new Map<string, string>());
   const terminologySelectionInitialized = useRef(false);
   const collectionTerminologyOptions = useMemo(() => {
-    const optionsByKey = new Map(ontologyOptions.map((option) => [getTerminologyOptionKey(option), option]));
+    const optionsByKey = new Map(terminologyOptions.map((option) => [getTerminologyOptionKey(option), option]));
     return collection.terminologies.map((terminology) => {
       const option = {
-        ontologyId: terminology.label,
+        terminologyId: terminology.label,
         providerId: terminology.source,
         description: "",
         uri: terminology.uri,
       };
       return optionsByKey.get(getTerminologyOptionKey(option)) ?? option;
     });
-  }, [collection.terminologies, ontologyOptions]);
+  }, [collection.terminologies, terminologyOptions]);
 
-  const loadOntologyOptions = useCallback(async () => {
-    if (ontologyRequestInFlight.current) {
+  const loadTerminologyOptions = useCallback(async () => {
+    if (terminologyRequestInFlight.current) {
       return;
     }
-    ontologyRequestInFlight.current = true;
-    setOntologyOptionsFailed(false);
+    terminologyRequestInFlight.current = true;
+    setTerminologyOptionsFailed(false);
     try {
-      const options = await getCachedOntologyOptions();
+      const options = await getCachedTerminologyOptions();
       if (!options) {
-        setOntologyOptionsFailed(true);
+        setTerminologyOptionsFailed(true);
         return;
       }
-      setOntologyOptions(options);
-      setOntologyOptionsLoaded(true);
+      setTerminologyOptions(options);
+      setTerminologyOptionsLoaded(true);
     } catch {
-      setOntologyOptionsFailed(true);
+      setTerminologyOptionsFailed(true);
     } finally {
-      ontologyRequestInFlight.current = false;
+      terminologyRequestInFlight.current = false;
     }
   }, []);
 
@@ -97,7 +97,7 @@ export default function CollectionEdit() {
       editedCollection.isPublic = isPublic;
       editedCollection.terminologies = selectedTerminologies.map((option) => {
         const terminology = new PortalTerminology();
-        terminology.label = option.ontologyId;
+        terminology.label = option.terminologyId;
         terminology.source = option.providerId;
         terminology.type = "DATABASE";
         terminology.uri = option.uri;
@@ -113,7 +113,7 @@ export default function CollectionEdit() {
   }
 
   useEffect(() => {
-    loadOntologyOptions();
+    loadTerminologyOptions();
     getUserList().then((response) => {
       if (response.status) {
         const people = response.content as PortalUser[];
@@ -122,7 +122,7 @@ export default function CollectionEdit() {
         setSelectedCollaborators((selected) => selected.map((value) => userOrcids.current.get(value) ?? value));
       }
     });
-  }, [loadOntologyOptions]);
+  }, [loadTerminologyOptions]);
 
   useEffect(() => {
     let active = true;
@@ -162,13 +162,13 @@ export default function CollectionEdit() {
   }, [collectionId]);
 
   useEffect(() => {
-    if (!collection.id || loadedCollectionId !== collectionId || !ontologyOptionsLoaded || terminologySelectionInitialized.current) {
+    if (!collection.id || loadedCollectionId !== collectionId || !terminologyOptionsLoaded || terminologySelectionInitialized.current) {
       return;
     }
     setSelectedTerminologies(collectionTerminologyOptions);
     terminologySelectionInitialized.current = true;
     setTerminologySelectionReady(true);
-  }, [collection.id, collectionId, collectionTerminologyOptions, loadedCollectionId, ontologyOptionsLoaded]);
+  }, [collection.id, collectionId, collectionTerminologyOptions, loadedCollectionId, terminologyOptionsLoaded]);
 
   return (
     <>
@@ -192,7 +192,7 @@ export default function CollectionEdit() {
               <CollectionVisibilityField messages={t} isPublic={isPublic} onChange={setIsPublic} />
               <CollaboratorField messages={t} users={users} selected={selectedCollaborators} onChange={setSelectedCollaborators} />
               {!collaboratorsHaveOrcids && <p role="alert" className="text-red-700 dark:text-red-400">{t.collaboratorOrcidRequired}</p>}
-              <TerminologySelectionField table messages={t} options={ontologyOptions} selected={selectedTerminologies} loaded={ontologyOptionsLoaded} failed={ontologyOptionsFailed} onRetry={loadOntologyOptions} onChange={setSelectedTerminologies} />
+              <TerminologySelectionField table messages={t} options={terminologyOptions} selected={selectedTerminologies} loaded={terminologyOptionsLoaded} failed={terminologyOptionsFailed} onRetry={loadTerminologyOptions} onChange={setSelectedTerminologies} />
               <div className="text-end">
                 <button
                   type="submit"

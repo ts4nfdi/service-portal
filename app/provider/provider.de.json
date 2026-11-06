@@ -1,7 +1,7 @@
 {
   "agroportal": {
     "title": "AgroPortal",
-    "description": "Verwenden Sie AgroPortal, um auf Ontologien zuzugreifen und diese zu teilen. Sie können ontologiebasierte Anmerkungen für Ihren eigenen Text erstellen, Ihr eigenes Projekt, das Ontologien verwendet, mit der Beschreibung dieser Ontologien verknüpfen, Beziehungen zwischen Begriffen in verschiedenen Ontologien suchen und erstellen sowie Ontologien und ihre Komponenten beim Durchsuchen überprüfen und kommentieren. Melden Sie sich bei AgroPortal an, um eine neue Ontologie oder ein ontologiebasiertes Projekt einzureichen, Kommentare zu Ontologien abzugeben oder Ontologiezuordnungen hinzuzufügen.",
+    "description": "Verwenden Sie AgroPortal, um auf Terminologien zuzugreifen und diese zu teilen. Sie können terminologiebasierte Anmerkungen für Ihren eigenen Text erstellen, Ihr eigenes Projekt, das Terminologien verwendet, mit der Beschreibung dieser Terminologien verknüpfen, Beziehungen zwischen Begriffen in verschiedenen Terminologien suchen und erstellen sowie Terminologien und ihre Komponenten beim Durchsuchen überprüfen und kommentieren. Melden Sie sich bei AgroPortal an, um eine neue Terminologie oder ein terminologiebasiertes Projekt einzureichen, Kommentare zu Terminologien abzugeben oder Terminologiezuordnungen hinzuzufügen.",
     "contactUrl": "https://agroportal.lirmm.fr/feedback",
     "homepage": "https://agroportal.lirmm.fr/",
     "api": "https://data.agroportal.lirmm.fr",
@@ -25,7 +25,7 @@
   },
   "biodivportal": {
     "title": "BiodivPortal",
-    "description": "BiodivPortal bietet Zugriff auf eine breite Palette biodiversitätsbezogener Ontologien, einschließlich Vokabeln, Taxonomien und Thesauri.",
+    "description": "BiodivPortal bietet Zugriff auf eine breite Palette biodiversitätsbezogener Terminologien, einschließlich Vokabeln, Taxonomien und Thesauri.",
     "contactUrl": "https://biodivportal.gfbio.org/feedback",
     "homepage": "https://biodivportal.gfbio.org/",
     "api": "https://data.biodivportal.gfbio.org",
@@ -37,7 +37,7 @@
   },
   "ecoportal": {
     "title": "EcoPortal",
-    "description": "EcoPortal ist eine Initiative von LifeWatch ERIC, der europäischen E-Science- und Technologie-Infrastruktur für Biodiversitäts- und Ökosystemforschung. Im letzten Jahrzehnt haben ökologische Forschungsgruppen und Infrastrukturen zur Definition und Erstellung von Kern- und Domänen-Ontologien sowie von Vokabularien und domänenrelevanten Referenzlisten beigetragen. Um die wissenschaftliche Gemeinschaft bei der Verwaltung und Integration dieser unterschiedlichen Ansätze zu unterstützen, hat LifeWatch ERIC EcoPortal geschaffen, ein Online-Angebot zur Sammlung semantischer Ressourcen und zur Bereitstellung der notwendigen Dienste zur Ermöglichung von Entdeckung und Interoperabilität.",
+    "description": "EcoPortal ist eine Initiative von LifeWatch ERIC, der europäischen E-Science- und Technologie-Infrastruktur für Biodiversitäts- und Ökosystemforschung. Im letzten Jahrzehnt haben ökologische Forschungsgruppen und Infrastrukturen zur Definition und Erstellung von Kern- und Domänen-Terminologien sowie von Vokabularien und domänenrelevanten Referenzlisten beigetragen. Um die wissenschaftliche Gemeinschaft bei der Verwaltung und Integration dieser unterschiedlichen Ansätze zu unterstützen, hat LifeWatch ERIC EcoPortal geschaffen, ein Online-Angebot zur Sammlung semantischer Ressourcen und zur Bereitstellung der notwendigen Dienste zur Ermöglichung von Entdeckung und Interoperabilität.",
     "contactUrl": "https://ecoportal.lifewatch.eu/feedback",
     "homepage": "https://ecoportal.lifewatch.eu/",
     "api": "https://data.ecoportal.lifewatch.eu",
@@ -49,7 +49,7 @@
   },
   "lovportal": {
     "title": "LovPortal",
-    "description": "Die Heimat von Ontologien und semantischen Artefakten in der Agrar- und Ernährungswirtschaft und verwandten Bereichen.",
+    "description": "Die Heimat von Terminologien und semantischen Artefakten in der Agrar- und Ernährungswirtschaft und verwandten Bereichen.",
     "contactUrl": "https://lovportal.lirmm.fr/feedback",
     "homepage": "https://lovportal.lirmm.fr/",
     "api": "https://data.lovportal.lirmm.fr",
@@ -61,7 +61,7 @@
   },
   "ebi": {
     "title": "EBI Ontology Lookup Service",
-    "description": "Der Ontology Lookup Service (OLS) ist ein Repository für biomedizinische Ontologien, das einen zentralen Zugriffspunkt auf die neuesten Ontologieversionen bieten soll. Sie können die Ontologien sowohl über die Website als auch programmgesteuert über die OLS-API durchsuchen. OLS wird vom „Samples, Phenotypes and Ontologies Team“ am EMBL-EBI entwickelt und gepflegt.",
+    "description": "Der Ontology Lookup Service (OLS) ist ein Repository für biomedizinische Terminologien, das einen zentralen Zugriffspunkt auf die neuesten Terminologieversionen bieten soll. Sie können die Terminologien sowohl über die Website als auch programmgesteuert über die OLS-API durchsuchen. OLS wird vom „Samples, Phenotypes and Ontologies Team“ am EMBL-EBI entwickelt und gepflegt.",
     "contactUrl": "https://github.com/EBISPOT/ols4/issues",
     "homepage": "https://www.ebi.ac.uk/ols4/",
     "api": "https://www.ebi.ac.uk/ols4/api/v2",
@@ -73,7 +73,7 @@
   },
   "tib": {
     "title": "TIB Terminology Service",
-    "description": "Der TIB-Terminologieservice bietet einen zentralen Zugangspunkt zu Terminologie aus Bereichen wie Architektur, Chemie, Informatik, Mathematik und Physik. Der Terminology Service ist ein Repository für terminologische Ressourcen, die auf semantischen W3C-Standards wie der Web Ontology Language (OWL 2) basieren. Sie können Ontologien auf der Website durchsuchen oder deren API verwenden, um terminologische Informationen abzurufen und diese in Ihren technischen Diensten zu verwenden. Darüber hinaus können Sie Ontologien beim Dienst registrieren.",
+    "description": "Der TIB-Terminologieservice bietet einen zentralen Zugangspunkt zu Terminologie aus Bereichen wie Architektur, Chemie, Informatik, Mathematik und Physik. Der Terminology Service ist ein Repository für terminologische Ressourcen, die auf semantischen W3C-Standards wie der Web Ontology Language (OWL 2) basieren. Sie können Terminologien auf der Website durchsuchen oder deren API verwenden, um terminologische Informationen abzurufen und diese in Ihren technischen Diensten zu verwenden. Darüber hinaus können Sie Terminologien beim Dienst registrieren.",
     "contactUrl": "https://terminology.tib.eu/ts/contact",
     "homepage": "https://terminology.tib.eu/ts/",
     "api": "https://api.terminology.tib.eu/api/v2",
@@ -121,7 +121,7 @@
   },
   "gnd": {
     "title": "GND",
-    "description": "GND steht für „Gemeinsame Normdatei“ oder „Integrated Authority File“. Ursprünglich bezog sich das Wort „Gemeinsam“ („integriert“, aber auch „gemeinsam“, „gemeinschaftlich“ usw.) auf die Zusammenführung zuvor getrennter Behördenakten. GND steht heute für gemeinschaftliches Arbeiten, gemeinsames Setzen von Standards und für den gemeinschaftlichen Erhalt des GND. GND vertritt daher die Vision, die Commons des Wissens mithilfe frei nutzbarer Autoritätsdaten zu fördern. Der GND hat seinen Ursprung in der deutschen Bibliotheksgemeinschaft und hat sich zum Ziel gesetzt, das Problem der Namensmehrdeutigkeit in der Bibliothekswelt zu lösen. Entsprechende Daten werden normalerweise in einem angepassten MARC 21 Authority Format (GND MARC Format) ausgedrückt, das ziemlich domänenspezifisch ist und nicht außerhalb der Bibliotheks- und Verlagswelt verwendet wird. Die GND-Ontologie versucht diese Lücke zu schließen, indem sie eine Formatspezifikation für die Verwendung im Semantic Web bereitstellt.",
+    "description": "GND steht für „Gemeinsame Normdatei“ oder „Integrated Authority File“. Ursprünglich bezog sich das Wort „Gemeinsam“ („integriert“, aber auch „gemeinsam“, „gemeinschaftlich“ usw.) auf die Zusammenführung zuvor getrennter Behördenakten. GND steht heute für gemeinschaftliches Arbeiten, gemeinsames Setzen von Standards und für den gemeinschaftlichen Erhalt des GND. GND vertritt daher die Vision, die Commons des Wissens mithilfe frei nutzbarer Autoritätsdaten zu fördern. Der GND hat seinen Ursprung in der deutschen Bibliotheksgemeinschaft und hat sich zum Ziel gesetzt, das Problem der Namensmehrdeutigkeit in der Bibliothekswelt zu lösen. Entsprechende Daten werden normalerweise in einem angepassten MARC 21 Authority Format (GND MARC Format) ausgedrückt, das ziemlich domänenspezifisch ist und nicht außerhalb der Bibliotheks- und Verlagswelt verwendet wird. Die GND-Terminologie versucht diese Lücke zu schließen, indem sie eine Formatspezifikation für die Verwendung im Semantic Web bereitstellt.",
     "contactUrl": "https://github.com/hbz/lobid-organisations/issues",
     "homepage": "https://lobid.org/index-en",
     "api": "https://lobid.org/gnd/api",
