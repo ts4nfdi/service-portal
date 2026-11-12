@@ -28,7 +28,8 @@ export function TextInput(props: TextInputProps) {
                 id={props.id}
                 placeholder={props.placeHolder}
                 required={props.required}
-                defaultValue={props.defaultValue}
+                value={props.value}
+                defaultValue={props.value === undefined ? props.defaultValue : undefined}
                 key={"input"}
                 onChange={props.onChange}
             />
@@ -64,7 +65,7 @@ export function SelectionInput(props: SelectionInputProps) {
         <div>
             <label htmlFor={props.id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 key={"label"}>{props.label}</label>
-            <select id={props.id} defaultValue={""} onChange={props.onSelection} key={"input"}>
+            <select id={props.id} value={props.value} defaultValue={props.value === undefined ? "" : undefined} onChange={props.onSelection} key={"input"}>
                 <option value={props.defaultValue} key={"defaultValue"}>{props.defaultOptionLabel}</option>
                 {props.options.map((stat) => {
                     return (
