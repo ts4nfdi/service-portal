@@ -18,7 +18,7 @@ export const incubatorMessages = {
     requestCycle: "Cycle ?",
     requestConsortium1: "some NFDI consortia",
     requestConsortium2: "no consortia - external",
-    requestDuration: "6 months somewhere in the future. The next call for incubators is currently open. The submission deadline will be on 14 January 2027. The next incubator cycle itself will start in the middle of Q1/2027.",
+    requestDuration: "6 months somewhere in the future. The next call for incubators is currently open. The submission deadline is on 14 January 2027. The next incubator cycle itself will start in the middle of Q1/2027.",
     requestDescription: "Have you considered one or more of the possible goals listed below? However, you may not have the resources or expertise to make it happen. Terminology Services 4 NFDI (TS4NFDI) can provide the assistance you need to bring your use case to life.",
     requestDescription2: "We offer incubator projects to interested parties to support them in the interaction, integration or handling of terminology services. TS4NFDI will offer at least two incubator cycles per year. These cycles will be user-driven and will include requirements analysis, service integration, testing and user feedback. Each cycle is expected to span six months, during which TS4NFDI will allocate resources (e.g. developer capacity) to support your specific use case.",
     requestGoal1: "Hosting of terminologies",
