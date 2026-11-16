@@ -1,8 +1,8 @@
 {
   "stats": {
     "In preparation": 5,
-    "Running": 7,
-    "Finished": 19
+    "Running": 6,
+    "Finished": 20
   },
   "license": {
     "link": "https://creativecommons.org/licenses/by/4.0/deed.en",
@@ -357,9 +357,9 @@
       "incubatorID": "incubator-19",
       "title": "Enabling Semantic Interoperability via DataCite Terminologies",
       "cycle": "3",
-      "status": "Running",
+      "status": "Finished",
       "start": "26.02.2026",
-      "end": "11.2026",
+      "end": "20.11.2026",
       "description": "This incubator project aims to host the DataCite metadata model and controlled vocabularies within the TIB Terminology Services (TS) infrastructure and expose them through the TS4NFDI API Gateway. The goal is to provide a canonical, machine-actionable representation of DataCite terms, including stable URIs, labels, definitions, and versioning, that can be reused consistently across NFDI services and beyond. Rather than introducing a new ontology for metadata, the project operationalises an existing, widely adopted metadata standard inside the TS ecosystem, enabling downstream propagation to TS4NFDI services and client applications. In this way other services such as ELNs, DMPs or other data repositories could use the well-established DataCite terms through the API Gateway and the widgets of the Terminology Service Suite. In addition, the project will establish and maintain curated mappings between DataCite vocabularies and related schemas such as schema.org and DCAT, using the TS4NFDI mapping service. These centrally managed mappings will be provided via the mapping service to support semantic interoperability without requiring hard-coded, system-specific alignments across different knowledge domains.",
       "goals": [
         "host a canonical, machine-actionable representation of DataCite terms",
