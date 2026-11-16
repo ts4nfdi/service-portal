@@ -11,6 +11,7 @@
   "projects": [
     {
       "incubatorID": "incubator-1",
+      "url": "radar_incubator_1",
       "title": "RADAR",
       "cycle": 1,
       "status": "Finished",
@@ -39,6 +40,7 @@
     },
     {
       "incubatorID": "incubator-2",
+      "url": "wdcc_world_data_center_for_climate_incubator_2",
       "title": "WDCC - World Data Center for Climate",
       "cycle": 1,
       "status": "Finished",
@@ -58,6 +60,7 @@
     },
     {
       "incubatorID": "incubator-3",
+      "url": "nmrxiv_incubator_3",
       "title": "nmrXiv",
       "cycle": 0,
       "status": "Running",
@@ -76,6 +79,7 @@
     },
     {
       "incubatorID": "incubator-4",
+      "url": "chebi_chemical_entities_of_biological_interest_incubator_4",
       "title": "ChEBI - Chemical Entities of Biological Interest",
       "cycle": 1,
       "status": "Finished",
@@ -98,6 +102,7 @@
     {
       "title": "Coconut",
       "incubatorID": "incubator-5",
+      "url": "coconut_incubator_5",
       "cycle": 0,
       "status": "Running",
       "start": "~",
@@ -115,6 +120,7 @@
     },
     {
       "incubatorID": "incubator-6",
+      "url": "nfdi4cat_central_data_repository_repo4cat_incubator_6",
       "title": "NFDI4Cat Central Data Repository (Repo4Cat)",
       "cycle": 1,
       "status": "Finished",
@@ -139,6 +145,7 @@
     },
     {
       "incubatorID": "incubator-7",
+      "url": "berd_terminology_service_incubator_7",
       "title": "BERD Terminology Service",
       "cycle": 0,
       "status": "Finished",
@@ -162,6 +169,7 @@
     },
     {
       "incubatorID": "incubator-8",
+      "url": "terminology_service_for_plasma_mds_incubator_8",
       "title": "Terminology service for Plasma-MDS",
       "cycle": 0,
       "status": "Finished",
@@ -184,6 +192,7 @@
     },
     {
       "incubatorID": "incubator-9",
+      "url": "preview_incubator_9",
       "title": "preVIEW",
       "cycle": 0,
       "status": "Finished",
@@ -205,6 +214,7 @@
     },
     {
       "incubatorID": "incubator-10",
+      "url": "metadata_annotation_workbench_incubator_10",
       "title": "Metadata Annotation Workbench",
       "cycle": 0,
       "status": "Finished",
@@ -231,6 +241,7 @@
     },
     {
       "incubatorID": "incubator-11",
+      "url": "discuss_data_incubator_11",
       "title": "Discuss Data",
       "cycle": 1,
       "status": "Finished",
@@ -252,6 +263,7 @@
     },
     {
       "incubatorID": "incubator-12",
+      "url": "open_energy_platform_incubator_12",
       "title": "Open Energy Platform",
       "cycle": 2,
       "status": "Finished",
@@ -272,6 +284,7 @@
     },
     {
       "incubatorID": "incubator-13",
+      "url": "iconclass_incubator_13",
       "title": "ICONCLASS",
       "cycle": "2",
       "status": "Finished",
@@ -294,6 +307,7 @@
     },
     {
       "incubatorID": "incubator-14",
+      "url": "ontology_of_the_historical_german_language_nomenclature_incubator_14",
       "title": "Ontology of the historical German-language nomenclature",
       "cycle": "2",
       "status": "Finished",
@@ -315,6 +329,7 @@
     },
     {
       "incubatorID": "incubator-15",
+      "url": "health_study_hub_incubator_15",
       "title": "Health Study Hub",
       "cycle": "2",
       "status": "Running",
@@ -335,6 +350,7 @@
     },
     {
       "incubatorID": "incubator-16",
+      "url": "dalia_search_portal_incubator_16",
       "title": "DALIA Search Portal",
       "cycle": "2",
       "status": "Running",
@@ -353,6 +369,7 @@
     },
     {
       "incubatorID": "incubator-17",
+      "url": "aims_incubator_17",
       "title": "AIMS",
       "cycle": "3",
       "status": "Running",
@@ -372,6 +389,7 @@
     },
     {
       "incubatorID": "incubator-18",
+      "url": "integrate_ts4nfdi_into_dmp4nfdi_rdmo_service_incubator_18",
       "title": "Integrate TS4NFDI into DMP4NFDI RDMO Service",
       "cycle": "3",
       "status": "Running",
@@ -390,6 +408,7 @@
     },
     {
       "incubatorID": "incubator-19",
+      "url": "enabling_semantic_interoperability_via_datacite_terminologies_incubator_19",
       "title": "Enabling Semantic Interoperability via DataCite Terminologies",
       "cycle": "3",
       "status": "Running",
@@ -409,6 +428,7 @@
     },
     {
       "incubatorID": "incubator-20",
+      "url": "metabase_incubator_20",
       "title": "Metabase",
       "cycle": "3",
       "status": "Running",
@@ -428,6 +448,7 @@
     },
     {
       "incubatorID": "incubator-21",
+      "url": "mathmoddb_incubator_21",
       "title": "MathModDB",
       "cycle": "3",
       "status": "Running",
@@ -447,6 +468,7 @@
     },
     {
       "incubatorID": "incubator-22",
+      "url": "fairagro_terminology_service_incubator_22",
       "title": "FAIRagro Terminology Service",
       "cycle": "3",
       "status": "Running",
@@ -468,6 +490,7 @@
     },
     {
       "incubatorID": "incubator-23",
+      "url": "ts4nfdi_integration_in_galaxy_incubator_23",
       "title": "TS4NDSI integration in Galaxy",
       "cycle": "4",
       "status": "In preparation",
@@ -482,6 +505,7 @@
     },
     {
       "incubatorID": "incubator-24",
+      "url": "tess_training_esupport_system_incubator_24",
       "title": "TeSS - Training eSupport System",
       "cycle": "4",
       "status": "In preparation",
@@ -499,6 +523,7 @@
     },
     {
       "incubatorID": "incubator-25",
+      "url": "semantic_interoperability_and_terminology_mapping_for_panet_based_discovery_in_photon_and_neutron_science_repositories_incubator_25",
       "title": "Semantic Interoperability and Terminology Mapping for PaNET-based Discovery in Photon and Neutron Science Repositories",
       "cycle": "4",
       "status": "In preparation",
@@ -515,6 +540,7 @@
     },
     {
       "incubatorID": "incubator-26",
+      "url": "improving_interoperability_for_climate_and_energy_policy_ontologies_incubator_26",
       "title": "Improving Interoperability for Climate and Energy Policy Ontologies",
       "cycle": "4",
       "status": "In preparation",
@@ -531,6 +557,7 @@
     },
     {
       "incubatorID": "incubator-27",
+      "url": "terminology_service_suite_integration_for_wisski_authority_data_enrichment_incubator_27",
       "title": "Terminology Service Suite integration for WissKI authority data enrichment",
       "cycle": "4",
       "status": "In preparation",
@@ -549,6 +576,7 @@
     },
     {
       "incubatorID": "incubator-28",
+      "url": "ostdata_4mms_incubator_28",
       "title": "OstData & 4MMS",
       "cycle": "4",
       "status": "In preparation",
@@ -565,6 +593,7 @@
     },
     {
       "incubatorID": "incubator-29",
+      "url": "sensorcv_incubator_29",
       "title": "SensorCV",
       "cycle": "4",
       "status": "In preparation",
@@ -581,6 +610,7 @@
     },
     {
       "incubatorID": "incubator-30",
+      "url": "semantic_and_interoperable_metadata_integration_for_eln_objects_incubator_30",
       "title": "Semantic and Interoperable Metadata Integration for ELN Objects",
       "cycle": "5",
       "status": "In preparation",
@@ -595,6 +625,7 @@
     },
     {
       "incubatorID": "incubator-31",
+      "url": "integration_of_ontology_based_auto_completion_in_nfdi4immuno_excel_metadata_templates_incubator_31",
       "title": "Integration of ontology-based auto-completion in NFDI4Immuno Excel metadata templates",
       "cycle": "5",
       "status": "In preparation",

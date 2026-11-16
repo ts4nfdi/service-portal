@@ -12,6 +12,7 @@ export type TextEditorProps = {
 }
 
 export type TextInputProps = {
+    value?: string,
     id: string,
     required: boolean,
     type: "text" | "email" | "password",
@@ -28,6 +29,7 @@ export type FileInputProps = Omit<TextInputProps, 'type'> & {
 
 
 export type SelectionInputProps = {
+    value?: string,
     id: string,
     required?: boolean,
     label: string,

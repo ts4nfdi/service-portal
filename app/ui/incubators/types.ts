@@ -5,6 +5,7 @@ export type Person = {
 
 export type Project = {
     incubatorID: string;
+    url: string;
     title: string,
     cycle: number,
     status: ProjectStatus,
