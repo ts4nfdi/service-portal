@@ -89,28 +89,28 @@ export default function CollectionContentCmp(props: {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex min-w-0 flex-col gap-4 break-words rounded border border-gray-300 bg-gray-100 p-3 dark:border-gray-600 dark:bg-gray-700">
               <div
+                  key={"collection-id-and-copy"}
+                  id="collection-id"
+              >
+                <p className="font-bold">Collection ID:</p>
+                <p key={"collection-id"} className="inline-block  text-sm">
+                  {collection.collectionID}
+                </p>
+                <CopyToClipboard
+                    textToCopy={collection.collectionID}
+                    key={"copy"}
+                />
+              </div>
+              <div
                 key={"label-and-copy"}
                 id="collection-id"
               >
-                <p className="font-bold">uuid</p>
+                <p className="font-bold">uuid:</p>
                 <p key={"collection-id"} className="inline-block  text-sm">
                   {props.collection.id}
                 </p>
                 <CopyToClipboard
                   textToCopy={props.collection.id!}
-                  key={"copy"}
-                />
-              </div>
-              <div
-                key={"permalink-and-copy"}
-                id="collection-permalink"
-              >
-                <p className="font-bold">PermaLink</p>
-                <p key={"collection-permalink"} className="inline-block  text-sm">
-                  {collection.permaLink}
-                </p>
-                <CopyToClipboard
-                  textToCopy={collection.permaLink}
                   key={"copy"}
                 />
               </div>

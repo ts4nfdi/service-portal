@@ -4,7 +4,7 @@ import { acceptTrackingConsent, readDownloadJson } from "@/tests/libs";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const COLLECTION = MOCK_COLLECTIONS[0];
-const PERMALINK = `https://w3id.org/ts4nfdi/collection/${COLLECTION.id}`;
+const COLLECTIONID = `https://w3id.org/ts4nfdi/collection/${COLLECTION.id}`;
 
 test.use({ acceptDownloads: true });
 
@@ -54,7 +54,7 @@ test("collection page is accessible by uuid and shows collection details", async
   }
 });
 
-test("collection page shows uuid and permalink boxes with copy actions", async ({
+test("collection page shows uuid and collection-id boxes with copy actions", async ({
   browserName,
   context,
   page,
@@ -69,22 +69,22 @@ test("collection page shows uuid and permalink boxes with copy actions", async (
   await openCollectionPage(page);
 
   const uuidBox = collectionBox(page, COLLECTION.id!);
-  const permalinkBox = collectionBox(page, PERMALINK);
+  const collectionidBox = collectionBox(page, COLLECTIONID);
 
+  await expect(collectionidBox).toContainText("Collection ID");
+  await expect(collectionidBox).toHaveClass(/bg-gray-100/);
   await expect(uuidBox).toContainText("uuid");
   await expect(uuidBox).toHaveClass(/bg-gray-100/);
-  await expect(permalinkBox).toContainText("PermaLink");
-  await expect(permalinkBox).toHaveClass(/bg-gray-100/);
 
   await uuidBox.locator("button").click();
   await expect
     .poll(() => page.evaluate(() => navigator.clipboard.readText()))
     .toBe(COLLECTION.id);
 
-  await permalinkBox.locator("button").click();
+  await collectionidBox.locator("button").click();
   await expect
     .poll(() => page.evaluate(() => navigator.clipboard.readText()))
-    .toBe(PERMALINK);
+    .toBe(COLLECTIONID);
 });
 
 test("collection page downloads the collection as JSON", async ({ page }) => {
