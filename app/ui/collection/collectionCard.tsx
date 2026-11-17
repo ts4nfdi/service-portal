@@ -99,17 +99,17 @@ export default function CollectionCard(props: CmpProps) {
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="min-w-0 break-words">
+                    <div key={"collection-id-and-copy"} className="!text-sm">
+                        <p className="font-bold inline mr-2">Collection ID:</p>
+                        <p key={"collection-id"}
+                           className="inline-block">{props.collection.collectionID}</p>
+                        <CopyToClipboard textToCopy={props.collection.collectionID}
+                                         key={"copy"}/>
+                    </div>
                     <div key={"label-and-copy"} className="!text-sm">
                         <p className="font-bold inline mr-2">uuid:</p>
                         <p key={"collection-id"} className="inline-block">{props.collection.id}</p>
                         <CopyToClipboard textToCopy={props.collection.id!} key={"copy"}/>
-                    </div>
-                    <div key={"permalink-and-copy"} className="!text-sm">
-                        <p className="font-bold inline mr-2">PermaLink:</p>
-                        <p key={"collection-permalink"}
-                           className="inline-block">{props.collection.permaLink}</p>
-                        <CopyToClipboard textToCopy={props.collection.permaLink}
-                                         key={"copy"}/>
                     </div>
                     <p key={"creator"} className="text-sm">
                         {t.createdBy}{creatorIdentity.url ? (

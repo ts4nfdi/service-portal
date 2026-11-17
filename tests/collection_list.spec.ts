@@ -134,14 +134,14 @@ test("collection cards show details, copy actions and terminology tags", async (
   await openCollectionsPage(page);
 
   const collection = MOCK_COLLECTIONS[0];
-  const permalink = `https://w3id.org/ts4nfdi/collection/${collection.id}`;
+  const collectionid = `https://w3id.org/ts4nfdi/collection/${collection.id}`;
   const card = collectionCard(page, collection.label!);
 
   await expect(
     card.getByRole("link", { name: collection.label }),
   ).toHaveAttribute("href", `/collection/${collection.id}`);
+  await expect(card).toContainText(`Collection ID:${collectionid}`);
   await expect(card).toContainText(`uuid:${collection.id}`);
-  await expect(card).toContainText(`PermaLink:${permalink}`);
   await expect(card).toContainText(`Created by: ${collection.creator}`);
   await expect(card).toContainText(collection.description!);
   await expect(
@@ -150,24 +150,25 @@ test("collection cards show details, copy actions and terminology tags", async (
     }),
   ).toBeVisible();
 
+  const collectionidCopyButton = card
+      .getByText(collectionid, { exact: true })
+      .locator("..")
+      .locator("button");
   const uuidCopyButton = card
     .getByText(collection.id!, { exact: true })
     .locator("..")
     .locator("button");
-  const permalinkCopyButton = card
-    .getByText(permalink, { exact: true })
-    .locator("..")
-    .locator("button");
+
+  await collectionidCopyButton.click();
+  await expect
+      .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+      .toBe(collectionid);
 
   await uuidCopyButton.click();
   await expect
     .poll(() => page.evaluate(() => navigator.clipboard.readText()))
     .toBe(collection.id);
 
-  await permalinkCopyButton.click();
-  await expect
-    .poll(() => page.evaluate(() => navigator.clipboard.readText()))
-    .toBe(permalink);
 });
 
 test("collection card downloads a single collection as JSON", async ({

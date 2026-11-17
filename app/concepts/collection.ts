@@ -26,7 +26,7 @@ export type PortalCollectionStatistics = {
 
 export type PortalCollectionJsonData = {
     id: string,
-    permaLink?: string,
+    collectionID?: string,
     creator: string,
     manageable?: boolean,
     description: string,
@@ -74,7 +74,7 @@ export class PortalCollection {
         return this._id;
     }
 
-    get permaLink() {
+    get collectionID() {
         return `https://w3id.org/ts4nfdi/collection/${this._id}`;
     }
 
@@ -165,7 +165,7 @@ export class PortalCollection {
         }
         return {
             id: this.id,
-            permaLink: this.permaLink,
+            collectionID: this.collectionID,
             creator: this.creator,
             manageable: this.manageable,
             description: this.description,
