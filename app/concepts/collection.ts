@@ -51,11 +51,11 @@ export class PortalCollection {
 
     constructor(collection: Collection = {}) {
         this._description = collection.description ?? "";
-        this._id = collection.id ?? "";
+        this._id = collection["@id"] ?? collection.id ?? "";
         this.creator = collection.creator ?? "";
         this._manageable = false;
         this._label = collection.label ?? "";
-        this._isPublic = collection.isPublic ?? false;
+        this._isPublic = collection["collection:isPublic"] ?? collection.isPublic ?? false;
         this.collaborators = collection.collaborators ?? [];
         this._terminologies = this._buildTerminologies(collection);
         const latest = collection.statistics?.slice().sort((a, b) => b.created.localeCompare(a.created))[0];

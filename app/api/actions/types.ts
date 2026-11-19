@@ -21,6 +21,7 @@ export type NewIncubatorForm = {
 }
 
 export type Collection = {
+  "@id"?: string,
   id?: string,
   creator?: string,
   description?: string,
@@ -28,6 +29,7 @@ export type Collection = {
   terminologies?: Terminology[],
   collaborators?: { username: string, orcid?: string | null, role: string }[],
   isPublic?: boolean,
+  "collection:isPublic"?: boolean,
   statistics?: { created: string, count: Record<string, number> }[],
 }
 
