@@ -30,7 +30,7 @@ export type Collection = {
   collaborators?: { username: string, orcid?: string | null, role: string }[],
   isPublic?: boolean,
   "collection:isPublic"?: boolean,
-  statistics?: { created: string, count: Record<string, number> }[],
+  statistics?: { created: string | [number, number, number], count: Record<string, number> }[],
 }
 
 export type Terminology = {

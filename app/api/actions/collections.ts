@@ -38,7 +38,7 @@ export async function getUserCollectionList(): Promise<ActionResponse> {
             return {status: false, content: ACTION_NOT_ALLOWED_MESSAGE}
         }
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/", {
-            headers: await getHttpHeaderForGateway(token),
+            headers: await getHttpHeaderForGateway(token, "application/ld+json, application/json"),
             cache: "no-store",
         });
         if (!resp.ok) {
@@ -63,7 +63,7 @@ export async function getPublicCollectionList(): Promise<ActionResponse> {
     try {
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/collections/", {
-            headers: await getHttpHeaderForGateway(),
+            headers: await getHttpHeaderForGateway(undefined, "application/ld+json, application/json"),
             cache: "no-store",
         });
         if (!resp.ok) {
@@ -122,7 +122,7 @@ export async function createCollection(collection: PortalCollectionJsonData, cre
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/", {
             method: "POST",
-            headers: await getHttpHeaderForGateway(token),
+            headers: await getHttpHeaderForGateway(token, "application/ld+json, application/json"),
             body: JSON.stringify(formData)
         });
         if (!resp.ok) {
@@ -191,7 +191,7 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
 
         let resp = await fetch((process.env.GATEWAY_BASE_URL! as string) + "/users/collections/" + formData.id, {
             method: "PUT",
-            headers: await getHttpHeaderForGateway(token),
+            headers: await getHttpHeaderForGateway(token, "application/ld+json, application/json"),
             body: JSON.stringify(formData)
         });
 
