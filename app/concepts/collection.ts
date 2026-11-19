@@ -51,14 +51,19 @@ export class PortalCollection {
 
     constructor(collection: Collection = {}) {
         this._description = collection.description ?? "";
-        this._id = collection["@id"] ?? collection.id ?? "";
+        this._id = (collection["@id"] ?? collection.id ?? "").replace(/^https?:\/\/w3id\.org\/ts4nfdi\/collection\//, "");
         this.creator = collection.creator ?? "";
         this._manageable = false;
         this._label = collection.label ?? "";
         this._isPublic = collection["collection:isPublic"] ?? collection.isPublic ?? false;
         this.collaborators = collection.collaborators ?? [];
         this._terminologies = this._buildTerminologies(collection);
-        const latest = collection.statistics?.slice().sort((a, b) => b.created.localeCompare(a.created))[0];
+        const latest = collection.statistics?.map(statistics => ({
+            ...statistics,
+            created: Array.isArray(statistics.created)
+                ? statistics.created.map((part, index) => String(part).padStart(index === 0 ? 4 : 2, "0")).join("-")
+                : statistics.created,
+        })).sort((a, b) => b.created.localeCompare(a.created))[0];
         if (latest) {
             this._statistics = {
                 created: latest.created,
