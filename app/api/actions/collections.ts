@@ -147,8 +147,9 @@ export async function createCollection(collection: PortalCollectionJsonData, cre
             }
         }
         let res: Collection = await resp.json();
-        scheduleCollectionStatistics(res.id);
-        return {status: true, content: new PortalCollection(res).toJson()}
+        const portalCollection = new PortalCollection(res);
+        scheduleCollectionStatistics(portalCollection.id);
+        return {status: true, content: portalCollection.toJson()}
 
     } catch {
         return {status: false, content: SERVER_ERROR_MESSAGE}
@@ -199,8 +200,9 @@ export async function updateCollection(collection: PortalCollectionJsonData): Pr
             return {status: false, content: REQUEST_FAILED_MESSAGE}
         }
         let res: Collection = await resp.json();
-        scheduleCollectionStatistics(res.id);
-        return {status: true, content: new PortalCollection(res).toJson()}
+        const portalCollection = new PortalCollection(res);
+        scheduleCollectionStatistics(portalCollection.id);
+        return {status: true, content: portalCollection.toJson()}
 
     } catch {
         return {status: false, content: SERVER_ERROR_MESSAGE}
